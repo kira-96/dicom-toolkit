@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D4D4C24F-0043-4342-89C0-38ED7052AC44}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>SimpleDICOMToolkit</RootNamespace>
+    <AssemblyName>Simple DICOM Toolkit</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Dicom.Core, Version=4.0.3.0, Culture=neutral, PublicKeyToken=3a13f649e28eb09a, processorArchitecture=MSIL">
+      <HintPath>..\..\Combine\packages\fo-dicom.Desktop.4.0.3\lib\net45\Dicom.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\..\Combine\packages\NLog.4.6.8\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="Stylet, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\Combine\packages\Stylet.1.3.0\lib\net45\Stylet.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="BindingProxy.cs" />
+    <Compile Include="Client\CMoveSCU.cs" />
+    <Compile Include="Client\CStoreSCU.cs" />
+    <Compile Include="Client\ICMoveSCU.cs" />
+    <Compile Include="Client\ICStoreSCU.cs" />
+    <Compile Include="Client\IPrintSCU.cs" />
+    <Compile Include="Client\IWorklistSCU.cs" />
+    <Compile Include="Client\PrintJob.cs" />
+    <Compile Include="Client\PrintSCU.cs" />
+    <Compile Include="Client\WorklistSCU.cs" />
+    <Compile Include="Logging\NLogManager.cs" />
+    <Compile Include="Models\CStoreItem.cs" />
+    <Compile Include="Models\CStoreRequestItem.cs" />
+    <Compile Include="Models\DcmItem.cs" />
+    <Compile Include="Models\PrintRequestItem.cs" />
+    <Compile Include="Models\SimpleWorklistResult.cs" />
+    <Compile Include="Models\WorklistRequestItem.cs" />
+    <Compile Include="Services\DialogServiceEx.cs" />
+    <Compile Include="Services\IDialogServiceEx.cs" />
+    <Compile Include="SimpleIoC.cs" />
+    <Compile Include="Utils\BitmapUtil.cs" />
+    <Compile Include="ViewModels\CStoreFileListViewModel.cs" />
+    <Compile Include="ViewModels\CStoreViewModel.cs" />
+    <Compile Include="ViewModels\DcmItemsViewModel.cs" />
+    <Compile Include="ViewModels\IViewModelFactory.cs" />
+    <Compile Include="ViewModels\PreviewImageViewModel.cs" />
+    <Compile Include="ViewModels\PrintPreviewViewModel.cs" />
+    <Compile Include="ViewModels\PrintViewModel.cs" />
+    <Compile Include="ViewModels\ServerConfigViewModel.cs" />
+    <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="ViewModels\WorklistResultViewModel.cs" />
+    <Compile Include="ViewModels\WorklistViewModel.cs" />
+    <Compile Include="Views\CStoreFileListView.xaml.cs">
+      <DependentUpon>CStoreFileListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CStoreView.xaml.cs">
+      <DependentUpon>CStoreView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DcmItemsView.xaml.cs">
+      <DependentUpon>DcmItemsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PreviewImageView.xaml.cs">
+      <DependentUpon>PreviewImageView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\PrintPreviewView.xaml.cs">
+      <DependentUpon>PrintPreviewView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrintView.xaml.cs">
+      <DependentUpon>PrintView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ServerConfigView.xaml.cs">
+      <DependentUpon>ServerConfigView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WorklistResultView.xaml.cs">
+      <DependentUpon>WorklistResultView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WorklistView.xaml.cs">
+      <DependentUpon>WorklistView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Logging\ILoggerService.cs" />
+    <Compile Include="Logging\LoggerService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <None Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\CStoreFileListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CStoreView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DcmItemsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PreviewImageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrintPreviewView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrintView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ServerConfigView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ShellView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WorklistResultView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WorklistView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\query.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\print.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\openfile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\upload.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\addfiles.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\waiting.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\success.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\failed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\delete.png" />
+    <Resource Include="Icons\preview.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\package.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\item.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\tag.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\tag-white.png" />
+    <Resource Include="Icons\item-white.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\..\Combine\packages\fo-dicom.Desktop.4.0.3\build\net45\fo-dicom.Desktop.targets" Condition="Exists('..\..\Combine\packages\fo-dicom.Desktop.4.0.3\build\net45\fo-dicom.Desktop.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\Combine\packages\fo-dicom.Desktop.4.0.3\build\net45\fo-dicom.Desktop.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\Combine\packages\fo-dicom.Desktop.4.0.3\build\net45\fo-dicom.Desktop.targets'))" />
+  </Target>
+</Project>

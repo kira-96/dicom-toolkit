@@ -1,0 +1,86 @@
+﻿<UserControl x:Class="SimpleDICOMToolkit.Views.DcmItemsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:s="https://github.com/canton7/Stylet"
+             xmlns:m="clr-namespace:SimpleDICOMToolkit.Models"
+             xmlns:v="clr-namespace:SimpleDICOMToolkit.Views"
+             mc:Ignorable="d" 
+             d:DesignWidth="600"
+             d:DesignHeight="480">
+
+    <Grid>
+        <TreeView AllowDrop="True" 
+                  DragEnter="{s:Action OnDragFileOver}"
+                  DragOver="{s:Action OnDragFileOver}"
+                  Drop="{s:Action OnDropFile}"
+                  ItemsSource="{Binding DicomItems}">
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <EventSetter Event="MouseDoubleClick" Handler="DcmItemMouseDoubleClick" />
+                </Style>
+            </TreeView.ItemContainerStyle>
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type m:DcmItem}" ItemsSource="{Binding SequenceItems}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image x:Name="Icon" Width="18" Height="18" Margin="0,0,4,0" />
+                        <TextBlock Text="{Binding Path=Header}" VerticalAlignment="Center" />
+                    </StackPanel>
+                    <DataTemplate.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding TagType}">
+                                    <Condition.Value>
+                                        <m:DcmTagType>Tag</m:DcmTagType>
+                                    </Condition.Value>
+                                </Condition>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}, Path=IsSelected}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="Icon" Property="Source" Value="pack://application:,,,/Icons/tag-white.png" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding TagType}">
+                                    <Condition.Value>
+                                        <m:DcmTagType>Tag</m:DcmTagType>
+                                    </Condition.Value>
+                                </Condition>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}, Path=IsSelected}" Value="False" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="Icon" Property="Source" Value="pack://application:,,,/Icons/tag.png" />
+                        </MultiDataTrigger>
+                        <DataTrigger Binding="{Binding TagType}">
+                            <DataTrigger.Value>
+                                <m:DcmTagType>Sequence</m:DcmTagType>
+                            </DataTrigger.Value>
+                            <Setter TargetName="Icon" Property="Source" Value="pack://application:,,,/Icons/package.png" />
+                        </DataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding TagType}">
+                                    <Condition.Value>
+                                        <m:DcmTagType>SequenceItem</m:DcmTagType>
+                                    </Condition.Value>
+                                </Condition>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}, Path=IsSelected}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="Icon" Property="Source" Value="pack://application:,,,/Icons/item-white.png" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding TagType}">
+                                    <Condition.Value>
+                                        <m:DcmTagType>SequenceItem</m:DcmTagType>
+                                    </Condition.Value>
+                                </Condition>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}, Path=IsSelected}" Value="False" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="Icon" Property="Source" Value="pack://application:,,,/Icons/item.png" />
+                        </MultiDataTrigger>
+                    </DataTemplate.Triggers>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
+    </Grid>
+</UserControl>

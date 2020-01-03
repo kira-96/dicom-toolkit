@@ -1,0 +1,176 @@
+﻿<UserControl x:Class="SimpleDICOMToolkit.Views.CStoreFileListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:s="https://github.com/canton7/Stylet"
+             xmlns:m="clr-namespace:SimpleDICOMToolkit.Models"
+             xmlns:v="clr-namespace:SimpleDICOMToolkit.Views"
+             mc:Ignorable="d"
+             d:DesignWidth="360"
+             d:DesignHeight="420">
+
+    <UserControl.Resources>
+        <ContextMenu x:Key="CStoreItemContextMenu">
+            <MenuItem Header="Preview" 
+                      ToolTip="Preview Image"
+                      s:View.ActionTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext}"
+                      Command="{s:Action PreviewCStoreItem, ActionNotFound=Disable}" 
+                      CommandParameter="{Binding}">
+                <MenuItem.Icon>
+                    <Image Width="16" Height="16" Source="pack://application:,,,/Icons/preview.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Delete" 
+                      ToolTip="Delete from list"
+                      s:View.ActionTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ListView}}, Path=DataContext}"
+                      Command="{s:Action DeleteCStoreItem, ActionNotFound=Disable}"
+                      CommandParameter="{Binding}">
+                <MenuItem.Icon>
+                    <Image Width="16" Height="16" Source="pack://application:,,,/Icons/delete.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+        </ContextMenu>
+        <DataTemplate x:Key="ItemTemplate" DataType="{x:Type m:CStoreItem}">
+            <Grid Height="32">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="276" />
+                    <ColumnDefinition Width="42" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding Id}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock Grid.Column="1" Text="{Binding FileName}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <Image x:Name="StatusImage" Grid.Column="2" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Grid>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding Status}">
+                    <DataTrigger.Value>
+                        <m:CStoreItemStatus>Waiting</m:CStoreItemStatus>
+                    </DataTrigger.Value>
+                    <Setter TargetName="StatusImage" Property="Source" Value="pack://application:,,,/Icons/waiting.png" />
+                    <Setter TargetName="StatusImage" Property="ToolTip" Value="waiting" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Status}">
+                    <DataTrigger.Value>
+                        <m:CStoreItemStatus>Success</m:CStoreItemStatus>
+                    </DataTrigger.Value>
+                    <Setter TargetName="StatusImage" Property="Source" Value="pack://application:,,,/Icons/success.png" />
+                    <Setter TargetName="StatusImage" Property="ToolTip" Value="success" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Status}">
+                    <DataTrigger.Value>
+                        <m:CStoreItemStatus>Failed</m:CStoreItemStatus>
+                    </DataTrigger.Value>
+                    <Setter TargetName="StatusImage" Property="Source" Value="pack://application:,,,/Icons/failed.png" />
+                    <Setter TargetName="StatusImage" Property="ToolTip" Value="failed" />
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+        <Style x:Key="ListItemStyle" TargetType="{x:Type ListViewItem}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Margin" Value="0,0,0,1" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="ContextMenu" Value="{StaticResource CStoreItemContextMenu}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListViewItem}">
+                        <Border x:Name="ContainerBorder"
+                                BorderThickness="0"
+                                SnapsToDevicePixels="True"
+                                HorizontalAlignment="Left"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter x:Name="ContentPresenter" 
+                                              Content="{TemplateBinding Content}"
+                                              ContentTemplate="{StaticResource ItemTemplate}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ContainerBorder" Property="Background" Value="LightSkyBlue" />
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Foreground" Value="White" />
+                                <Setter TargetName="ContainerBorder" Property="Background" Value="#2a5caa" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <EventSetter Event="MouseDoubleClick" Handler="CStoreItemMouseDoubleClick" />
+        </Style>
+        <Style x:Key="AddFilesButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Padding" Value="2" />
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="ContentBorder"
+                                Background="Transparent"
+                                BorderBrush="Transparent"
+                                CornerRadius="2"
+                                BorderThickness="1"
+                                SnapsToDevicePixels="True"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter Content="{TemplateBinding Content}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ContentBorder" Property="BorderBrush" Value="LightGray" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ContentBorder" Property="Background" Value="LightSkyBlue" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Height="18">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="31" />
+                <ColumnDefinition Width="276" />
+                <ColumnDefinition Width="43" />
+            </Grid.ColumnDefinitions>
+            <Rectangle Grid.Column="0" Fill="DodgerBlue" Margin="0 0 1 0" />
+            <TextBlock Grid.Column="0" Text="ID" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <Rectangle Grid.Column="1" Fill="DodgerBlue" Margin="0 0 1 0" />
+            <TextBlock Grid.Column="1" Text="File" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <Rectangle Grid.Column="2" Fill="DodgerBlue" Margin="0" />
+            <TextBlock Grid.Column="2" Text="Status" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </Grid>
+        <ListView x:Name="CStoreItemsList" 
+                  Grid.Row="1"
+                  BorderThickness="0"
+                  s:View.ActionTarget="{Binding}"
+                  AllowDrop="True"
+                  DragEnter="{s:Action OnDragFilesOver}"
+                  DragOver="{s:Action OnDragFilesOver}"
+                  Drop="{s:Action OnDropFiles}"
+                  ItemsSource="{Binding FileList}"
+                  ItemContainerStyle="{StaticResource ListItemStyle}"
+                  ScrollViewer.VerticalScrollBarVisibility="Hidden" />
+        <Button Grid.Row="2" 
+                ToolTip="Add Files"
+                Style="{StaticResource AddFilesButtonStyle}"
+                s:View.ActionTarget="{Binding}"
+                Command="{s:Action AddFiles, ActionNotFound=Disable}">
+            <Image Width="24" Height="24" Stretch="Fill"
+                   Source="pack://application:,,,/Icons/addfiles.png" />
+        </Button>
+    </Grid>
+</UserControl>
