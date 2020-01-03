@@ -10,34 +10,15 @@
         SequenceItem,
     }
 
-    public class DcmItem : PropertyChangedBase
+    public class DcmItem
     {
         public string DcmTagCode { get; private set; }
 
-        private string _dcmVRCode;
-        public string DcmVRCode 
-        {
-            get => _dcmVRCode;
-            set
-            {
-                SetAndNotify(ref _dcmVRCode, value);
-                NotifyOfPropertyChange(() => Header);
-            }
-        }
+        public string DcmVRCode { get; private set; }
 
         public string TagDescription { get; private set; }
 
-        private string _tagValue = "";
-
-        public string TagValue
-        {
-            get => _tagValue;
-            set
-            {
-                SetAndNotify(ref _tagValue, value);
-                NotifyOfPropertyChange(() => Header);
-            }
-        }
+        public string TagValue { get; private set; }
 
         public DcmTagType TagType { get; private set; } = DcmTagType.Tag;
 
@@ -58,14 +39,13 @@
                 }
             }
         }
-        
 
         public BindableCollection<DcmItem> SequenceItems { get; private set; }
 
         public DcmItem(DicomItem item)
         {
             DcmTagCode = string.Format("({0:X4},{1:X4})", item.Tag.Group, item.Tag.Element);
-            _dcmVRCode = item.ValueRepresentation.Code;
+            DcmVRCode = item.ValueRepresentation.Code;
             TagDescription = item.Tag.DictionaryEntry.Name;
 
             if (item is DicomSequence seq)
@@ -76,7 +56,7 @@
                 foreach (DicomDataset dataset in seq.Items)
                 {
                     DcmItem seqItem = new DcmItem(dataset)
-                    { TagDescription = $"item #{SequenceItems.Count}" };
+                    { TagDescription = $"Item #{SequenceItems.Count}" };
 
                     SequenceItems.Add(seqItem);
                 }
@@ -85,16 +65,16 @@
             {
                 if (element.Tag == DicomTag.PixelData)
                 {
-                    _tagValue = "[Binary Pixel Data]";
+                    TagValue = "[Binary Pixel Data]";
                     return;
                 }
 
                 for (int i = 0; i < element.Count; i++)
                 {
-                    _tagValue += element.Get<string>(i) + '\\';
+                    TagValue += element.Get<string>(i) + '\\';
                 }
 
-                _tagValue = _tagValue.TrimEnd('\\');
+                TagValue = TagValue?.TrimEnd('\\');
             }
         }
 
