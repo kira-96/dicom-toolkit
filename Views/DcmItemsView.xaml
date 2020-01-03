@@ -23,7 +23,7 @@
             </TreeView.ItemContainerStyle>
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type m:DcmItem}" ItemsSource="{Binding SequenceItems}">
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" ToolTip="{Binding Path=TagDescription}">
                         <Image x:Name="Icon" Width="18" Height="18" Margin="0,0,4,0" />
                         <TextBlock Text="{Binding Path=Header}" VerticalAlignment="Center" />
                     </StackPanel>

@@ -72,14 +72,14 @@
             if (result != true)
                 return;
 
-            if (!File.Exists(files[0]))
-                return;
-
             ShowDcmImage(files[0]);
         }
 
         private void ShowDcmImage(string file)
         {
+            if (!File.Exists(file))
+                return;
+
             DicomImage image = new DicomImage(file);
 
             using (IImage iimage = image.RenderImage())
