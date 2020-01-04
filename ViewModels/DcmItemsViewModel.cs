@@ -80,6 +80,8 @@
 
         private async Task OpenDcmFile(string file)
         {
+            DicomItems.Clear();
+
             DicomFile dcmFile = await DicomFile.OpenAsync(file);
 
             _currentDataset = dcmFile.Dataset;
