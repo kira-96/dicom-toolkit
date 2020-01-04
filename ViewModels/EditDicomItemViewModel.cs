@@ -70,12 +70,12 @@
             Initialize();
 
             _currentDataset = dataset;
+            _currentTag = dicomTag;
             DicomElement element = dataset.GetDicomItem<DicomElement>(dicomTag);
 
-            DisplayName = element.Tag.DictionaryEntry.Name;
-            TagText = string.Format("Tag: ({0:X4},{1:X4})", element.Tag.Group, element.Tag.Element);
+            DisplayName = dicomTag.DictionaryEntry.Name;
+            TagText = string.Format("Tag: ({0:X4},{1:X4})", dicomTag.Group, dicomTag.Element);
             CurrentVR = element.ValueRepresentation.Code;
-            _currentTag = element.Tag;
 
             for (int i = 0; i < element.Count; i++)
             {

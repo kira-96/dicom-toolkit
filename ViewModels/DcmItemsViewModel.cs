@@ -96,7 +96,7 @@
 
         public bool IsPixelDataItem(DcmItem item)
         {
-            return new DicomTag(item.Group, item.Element).CompareTo(DicomTag.PixelData) == 0;
+            return item.DcmTag.CompareTo(DicomTag.PixelData) == 0;
         }
 
         public void ShowDcmImage()
@@ -107,7 +107,7 @@
         public void EditDicomItem(DcmItem item)
         {
             _currentItem = item;
-            _windowManager.ShowDialog(new EditDicomItemViewModel(GetItemDataset(item), new DicomTag(item.Group, item.Element)));
+            _windowManager.ShowDialog(new EditDicomItemViewModel(GetItemDataset(item), item.DcmTag));
         }
 
         private DicomDataset GetItemDataset(DcmItem item)
@@ -121,7 +121,7 @@
                 {
                     if (seq.SequenceItems[i].SequenceItems.Contains(item))
                     {
-                        return _currentDataset.GetDicomItem<DicomSequence>(new DicomTag(seq.Group, seq.Element)).Items[i];
+                        return _currentDataset.GetDicomItem<DicomSequence>(seq.DcmTag).Items[i];
                     }
                 }
             }

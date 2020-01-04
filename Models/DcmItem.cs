@@ -12,9 +12,7 @@
 
     public class DcmItem : PropertyChangedBase
     {
-        public ushort Group { get; private set; }
-
-        public ushort Element { get; private set; }
+        public DicomTag DcmTag { get; private set; }
 
         private string _dcmVRCode;
 
@@ -51,9 +49,9 @@
                 switch (TagType)
                 {
                     case DcmTagType.Tag:
-                        return string.Format("({0:X4},{1:X4}) {2} {3} = <{4}>", Group, Element, DcmVRCode, TagDescription, TagValue);
+                        return string.Format("({0:X4},{1:X4}) {2} {3} = <{4}>", DcmTag.Group, DcmTag.Element, DcmVRCode, TagDescription, TagValue);
                     case DcmTagType.Sequence:
-                        return string.Format("({0:X4},{1:X4}) {2} {3}", Group, Element, DcmVRCode, TagDescription);
+                        return string.Format("({0:X4},{1:X4}) {2} {3}", DcmTag.Group, DcmTag.Element, DcmVRCode, TagDescription);
                     case DcmTagType.SequenceItem:
                         return TagDescription;
                     default:
@@ -66,8 +64,7 @@
 
         public DcmItem(DicomItem item)
         {
-            Group = item.Tag.Group;
-            Element = item.Tag.Element;
+            DcmTag = item.Tag;
             DcmVRCode = item.ValueRepresentation.Code;
             TagDescription = item.Tag.DictionaryEntry.Name;
 
@@ -86,11 +83,13 @@
             }
             else if (item is DicomElement element)
             {
-                if (element.Tag == DicomTag.PixelData)
+                if (element.Tag.CompareTo(DicomTag.PixelData) == 0)
                 {
                     TagValue = "[Binary Pixel Data]";
                     return;
                 }
+
+                TagValue = "";
 
                 for (int i = 0; i < element.Count; i++)
                 {
@@ -98,6 +97,20 @@
                 }
 
                 TagValue = TagValue?.TrimEnd('\\');
+            }
+            else if (item is DicomFragmentSequence fragment)
+            {
+                if (fragment.Tag.CompareTo(DicomTag.PixelData) == 0)
+                {
+                    TagValue = "[Binary Pixel Data]";
+                    return;
+                }
+
+                TagValue = "[Binary Data]";
+            }
+            else
+            {
+                // do nothing
             }
         }
 
