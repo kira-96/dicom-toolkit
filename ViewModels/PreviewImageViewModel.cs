@@ -4,7 +4,6 @@
     using Dicom.Imaging;
     using Stylet;
     using System.IO;
-    using System.Threading.Tasks;
     using System.Windows.Media.Imaging;
     using Utils;
 
@@ -20,16 +19,22 @@
 
         public PreviewImageViewModel(string dcmfilepath)
         {
-            ShowImage(dcmfilepath).Wait();
-        }
-
-        private async Task ShowImage(string dcmfilepath)
-        {
             if (!File.Exists(dcmfilepath))
                 return;
 
-            DicomFile dcmFile = await DicomFile.OpenAsync(dcmfilepath);
-            DicomImage image = new DicomImage(dcmFile.Dataset);
+            DicomFile dcmFile = DicomFile.Open(dcmfilepath);
+
+            ShowImage(dcmFile.Dataset);
+        }
+
+        public PreviewImageViewModel(DicomDataset dataset)
+        {
+            ShowImage(dataset);
+        }
+
+        private void ShowImage(DicomDataset dataset)
+        {
+            DicomImage image = new DicomImage(dataset);
 
             using (IImage iimage = image.RenderImage())
             {
@@ -37,7 +42,7 @@
             }
 
             // set window title
-            DisplayName = dcmFile.Dataset.GetString(DicomTag.PatientName);
+            DisplayName = dataset.GetString(DicomTag.PatientName);
         }
     }
 }

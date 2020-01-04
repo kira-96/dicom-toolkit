@@ -1,0 +1,94 @@
+﻿<Window x:Class="SimpleDICOMToolkit.Views.EditDicomItemView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:s="https://github.com/canton7/Stylet"
+        xmlns:v="clr-namespace:SimpleDICOMToolkit.Views"
+        mc:Ignorable="d"
+        Title="{Binding DisplayName}" 
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        Width="360"
+        Height="360">
+
+    <Window.Resources>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Padding" Value="12 2" />
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="MinWidth" Value="64" />
+            <Setter Property="MinHeight" Value="24" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="ContentBorder"
+                                Background="DodgerBlue"
+                                BorderBrush="Transparent"
+                                BorderThickness="1"
+                                CornerRadius="2"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter Content="{TemplateBinding Content}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ContentBorder" Property="BorderBrush" Value="LightGray" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ContentBorder" Property="Background" Value="LightSkyBlue" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="ContentBorder" Property="Background" Value="LightGray" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="2">
+            <TextBlock Text="{Binding TagText}" VerticalAlignment="Center" Margin="4" />
+            <TextBlock Text="VR: " VerticalAlignment="Center" Margin="10 0 0 0" />
+            <ComboBox ItemsSource="{Binding VRList}" 
+                      SelectedItem="{Binding CurrentVR}" />
+        </StackPanel>
+        <GroupBox Grid.Row="1" 
+                  Header="Element Values"
+                  Margin="2">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBox Grid.Row="0" Text="{Binding CurrentEditValue}" />
+                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                    <Button x:Name="UpdateButton" Content="Update" ToolTip="update current value" Command="{s:Action UpdateCurrentValue}" />
+                    <Button x:Name="InserButton" Content="Insert" ToolTip="insert a new value" Command="{s:Action InsertNewValue}" />
+                    <Button x:Name="DeleteButton" Content="Delete" ToolTip="delete current value" Command="{s:Action DeleteCurrentValue}" />
+                </StackPanel>
+                <ListView Grid.Row="2" ItemsSource="{Binding ElementValues}"
+                          SelectedIndex="{Binding CurrentValueIndex}" />
+            </Grid>
+        </GroupBox>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="OK" Content="OK" ToolTip="OK" Click="OnOK" />
+            <Button x:Name="Cancel" Content="Cancel" ToolTip="Cancel" Click="OnCancel" />
+        </StackPanel>
+    </Grid>
+</Window>

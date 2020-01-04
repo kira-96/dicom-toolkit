@@ -18,10 +18,18 @@
         private void DcmItemMouseDoubleClick(object s, MouseButtonEventArgs e)
         {
             DcmItemsViewModel vm = DataContext as DcmItemsViewModel;
+            DcmItem tappedItem = (s as TreeViewItem).DataContext as DcmItem;
 
-            if (vm.IsPixelDataItem((s as TreeViewItem).DataContext as DcmItem))
+            if (tappedItem.TagType != DcmTagType.Tag)
+                return;
+
+            if (vm.IsPixelDataItem(tappedItem))
             {
                 vm.ShowDcmImage();
+            }
+            else
+            {
+                vm.EditDicomItem(tappedItem);
             }
         }
     }

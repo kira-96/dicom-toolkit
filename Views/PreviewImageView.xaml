@@ -6,6 +6,7 @@
         xmlns:v="clr-namespace:SimpleDICOMToolkit.Views"
         mc:Ignorable="d"
         Title="{Binding DisplayName}" 
+        ShowInTaskbar="False"
         Width="480"
         Height="480" >
 

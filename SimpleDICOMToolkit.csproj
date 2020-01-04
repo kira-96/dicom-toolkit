@@ -93,6 +93,7 @@
     <Compile Include="Models\DcmItem.cs" />
     <Compile Include="Models\PrintRequestItem.cs" />
     <Compile Include="Models\SimpleWorklistResult.cs" />
+    <Compile Include="Models\UpdateDicomElementItem.cs" />
     <Compile Include="Models\WorklistRequestItem.cs" />
     <Compile Include="Services\DialogServiceEx.cs" />
     <Compile Include="Services\IDialogServiceEx.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="ViewModels\CStoreFileListViewModel.cs" />
     <Compile Include="ViewModels\CStoreViewModel.cs" />
     <Compile Include="ViewModels\DcmItemsViewModel.cs" />
+    <Compile Include="ViewModels\EditDicomItemViewModel.cs" />
     <Compile Include="ViewModels\IViewModelFactory.cs" />
     <Compile Include="ViewModels\PreviewImageViewModel.cs" />
     <Compile Include="ViewModels\PrintPreviewViewModel.cs" />
@@ -117,6 +119,9 @@
     </Compile>
     <Compile Include="Views\DcmItemsView.xaml.cs">
       <DependentUpon>DcmItemsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EditDicomItemView.xaml.cs">
+      <DependentUpon>EditDicomItemView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PreviewImageView.xaml.cs">
       <DependentUpon>PreviewImageView.xaml</DependentUpon>
@@ -163,6 +168,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DcmItemsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditDicomItemView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

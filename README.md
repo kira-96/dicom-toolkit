@@ -6,6 +6,8 @@
 
 - Simple Dicom Dump
 
+    慎用修改和保存功能
+
 - Worklist SCU
 
 - C-Store SCU
