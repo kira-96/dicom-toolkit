@@ -42,35 +42,10 @@
                   ScrollViewer.VerticalScrollBarVisibility="Hidden">
             <ListView.View>
                 <GridView ColumnHeaderContainerStyle="{StaticResource ListColumnHeaderStyle}">
-                    <GridViewColumn Header="Name" Width="128">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" 
-                                           Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type GridViewColumn}}, Path=Width}" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="Sex" Width="32">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Sex}" HorizontalAlignment="Center" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="Age" Width="48">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Age}" HorizontalAlignment="Center" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="Patient ID" Width="136">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding PatientId}" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="128" />
+                    <GridViewColumn Header="Sex" DisplayMemberBinding="{Binding Sex}" Width="32" />
+                    <GridViewColumn Header="Age" DisplayMemberBinding="{Binding Age}" Width="48" />
+                    <GridViewColumn Header="Patient ID" DisplayMemberBinding="{Binding PatientId}" Width="136" />
                 </GridView>
             </ListView.View>
         </ListView>
