@@ -10,6 +10,28 @@
         SequenceItem,
     }
 
+    /**
+     * 这一块逻辑可能比较乱
+     * 主要是Sequence可能有多个Item，每个Item又可能有多个Tag
+     * 相互嵌套间形成了树状结构
+     * 所以在View层使用了TreeView而不是ListView
+     * 
+     * ├─ Tag (00xx,xxxx)
+     * ├─ Tag (00xx,xxxx)
+     * ├─ Sequence (00xx,xxxx)
+     * │   ├─ Item #0
+     * │   │   ├─ Tag (00xx,xxxx)
+     * │   │   ├─ Tag (00xx,xxxx)
+     * │   │   └─ Tag (00xx,xxxx)
+     * │   └─ Item #1
+     * │       ├─ Tag (00xx,xxxx)
+     * │       ├─ Tag (00xx,xxxx)
+     * │       └─ Tag (00xx,xxxx)
+     * ├─ Tag (00xx,xxxx)
+     * ├─ ...
+     * └─ (7FE0,0010) Pixel Data = <[Binary Pixel Data]>
+     */
+
     public class DcmItem : PropertyChangedBase
     {
         public DicomTag DcmTag { get; private set; }

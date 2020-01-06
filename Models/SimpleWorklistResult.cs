@@ -1,5 +1,8 @@
 ﻿namespace SimpleDICOMToolkit.Models
 {
+    /// <summary>
+    /// 列表显示的 Worklist 查询结果
+    /// </summary>
     public class SimpleWorklistResult
     {
         public string Name { get; private set; }

@@ -3,13 +3,19 @@
     using Stylet;
     using System.IO;
 
+    /// <summary>
+    /// 文件发送状态
+    /// </summary>
     public enum CStoreItemStatus
     {
-        Waiting,
-        Success,
-        Failed
+        Waiting,  // 等待
+        Success,  // 成功
+        Failed    // 失败
     }
 
+    /// <summary>
+    /// 列表显示的待发送文件
+    /// </summary>
     public class CStoreItem : PropertyChangedBase
     {
         private int _id;

@@ -2,6 +2,9 @@
 {
     using Dicom;
 
+    /// <summary>
+    /// 更新修改后的DicomElement
+    /// </summary>
     public class UpdateDicomElementItem
     {
         public DicomDataset Dataset { get; private set; }

@@ -5,6 +5,10 @@ using System.Windows.Media.Imaging;
 
 namespace SimpleDICOMToolkit.Utils
 {
+    /// <summary>
+    /// 扩展类
+    /// Bitmap 类型转换
+    /// </summary>
     public static class BitmapUtil
     {
         /// <summary>
