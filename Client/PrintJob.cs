@@ -18,6 +18,21 @@ using DicomClient = Dicom.Network.Client.DicomClient;
 
 namespace SimpleDICOMToolkit.Client
 {
+    internal static class FilmBoxEx
+    {
+        public static bool InitializeEx(this FilmBox self)
+        {
+            self.AddOrUpdate(new DicomSequence(DicomTag.ReferencedFilmSessionSequence,
+                new DicomDataset
+                {
+                    { DicomTag.ReferencedSOPClassUID, self.FilmSession.SOPClassUID },
+                    { DicomTag.ReferencedSOPInstanceUID, self.FilmSession.SOPInstanceUID }
+                }));
+
+            return self.Initialize();
+        }
+    }
+
     internal class PrintJob
     {
         public string CallingAE { get; set; }
@@ -29,12 +44,12 @@ namespace SimpleDICOMToolkit.Client
 
         private FilmBox _currentFilmBox;
 
-        public PrintJob(string jobLabel)
+        public PrintJob(string jobLabel, string mediumType)
         {
             FilmSession = new FilmSession(DicomUID.BasicFilmSessionSOPClass)
             {
                 FilmSessionLabel = jobLabel,
-                MediumType = "PAPER",
+                MediumType = mediumType,
                 NumberOfCopies = 1
             };
         }
@@ -51,7 +66,7 @@ namespace SimpleDICOMToolkit.Client
                 EmptyImageDensity = "BLACK"
             };
 
-            filmBox.Initialize();
+            filmBox.InitializeEx();
             FilmSession.BasicFilmBoxes.Add(filmBox);
 
             _currentFilmBox = filmBox;
@@ -170,7 +185,6 @@ namespace SimpleDICOMToolkit.Client
 
             foreach (var filmbox in FilmSession.BasicFilmBoxes)
             {
-
                 var imageBoxRequests = new List<DicomNSetRequest>();
 
                 var filmBoxRequest = new DicomNCreateRequest(FilmBox.SOPClassUID, filmbox.SOPInstanceUID)
