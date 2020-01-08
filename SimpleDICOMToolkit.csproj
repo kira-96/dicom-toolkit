@@ -78,8 +78,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BindingProxy.cs" />
+    <Compile Include="Client\CEchoSCU.cs" />
     <Compile Include="Client\CMoveSCU.cs" />
     <Compile Include="Client\CStoreSCU.cs" />
+    <Compile Include="Client\ICEchoSCU.cs" />
     <Compile Include="Client\ICMoveSCU.cs" />
     <Compile Include="Client\ICStoreSCU.cs" />
     <Compile Include="Client\IPrintSCU.cs" />

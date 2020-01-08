@@ -24,6 +24,7 @@
 
             builder.Bind<ILoggerService>().To<LoggerService>().InSingletonScope().AsWeakBinding();
             builder.Bind<IDialogServiceEx>().To<DialogServiceEx>().InSingletonScope().AsWeakBinding();
+            builder.Bind<ICEchoSCU>().To<CEchoSCU>().InSingletonScope().AsWeakBinding();
             builder.Bind<ICMoveSCU>().To<CMoveSCU>().InSingletonScope().AsWeakBinding();
             builder.Bind<ICStoreSCU>().To<CStoreSCU>().InSingletonScope().AsWeakBinding();
             builder.Bind<IPrintSCU>().To<PrintSCU>().InSingletonScope().AsWeakBinding();
