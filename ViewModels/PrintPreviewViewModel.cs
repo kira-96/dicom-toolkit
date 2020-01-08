@@ -43,7 +43,7 @@
             _eventAggregator = eventAggregator;
             _eventAggregator.Subscribe(this);
 
-            ShowDcmImage(System.Environment.CurrentDirectory + "\\sample.dcm");
+            ShowDcmImage(System.Environment.CurrentDirectory + "\\942A.dcm");
         }
 
         public void OpenImage()
