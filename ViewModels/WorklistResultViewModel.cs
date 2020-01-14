@@ -23,9 +23,15 @@
 
         public async void Handle(WorklistRequestItem message)
         {
+            _eventAggregator.Publish(new BusyStateItem(true), nameof(WorklistResultViewModel));
+
             WorklistItems.Clear();
 
-            WorklistItems.AddRange(await _worklistSCU.GetAllResultFromWorklistAsync(message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET, message.Modality));
+            var result = await _worklistSCU.GetAllResultFromWorklistAsync(message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET, message.Modality);
+
+            WorklistItems.AddRange(result);
+
+            _eventAggregator.Publish(new BusyStateItem(false), nameof(WorklistResultViewModel));
         }
 
         protected override void OnClose()

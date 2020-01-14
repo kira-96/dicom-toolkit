@@ -89,7 +89,9 @@
     <Compile Include="Client\PrintJob.cs" />
     <Compile Include="Client\PrintSCU.cs" />
     <Compile Include="Client\WorklistSCU.cs" />
+    <Compile Include="Controls\AduLoading.cs" />
     <Compile Include="Logging\NLogManager.cs" />
+    <Compile Include="Models\BusyStateItem.cs" />
     <Compile Include="Models\CStoreItem.cs" />
     <Compile Include="Models\CStoreRequestItem.cs" />
     <Compile Include="Models\DcmItem.cs" />
@@ -164,6 +166,18 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Themes\AduLoading.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\SingleRound.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\CStoreFileListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -6,7 +6,7 @@
     using Logging;
     using Models;
 
-    public class ServerConfigViewModel : Screen
+    public class ServerConfigViewModel : Screen, IHandle<BusyStateItem>
     {
         private readonly IEventAggregator _eventAggregator;
 
@@ -75,16 +75,37 @@
             private set => SetAndNotify(ref _isModalityEnabled, value);
         }
 
+        private bool _isBusy = false;
+
+        public bool IsBusy
+        {
+            get => _isBusy;
+            private set
+            {
+                if (SetAndNotify(ref _isBusy, value))
+                {
+                    NotifyOfPropertyChange(() => CanDoRequest);
+                }
+            }
+        }
+
         public ServerConfigViewModel(IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
+        }
+
+        protected override void OnClose()
+        {
+            _eventAggregator.Unsubscribe(this);
+            base.OnClose();
         }
 
         public bool CanDoRequest =>
             !string.IsNullOrEmpty(ServerIP) &&
             !string.IsNullOrEmpty(ServerPort) &&
             !string.IsNullOrEmpty(ServerAET) &&
-            !string.IsNullOrEmpty(LocalAET);
+            !string.IsNullOrEmpty(LocalAET) &&
+            !IsBusy;
 
         public void DoRequest()
         {
@@ -96,10 +117,12 @@
             if (parentViewModel is WorklistViewModel)
             {
                 _doRequestAction = WorklistQueryRequest;
+                _eventAggregator.Subscribe(this, nameof(WorklistResultViewModel));
             }
             else if (parentViewModel is PrintViewModel)
             {
                 _doRequestAction = PrintRequest;
+                _eventAggregator.Subscribe(this, nameof(PrintPreviewViewModel));
                 ServerPort = "104";
                 ServerAET = "PRINTSCP";
                 IsModalityEnabled = false;
@@ -107,6 +130,7 @@
             else if (parentViewModel is CStoreViewModel)
             {
                 _doRequestAction = CStoreRequest;
+                _eventAggregator.Subscribe(this, nameof(CStoreFileListViewModel));
                 ServerPort = "104";
                 ServerAET = "PACS";
                 IsModalityEnabled = false;
@@ -153,6 +177,11 @@
             }
 
             return port;
+        }
+
+        public void Handle(BusyStateItem message)
+        {
+            IsBusy = message.IsBusy;
         }
     }
 }

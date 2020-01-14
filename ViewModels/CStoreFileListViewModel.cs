@@ -34,7 +34,11 @@
             if (FileList.Count == 0)
                 return;
 
+            _eventAggregator.Publish(new BusyStateItem(true), nameof(CStoreFileListViewModel));
+
             await _cstoreSCU.StoreImageAsync(message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET, FileList);
+
+            _eventAggregator.Publish(new BusyStateItem(false), nameof(CStoreFileListViewModel));
         }
 
         public void AddFiles()

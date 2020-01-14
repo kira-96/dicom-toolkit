@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:s="https://github.com/canton7/Stylet"
+             xmlns:c="clr-namespace:SimpleDICOMToolkit.Controls"
              xmlns:v="clr-namespace:SimpleDICOMToolkit.Views"
              mc:Ignorable="d" 
              d:DesignWidth="600"
@@ -16,12 +17,18 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0" VerticalAlignment="Center">
             <v:ServerConfigView DataContext="{Binding ServerConfigViewModel}" />
-            <Button ToolTip="Query Worklist"
-                    s:View.ActionTarget="{Binding ServerConfigViewModel}"
-                    Command="{s:Action DoRequest, ActionNotFound=Disable}">
-                <Image Width="20" Height="20" Stretch="Fill"
-                       Source="pack://application:,,,/Icons/query.png" />
-            </Button>
+            <Grid>
+                <Button ToolTip="Query Worklist"
+                        s:View.ActionTarget="{Binding ServerConfigViewModel}"
+                        Command="{s:Action DoRequest, ActionNotFound=Disable}">
+                    <Image Width="20" Height="20" Stretch="Fill"
+                           Source="pack://application:,,,/Icons/query.png" />
+                </Button>
+                <c:AduLoading SpeedRatio="1" Type="Apple" 
+                              Foreground="#2a5caa" Margin="0,-24,0,0"
+                              DataContext="{Binding ServerConfigViewModel}"
+                              IsActived="{Binding IsBusy}" />
+            </Grid>
         </StackPanel>
         <v:WorklistResultView Grid.Column="1" DataContext="{Binding WorklistResultViewModel}" />
     </Grid>

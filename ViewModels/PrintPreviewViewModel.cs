@@ -56,8 +56,12 @@
             if (ImageSource == null)
                 return;
 
+            _eventAggregator.Publish(new BusyStateItem(true), nameof(PrintPreviewViewModel));
+
             await _printSCU.PrintImagesAsync(message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET, 
                 new List<Bitmap>() { ImageSource.AsBitmap() });
+
+            _eventAggregator.Publish(new BusyStateItem(false), nameof(PrintPreviewViewModel));
         }
 
         protected override void OnClose()

@@ -9,6 +9,9 @@
             <s:ApplicationLoader.Bootstrapper>
                 <app:Bootstrapper />
             </s:ApplicationLoader.Bootstrapper>
+            <s:ApplicationLoader.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Themes/Generic.xaml" />
+            </s:ApplicationLoader.MergedDictionaries>
         </s:ApplicationLoader>
     </Application.Resources>
 </Application>
