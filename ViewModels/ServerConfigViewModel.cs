@@ -3,6 +3,7 @@
     using Stylet;
     using StyletIoC;
     using System;
+    using Client;
     using Logging;
     using Models;
 
@@ -10,8 +11,14 @@
     {
         private readonly IEventAggregator _eventAggregator;
 
+        [Inject]
+        private IWindowManager _windowManager;
+
         [Inject(Key = "filelogger")]
         private ILoggerService _logger;
+
+        [Inject]
+        private ICEchoSCU _cechoSCU;
 
         private Action _doRequestAction;
 
@@ -29,6 +36,7 @@
             set
             {
                 SetAndNotify(ref _serverIP, value);
+                NotifyOfPropertyChange(() => CanDoEcho);
                 NotifyOfPropertyChange(() => CanDoRequest);
             }
         }
@@ -39,6 +47,7 @@
             set
             {
                 SetAndNotify(ref _serverPort, value);
+                NotifyOfPropertyChange(() => CanDoEcho);
                 NotifyOfPropertyChange(() => CanDoRequest);
             }
         }
@@ -49,6 +58,7 @@
             set
             {
                 SetAndNotify(ref _serverAET, value);
+                NotifyOfPropertyChange(() => CanDoEcho);
                 NotifyOfPropertyChange(() => CanDoRequest);
             }
         }
@@ -59,6 +69,7 @@
             set
             {
                 SetAndNotify(ref _localAET, value);
+                NotifyOfPropertyChange(() => CanDoEcho);
                 NotifyOfPropertyChange(() => CanDoRequest);
             }
         }
@@ -84,9 +95,18 @@
             {
                 if (SetAndNotify(ref _isBusy, value))
                 {
+                    NotifyOfPropertyChange(() => CanDoEcho);
                     NotifyOfPropertyChange(() => CanDoRequest);
                 }
             }
+        }
+
+        private int _busyIndicatorColumn = 0;
+
+        public int BusyIndicatorColumn
+        {
+            get => _busyIndicatorColumn;
+            private set => SetAndNotify(ref _busyIndicatorColumn, value);
         }
 
         public ServerConfigViewModel(IEventAggregator eventAggregator)
@@ -110,6 +130,32 @@
         public void DoRequest()
         {
             _doRequestAction?.Invoke();
+        }
+
+        public bool CanDoEcho =>
+            !string.IsNullOrEmpty(ServerIP) &&
+            !string.IsNullOrEmpty(ServerPort) &&
+            !string.IsNullOrEmpty(ServerAET) &&
+            !string.IsNullOrEmpty(LocalAET) &&
+            !IsBusy;
+
+        public async void DoEcho()
+        {
+            int port = ParseServerPort();
+            if (port == 0)
+                return;
+
+            BusyIndicatorColumn = 0;
+
+            IsBusy = true;
+
+            bool result = await _cechoSCU.Echo(_serverIP, port, _serverAET, _localAET);
+
+            IsBusy = false;
+
+            _windowManager.ShowMessageBox(
+                result ? "test connection success." : "test connection failed.",
+                "test result");
         }
 
         public void Init(IScreen parentViewModel)
@@ -181,6 +227,8 @@
 
         public void Handle(BusyStateItem message)
         {
+            BusyIndicatorColumn = 1;
+
             IsBusy = message.IsBusy;
         }
     }

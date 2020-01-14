@@ -15,10 +15,22 @@
             <ColumnDefinition Width="232" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+        <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
             <v:ServerConfigView DataContext="{Binding ServerConfigViewModel}" />
             <Grid>
-                <Button ToolTip="Send to PACS"
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0"
+                        ToolTip="Test Connect"
+                        s:View.ActionTarget="{Binding ServerConfigViewModel}"
+                        Command="{s:Action DoEcho, ActionNotFound=Disable}">
+                    <Image Width="20" Height="20" Stretch="Fill"
+                           Source="pack://application:,,,/Icons/connection.png" />
+                </Button>
+                <Button Grid.Column="1" 
+                        ToolTip="Send to PACS"
                         s:View.ActionTarget="{Binding ServerConfigViewModel}"
                         Command="{s:Action DoRequest, ActionNotFound=Disable}">
                     <Image Width="20" Height="20" Stretch="Fill"
@@ -27,6 +39,7 @@
                 <c:AduLoading SpeedRatio="1" Type="Apple" 
                               Foreground="#2a5caa" Margin="0,-24,0,0"
                               DataContext="{Binding ServerConfigViewModel}"
+                              Grid.Column="{Binding BusyIndicatorColumn}"
                               IsActived="{Binding IsBusy}" />
             </Grid>
         </StackPanel>

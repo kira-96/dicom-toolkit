@@ -23,7 +23,15 @@
             };
 
             await client.AddRequestAsync(request);
-            await client.SendAsync();
+
+            try
+            {
+                await client.SendAsync();
+            }
+            catch (System.Exception)
+            {
+                return false;
+            }
 
             return echoResult;
         }
