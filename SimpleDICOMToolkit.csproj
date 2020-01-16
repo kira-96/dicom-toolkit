@@ -43,13 +43,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Dicom.Core, Version=4.0.3.0, Culture=neutral, PublicKeyToken=3a13f649e28eb09a, processorArchitecture=MSIL">
-      <HintPath>..\..\Combine\packages\fo-dicom.Desktop.4.0.3\lib\net45\Dicom.Core.dll</HintPath>
+      <HintPath>packages\fo-dicom.Desktop.4.0.3\lib\net45\Dicom.Core.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\..\Combine\packages\NLog.4.6.8\lib\net45\NLog.dll</HintPath>
+      <HintPath>packages\NLog.4.6.8\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="Stylet, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\Combine\packages\Stylet.1.3.0\lib\net45\Stylet.dll</HintPath>
+      <HintPath>packages\Stylet.1.3.0\lib\net45\Stylet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -77,7 +77,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="BindingProxy.cs" />
+    <Compile Include="Bootstrapper.cs" />
     <Compile Include="Client\CEchoSCU.cs" />
     <Compile Include="Client\CMoveSCU.cs" />
     <Compile Include="Client\CStoreSCU.cs" />
@@ -90,6 +94,8 @@
     <Compile Include="Client\PrintSCU.cs" />
     <Compile Include="Client\WorklistSCU.cs" />
     <Compile Include="Controls\AduLoading.cs" />
+    <Compile Include="Logging\ILoggerService.cs" />
+    <Compile Include="Logging\LoggerService.cs" />
     <Compile Include="Logging\NLogManager.cs" />
     <Compile Include="Models\BusyStateItem.cs" />
     <Compile Include="Models\CStoreItem.cs" />
@@ -148,12 +154,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Logging\ILoggerService.cs" />
-    <Compile Include="Logging\LoggerService.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <None Include="942A.dcm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -161,8 +161,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
@@ -224,55 +222,29 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\query.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\print.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\openfile.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\upload.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Icons\addfiles.png" />
-  </ItemGroup>
-  <ItemGroup>
+    <Resource Include="Icons\connection.png" />
+    <Resource Include="Icons\delete.png" />
+    <Resource Include="Icons\failed.png" />
+    <Resource Include="Icons\item-white.png" />
+    <Resource Include="Icons\item.png" />
+    <Resource Include="Icons\openfile.png" />
+    <Resource Include="Icons\package.png" />
+    <Resource Include="Icons\preview.png" />
+    <Resource Include="Icons\print.png" />
+    <Resource Include="Icons\query.png" />
+    <Resource Include="Icons\success.png" />
+    <Resource Include="Icons\tag-white.png" />
+    <Resource Include="Icons\tag.png" />
+    <Resource Include="Icons\upload.png" />
     <Resource Include="Icons\waiting.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\success.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\failed.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\delete.png" />
-    <Resource Include="Icons\preview.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\package.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\item.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\tag.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\tag-white.png" />
-    <Resource Include="Icons\item-white.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\connection.png" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\..\Combine\packages\fo-dicom.Desktop.4.0.3\build\net45\fo-dicom.Desktop.targets" Condition="Exists('..\..\Combine\packages\fo-dicom.Desktop.4.0.3\build\net45\fo-dicom.Desktop.targets')" />
+  <Import Project="packages\fo-dicom.Desktop.4.0.3\build\net45\fo-dicom.Desktop.targets" Condition="Exists('packages\fo-dicom.Desktop.4.0.3\build\net45\fo-dicom.Desktop.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\Combine\packages\fo-dicom.Desktop.4.0.3\build\net45\fo-dicom.Desktop.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\Combine\packages\fo-dicom.Desktop.4.0.3\build\net45\fo-dicom.Desktop.targets'))" />
+    <Error Condition="!Exists('packages\fo-dicom.Desktop.4.0.3\build\net45\fo-dicom.Desktop.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fo-dicom.Desktop.4.0.3\build\net45\fo-dicom.Desktop.targets'))" />
   </Target>
 </Project>
