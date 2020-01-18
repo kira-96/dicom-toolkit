@@ -43,7 +43,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Dicom.Core, Version=4.0.4.0, Culture=neutral, PublicKeyToken=3a13f649e28eb09a, processorArchitecture=MSIL">
-      <HintPath>..\..\Combine\packages\fo-dicom.Desktop.4.0.4\lib\net45\Dicom.Core.dll</HintPath>
+      <HintPath>packages\fo-dicom.Desktop.4.0.4\lib\net45\Dicom.Core.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>packages\NLog.4.6.8\lib\net45\NLog.dll</HintPath>
@@ -240,13 +240,11 @@
     <Resource Include="Icons\waiting.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="packages\fo-dicom.Desktop.4.0.3\build\net45\fo-dicom.Desktop.targets" Condition="Exists('packages\fo-dicom.Desktop.4.0.3\build\net45\fo-dicom.Desktop.targets')" />
+  <Import Project="packages\fo-dicom.Desktop.4.0.4\build\net45\fo-dicom.Desktop.targets" Condition="Exists('packages\fo-dicom.Desktop.4.0.4\build\net45\fo-dicom.Desktop.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('packages\fo-dicom.Desktop.4.0.3\build\net45\fo-dicom.Desktop.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fo-dicom.Desktop.4.0.3\build\net45\fo-dicom.Desktop.targets'))" />
-    <Error Condition="!Exists('..\..\Combine\packages\fo-dicom.Desktop.4.0.4\build\net45\fo-dicom.Desktop.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\Combine\packages\fo-dicom.Desktop.4.0.4\build\net45\fo-dicom.Desktop.targets'))" />
+    <Error Condition="!Exists('packages\fo-dicom.Desktop.4.0.4\build\net45\fo-dicom.Desktop.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fo-dicom.Desktop.4.0.4\build\net45\fo-dicom.Desktop.targets'))" />
   </Target>
-  <Import Project="..\..\Combine\packages\fo-dicom.Desktop.4.0.4\build\net45\fo-dicom.Desktop.targets" Condition="Exists('..\..\Combine\packages\fo-dicom.Desktop.4.0.4\build\net45\fo-dicom.Desktop.targets')" />
 </Project>
