@@ -18,20 +18,20 @@ using DicomClient = Dicom.Network.Client.DicomClient;
 
 namespace SimpleDICOMToolkit.Client
 {
-    internal static class FilmBoxEx
-    {
-        public static bool InitializeEx(this FilmBox self)
-        {
-            self.AddOrUpdate(new DicomSequence(DicomTag.ReferencedFilmSessionSequence,
-                new DicomDataset
-                {
-                    { DicomTag.ReferencedSOPClassUID, self.FilmSession.SOPClassUID },
-                    { DicomTag.ReferencedSOPInstanceUID, self.FilmSession.SOPInstanceUID }
-                }));
+    //internal static class FilmBoxEx
+    //{
+    //    public static bool InitializeEx(this FilmBox self)
+    //    {
+    //        self.AddOrUpdate(new DicomSequence(DicomTag.ReferencedFilmSessionSequence,
+    //            new DicomDataset
+    //            {
+    //                { DicomTag.ReferencedSOPClassUID, self.FilmSession.SOPClassUID },
+    //                { DicomTag.ReferencedSOPInstanceUID, self.FilmSession.SOPInstanceUID }
+    //            }));
 
-            return self.Initialize();
-        }
-    }
+    //        return self.Initialize();
+    //    }
+    //}
 
     internal class PrintJob
     {
@@ -66,7 +66,7 @@ namespace SimpleDICOMToolkit.Client
                 EmptyImageDensity = "BLACK"
             };
 
-            filmBox.InitializeEx();
+            filmBox.Initialize();
             FilmSession.BasicFilmBoxes.Add(filmBox);
 
             _currentFilmBox = filmBox;

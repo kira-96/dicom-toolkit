@@ -43,6 +43,8 @@
 
         protected override void OnUnhandledException(DispatcherUnhandledExceptionEventArgs e)
         {
+            e.Handled = true;
+
             Container.Get<ILoggerService>("filelogger").Error(e.Exception);
             Container.Get<IWindowManager>().ShowMessageBox(e.Exception.Message, "Oops!");
         }
