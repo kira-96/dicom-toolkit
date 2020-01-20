@@ -6,6 +6,7 @@
     using Client;
     using Logging;
     using Models;
+    using System.Net;
 
     public class ServerConfigViewModel : Screen, IHandle<BusyStateItem>
     {
@@ -28,6 +29,10 @@
         private string _localAET = "LONWINMRI";
         private string _modality = "MR";
 
+        private bool _isServerIPEnabled = true;
+        private bool _isServerPortEnabled = true;
+        private bool _isServerAETEnabled = true;
+        private bool _isLocalAETEnabled = true;
         private bool _isModalityEnabled = true;
 
         public string ServerIP
@@ -78,6 +83,30 @@
         {
             get => _modality;
             set => SetAndNotify(ref _modality, value);
+        }
+
+        public bool IsServerIPEnabled
+        {
+            get => _isServerIPEnabled;
+            private set => SetAndNotify(ref _isServerIPEnabled, value);
+        }
+
+        public bool ISServerPortEnabled
+        {
+            get => _isServerPortEnabled;
+            private set => SetAndNotify(ref _isServerPortEnabled, value);
+        }
+
+        public bool IsServerAETEnabled
+        {
+            get => _isServerAETEnabled;
+            private set => SetAndNotify(ref _isServerAETEnabled, value);
+        }
+
+        public bool IsLocalAETEnabled
+        {
+            get => _isLocalAETEnabled;
+            private set => SetAndNotify(ref _isLocalAETEnabled, value);
         }
 
         public bool IsModalityEnabled
@@ -181,6 +210,23 @@
                 ServerAET = "PACS";
                 IsModalityEnabled = false;
             }
+            else if (parentViewModel is CStoreSCPViewModel)
+            {
+                _doRequestAction = StartCStoreServer;
+                _eventAggregator.Subscribe(this, nameof(CStoreReceivedViewModel));
+
+                foreach (IPAddress item in Dns.GetHostEntry(Dns.GetHostName()).AddressList)
+                {
+                    if (item.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                    {
+                        ServerIP = item.ToString();
+                        break;
+                    }
+                }
+
+                LocalAET = ServerAET = "CSTORESCP";
+                IsServerIPEnabled = IsServerAETEnabled = IsModalityEnabled = false;
+            }
             else
             {
                 // ...
@@ -212,6 +258,15 @@
                 return;
 
             _eventAggregator.Publish(new CStoreRequestItem(_serverIP, port, _serverAET, _localAET));
+        }
+
+        private void StartCStoreServer()
+        {
+            int port = ParseServerPort();
+            if (port == 0)
+                return;
+
+            _eventAggregator.Publish(new CStoreServerItem(port, _localAET));
         }
 
         private int ParseServerPort()

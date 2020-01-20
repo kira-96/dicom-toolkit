@@ -77,6 +77,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\CStoreServerItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -105,11 +106,14 @@
     <Compile Include="Models\SimpleWorklistResult.cs" />
     <Compile Include="Models\UpdateDicomElementItem.cs" />
     <Compile Include="Models\WorklistRequestItem.cs" />
+    <Compile Include="Server\CStoreSCP.cs" />
     <Compile Include="Services\DialogServiceEx.cs" />
     <Compile Include="Services\IDialogServiceEx.cs" />
     <Compile Include="SimpleIoC.cs" />
     <Compile Include="Utils\BitmapUtil.cs" />
     <Compile Include="ViewModels\CStoreFileListViewModel.cs" />
+    <Compile Include="ViewModels\CStoreReceivedViewModel.cs" />
+    <Compile Include="ViewModels\CStoreSCPViewModel.cs" />
     <Compile Include="ViewModels\CStoreViewModel.cs" />
     <Compile Include="ViewModels\DcmItemsViewModel.cs" />
     <Compile Include="ViewModels\EditDicomItemViewModel.cs" />
@@ -123,6 +127,12 @@
     <Compile Include="ViewModels\WorklistViewModel.cs" />
     <Compile Include="Views\CStoreFileListView.xaml.cs">
       <DependentUpon>CStoreFileListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CStoreReceivedView.xaml.cs">
+      <DependentUpon>CStoreReceivedView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CStoreSCPView.xaml.cs">
+      <DependentUpon>CStoreSCPView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CStoreView.xaml.cs">
       <DependentUpon>CStoreView.xaml</DependentUpon>
@@ -180,6 +190,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\CStoreReceivedView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CStoreSCPView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\CStoreView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -234,6 +252,8 @@
     <Resource Include="Icons\print.png" />
     <Resource Include="Icons\query.png" />
     <Resource Include="Icons\success.png" />
+    <Resource Include="Icons\start.png" />
+    <Resource Include="Icons\stop.png" />
     <Resource Include="Icons\tag-white.png" />
     <Resource Include="Icons\tag.png" />
     <Resource Include="Icons\upload.png" />

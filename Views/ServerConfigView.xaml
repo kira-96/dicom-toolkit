@@ -26,11 +26,11 @@
             <TextBlock Grid.Row="1" Text="Server Port:" Margin="2" VerticalAlignment="Center" />
             <TextBlock Grid.Row="2" Text="Server AET:" Margin="2" VerticalAlignment="Center" />
             <TextBlock Grid.Row="3" Text="Local  AET:" Margin="2" VerticalAlignment="Center" />
-            <TextBlock Grid.Row="4" Text="Modality:" IsEnabled="{Binding IsModalityEnabled}" Margin="2" VerticalAlignment="Center" />
-            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ServerIP, UpdateSourceTrigger=PropertyChanged}" Width="120" Margin="2" />
-            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ServerPort, UpdateSourceTrigger=PropertyChanged}" Width="120" Margin="2" />
-            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ServerAET, UpdateSourceTrigger=PropertyChanged}" Width="120" Margin="2" />
-            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding LocalAET, UpdateSourceTrigger=PropertyChanged}" Width="120" Margin="2" />
+            <TextBlock Grid.Row="4" Text="Modality:" Margin="2" VerticalAlignment="Center" />
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ServerIP, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsServerIPEnabled}" Width="120" Margin="2" />
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ServerPort, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsServerPortEnabled}" Width="120" Margin="2" />
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ServerAET, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsServerAETEnabled}" Width="120" Margin="2" />
+            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding LocalAET, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsLocalAETEnabled}" Width="120" Margin="2" />
             <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Modality, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsModalityEnabled}" Width="120" Margin="2" />
         </Grid>
     </Grid>

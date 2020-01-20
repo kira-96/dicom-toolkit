@@ -8,6 +8,7 @@
             DcmItemsViewModel dcmItemsViewModel,
             WorklistViewModel worklistViewModel,
             CStoreViewModel cstoreViewModel,
+            CStoreSCPViewModel cstoreSCPViewModel,
             PrintViewModel printViewModel)
         {
             DisplayName = "Simple DICOM Toolkit";
@@ -15,6 +16,7 @@
             Items.Add(dcmItemsViewModel);
             Items.Add(worklistViewModel);
             Items.Add(cstoreViewModel);
+            Items.Add(cstoreSCPViewModel);
             Items.Add(printViewModel);
         }
 
