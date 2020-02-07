@@ -68,7 +68,7 @@
 
         public Task OnReceiveAssociationRequestAsync(DicomAssociation association)
         {
-            if (association.CalledAE != "LocalAET")
+            if (association.CalledAE != "CSTORESCP")
             {
                 return SendAssociationRejectAsync(
                     DicomRejectResult.Permanent,
