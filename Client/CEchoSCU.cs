@@ -6,6 +6,14 @@
 
     public class CEchoSCU : ICEchoSCU
     {
+        /// <summary>
+        /// 测试请求
+        /// </summary>
+        /// <param name="serverIp">Server IP Addr</param>
+        /// <param name="serverPort">Server Port</param>
+        /// <param name="serverAET">Server AE Title</param>
+        /// <param name="localAET">Client AE Title</param>
+        /// <returns>true if success</returns>
         public async Task<bool> Echo(string serverIp, int serverPort, string serverAET, string localAET)
         {
             bool echoResult = false;

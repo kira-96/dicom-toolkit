@@ -1,6 +1,5 @@
 ﻿namespace SimpleDICOMToolkit.ViewModels
 {
-    using Dicom.Network;
     using Stylet;
     using StyletIoC;
     using Models;
@@ -9,8 +8,6 @@
     public class CStoreReceivedViewModel : Screen, IHandle<CStoreServerItem>
     {
         private readonly IEventAggregator _eventAggregator;
-
-        private IDicomServer _server;
 
         private bool _isServerStarted = false;
 
@@ -30,15 +27,11 @@
         {
             if (_isServerStarted)
             {
-                // Start server
-                _server = DicomServer.Create<CStoreSCP>(message.ServerPort);
-                // set AET
+                CStoreServer.Default.CreateServer(message.ServerPort, message.LocalAET);
             }
             else
             {
-                // Stop server
-                _server.Stop();
-                _server.Dispose();
+                CStoreServer.Default.StopServer();
             }
         }
 
@@ -46,11 +39,7 @@
         {
             _eventAggregator.Unsubscribe(this);
 
-            if (_server?.IsListening == true)
-            {
-                _server.Stop();
-                _server.Dispose();
-            }
+            CStoreServer.Default.StopServer();
 
             base.OnClose();
         }

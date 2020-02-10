@@ -36,8 +36,8 @@ namespace SimpleDICOMToolkit.Logging
         /// <returns>Logger from the current log manager implementation.</returns>
         protected override Dicom.Log.Logger GetLoggerImpl(string name)
         {
-            // return new NLogger(NLog.LogManager.GetLogger(name));
-            return new NLogger(NLog.LogManager.GetCurrentClassLogger());
+            return new NLogger(NLog.LogManager.GetLogger(name));
+            // return new NLogger(NLog.LogManager.GetCurrentClassLogger());
         }
 
         /// <summary>

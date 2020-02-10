@@ -68,7 +68,7 @@
 
         public Task OnReceiveAssociationRequestAsync(DicomAssociation association)
         {
-            if (association.CalledAE != "CSTORESCP")
+            if (association.CalledAE != CStoreServer.Default.AETitle)
             {
                 return SendAssociationRejectAsync(
                     DicomRejectResult.Permanent,
@@ -100,7 +100,7 @@
             string instUid = request.SOPInstanceUID.UID;
 
             // 设置中应该支持设置存储目录
-            string path = Path.GetFullPath("DICM");
+            string path = Path.GetFullPath(CStoreServer.Default.DcmDirPath);
 
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
