@@ -8,9 +8,9 @@
 
     慎用修改和保存功能
 
-- Worklist SCU
+- Worklist SCU with MPPS
 
-- C-Store SCU
+- C-Store SCU/SCP
 
 - Print SCU
 
@@ -21,3 +21,5 @@
 - [NLog](https://nlog-project.org/)
 
 - [Stylet](https://github.com/canton7/Stylet)
+
+**部分图标来源于[阿里巴巴矢量图标库](https://www.iconfont.cn/)**
