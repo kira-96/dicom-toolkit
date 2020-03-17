@@ -9,5 +9,7 @@
         PrintViewModel GetPrintViewModel(string key = null);
 
         CStoreViewModel GetCStoreViewModel(string key = null);
+
+        CStoreSCPViewModel GetStoreSCPViewModel(string key = null);
     }
 }

@@ -91,7 +91,7 @@
             private set => SetAndNotify(ref _isServerIPEnabled, value);
         }
 
-        public bool ISServerPortEnabled
+        public bool IsServerPortEnabled
         {
             get => _isServerPortEnabled;
             private set => SetAndNotify(ref _isServerPortEnabled, value);
@@ -198,7 +198,7 @@
             {
                 _doRequestAction = PrintRequest;
                 _eventAggregator.Subscribe(this, nameof(PrintPreviewViewModel));
-                ServerPort = "104";
+                ServerPort = "7104";
                 ServerAET = "PRINTSCP";
                 IsModalityEnabled = false;
             }
@@ -269,7 +269,7 @@
             _eventAggregator.Publish(new CStoreServerItem(port, _localAET));
         }
 
-        private int ParseServerPort()
+        public int ParseServerPort()
         {
             if (!int.TryParse(_serverPort, out int port))
             {

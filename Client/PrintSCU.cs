@@ -6,9 +6,9 @@
 
     public class PrintSCU : IPrintSCU
     {
-        public async Task PrintImagesAsync(string serverIp, int serverPort, string serverAET, string localAET, IEnumerable<Bitmap> images)
+        public async Task PrintImagesAsync(string serverIp, int serverPort, string serverAET, string localAET, PrintOptions options, IEnumerable<Bitmap> images)
         {
-            PrintJob printJob = new PrintJob("DICOM PRINT JOB", "BLUE FILM")
+            PrintJob printJob = new PrintJob(options)
             {
                 RemoteAddress = serverIp,
                 RemotePort = serverPort,
@@ -16,11 +16,9 @@
                 CalledAE = serverAET
             };
 
-            printJob.FilmSession.IsColor = false;
-
             foreach (Bitmap image in images)
             {
-                printJob.StartFilmBox("STANDARD\\1,1", "PORTRAIT", "14INX17IN");
+                printJob.StartFilmBox(options);
                 printJob.AddImage(image, 0);
                 printJob.EndFilmBox();
             }

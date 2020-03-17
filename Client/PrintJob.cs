@@ -1,7 +1,4 @@
-﻿// copied from fo-dicom
-// Original Source https://github.com/fo-dicom/fo-dicom-samples/blob/master/Desktop/Print%20SCU/PrintJob.cs
-
-// Copyright (c) 2012-2019 fo-dicom contributors.
+﻿// Copyright (c) 2012-2020 fo-dicom contributors.
 // Licensed under the Microsoft Public License (MS-PL).
 
 using System;
@@ -18,21 +15,6 @@ using DicomClient = Dicom.Network.Client.DicomClient;
 
 namespace SimpleDICOMToolkit.Client
 {
-    //internal static class FilmBoxEx
-    //{
-    //    public static bool InitializeEx(this FilmBox self)
-    //    {
-    //        self.AddOrUpdate(new DicomSequence(DicomTag.ReferencedFilmSessionSequence,
-    //            new DicomDataset
-    //            {
-    //                { DicomTag.ReferencedSOPClassUID, self.FilmSession.SOPClassUID },
-    //                { DicomTag.ReferencedSOPInstanceUID, self.FilmSession.SOPInstanceUID }
-    //            }));
-
-    //        return self.Initialize();
-    //    }
-    //}
-
     internal class PrintJob
     {
         public string CallingAE { get; set; }
@@ -44,14 +26,50 @@ namespace SimpleDICOMToolkit.Client
 
         private FilmBox _currentFilmBox;
 
-        public PrintJob(string jobLabel, string mediumType)
+        public PrintJob(string jobLabel)
         {
             FilmSession = new FilmSession(DicomUID.BasicFilmSessionSOPClass)
             {
                 FilmSessionLabel = jobLabel,
-                MediumType = mediumType,
+                MediumType = "PAPER",
                 NumberOfCopies = 1
             };
+        }
+
+        /**
+         * 添加构造方法
+         */
+        public PrintJob(PrintOptions options)
+        {
+            FilmSession = new FilmSession(DicomUID.BasicFilmSessionSOPClass)
+            {
+                FilmSessionLabel = options.JobLabel,
+                MediumType = options.MediumType.ToStringEx(),
+                NumberOfCopies = 1,
+                IsColor = options.ColorType == PrintColorType.Color,
+            };
+        }
+
+        /**
+         * 添加重载函数
+         */
+        public FilmBox StartFilmBox(PrintOptions options)
+        {
+            FilmBox filmBox = new FilmBox(FilmSession, null, DicomTransferSyntax.ExplicitVRLittleEndian)
+            {
+                ImageDisplayFormat = options.ImageDisplayFormat,
+                FilmOrientation = options.Orientation.ToStringEx(),
+                FilmSizeID = options.FilmSize.ToStringEx(),
+                MagnificationType = options.MagnificationType.ToStringEx(),
+                BorderDensity = options.BorderDensity.ToStringEx(),
+                EmptyImageDensity = options.EmptyImageDensity.ToStringEx(),
+            };
+
+            filmBox.Initialize();
+            FilmSession.BasicFilmBoxes.Add(filmBox);
+
+            _currentFilmBox = filmBox;
+            return filmBox;
         }
 
         public FilmBox StartFilmBox(string format, string orientation, string filmSize)
@@ -185,6 +203,7 @@ namespace SimpleDICOMToolkit.Client
 
             foreach (var filmbox in FilmSession.BasicFilmBoxes)
             {
+
                 var imageBoxRequests = new List<DicomNSetRequest>();
 
                 var filmBoxRequest = new DicomNCreateRequest(FilmBox.SOPClassUID, filmbox.SOPInstanceUID)

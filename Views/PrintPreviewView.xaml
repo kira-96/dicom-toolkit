@@ -4,25 +4,89 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:s="https://github.com/canton7/Stylet"
-             xmlns:v="clr-namespace:SimpleDICOMToolkit.Views"
              mc:Ignorable="d" 
              d:DesignWidth="340"
              d:DesignHeight="420">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-            <Button ToolTip="Open File"
+    <UserControl.Resources>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="Gray" />
+            <Setter Property="Padding" Value="2" />
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="ContentBorder"
+                                Background="Transparent"
+                                BorderBrush="Transparent"
+                                SnapsToDevicePixels="True"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter Content="{TemplateBinding Content}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="DodgerBlue" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Visibility" Value="Hidden" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    
+    <Border BorderBrush="DodgerBlue"
+            BorderThickness="1"
+            CornerRadius="5"
+            Padding="2"
+            s:View.ActionTarget="{Binding}"
+            AllowDrop="True"
+            DragEnter="{s:Action OnDragFilesOver}"
+            DragOver="{s:Action OnDragFilesOver}"
+            Drop="{s:Action OnDropFiles}">
+        <Grid>
+            <Image Grid.Row="1" Source="{Binding ImageSource}">
+                <Image.Style>
+                    <Style TargetType="{x:Type Image}">
+                        <Setter Property="ContextMenu">
+                            <Setter.Value>
+                                <ContextMenu>
+                                    <MenuItem Header="Remove" ToolTip="Remove from List"
+                                              s:View.ActionTarget="{Binding}"
+                                              Command="{s:Action RemoveCurrentImage}">
+                                        <MenuItem.Icon>
+                                            <Image Width="16" Height="16" Source="pack://application:,,,/Icons/delete.png" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </ContextMenu>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Image.Style>
+            </Image>
+            <Button HorizontalAlignment="Left" VerticalAlignment="Center" 
+                    ToolTip="Previous" 
                     s:View.ActionTarget="{Binding}"
-                    Command="{s:Action OpenImage, ActionNotFound=Disable}">
-                <Image Width="20" Height="20" Stretch="Fill" 
-                       Source="pack://application:,,,/Icons/openfile.png" />
+                    Command="{s:Action ShowPrev}">
+                <Path Width="20" Height="20" Stretch="Uniform" Fill="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=Foreground}"
+                      Data="M748.307692 163.446154v697.107692c0 19.692308-25.6 33.476923-43.323077 17.723077L287.507692 537.6c-15.753846-11.815385-15.753846-37.415385 0-49.230769L704.984615 143.753846c17.723077-13.784615 43.323077-1.969231 43.323077 19.692308z" />
             </Button>
-            <TextBox Text="{Binding DcmFile, Mode=OneWay}" Width="272" Height="24" IsReadOnly="True" />
-        </StackPanel>
-        <Image Grid.Row="1" Source="{Binding ImageSource}" />
-    </Grid>
+            <Button HorizontalAlignment="Right" VerticalAlignment="Center" 
+                    ToolTip="Next" 
+                    s:View.ActionTarget="{Binding}"
+                    Command="{s:Action ShowNext}">
+                <Path Width="20" Height="20" Stretch="Uniform" Fill="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=Foreground}"
+                      Data="M275.692308 860.553846V163.446154c0-19.692308 25.6-33.476923 43.323077-17.723077l417.476923 340.676923c15.753846 11.815385 15.753846 37.415385 0 49.230769L319.015385 880.246154c-17.723077 13.784615-43.323077 1.969231-43.323077-19.692308z" />
+            </Button>
+        </Grid>
+    </Border>
 </UserControl>

@@ -59,6 +59,9 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\Combine\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -260,6 +263,9 @@
     <Resource Include="Icons\tag.png" />
     <Resource Include="Icons\upload.png" />
     <Resource Include="Icons\waiting.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\start1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\fo-dicom.Desktop.4.0.4\build\net45\fo-dicom.Desktop.targets" Condition="Exists('packages\fo-dicom.Desktop.4.0.4\build\net45\fo-dicom.Desktop.targets')" />

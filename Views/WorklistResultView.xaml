@@ -3,12 +3,33 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:s="https://github.com/canton7/Stylet"
              xmlns:m="clr-namespace:SimpleDICOMToolkit.Models"
              mc:Ignorable="d" 
              d:DesignWidth="340"
              d:DesignHeight="420">
 
     <UserControl.Resources>
+        <ContextMenu x:Key="WorklistItemContextMenu">
+            <MenuItem Header="Start"
+                      ToolTip="Start"
+                      s:View.ActionTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext}"
+                      Command="{s:Action StartPerformance, ActionNotFound=Disable}"
+                      CommandParameter="{Binding}">
+                <MenuItem.Icon>
+                    <Image Width="16" Height="16" Source="pack://application:,,,/Icons/start1.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Complete"
+                      ToolTip="Complete"
+                      s:View.ActionTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext}"
+                      Command="{s:Action CompletePerformance, ActionNotFound=Disable}"
+                      CommandParameter="{Binding}">
+                <MenuItem.Icon>
+                    <Image Width="16" Height="16" Source="pack://application:,,,/Icons/success.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+        </ContextMenu>
         <Style x:Key="ListColumnHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -40,6 +61,11 @@
         <ListView BorderThickness="0"
                   ItemsSource="{Binding WorklistItems}" 
                   ScrollViewer.VerticalScrollBarVisibility="Hidden">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="ContextMenu" Value="{StaticResource WorklistItemContextMenu}" />
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView ColumnHeaderContainerStyle="{StaticResource ListColumnHeaderStyle}">
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="128" />
