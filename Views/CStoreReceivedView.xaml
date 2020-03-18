@@ -10,5 +10,14 @@
              d:DesignHeight="480">
 
     <Grid Background="White">
+        <ListView ItemsSource="{Binding StoredFiles}"
+                  BorderThickness="0"
+                  ScrollViewer.VerticalScrollBarVisibility="Hidden">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <EventSetter Event="MouseDoubleClick" Handler="ItemMouseDoubleClick" />
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
     </Grid>
 </UserControl>

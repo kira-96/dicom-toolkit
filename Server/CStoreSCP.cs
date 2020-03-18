@@ -6,6 +6,7 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
 
@@ -37,28 +38,32 @@
             DicomTransferSyntax.ImplicitVRLittleEndian
         };
 
-        private readonly List<string> _receivedFiles;
-
-        public Action<IList<string>> OnFilesSaved;
-
-        public string LocalAET { get; set; }
+        private readonly List<string> receivedFiles;
 
         public CStoreSCP(INetworkStream stream, Encoding fallbackEncoding, Logger log)
             : base(stream, fallbackEncoding, log)
         {
-            _receivedFiles = new List<string>();
+            receivedFiles = new List<string>();
         }
 
         public void OnConnectionClosed(Exception exception)
         {
-            OnFilesSaved?.Invoke(_receivedFiles);
-            _receivedFiles.Clear();
+            Logger.Info("C-STORE Connection closed");
+            if (receivedFiles.Any())
+            {
+                CStoreServer.Default.OnFilesSaved?.Invoke(receivedFiles);
+                receivedFiles.Clear();
+            }
         }
 
         public void OnReceiveAbort(DicomAbortSource source, DicomAbortReason reason)
         {
-            OnFilesSaved?.Invoke(_receivedFiles);
-            _receivedFiles.Clear();
+            Logger.Error("Received abort from {0}, reason is {1}", source, reason);
+            if (receivedFiles.Any())
+            {
+                CStoreServer.Default.OnFilesSaved?.Invoke(receivedFiles);
+                receivedFiles.Clear();
+            }
         }
 
         public Task OnReceiveAssociationReleaseRequestAsync()
@@ -114,7 +119,7 @@
 
             request.File.Save(path);
 
-            _receivedFiles.Add(path);
+            receivedFiles.Add(path);
 
             return new DicomCStoreResponse(request, DicomStatus.Success);
         }

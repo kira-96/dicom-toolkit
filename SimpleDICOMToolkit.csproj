@@ -86,7 +86,7 @@
     <Compile Include="Client\PrintOptions.cs" />
     <Compile Include="Controls\EffectBehavior.cs" />
     <Compile Include="Controls\TextBoxPlaceholderBehavior.cs" />
-    <Compile Include="Models\CStoreServerItem.cs" />
+    <Compile Include="Models\ServerMessageItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -117,6 +117,10 @@
     <Compile Include="Models\WorklistRequestItem.cs" />
     <Compile Include="Server\CStoreSCP.cs" />
     <Compile Include="Server\CStoreServer.cs" />
+    <Compile Include="Server\Printer.cs" />
+    <Compile Include="Server\PrintJob.cs" />
+    <Compile Include="Server\PrintSCP.cs" />
+    <Compile Include="Server\PrintServer.cs" />
     <Compile Include="Services\DialogServiceEx.cs" />
     <Compile Include="Services\IDialogServiceEx.cs" />
     <Compile Include="SimpleIoC.cs" />
@@ -129,7 +133,9 @@
     <Compile Include="ViewModels\EditDicomItemViewModel.cs" />
     <Compile Include="ViewModels\IViewModelFactory.cs" />
     <Compile Include="ViewModels\PreviewImageViewModel.cs" />
+    <Compile Include="ViewModels\PrintJobsViewModel.cs" />
     <Compile Include="ViewModels\PrintPreviewViewModel.cs" />
+    <Compile Include="ViewModels\PrintSCPViewModel.cs" />
     <Compile Include="ViewModels\PrintViewModel.cs" />
     <Compile Include="ViewModels\ServerConfigViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
@@ -157,8 +163,14 @@
       <DependentUpon>PreviewImageView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Views\PrintJobsView.xaml.cs">
+      <DependentUpon>PrintJobsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PrintPreviewView.xaml.cs">
       <DependentUpon>PrintPreviewView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrintSCPView.xaml.cs">
+      <DependentUpon>PrintSCPView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PrintView.xaml.cs">
       <DependentUpon>PrintView.xaml</DependentUpon>
@@ -224,7 +236,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\PrintJobsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\PrintPreviewView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrintSCPView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -9,7 +9,8 @@
             WorklistViewModel worklistViewModel,
             CStoreViewModel cstoreViewModel,
             CStoreSCPViewModel cstoreSCPViewModel,
-            PrintViewModel printViewModel)
+            PrintViewModel printViewModel,
+            PrintSCPViewModel printSCPViewModel)
         {
             DisplayName = "Simple DICOM Toolkit";
 
@@ -18,6 +19,7 @@
             Items.Add(cstoreViewModel);
             Items.Add(cstoreSCPViewModel);
             Items.Add(printViewModel);
+            Items.Add(printSCPViewModel);
         }
 
         protected override void OnViewLoaded()

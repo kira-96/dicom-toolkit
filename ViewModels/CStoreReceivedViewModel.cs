@@ -4,9 +4,17 @@
     using StyletIoC;
     using Models;
     using Server;
+    using System.Collections.Generic;
+    using Logging;
 
-    public class CStoreReceivedViewModel : Screen, IHandle<CStoreServerItem>
+    public class CStoreReceivedViewModel : Screen, IHandle<ServerMessageItem>
     {
+        [Inject(Key = "filelogger")]
+        private ILoggerService _logger;
+
+        [Inject]
+        private IWindowManager _windowManager;
+
         private readonly IEventAggregator _eventAggregator;
 
         private bool _isServerStarted = false;
@@ -17,13 +25,29 @@
             set => SetAndNotify(ref _isServerStarted, value);
         }
 
+        public BindableCollection<string> StoredFiles { get; } = new BindableCollection<string>();
+
         public CStoreReceivedViewModel(IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
-            _eventAggregator.Subscribe(this);
+            _eventAggregator.Subscribe(this, nameof(CStoreReceivedViewModel));
+            CStoreServer.Default.OnFilesSaved += OnFilesSaved;
         }
 
-        public void Handle(CStoreServerItem message)
+        private void OnFilesSaved(IList<string> files)
+        {
+            _logger.Debug("files received, count: {0}", files.Count);
+
+            int currentDirPathLength = System.Environment.CurrentDirectory.Length + 1;
+
+            foreach (string file in files)
+            {
+                string path = file.Remove(0, currentDirPathLength);
+                StoredFiles.Add(path);
+            }
+        }
+
+        public void Handle(ServerMessageItem message)
         {
             if (_isServerStarted)
             {
@@ -35,10 +59,16 @@
             }
         }
 
+        public void ShowReceivedFile(string file)
+        {
+            _windowManager.ShowDialog(new PreviewImageViewModel(file));
+        }
+
         protected override void OnClose()
         {
             _eventAggregator.Unsubscribe(this);
 
+            CStoreServer.Default.OnFilesSaved -= OnFilesSaved;
             CStoreServer.Default.StopServer();
 
             base.OnClose();

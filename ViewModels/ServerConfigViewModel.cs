@@ -213,7 +213,7 @@
             else if (parentViewModel is CStoreSCPViewModel)
             {
                 _doRequestAction = StartCStoreServer;
-                _eventAggregator.Subscribe(this, nameof(CStoreReceivedViewModel));
+                // _eventAggregator.Subscribe(this, nameof(CStoreReceivedViewModel));
 
                 foreach (IPAddress item in Dns.GetHostEntry(Dns.GetHostName()).AddressList)
                 {
@@ -225,6 +225,22 @@
                 }
 
                 LocalAET = ServerAET = "CSTORESCP";
+                IsServerIPEnabled = IsServerAETEnabled = IsModalityEnabled = false;
+            }
+            else if (parentViewModel is PrintSCPViewModel)
+            {
+                _doRequestAction = StartPrintServer;
+
+                foreach (IPAddress item in Dns.GetHostEntry(Dns.GetHostName()).AddressList)
+                {
+                    if (item.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                    {
+                        ServerIP = item.ToString();
+                        break;
+                    }
+                }
+
+                LocalAET = ServerAET = "PRINTSCP";
                 IsServerIPEnabled = IsServerAETEnabled = IsModalityEnabled = false;
             }
             else
@@ -266,7 +282,16 @@
             if (port == 0)
                 return;
 
-            _eventAggregator.Publish(new CStoreServerItem(port, _localAET));
+            _eventAggregator.Publish(new ServerMessageItem(port, _localAET), nameof(CStoreReceivedViewModel));
+        }
+
+        private void StartPrintServer()
+        {
+            int port = ParseServerPort();
+            if (port == 0)
+                return;
+
+            _eventAggregator.Publish(new ServerMessageItem(port, _localAET), nameof(PrintJobsViewModel));
         }
 
         public int ParseServerPort()

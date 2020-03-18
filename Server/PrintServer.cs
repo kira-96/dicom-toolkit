@@ -1,18 +1,16 @@
 ﻿using Dicom.Network;
-using System;
-using System.Collections.Generic;
 
 namespace SimpleDICOMToolkit.Server
 {
-    public class CStoreServer
+    public class PrintServer
     {
         private static readonly object locker = new object();
 
-        private static CStoreServer instance = null;
+        private static PrintServer instance = null;
 
         private IDicomServer defaultServer = null;
 
-        public static CStoreServer Default
+        public static PrintServer Default
         {
             get
             {
@@ -22,7 +20,7 @@ namespace SimpleDICOMToolkit.Server
                     {
                         if (instance == null)
                         {
-                            instance = new CStoreServer();
+                            instance = new PrintServer();
                         }
                     }
                 }
@@ -31,13 +29,11 @@ namespace SimpleDICOMToolkit.Server
             }
         }
 
-        public Action<IList<string>> OnFilesSaved;
-
         public string AETitle { get; private set; } = "";
 
-        public string DcmDirPath { get; private set; } = "DICM";
+        public Printer Printer { get; private set; }
 
-        private CStoreServer()
+        private PrintServer()
         {}
 
         public bool IsListening()
@@ -48,25 +44,16 @@ namespace SimpleDICOMToolkit.Server
             return defaultServer.IsListening;
         }
 
-        public bool CreateServer(int port, string serverAET, string fileSaveDir = "")
+        public bool CreateServer(int port, string serverAET)
         {
             if (IsListening())
                 return true;
 
             AETitle = serverAET;
 
-            if (!string.IsNullOrEmpty(fileSaveDir))
-            {
-                DcmDirPath = fileSaveDir;
+            defaultServer = DicomServer.Create<PrintSCP>(port);
 
-                // 如果文件夹不存在就创建
-                if (!System.IO.Directory.Exists(fileSaveDir))
-                {
-                    System.IO.Directory.CreateDirectory(fileSaveDir);
-                }
-            }
-
-            defaultServer = DicomServer.Create<CStoreSCP>(port);
+            Printer = new Printer(serverAET);
 
             return IsListening();
         }

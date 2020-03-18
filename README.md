@@ -27,3 +27,15 @@
 - [Microsoft.Xaml.Behaviors](https://github.com/Microsoft/XamlBehaviorsWpf)
 
 **部分图标来源于[阿里巴巴矢量图标库](https://www.iconfont.cn/)**
+
+**我的其它常用软件**
+
+- [DICOM Dump](http://www.makhaon.com/index.php?lng=en&p=products&id=dicomdump)
+
+- [Print SCP](http://www.charruasoft.com/products/printscp/)
+
+- [ClearCanvas](https://www.clearcanvas.ca/)
+
+- [jDicom](http://members.chello.at/petra.kirchdorfer/jdicom/)
+
+- [ITK-SNAP](http://www.itksnap.org/pmwiki/pmwiki.php)
