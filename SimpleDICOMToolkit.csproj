@@ -41,6 +41,12 @@
     <Prefer32Bit>true</Prefer32Bit>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icons\icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Dicom.Core, Version=4.0.4.0, Culture=neutral, PublicKeyToken=3a13f649e28eb09a, processorArchitecture=MSIL">
       <HintPath>packages\fo-dicom.Desktop.4.0.4\lib\net45\Dicom.Core.dll</HintPath>
@@ -65,6 +71,7 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -123,8 +130,11 @@
     <Compile Include="Server\PrintServer.cs" />
     <Compile Include="Services\DialogServiceEx.cs" />
     <Compile Include="Services\IDialogServiceEx.cs" />
+    <Compile Include="Services\INotificationService.cs" />
+    <Compile Include="Services\NotificationService.cs" />
     <Compile Include="SimpleIoC.cs" />
     <Compile Include="Utils\BitmapUtil.cs" />
+    <Compile Include="Utils\EnvUtil.cs" />
     <Compile Include="ViewModels\CStoreFileListViewModel.cs" />
     <Compile Include="ViewModels\CStoreReceivedViewModel.cs" />
     <Compile Include="ViewModels\CStoreSCPViewModel.cs" />
@@ -178,6 +188,9 @@
     <Compile Include="Views\ServerConfigView.xaml.cs">
       <DependentUpon>ServerConfigView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ShellView.xaml.cs">
+      <DependentUpon>ShellView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\WorklistResultView.xaml.cs">
       <DependentUpon>WorklistResultView.xaml</DependentUpon>
     </Compile>
@@ -189,6 +202,7 @@
     <None Include="942A.dcm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="app.manifest" />
     <None Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -291,6 +305,13 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\start1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\exit.png" />
+    <Resource Include="Icons\window.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\fo-dicom.Desktop.4.0.4\build\net45\fo-dicom.Desktop.targets" Condition="Exists('packages\fo-dicom.Desktop.4.0.4\build\net45\fo-dicom.Desktop.targets')" />

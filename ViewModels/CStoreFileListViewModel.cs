@@ -2,13 +2,14 @@
 {
     using Stylet;
     using StyletIoC;
+    using System;
     using System.IO;
     using System.Windows;
     using Client;
     using Services;
     using Models;
 
-    public class CStoreFileListViewModel : Screen, IHandle<CStoreRequestItem>
+    public class CStoreFileListViewModel : Screen, IHandle<CStoreRequestItem>, IDisposable
     {
         private readonly IEventAggregator _eventAggregator;
 
@@ -112,13 +113,6 @@
             ReIndexItems();
         }
 
-        protected override void OnClose()
-        {
-            _eventAggregator.Unsubscribe(this);
-
-            base.OnClose();
-        }
-
         private void AddDcmFilesToList(bool? result, string[] files)
         {
             foreach (string file in files)
@@ -133,6 +127,11 @@
             {
                 FileList[i].Id = i;
             }
+        }
+
+        public void Dispose()
+        {
+            _eventAggregator.Unsubscribe(this);
         }
     }
 }

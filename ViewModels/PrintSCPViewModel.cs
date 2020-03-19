@@ -17,16 +17,17 @@
             DisplayName = "Print SCP";
         }
 
-        protected override void OnViewLoaded()
+        protected override void OnInitialActivate()
         {
-            base.OnViewLoaded();
-
+            base.OnInitialActivate();
             ServerConfigViewModel.Init(this);
         }
 
         public void Dispose()
         {
             // TODO
+            ServerConfigViewModel.Dispose();
+            PrintJobsViewModel.Dispose();
         }
     }
 }

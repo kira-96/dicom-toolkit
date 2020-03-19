@@ -3,6 +3,7 @@
     using Dicom.Imaging;
     using Stylet;
     using StyletIoC;
+    using System;
     using System.Collections.Generic;
     using System.Drawing;
     using System.IO;
@@ -13,7 +14,7 @@
     using Utils;
     using System.Windows;
 
-    public class PrintPreviewViewModel : Screen, IHandle<PrintRequestItem>
+    public class PrintPreviewViewModel : Screen, IHandle<PrintRequestItem>, IDisposable
     {
         private readonly IEventAggregator _eventAggregator;
 
@@ -114,13 +115,6 @@
             }
         }
 
-        protected override void OnClose()
-        {
-            _eventAggregator.Unsubscribe(this);
-
-            base.OnClose();
-        }
-
         private void AddDcmImage(string file)
         {
             if (!File.Exists(file))
@@ -161,6 +155,11 @@
             {
                 CurrentIndex += 1;
             }
+        }
+
+        public void Dispose()
+        {
+            _eventAggregator.Unsubscribe(this);
         }
     }
 }

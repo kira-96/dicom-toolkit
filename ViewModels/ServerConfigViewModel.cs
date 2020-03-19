@@ -6,9 +6,9 @@
     using Client;
     using Logging;
     using Models;
-    using System.Net;
+    using Utils;
 
-    public class ServerConfigViewModel : Screen, IHandle<BusyStateItem>
+    public class ServerConfigViewModel : Screen, IHandle<BusyStateItem>, IDisposable
     {
         private readonly IEventAggregator _eventAggregator;
 
@@ -26,7 +26,7 @@
         private string _serverIP = "localhost";
         private string _serverPort = "6104";
         private string _serverAET = "RIS";
-        private string _localAET = "LONWINMRI";
+        private string _localAET = "LOCAL_AET";
         private string _modality = "MR";
 
         private bool _isServerIPEnabled = true;
@@ -143,12 +143,6 @@
             _eventAggregator = eventAggregator;
         }
 
-        protected override void OnClose()
-        {
-            _eventAggregator.Unsubscribe(this);
-            base.OnClose();
-        }
-
         public bool CanDoRequest =>
             !string.IsNullOrEmpty(ServerIP) &&
             !string.IsNullOrEmpty(ServerPort) &&
@@ -194,6 +188,22 @@
                 _doRequestAction = WorklistQueryRequest;
                 _eventAggregator.Subscribe(this, nameof(WorklistResultViewModel));
             }
+            else if (parentViewModel is CStoreViewModel)
+            {
+                _doRequestAction = CStoreRequest;
+                _eventAggregator.Subscribe(this, nameof(CStoreFileListViewModel));
+                ServerPort = "104";
+                ServerAET = "CSTORESCP";
+                IsModalityEnabled = false;
+            }
+            else if (parentViewModel is CStoreSCPViewModel)
+            {
+                _doRequestAction = StartCStoreServer;
+                ServerIP = EnvUtil.LocalIPAddress;
+                ServerPort = "104";
+                LocalAET = ServerAET = "CSTORESCP";
+                IsServerIPEnabled = IsServerAETEnabled = IsModalityEnabled = false;
+            }
             else if (parentViewModel is PrintViewModel)
             {
                 _doRequestAction = PrintRequest;
@@ -202,44 +212,11 @@
                 ServerAET = "PRINTSCP";
                 IsModalityEnabled = false;
             }
-            else if (parentViewModel is CStoreViewModel)
-            {
-                _doRequestAction = CStoreRequest;
-                _eventAggregator.Subscribe(this, nameof(CStoreFileListViewModel));
-                ServerPort = "104";
-                ServerAET = "PACS";
-                IsModalityEnabled = false;
-            }
-            else if (parentViewModel is CStoreSCPViewModel)
-            {
-                _doRequestAction = StartCStoreServer;
-                // _eventAggregator.Subscribe(this, nameof(CStoreReceivedViewModel));
-
-                foreach (IPAddress item in Dns.GetHostEntry(Dns.GetHostName()).AddressList)
-                {
-                    if (item.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-                    {
-                        ServerIP = item.ToString();
-                        break;
-                    }
-                }
-
-                LocalAET = ServerAET = "CSTORESCP";
-                IsServerIPEnabled = IsServerAETEnabled = IsModalityEnabled = false;
-            }
             else if (parentViewModel is PrintSCPViewModel)
             {
                 _doRequestAction = StartPrintServer;
-
-                foreach (IPAddress item in Dns.GetHostEntry(Dns.GetHostName()).AddressList)
-                {
-                    if (item.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-                    {
-                        ServerIP = item.ToString();
-                        break;
-                    }
-                }
-
+                ServerIP = EnvUtil.LocalIPAddress;
+                ServerPort = "7104";
                 LocalAET = ServerAET = "PRINTSCP";
                 IsServerIPEnabled = IsServerAETEnabled = IsModalityEnabled = false;
             }
@@ -310,6 +287,11 @@
             BusyIndicatorColumn = 1;
 
             IsBusy = message.IsBusy;
+        }
+
+        public void Dispose()
+        {
+            _eventAggregator.Unsubscribe(this);
         }
     }
 }

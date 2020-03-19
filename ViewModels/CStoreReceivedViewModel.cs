@@ -2,18 +2,24 @@
 {
     using Stylet;
     using StyletIoC;
-    using Models;
-    using Server;
+    using System;
     using System.Collections.Generic;
     using Logging;
+    using Models;
+    using Server;
+    using Services;
+    using Utils;
 
-    public class CStoreReceivedViewModel : Screen, IHandle<ServerMessageItem>
+    public class CStoreReceivedViewModel : Screen, IHandle<ServerMessageItem>, IDisposable
     {
         [Inject(Key = "filelogger")]
         private ILoggerService _logger;
 
         [Inject]
         private IWindowManager _windowManager;
+
+        [Inject]
+        private INotificationService notificationService;
 
         private readonly IEventAggregator _eventAggregator;
 
@@ -52,6 +58,7 @@
             if (_isServerStarted)
             {
                 CStoreServer.Default.CreateServer(message.ServerPort, message.LocalAET);
+                notificationService.ShowNotification($"C-STORE server is running at: {EnvUtil.LocalIPAddress}:{message.ServerPort}", message.LocalAET);
             }
             else
             {
@@ -64,14 +71,12 @@
             _windowManager.ShowDialog(new PreviewImageViewModel(file));
         }
 
-        protected override void OnClose()
+        public void Dispose()
         {
             _eventAggregator.Unsubscribe(this);
 
             CStoreServer.Default.OnFilesSaved -= OnFilesSaved;
             CStoreServer.Default.StopServer();
-
-            base.OnClose();
         }
     }
 }

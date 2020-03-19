@@ -2,14 +2,20 @@
 {
     using Stylet;
     using StyletIoC;
+    using System;
+    using Logging;
     using Models;
     using Server;
-    using Logging;
+    using Services;
+    using Utils;
 
-    public class PrintJobsViewModel : Screen, IHandle<ServerMessageItem>
+    public class PrintJobsViewModel : Screen, IHandle<ServerMessageItem>, IDisposable
     {
         [Inject(Key = "filelogger")]
         private ILoggerService _logger;
+
+        [Inject]
+        private INotificationService notificationService;
 
         private readonly IEventAggregator _eventAggregator;
 
@@ -32,6 +38,7 @@
             if (_isServerStarted)
             {
                 PrintServer.Default.CreateServer(message.ServerPort, message.LocalAET);
+                notificationService.ShowNotification($"Print server is running at: {EnvUtil.LocalIPAddress}:{message.ServerPort}", message.LocalAET);
             }
             else
             {
@@ -39,13 +46,11 @@
             }
         }
 
-        protected override void OnClose()
+        public void Dispose()
         {
             _eventAggregator.Unsubscribe(this);
 
             PrintServer.Default.StopServer();
-
-            base.OnClose();
         }
     }
 }

@@ -12,7 +12,7 @@
 
 - C-Store SCU/SCP
 
-- Print SCU
+- Print SCU/SCP
 
 ## dependency packages
 
@@ -28,7 +28,7 @@
 
 **部分图标来源于[阿里巴巴矢量图标库](https://www.iconfont.cn/)**
 
-**我的其它常用软件**
+**其它常用软件**
 
 - [DICOM Dump](http://www.makhaon.com/index.php?lng=en&p=products&id=dicomdump)
 

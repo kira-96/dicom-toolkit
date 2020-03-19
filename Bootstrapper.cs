@@ -24,6 +24,7 @@
 
             builder.Bind<ILoggerService>().To<LoggerService>().InSingletonScope().AsWeakBinding();
             builder.Bind<IDialogServiceEx>().To<DialogServiceEx>().InSingletonScope().AsWeakBinding();
+            builder.Bind<INotificationService>().To<NotificationService>().InSingletonScope().AsWeakBinding();
             builder.Bind<ICEchoSCU>().To<CEchoSCU>().InSingletonScope().AsWeakBinding();
             builder.Bind<ICMoveSCU>().To<CMoveSCU>().InSingletonScope().AsWeakBinding();
             builder.Bind<ICStoreSCU>().To<CStoreSCU>().InSingletonScope().AsWeakBinding();
@@ -46,7 +47,7 @@
             e.Handled = true;
 
             Container.Get<ILoggerService>("filelogger").Error(e.Exception);
-            Container.Get<IWindowManager>().ShowMessageBox(e.Exception.Message, "Oops!");
+            Container.Get<IWindowManager>().ShowMessageBox(e.Exception.Message, "出错了!");
         }
     }
 }

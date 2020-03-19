@@ -2,10 +2,11 @@
 {
     using Stylet;
     using StyletIoC;
+    using System;
     using Client;
     using Models;
 
-    public class WorklistResultViewModel : Screen, IHandle<WorklistRequestItem>
+    public class WorklistResultViewModel : Screen, IHandle<WorklistRequestItem>, IDisposable
     {
         private readonly IEventAggregator _eventAggregator;
 
@@ -80,11 +81,9 @@
             _eventAggregator.Publish(new BusyStateItem(false), nameof(WorklistResultViewModel));
         }
 
-        protected override void OnClose()
+        public void Dispose()
         {
             _eventAggregator.Unsubscribe(this);
-
-            base.OnClose();
         }
     }
 }
