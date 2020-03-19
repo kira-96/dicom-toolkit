@@ -287,6 +287,7 @@
     <Resource Include="Icons\addfiles.png" />
     <Resource Include="Icons\connection.png" />
     <Resource Include="Icons\delete.png" />
+    <Resource Include="Icons\exit.png" />
     <Resource Include="Icons\failed.png" />
     <Resource Include="Icons\item-white.png" />
     <Resource Include="Icons\item.png" />
@@ -297,17 +298,12 @@
     <Resource Include="Icons\query.png" />
     <Resource Include="Icons\success.png" />
     <Resource Include="Icons\start.png" />
+    <Resource Include="Icons\start1.png" />
     <Resource Include="Icons\stop.png" />
     <Resource Include="Icons\tag-white.png" />
     <Resource Include="Icons\tag.png" />
     <Resource Include="Icons\upload.png" />
     <Resource Include="Icons\waiting.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\start1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\exit.png" />
     <Resource Include="Icons\window.png" />
   </ItemGroup>
   <ItemGroup>
