@@ -46,6 +46,11 @@
             }
         }
 
+        public void Explore()
+        {
+            ProcessUtil.Explore("PrintJobs");
+        }
+
         public void Dispose()
         {
             _eventAggregator.Unsubscribe(this);

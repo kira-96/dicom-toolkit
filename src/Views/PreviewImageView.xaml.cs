@@ -1,11 +1,9 @@
-﻿using System.Windows;
-
-namespace SimpleDICOMToolkit.Views
+﻿namespace SimpleDICOMToolkit.Views
 {
     /// <summary>
     /// PreviewImageView.xaml 的交互逻辑
     /// </summary>
-    public partial class PreviewImageView : Window
+    public partial class PreviewImageView
     {
         public PreviewImageView()
         {

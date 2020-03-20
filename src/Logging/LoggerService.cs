@@ -7,7 +7,7 @@
     [Inject(Key = "filelogger")]
     public class LoggerService : ILoggerService
     {
-        private readonly NLogger logger = NLog.LogManager.GetCurrentClassLogger();
+        private readonly NLogger logger = NLog.LogManager.GetLogger("LoggerService");
 
         public LoggerService()
         {

@@ -9,6 +9,29 @@
              d:DesignWidth="600"
              d:DesignHeight="480">
 
+    <UserControl.Resources>
+        <ContextMenu x:Key="ListItemContextMenu">
+            <MenuItem Header="Preview"
+                      ToolTip="Preview Image"
+                      s:View.ActionTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ListView}}, Path=DataContext}"
+                      Command="{s:Action ShowReceivedFile, ActionNotFound=Disable}"
+                      CommandParameter="{Binding}">
+                <MenuItem.Icon>
+                    <Image Width="16" Height="16" Source="pack://application:,,,/Icons/preview.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Explore"
+                      ToolTip="Explore file"
+                      s:View.ActionTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ListView}}, Path=DataContext}"
+                      Command="{s:Action OpenFolder, ActionNotFound=Disable}"
+                      CommandParameter="{Binding}">
+                <MenuItem.Icon>
+                    <Image Width="16" Height="16" Source="pack://application:,,,/Icons/open_folder.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+        </ContextMenu>
+    </UserControl.Resources>
+    
     <Grid Background="White">
         <ListView ItemsSource="{Binding StoredFiles}"
                   BorderThickness="0"
@@ -16,6 +39,7 @@
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <EventSetter Event="MouseDoubleClick" Handler="ItemMouseDoubleClick" />
+                    <Setter Property="ContextMenu" Value="{StaticResource ListItemContextMenu}" />
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>

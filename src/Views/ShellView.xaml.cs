@@ -47,17 +47,23 @@
         private void Window_Closing(object s, System.ComponentModel.CancelEventArgs e)
         {
             // 弹窗提示是否确定退出
-            MessageBoxResult result = System.Windows.MessageBox.Show("确定要退出吗？", "退出应用？", MessageBoxButton.YesNo, MessageBoxImage.Information);
+            MessageBoxResult result = System.Windows.MessageBox.Show(
+                "确定要退出吗？", "退出应用？", 
+                MessageBoxButton.YesNo, 
+                MessageBoxImage.Information);
 
             if (result == MessageBoxResult.No)
             {
                 e.Cancel = true;
                 WindowState = WindowState.Minimized;
             }
-            else
-            {
-                notifyIcon.Dispose();
-            }
+        }
+
+        private void Window_Closed(object s, System.EventArgs e)
+        {
+            notifyIcon.MouseClick -= TrayIconMouseClick;
+            notifyIcon.MouseDoubleClick -= TrayIconMouseDoubleClick;
+            notifyIcon.Dispose();
         }
 
         private void Window_Deactivated(object s, System.EventArgs e)

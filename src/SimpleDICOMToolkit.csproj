@@ -135,6 +135,7 @@
     <Compile Include="SimpleIoC.cs" />
     <Compile Include="Utils\BitmapUtil.cs" />
     <Compile Include="Utils\EnvUtil.cs" />
+    <Compile Include="Utils\ProcessUtil.cs" />
     <Compile Include="ViewModels\CStoreFileListViewModel.cs" />
     <Compile Include="ViewModels\CStoreReceivedViewModel.cs" />
     <Compile Include="ViewModels\CStoreSCPViewModel.cs" />
@@ -291,6 +292,7 @@
     <Resource Include="Icons\failed.png" />
     <Resource Include="Icons\item-white.png" />
     <Resource Include="Icons\item.png" />
+    <Resource Include="Icons\open_folder.png" />
     <Resource Include="Icons\openfile.png" />
     <Resource Include="Icons\package.png" />
     <Resource Include="Icons\preview.png" />

@@ -71,6 +71,11 @@
             _windowManager.ShowDialog(new PreviewImageViewModel(file));
         }
 
+        public void OpenFolder(string file)
+        {
+            ProcessUtil.Explore(file);
+        }
+
         public void Dispose()
         {
             _eventAggregator.Unsubscribe(this);

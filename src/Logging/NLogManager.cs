@@ -1,13 +1,9 @@
-﻿// copied from fo-dicom
-// original source https://github.com/fo-dicom/fo-dicom/blob/development/Logging/NLog.Desktop/NLogManager.cs
-
-// Copyright (c) 2012-2019 fo-dicom contributors.
+﻿// Copyright (c) 2012-2020 fo-dicom contributors.
 // Licensed under the Microsoft Public License (MS-PL).
 
-using Dicom.Log;
 using System;
 
-namespace SimpleDICOMToolkit.Logging
+namespace Dicom.Log
 {
     /// <summary>
     /// LogManager for the NLog logging framework.
@@ -34,16 +30,15 @@ namespace SimpleDICOMToolkit.Logging
         /// </summary>
         /// <param name="name">Classifier name, typically namespace or type name.</param>
         /// <returns>Logger from the current log manager implementation.</returns>
-        protected override Dicom.Log.Logger GetLoggerImpl(string name)
+        protected override Logger GetLoggerImpl(string name)
         {
             return new NLogger(NLog.LogManager.GetLogger(name));
-            // return new NLogger(NLog.LogManager.GetCurrentClassLogger());
         }
 
         /// <summary>
         /// Implementation of a NLog logger.
         /// </summary>
-        private class NLogger : Dicom.Log.Logger
+        private class NLogger : Logger
         {
             private readonly NLog.Logger logger;
 

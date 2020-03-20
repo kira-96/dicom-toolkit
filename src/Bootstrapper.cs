@@ -15,7 +15,7 @@
             base.OnStart();
 
             Dicom.Imaging.ImageManager.SetImplementation(Dicom.Imaging.WPFImageManager.Instance);
-            Dicom.Log.LogManager.SetImplementation(NLogManager.Instance);
+            Dicom.Log.LogManager.SetImplementation(Dicom.Log.NLogManager.Instance);
         }
 
         protected override void ConfigureIoC(IStyletIoCBuilder builder)
