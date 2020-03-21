@@ -14,7 +14,7 @@
     using Utils;
     using System.Windows;
 
-    public class PrintPreviewViewModel : Screen, IHandle<PrintRequestItem>, IDisposable
+    public class PrintPreviewViewModel : Screen, IHandle<ClientMessageItem>, IDisposable
     {
         private readonly IEventAggregator _eventAggregator;
 
@@ -56,12 +56,12 @@
         public PrintPreviewViewModel(IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
-            _eventAggregator.Subscribe(this);
+            _eventAggregator.Subscribe(this, nameof(PrintPreviewViewModel));
 
             AddDcmImage(System.Environment.CurrentDirectory + "\\942A.dcm");
         }
 
-        public async void Handle(PrintRequestItem message)
+        public async void Handle(ClientMessageItem message)
         {
             if (ImageSource == null)
                 return;

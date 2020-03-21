@@ -9,7 +9,7 @@
     using Services;
     using Models;
 
-    public class CStoreFileListViewModel : Screen, IHandle<CStoreRequestItem>, IDisposable
+    public class CStoreFileListViewModel : Screen, IHandle<ClientMessageItem>, IDisposable
     {
         private readonly IEventAggregator _eventAggregator;
 
@@ -27,10 +27,10 @@
         public CStoreFileListViewModel(IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
-            _eventAggregator.Subscribe(this);
+            _eventAggregator.Subscribe(this, nameof(CStoreFileListViewModel));
         }
 
-        public async void Handle(CStoreRequestItem message)
+        public async void Handle(ClientMessageItem message)
         {
             if (FileList.Count == 0)
                 return;

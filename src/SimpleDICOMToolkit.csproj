@@ -91,6 +91,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Client\PrintOptions.cs" />
+    <Compile Include="Client\RequestFactory.cs" />
     <Compile Include="Controls\EffectBehavior.cs" />
     <Compile Include="Controls\TextBoxPlaceholderBehavior.cs" />
     <Compile Include="Models\ServerMessageItem.cs" />
@@ -100,10 +101,10 @@
     <Compile Include="BindingProxy.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Client\CEchoSCU.cs" />
-    <Compile Include="Client\CMoveSCU.cs" />
+    <Compile Include="Client\QueryRetrieveSCU.cs" />
     <Compile Include="Client\CStoreSCU.cs" />
     <Compile Include="Client\ICEchoSCU.cs" />
-    <Compile Include="Client\ICMoveSCU.cs" />
+    <Compile Include="Client\IQueryRetrieveSCU.cs" />
     <Compile Include="Client\ICStoreSCU.cs" />
     <Compile Include="Client\IPrintSCU.cs" />
     <Compile Include="Client\IWorklistSCU.cs" />
@@ -116,12 +117,10 @@
     <Compile Include="Logging\NLogManager.cs" />
     <Compile Include="Models\BusyStateItem.cs" />
     <Compile Include="Models\CStoreItem.cs" />
-    <Compile Include="Models\CStoreRequestItem.cs" />
     <Compile Include="Models\DcmItem.cs" />
-    <Compile Include="Models\PrintRequestItem.cs" />
     <Compile Include="Models\SimpleWorklistResult.cs" />
     <Compile Include="Models\UpdateDicomElementItem.cs" />
-    <Compile Include="Models\WorklistRequestItem.cs" />
+    <Compile Include="Models\ClientMessageItem.cs" />
     <Compile Include="Server\CStoreSCP.cs" />
     <Compile Include="Server\CStoreServer.cs" />
     <Compile Include="Server\Printer.cs" />
@@ -148,6 +147,8 @@
     <Compile Include="ViewModels\PrintPreviewViewModel.cs" />
     <Compile Include="ViewModels\PrintSCPViewModel.cs" />
     <Compile Include="ViewModels\PrintViewModel.cs" />
+    <Compile Include="ViewModels\QueryResultViewModel.cs" />
+    <Compile Include="ViewModels\QueryRetrieveViewModel.cs" />
     <Compile Include="ViewModels\ServerConfigViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\WorklistResultViewModel.cs" />
@@ -185,6 +186,12 @@
     </Compile>
     <Compile Include="Views\PrintView.xaml.cs">
       <DependentUpon>PrintView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\QueryResultView.xaml.cs">
+      <DependentUpon>QueryResultView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\QueryRetrieveView.xaml.cs">
+      <DependentUpon>QueryRetrieveView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ServerConfigView.xaml.cs">
       <DependentUpon>ServerConfigView.xaml</DependentUpon>
@@ -264,6 +271,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PrintView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\QueryResultView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\QueryRetrieveView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

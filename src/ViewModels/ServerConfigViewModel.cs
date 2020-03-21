@@ -188,12 +188,28 @@
                 _doRequestAction = WorklistQueryRequest;
                 _eventAggregator.Subscribe(this, nameof(WorklistResultViewModel));
             }
+            else if (parentViewModel is QueryRetrieveViewModel)
+            {
+                _doRequestAction = QueryRetrieveRequest;
+                _eventAggregator.Subscribe(this, nameof(QueryResultViewModel));
+                ServerIP = "www.dicomserver.co.uk";
+                ServerPort = "104";  // 104/11112
+                ServerAET = "QRSCP";
+            }
             else if (parentViewModel is CStoreViewModel)
             {
                 _doRequestAction = CStoreRequest;
                 _eventAggregator.Subscribe(this, nameof(CStoreFileListViewModel));
                 ServerPort = "104";
                 ServerAET = "CSTORESCP";
+                IsModalityEnabled = false;
+            }
+            else if (parentViewModel is PrintViewModel)
+            {
+                _doRequestAction = PrintRequest;
+                _eventAggregator.Subscribe(this, nameof(PrintPreviewViewModel));
+                ServerPort = "7104";
+                ServerAET = "PRINTSCP";
                 IsModalityEnabled = false;
             }
             else if (parentViewModel is CStoreSCPViewModel)
@@ -203,14 +219,6 @@
                 ServerPort = "104";
                 LocalAET = ServerAET = "CSTORESCP";
                 IsServerIPEnabled = IsServerAETEnabled = IsModalityEnabled = false;
-            }
-            else if (parentViewModel is PrintViewModel)
-            {
-                _doRequestAction = PrintRequest;
-                _eventAggregator.Subscribe(this, nameof(PrintPreviewViewModel));
-                ServerPort = "7104";
-                ServerAET = "PRINTSCP";
-                IsModalityEnabled = false;
             }
             else if (parentViewModel is PrintSCPViewModel)
             {
@@ -226,49 +234,52 @@
             }
         }
 
-        private void WorklistQueryRequest()
+        private void PublishClientRequest(string channel)
         {
             int port = ParseServerPort();
             if (port == 0)
                 return;
 
-            _eventAggregator.Publish(new WorklistRequestItem(_serverIP, port, _serverAET, _localAET, _modality));
+            _eventAggregator.Publish(new ClientMessageItem(_serverIP, port, _serverAET, _localAET, _modality), channel);
+        }
+
+        private void PublishServerRequest(string channel)
+        {
+            int port = ParseServerPort();
+            if (port == 0)
+                return;
+
+            _eventAggregator.Publish(new ServerMessageItem(port, _localAET), channel);
+        }
+
+        private void WorklistQueryRequest()
+        {
+            PublishClientRequest(nameof(WorklistResultViewModel));
+        }
+
+        private void QueryRetrieveRequest()
+        {
+            PublishClientRequest(nameof(QueryResultViewModel));
         }
 
         private void PrintRequest()
         {
-            int port = ParseServerPort();
-            if (port == 0)
-                return;
-
-            _eventAggregator.Publish(new PrintRequestItem(_serverIP, port, _serverAET, _localAET));
+            PublishClientRequest(nameof(PrintPreviewViewModel));
         }
 
         private void CStoreRequest()
         {
-            int port = ParseServerPort();
-            if (port == 0)
-                return;
-
-            _eventAggregator.Publish(new CStoreRequestItem(_serverIP, port, _serverAET, _localAET));
+            PublishClientRequest(nameof(CStoreFileListViewModel));
         }
 
         private void StartCStoreServer()
         {
-            int port = ParseServerPort();
-            if (port == 0)
-                return;
-
-            _eventAggregator.Publish(new ServerMessageItem(port, _localAET), nameof(CStoreReceivedViewModel));
+            PublishServerRequest(nameof(CStoreReceivedViewModel));
         }
 
         private void StartPrintServer()
         {
-            int port = ParseServerPort();
-            if (port == 0)
-                return;
-
-            _eventAggregator.Publish(new ServerMessageItem(port, _localAET), nameof(PrintJobsViewModel));
+            PublishServerRequest(nameof(PrintJobsViewModel));
         }
 
         public int ParseServerPort()

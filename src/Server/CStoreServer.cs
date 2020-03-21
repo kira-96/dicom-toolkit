@@ -35,7 +35,7 @@ namespace SimpleDICOMToolkit.Server
 
         public string AETitle { get; private set; } = "";
 
-        public string DcmDirPath { get; private set; } = "DICM";
+        public string DcmDirPath { get; private set; } = "DICOM";
 
         private CStoreServer()
         {}

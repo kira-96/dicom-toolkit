@@ -6,7 +6,7 @@
     using Client;
     using Models;
 
-    public class WorklistResultViewModel : Screen, IHandle<WorklistRequestItem>, IDisposable
+    public class WorklistResultViewModel : Screen, IHandle<ClientMessageItem>, IDisposable
     {
         private readonly IEventAggregator _eventAggregator;
 
@@ -25,7 +25,7 @@
         public WorklistResultViewModel(IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
-            _eventAggregator.Subscribe(this);
+            _eventAggregator.Subscribe(this, nameof(WorklistResultViewModel));
             WorklistItems = new BindableCollection<SimpleWorklistResult>();
         }
 
@@ -68,7 +68,7 @@
             StudyInstanceUID = null;
         }
 
-        public async void Handle(WorklistRequestItem message)
+        public async void Handle(ClientMessageItem message)
         {
             _eventAggregator.Publish(new BusyStateItem(true), nameof(WorklistResultViewModel));
 

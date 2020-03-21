@@ -26,10 +26,10 @@
             builder.Bind<IDialogServiceEx>().To<DialogServiceEx>().InSingletonScope().AsWeakBinding();
             builder.Bind<INotificationService>().To<NotificationService>().InSingletonScope().AsWeakBinding();
             builder.Bind<ICEchoSCU>().To<CEchoSCU>().InSingletonScope().AsWeakBinding();
-            builder.Bind<ICMoveSCU>().To<CMoveSCU>().InSingletonScope().AsWeakBinding();
             builder.Bind<ICStoreSCU>().To<CStoreSCU>().InSingletonScope().AsWeakBinding();
             builder.Bind<IPrintSCU>().To<PrintSCU>().InSingletonScope().AsWeakBinding();
             builder.Bind<IWorklistSCU>().To<WorklistSCU>().InSingletonScope().AsWeakBinding();
+            builder.Bind<IQueryRetrieveSCU>().To<QueryRetrieveSCU>().InSingletonScope().AsWeakBinding();
             builder.Bind<IViewModelFactory>().ToAbstractFactory();
         }
 
