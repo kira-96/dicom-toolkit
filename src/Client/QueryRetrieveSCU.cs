@@ -16,7 +16,6 @@
             List<DicomDataset> patients = new List<DicomDataset>();
 
             DicomCFindRequest request = RequestFactory.CreatePatientQuery(patientId, patientName);
-            request.Dataset.Add(DicomTag.SpecificCharacterSet, "ISO_IR 192");
             request.OnResponseReceived += (req, res) =>
             {
                 if (res.Status == DicomStatus.Success ||

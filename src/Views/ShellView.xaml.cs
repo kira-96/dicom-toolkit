@@ -4,6 +4,10 @@
     using System.Windows;
     using System.Windows.Forms;
     using Services;
+    using Utils;
+    using System;
+    using System.Windows.Interop;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// ShellView.xaml 的交互逻辑
@@ -47,10 +51,7 @@
         private void Window_Closing(object s, System.ComponentModel.CancelEventArgs e)
         {
             // 弹窗提示是否确定退出
-            MessageBoxResult result = System.Windows.MessageBox.Show(
-                "确定要退出吗？", "退出应用？", 
-                MessageBoxButton.YesNo, 
-                MessageBoxImage.Information);
+            MessageBoxResult result = ShowMessageBoxBeforeExit();
 
             if (result == MessageBoxResult.No)
             {
@@ -99,6 +100,46 @@
         private void MenuItemExitClick(object s, RoutedEventArgs e)
         {
             Close();
+        }
+
+        /// <summary>
+        /// 显示消息框并将鼠标移动到默认按钮位置
+        /// </summary>
+        /// <returns>MessageBoxResult</returns>
+        private MessageBoxResult ShowMessageBoxBeforeExit()
+        {
+            string title = "退出应用？";
+            IntPtr thisWindow = new WindowInteropHelper(this).Handle;
+            bool messageBoxClosed = false;
+
+            // 由于MessageBox会阻塞主线程
+            // 需要使用另外一个线程进行操作
+            Task.Run(() =>
+            {
+                IntPtr messageBoxHandle = IntPtr.Zero;
+                IntPtr activeWindow = IntPtr.Zero;
+                // 线程启动时可能MessageBox还没弹出，所以需要循环查找
+                while (messageBoxHandle == IntPtr.Zero || activeWindow != messageBoxHandle)
+                {
+                    Task.Delay(100);
+                    if (messageBoxClosed) return;
+                    messageBoxHandle = WindowsAPI.FindWindow(null, title);  // 查找对话框窗口
+                    activeWindow = WindowsAPI.GetForegroundWindow();  // 查找当前激活窗口，MessageBox会弹出到最前
+                }
+                WindowsAPI.GetWindowRect(messageBoxHandle, out MyRect rect);
+                WindowsAPI.SetCursorPos(rect.Right - 72, rect.Bottom - 36);  // 设置鼠标位置
+            });
+
+            MessageBoxResult result = System.Windows.MessageBox.Show(
+                this,
+                "确定要退出吗？", title,
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Information,
+                MessageBoxResult.No);
+
+            messageBoxClosed = true;
+
+            return result;
         }
     }
 }
