@@ -32,7 +32,9 @@
             {
                 Visible = false,
                 Text = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name,
-                Icon = new System.Drawing.Icon(System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("SimpleDICOMToolkit.Icons.icon.ico"))
+                Icon = new System.Drawing.Icon(
+                    System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("SimpleDICOMToolkit.Icons.icon.ico"),
+                    System.Windows.Forms.SystemInformation.SmallIconSize)
             };
 
             notifyIcon.MouseClick += TrayIconMouseClick;
