@@ -4,11 +4,82 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:s="https://github.com/canton7/Stylet"
+             xmlns:m="clr-namespace:SimpleDICOMToolkit.Models"
              xmlns:v="clr-namespace:SimpleDICOMToolkit.Views"
              mc:Ignorable="d" 
              d:DesignWidth="340"
              d:DesignHeight="420">
 
+    <UserControl.Resources>
+        <DataTemplate x:Key="ItemTemplate" DataType="{x:Type m:DicomObjectLevel}">
+            <TextBlock Text="{Binding Text}" ToolTip="{Binding Text}" VerticalAlignment="Center" />
+        </DataTemplate>
+        <Style TargetType="{x:Type ListViewItem}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Margin" Value="0 0 0 1" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListViewItem}">
+                        <Border x:Name="ContainerBorder"
+                                BorderThickness="0"
+                                SnapsToDevicePixels="True"
+                                HorizontalAlignment="Left"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter x:Name="ContentPresenter" 
+                                              Content="{TemplateBinding Content}"
+                                              ContentTemplate="{StaticResource ItemTemplate}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ContainerBorder" Property="Background" Value="LightSkyBlue" />
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Foreground" Value="White" />
+                                <Setter TargetName="ContainerBorder" Property="Background" Value="#2a5caa" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="{x:Type ListView}">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
+        </Style>
+    </UserControl.Resources>
+    
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="18" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Rectangle Grid.Column="0" Fill="DodgerBlue" Margin="0 0 1 0" />
+        <Rectangle Grid.Column="1" Fill="DodgerBlue" Margin="0 0 1 0" />
+        <Rectangle Grid.Column="2" Fill="DodgerBlue" Margin="0 0 1 0" />
+        <Rectangle Grid.Column="3" Fill="DodgerBlue" Margin="0" />
+        <TextBlock Grid.Column="0" Text="Patient" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <TextBlock Grid.Column="1" Text="Study" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <TextBlock Grid.Column="2" Text="Series" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <TextBlock Grid.Column="3" Text="Images" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <ListView x:Name="PatientList" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding QueryResult}" SelectedItem="{Binding SelectedPatient}" />
+        <ListView x:Name="StudyList" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding SelectedPatient.Children}" SelectedItem="{Binding SelectedStudy}" />
+        <ListView x:Name="SeriesList" Grid.Row="1" Grid.Column="2" ItemsSource="{Binding SelectedStudy.Children}" SelectedItem="{Binding SelectedSeries}" />
+        <ListView x:Name="ImagesList" Grid.Row="1" Grid.Column="3" ItemsSource="{Binding SelectedSeries.Children}" SelectedItem="{Binding SelectedImage}">
+            <ListView.Style>
+                <Style TargetType="{x:Type ListView}">
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
+                    <EventSetter Event="MouseDoubleClick" Handler="ImagesListMouseDoubleClick" />
+                </Style>
+            </ListView.Style>
+        </ListView>
     </Grid>
 </UserControl>

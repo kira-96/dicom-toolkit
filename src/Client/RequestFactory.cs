@@ -105,6 +105,13 @@ namespace SimpleDICOMToolkit.Client
             return request;
         }
 
+        public static DicomCGetRequest CreateCGetBySOPInstanceUID(string studyInstanceUID, string seriesInstanceUID, string sopInstanceUID, DicomPriority priority = DicomPriority.Medium)
+        {
+            var request = new DicomCGetRequest(studyInstanceUID, seriesInstanceUID, sopInstanceUID, priority);
+            // no more dicomtags have to be set
+            return request;
+        }
+
         public static DicomCMoveRequest CreateCMoveByStudyUID(string destAET, string studyInstanceUID, DicomPriority priority = DicomPriority.Medium)
         {
             var request = new DicomCMoveRequest(destAET, studyInstanceUID, priority);

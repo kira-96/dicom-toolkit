@@ -4,17 +4,21 @@
 
 ## 功能
 
-- Simple Dicom Dump
-
-    慎用修改和保存功能
+- Simple Dicom Dump [**慎用修改和保存功能**]
 
 - Worklist SCU with MPPS
 
-- Query Retrieve SCU [未完成]
+- Query Retrieve SCU [测试功能]
 
 - C-Store SCU/SCP
 
 - Print SCU/SCP
+
+## 命令行参数
+
+客户端模式 ["-c", "/c", "--client"]
+
+服务端模式 ["-s", "/s", "--server"]
 
 ## dependency packages
 

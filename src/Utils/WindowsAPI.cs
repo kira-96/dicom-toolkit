@@ -59,6 +59,11 @@ namespace SimpleDICOMToolkit.Utils
         [DllImport("user32.dll", EntryPoint = "FindWindowEx")]
         public static extern IntPtr FindWindowEx(IntPtr parent, IntPtr childAfter, string classname, string windowname);
 
+        public delegate bool WndEnumProc(IntPtr hWnd, IntPtr lParam);
+
+        [DllImport("user32.dll", EntryPoint = "EnumThreadWindows")]
+        public static extern bool EnumThreadWindows(uint threadId, WndEnumProc lpfn, IntPtr lParam);
+
         [DllImport("user32.dll", EntryPoint = "MoveWindow")]
         public static extern void MoveWindow(IntPtr hwnd, int x, int y, int width, int height, bool repaient);
 

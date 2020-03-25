@@ -13,9 +13,6 @@
         [Inject]
         private IWorklistSCU _worklistSCU;
 
-        [Inject]
-        private IViewModelFactory _viewModelFactory;  // 抽象工厂模式
-
         // 由于只是简单测试，这里只做临时保存
         private Dicom.DicomUID AffectedInstanceUID = null;
         private string StudyInstanceUID = null;
@@ -33,7 +30,7 @@
         {
             var dataset = (_worklistSCU as WorklistSCU).GetWorklistItemByPID(item.PatientId);
 
-            var config = _viewModelFactory.GetWorklistViewModel().ServerConfigViewModel;
+            var config = SimpleIoC.Get<WorklistViewModel>().ServerConfigViewModel;
 
             int port = config.ParseServerPort();
             if (port == 0) return;
@@ -57,7 +54,7 @@
 
             var dataset = (_worklistSCU as WorklistSCU).GetWorklistItemByPID(item.PatientId);
 
-            var config = _viewModelFactory.GetWorklistViewModel().ServerConfigViewModel;
+            var config = SimpleIoC.Get<WorklistViewModel>().ServerConfigViewModel;
 
             int port = config.ParseServerPort();
             if (port == 0) return;

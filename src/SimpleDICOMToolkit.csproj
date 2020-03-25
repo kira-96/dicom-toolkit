@@ -101,6 +101,8 @@
     <Compile Include="Client\RequestFactory.cs" />
     <Compile Include="Controls\EffectBehavior.cs" />
     <Compile Include="Controls\TextBoxPlaceholderBehavior.cs" />
+    <Compile Include="IoCModules\DicomSCUModule.cs" />
+    <Compile Include="IoCModules\ViewModelModule.cs" />
     <Compile Include="Models\DicomObjectLevel.cs" />
     <Compile Include="Models\ServerMessageItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -135,13 +137,14 @@
     <Compile Include="Server\PrintJob.cs" />
     <Compile Include="Server\PrintSCP.cs" />
     <Compile Include="Server\PrintServer.cs" />
+    <Compile Include="IoCModules\ServicesModule.cs" />
     <Compile Include="Services\DialogServiceEx.cs" />
     <Compile Include="Services\IDialogServiceEx.cs" />
     <Compile Include="Services\INotificationService.cs" />
     <Compile Include="Services\NotificationService.cs" />
     <Compile Include="SimpleIoC.cs" />
     <Compile Include="Utils\BitmapUtil.cs" />
-    <Compile Include="Utils\CommandLineArgsUtil.cs" />
+    <Compile Include="Utils\ApplicationUtil.cs" />
     <Compile Include="Utils\EnvUtil.cs" />
     <Compile Include="Utils\ProcessUtil.cs" />
     <Compile Include="Utils\WindowsAPI.cs" />

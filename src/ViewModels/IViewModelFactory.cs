@@ -11,5 +11,9 @@
         CStoreViewModel GetCStoreViewModel(string key = null);
 
         CStoreSCPViewModel GetStoreSCPViewModel(string key = null);
+
+        PrintSCPViewModel GetPrintSCPViewModel(string key = null);
+
+        QueryRetrieveViewModel GetQueryRetrieveViewModel(string key = null);
     }
 }

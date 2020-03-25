@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using Stylet;
 
 namespace SimpleDICOMToolkit.Models
 {
@@ -12,31 +12,40 @@ namespace SimpleDICOMToolkit.Models
 
     public interface IDicomObjectLevel
     {
-        string DisplayName { get; }
+        string Text { get; }
+
+        string UID { get; }
+
+        bool HasChildren { get; }
 
         Level Level { get; }
 
         IDicomObjectLevel Parent { get; }
 
-        List<IDicomObjectLevel> Children { get; }
+        BindableCollection<IDicomObjectLevel> Children { get; }
     }
 
     public class DicomObjectLevel : IDicomObjectLevel
     {
-        public string DisplayName { get; private set; }
+        public string Text { get; private set; }
+
+        public string UID { get; }
+
+        public bool HasChildren => Children.Count > 0;
 
         public Level Level { get; }
 
         public IDicomObjectLevel Parent { get; }
 
-        public List<IDicomObjectLevel> Children { get; }
+        public BindableCollection<IDicomObjectLevel> Children { get; }
 
-        public DicomObjectLevel(string name, Level level, IDicomObjectLevel parent)
+        public DicomObjectLevel(string text, string uid, Level level, IDicomObjectLevel parent)
         {
-            DisplayName = name;
+            Text = text;
+            UID = uid;
             Level = level;
             Parent = parent;
-            Children = new List<IDicomObjectLevel>();
+            Children = new BindableCollection<IDicomObjectLevel>();
         }
     }
 }

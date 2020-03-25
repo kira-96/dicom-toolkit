@@ -43,9 +43,9 @@
             return patients;
         }
 
-        public async Task<List<string>> QueryStudiesByPatientAsync(string serverIp, int serverPort, string serverAET, string localAET, string patientId = null, string patientName = null, DicomDateRange studyDateTime = null)
+        public async Task<List<DicomDataset>> QueryStudiesByPatientAsync(string serverIp, int serverPort, string serverAET, string localAET, string patientId = null, string patientName = null, DicomDateRange studyDateTime = null)
         {
-            List<string> studyUids = new List<string>();
+            List<DicomDataset> studyUids = new List<DicomDataset>();
 
             DicomCFindRequest request = RequestFactory.CreateStudyQuery(patientId, patientName, studyDateTime);
             request.OnResponseReceived += (req, res) =>
@@ -53,13 +53,13 @@
                 if (res.Status == DicomStatus.Success ||
                     res.Status == DicomStatus.Pending)
                 {
-                    if (res.HasDataset && res.Dataset.Contains(DicomTag.StudyInstanceUID))
+                    if (res.HasDataset)
                     {
-                        studyUids.Add(res.Dataset.GetString(DicomTag.StudyInstanceUID));
+                        studyUids.Add(res.Dataset);
                     }
                     else
                     {
-                        logger.Error("Query response dataset not contains [Study Instance UID].");
+                        logger.Error("Query studies response has no dataset.");
                     }
                 }
                 else
@@ -75,9 +75,9 @@
             return studyUids;
         }
 
-        public async Task<List<string>> QuerySeriesByStudyAsync(string serverIp, int serverPort, string serverAET, string localAET, string studyInstanceUid, string modality = null)
+        public async Task<List<DicomDataset>> QuerySeriesByStudyAsync(string serverIp, int serverPort, string serverAET, string localAET, string studyInstanceUid, string modality = null)
         {
-            List<string> seriesUids = new List<string>();
+            List<DicomDataset> seriesUids = new List<DicomDataset>();
 
             DicomCFindRequest request = RequestFactory.CreateSeriesQuery(studyInstanceUid, modality);
             request.OnResponseReceived += (req, res) =>
@@ -85,13 +85,13 @@
                 if (res.Status == DicomStatus.Success ||
                     res.Status == DicomStatus.Pending)
                 {
-                    if (res.HasDataset && res.Dataset.Contains(DicomTag.SeriesInstanceUID))
+                    if (res.HasDataset)
                     {
-                        seriesUids.Add(res.Dataset.GetString(DicomTag.SeriesInstanceUID));
+                        seriesUids.Add(res.Dataset);
                     }
                     else
                     {
-                        logger.Error("Query response dataset not contains [Series Instance UID].");
+                        logger.Error("Query series response has no dataset.");
                     }
                 }
                 else
@@ -107,9 +107,9 @@
             return seriesUids;
         }
 
-        public async Task<List<string>> QueryImagesByStudyAndSeriesAsync(string serverIp, int serverPort, string serverAET, string localAET, string studyInstanceUid, string seriesInstanceUid, string modality = null)
+        public async Task<List<DicomDataset>> QueryImagesByStudyAndSeriesAsync(string serverIp, int serverPort, string serverAET, string localAET, string studyInstanceUid, string seriesInstanceUid, string modality = null)
         {
-            List<string> sopUids = new List<string>();
+            List<DicomDataset> sopUids = new List<DicomDataset>();
 
             DicomCFindRequest request = RequestFactory.CreateImageQuery(studyInstanceUid, seriesInstanceUid, modality);
             request.OnResponseReceived += (req, res) =>
@@ -117,13 +117,13 @@
                 if (res.Status == DicomStatus.Success ||
                     res.Status == DicomStatus.Pending)
                 {
-                    if (res.HasDataset && res.Dataset.Contains(DicomTag.SOPInstanceUID))
+                    if (res.HasDataset)
                     {
-                        sopUids.Add(res.Dataset.GetString(DicomTag.SOPInstanceUID));
+                        sopUids.Add(res.Dataset);
                     }
                     else
                     {
-                        logger.Error("Query response dataset not contains [SOP Instance UID].");
+                        logger.Error("Query images response has no dataset.");
                     }
                 }
                 else
@@ -150,6 +150,41 @@
                 if (req.HasDataset)
                 {
                     imageDatasets.Add(req.Dataset);
+                    return await Task.FromResult(new DicomCStoreResponse(req, DicomStatus.Success));
+                }
+                else
+                {
+                    logger.Error("C-STORE request has no dataset.");
+                    return await Task.FromResult(new DicomCStoreResponse(req, DicomStatus.AttributeListError));
+                }
+            };
+            // the client has to accept storage of the images. We know that the requested images are of SOP class Secondary capture,
+            // so we add the Secondary capture to the additional presentation context
+            // a more general approach would be to mace a cfind-request on image level and to read a list of distinct SOP classes of all
+            // the images. these SOP classes shall be added here.
+            var pcs = DicomPresentationContext.GetScpRolePresentationContextsFromStorageUids(
+                DicomStorageCategory.Image,
+                DicomTransferSyntax.ExplicitVRLittleEndian,
+                DicomTransferSyntax.ImplicitVRLittleEndian,
+                DicomTransferSyntax.ImplicitVRBigEndian);
+            client.AdditionalPresentationContexts.AddRange(pcs);
+            await client.AddRequestAsync(request);
+            await client.SendAsync();
+
+            return imageDatasets;
+        }
+
+        public async Task<DicomDataset> GetImagesBySOPInstanceAsync(string serverIp, int serverPort, string serverAET, string localAET, string studyInstanceUid, string seriesInstanceUid, string sopInstanceUid)
+        {
+            DicomDataset imageDatasets = null;
+
+            DicomCGetRequest request = RequestFactory.CreateCGetBySeriesUID(studyInstanceUid, seriesInstanceUid);
+            DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
+            client.OnCStoreRequest += async (req) =>
+            {
+                if (req.HasDataset)
+                {
+                    imageDatasets = req.Dataset;
                     return await Task.FromResult(new DicomCStoreResponse(req, DicomStatus.Success));
                 }
                 else

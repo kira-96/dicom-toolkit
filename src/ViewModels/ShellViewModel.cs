@@ -24,7 +24,7 @@
             DisplayName = WindowName;
             logger = loggerService;
 
-            string[] args = CommandLineArgsUtil.CommandLineArgs;
+            string[] args = ApplicationUtil.CommandLineArgs;
 
             if (args.Length <= 1)
             {
@@ -36,11 +36,11 @@
                 logger.Debug("Application startup with Args: [{0}]", string.Join(" ", System.Environment.GetCommandLineArgs()));
                 // 第一个参数为应用程序路径
                 // 只检测第2个参数
-                if (CommandLineArgsUtil.IsClientModeOnly(args[1]))
+                if (ApplicationUtil.IsClientModeOnly(args[1]))
                 {
                     AddClientModeItems(dcmItemsViewModel, worklistViewModel, queryRetrieveViewModel, cstoreViewModel, printViewModel);
                 }
-                else if (CommandLineArgsUtil.IsServerModeOnly(args[1]))
+                else if (ApplicationUtil.IsServerModeOnly(args[1]))
                 {
                     AddServerModeItems(cstoreSCPViewModel, printSCPViewModel);
                 }
