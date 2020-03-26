@@ -1,15 +1,24 @@
 ﻿namespace SimpleDICOMToolkit.Views
 {
     using StyletIoC;
+    using System;
+    using System.Reflection;
     using System.Windows;
     using System.Windows.Forms;
+    using System.Windows.Interop;
     using Services;
+    using static Utils.WindowsAPI;
 
     /// <summary>
     /// ShellView.xaml 的交互逻辑
     /// </summary>
     public partial class ShellView : Window
     {
+        /// <summary>
+        /// Menu Item ID
+        /// </summary>
+        private const uint IDM_ABOUT = 1001;
+
         [Inject]
         private INotificationService notificationService;
 
@@ -26,14 +35,86 @@
             InitializeTrayIcon();
         }
 
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+
+            IntPtr hWnd = new WindowInteropHelper(this).Handle;
+
+            // 修改系统菜单
+            ModifySystemMenu(hWnd);
+
+            // 添加窗口消息钩子
+            HwndSource.FromHwnd(hWnd).AddHook(new HwndSourceHook(WndProc));
+        }
+
+        /// <summary>
+        /// 注意，移除系统菜单后，相应功能也会被禁用
+        /// 由于本窗口没有调整大小功能，可以只保留“移动”和“关闭”
+        /// 并添加“关于”
+        /// </summary>
+        private void ModifySystemMenu(IntPtr hWnd)
+        {
+            IntPtr hMenu = GetSystemMenu(hWnd);
+
+            /** 系统菜单默认排列
+             * 还原
+             * 移动
+             * 大小
+             * 最小化/还原
+             * 最大化
+             * 关闭
+             */
+            RemoveMenu(hMenu, 0, MF_DISABLED | MF_BYPOSITION);
+            RemoveMenu(hMenu, 1, MF_DISABLED | MF_BYPOSITION);
+            RemoveMenu(hMenu, 1, MF_DISABLED | MF_BYPOSITION);
+            RemoveMenu(hMenu, 1, MF_DISABLED | MF_BYPOSITION);
+            InsertMenu(hMenu, 0, MF_SEPARATOR, 0, null);  // 添加分割线
+            InsertMenu(hMenu, 2, MF_BYPOSITION, IDM_ABOUT, "关于(&A)");
+        }
+
+        /// <summary>
+        /// 窗口消息处理函数
+        /// </summary>
+        /// <param name="hwnd"></param>
+        /// <param name="msg"></param>
+        /// <param name="wParam"></param>
+        /// <param name="lParam"></param>
+        /// <param name="handled"></param>
+        /// <returns></returns>
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            // 这里只需要处理“关于”菜单按钮事件
+            if (msg == WM_SYSCOMMAND)
+            {
+                if (wParam.ToInt32() == IDM_ABOUT)
+                {
+                    handled = true;
+                    ShowAbout();
+                }
+            }
+
+            return IntPtr.Zero;
+        }
+
+        /// <summary>
+        /// 显示"关于"
+        /// </summary>
+        private void ShowAbout()
+        {
+            Version version = Assembly.GetExecutingAssembly().GetName().Version;
+
+            dialogService.ShowMessageBox($"版本: {version}", "关于", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, this);
+        }
+
         private void InitializeTrayIcon()
         {
             notifyIcon = new NotifyIcon()
             {
                 Visible = false,
-                Text = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name,
+                Text = Assembly.GetExecutingAssembly().GetName().Name,
                 Icon = new System.Drawing.Icon(
-                    System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("SimpleDICOMToolkit.Icons.icon.ico"),
+                    Assembly.GetExecutingAssembly().GetManifestResourceStream("SimpleDICOMToolkit.Icons.icon.ico"),
                     System.Windows.Forms.SystemInformation.SmallIconSize)
             };
 
@@ -65,14 +146,14 @@
             }
         }
 
-        private void Window_Closed(object s, System.EventArgs e)
+        private void Window_Closed(object s, EventArgs e)
         {
             notifyIcon.MouseClick -= TrayIconMouseClick;
             notifyIcon.MouseDoubleClick -= TrayIconMouseDoubleClick;
             notifyIcon.Dispose();
         }
 
-        private void Window_Deactivated(object s, System.EventArgs e)
+        private void Window_Deactivated(object s, EventArgs e)
         {
             trayIconContextMenu.IsOpen = false;
         }

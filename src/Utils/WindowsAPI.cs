@@ -14,6 +14,9 @@ namespace SimpleDICOMToolkit.Utils
     public static class WindowsAPI
     {
         #region System API
+
+        public const int WM_SYSCOMMAND = 0x112;  // 系统菜单事件消息
+
         [DllImport("user32.dll", EntryPoint = "GetActiveWindow")]
         public static extern IntPtr GetActiveWindow();
 
@@ -72,6 +75,36 @@ namespace SimpleDICOMToolkit.Utils
 
         [DllImport("user32.dll", EntryPoint = "SetCursorPos")]
         public static extern int SetCursorPos(int x, int y);
+
+        public const int MF_INSERT = 0;
+        public const int MF_BYCOMMAND = 0;
+        public const int MF_BYPOSITION = 0x400;
+        public const int MF_SEPARATOR = 0x800;
+
+        public const int MF_ENABLED = 0x00000000;
+        public const int MF_GRAYED = 0x00000001;
+        public const int MF_DISABLED = 0x00000002;
+
+        [DllImport("user32.dll", EntryPoint = "GetSystemMenu")]
+        public static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert = false);
+
+        [DllImport("user32.dll", EntryPoint = "GetMenuItemCount")]
+        public static extern int GetMenuItemCount(IntPtr hMenu);
+
+        [DllImport("user32.dll", EntryPoint = "GetSubMenu")]
+        public static extern IntPtr GetSubMenu(IntPtr hMenu, int nPos);
+
+        [DllImport("user32.dll", EntryPoint = "InsertMenu")]
+        public static extern bool InsertMenu(IntPtr hMenu, uint uPosition, uint uFlags, ulong uIDNewItem, string newItem);
+
+        [DllImport("user32.dll", EntryPoint = "RemoveMenu")]
+        public static extern bool RemoveMenu(IntPtr hMenu, uint nPosition, uint nFlags);
+
+        [DllImport("user32.dll", EntryPoint = "DeleteMenu")]
+        public static extern bool DeleteMenu(IntPtr hMenu, uint nPosition, uint nFlags);
+
+        [DllImport("user32.dll", EntryPoint = "AppendMenu")]
+        public static extern bool AppendMenu(IntPtr hMenu, uint uFlags, uint uIDNewItem, string newItem);
 
         #endregion
 
