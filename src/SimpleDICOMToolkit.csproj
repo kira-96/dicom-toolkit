@@ -93,10 +93,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Client\PrintOptions.cs" />
     <Compile Include="Client\RequestFactory.cs" />
     <Compile Include="Controls\EffectBehavior.cs" />
