@@ -94,6 +94,21 @@
             }
         }
 
+        public void DcmItemTapped(DcmItem item)
+        {
+            if (item.TagType != DcmTagType.Tag)
+                return;
+
+            if (IsPixelDataItem(item))
+            {
+                ShowDcmImage();
+            }
+            else
+            {
+                EditDicomItem(item);
+            }
+        }
+
         public bool IsPixelDataItem(DcmItem item)
         {
             return item.DcmTag.CompareTo(DicomTag.PixelData) == 0;

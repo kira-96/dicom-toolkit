@@ -15,20 +15,19 @@
                   DragEnter="{s:Action OnDragFileOver}"
                   DragOver="{s:Action OnDragFileOver}"
                   Drop="{s:Action OnDropFile}"
-                  ItemsSource="{Binding DicomItems}">
+                  ItemsSource="{Binding DicomItems}"
+                  BorderThickness="0">
             <TreeView.InputBindings>
                 <KeyBinding Gesture="Ctrl+S" Command="{s:Action SaveNewDicom}" />
             </TreeView.InputBindings>
-            <TreeView.ItemContainerStyle>
-                <Style TargetType="{x:Type TreeViewItem}">
-                    <EventSetter Event="MouseDoubleClick" Handler="DcmItemMouseDoubleClick" />
-                </Style>
-            </TreeView.ItemContainerStyle>
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type m:DcmItem}" ItemsSource="{Binding SequenceItems}">
                     <StackPanel Orientation="Horizontal" ToolTip="{Binding Path=TagDescription}">
                         <Image x:Name="Icon" Width="18" Height="18" Margin="0,0,4,0" />
                         <TextBlock Text="{Binding Path=Header}" VerticalAlignment="Center" />
+                        <StackPanel.InputBindings>
+                            <MouseBinding MouseAction="LeftDoubleClick" Command="{s:Action DcmItemTapped}" CommandParameter="{Binding}" />
+                        </StackPanel.InputBindings>
                     </StackPanel>
                     <DataTemplate.Triggers>
                         <MultiDataTrigger>
