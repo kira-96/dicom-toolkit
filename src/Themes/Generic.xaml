@@ -3,5 +3,6 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Themes/AduLoading.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Themes/NeteaseResizeGrip.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

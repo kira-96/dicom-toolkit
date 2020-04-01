@@ -106,13 +106,72 @@ namespace SimpleDICOMToolkit.Utils
         [DllImport("user32.dll", EntryPoint = "AppendMenu")]
         public static extern bool AppendMenu(IntPtr hMenu, uint uFlags, uint uIDNewItem, string newItem);
 
-        #endregion
+        /*
+         * Window field offsets for GetWindowLong()
+         */
+        public const int GWL_WNDPROC = -4;
+        public const int GWL_HINSTANCE = -6;
+        public const int GWL_HWNDPARENT = -8;
+        public const int GWL_STYLE = -16;
+        public const int GWL_EXSTYLE = -20;
+        public const int GWL_USERDATA = -21;
+        public const int GWL_ID = -12;
 
+        public const int WS_SYSMENU = 0x00080000;
+
+        [DllImport("user32.dll", EntryPoint = "GetWindowLong")]
+        public static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+
+        [DllImport("user32.dll", EntryPoint = "GetWindowLongPtr")]
+        public static extern IntPtr GetWindowLongPtr(IntPtr hWnd, int nIndex);
+
+        [DllImport("user32.dll", EntryPoint = "SetWindowLong")]
+        private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+
+        [DllImport("user32.dll", EntryPoint = "SetWindowLongPtr")]
+        private static extern IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
+
+        #endregion
+        
         public static void FindWindowAndActive(string classname, string windowname)
         {
             IntPtr hWnd = FindWindow(classname, windowname);
             ShowWindow(hWnd, SW_NORMAL);
             SetForegroundWindow(hWnd);
+        }
+
+        public static void SetWindowSystemMenu(IntPtr hWnd, bool isEnabled)
+        {
+            if (Environment.Is64BitProcess)
+                SetWindowSystemMenu64(hWnd, isEnabled);
+            else
+                SetWindowSystemMenu32(hWnd, isEnabled);
+        }
+
+        private static void SetWindowSystemMenu32(IntPtr hWnd, bool isEnabled)
+        {
+            int windowLong = GetWindowLong(hWnd, GWL_STYLE);
+
+            if (isEnabled) windowLong |= WS_SYSMENU;
+            else windowLong &= ~WS_SYSMENU;
+
+            SetWindowLong(hWnd, GWL_STYLE, windowLong);
+        }
+
+        private static void SetWindowSystemMenu64(IntPtr hWnd, bool isEnabled)
+        {
+            int windowLong = GetWindowLongPtr(hWnd, GWL_STYLE).ToInt32();
+
+
+            if (isEnabled) windowLong |= WS_SYSMENU;
+            else windowLong &= ~WS_SYSMENU;
+
+            SetWindowLongPtr(hWnd, GWL_STYLE, new IntPtr(windowLong));
+        }
+
+        public static IntPtr HookSystemMenu(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            return IntPtr.Zero;
         }
     }
 }

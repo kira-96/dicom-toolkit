@@ -235,6 +235,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\NeteaseResizeGrip.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\SingleRound.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
