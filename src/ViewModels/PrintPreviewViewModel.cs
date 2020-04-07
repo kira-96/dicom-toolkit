@@ -7,12 +7,12 @@
     using System.Collections.Generic;
     using System.Drawing;
     using System.IO;
+    using System.Windows;
     using System.Windows.Media.Imaging;
     using Client;
     using Services;
     using Models;
     using Utils;
-    using System.Windows;
 
     public class PrintPreviewViewModel : Screen, IHandle<ClientMessageItem>, IDisposable
     {
@@ -58,7 +58,7 @@
             _eventAggregator = eventAggregator;
             _eventAggregator.Subscribe(this, nameof(PrintPreviewViewModel));
 
-            AddDcmImage(System.Environment.CurrentDirectory + "\\942A.dcm");
+            AddDcmImage(Environment.CurrentDirectory + "\\Fate.dcm");
         }
 
         public async void Handle(ClientMessageItem message)
@@ -68,12 +68,14 @@
 
             _eventAggregator.Publish(new BusyStateItem(true), nameof(PrintPreviewViewModel));
 
+            var (orientation, size, magnification, medium) = GetPrintOptions();
+
             PrintOptions options = new PrintOptions()
             {
-                Orientation = FilmOrientation.Portrail,
-                FilmSize = FilmSize.E14InX17In,
-                MagnificationType = MagnificationType.None,
-                MediumType = MediumType.BlueFilm
+                Orientation = orientation,
+                FilmSize = size,
+                MagnificationType = magnification,
+                MediumType = medium
             };
 
             List<Bitmap> images = new List<Bitmap>();
@@ -102,7 +104,7 @@
             if (!e.Data.GetDataPresent(DataFormats.FileDrop))
                 return;
 
-            System.Array files = e.Data.GetData(DataFormats.FileDrop) as System.Array;
+            Array files = e.Data.GetData(DataFormats.FileDrop) as Array;
 
             foreach (object file in files)
             {
@@ -113,6 +115,12 @@
 
                 AddDcmImage(file.ToString());
             }
+        }
+
+        private (FilmOrientation orientation, FilmSize size, MagnificationType magnification, MediumType medium) GetPrintOptions()
+        {
+            var optionsVm = SimpleIoC.Get<PrintViewModel>().PrintOptionsViewModel;
+            return ((FilmOrientation)optionsVm.Orientation, (FilmSize)optionsVm.Size, (MagnificationType)optionsVm.Magnification, (MediumType)optionsVm.Medium);
         }
 
         private void AddDcmImage(string file)

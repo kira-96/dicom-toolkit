@@ -7,7 +7,13 @@
     public class PrintViewModel : Screen, IDisposable
     {
         [Inject]
+        private IWindowManager _windowManager;
+
+        [Inject]
         public ServerConfigViewModel ServerConfigViewModel { get; private set; }
+
+        [Inject]
+        public PrintOptionsViewModel PrintOptionsViewModel { get; private set; }
 
         [Inject]
         public PrintPreviewViewModel PrintPreviewViewModel { get; private set; }
@@ -23,10 +29,16 @@
             ServerConfigViewModel.Init(this);
         }
 
+        public void ShowOptions()
+        {
+            _windowManager.ShowDialog(PrintOptionsViewModel);
+        }
+
         public void Dispose()
         {
             // TODO
             ServerConfigViewModel.Dispose();
+            PrintOptionsViewModel.Dispose();
             PrintPreviewViewModel.Dispose();
         }
     }

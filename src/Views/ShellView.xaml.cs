@@ -69,8 +69,8 @@
             //RemoveMenu(hMenu, 1, MF_DISABLED | MF_BYPOSITION);
             //RemoveMenu(hMenu, 1, MF_DISABLED | MF_BYPOSITION);
             //RemoveMenu(hMenu, 1, MF_DISABLED | MF_BYPOSITION);
-            InsertMenu(hMenu, 0, MF_SEPARATOR, 0, null);  // 添加分割线
-            InsertMenu(hMenu, 6, MF_BYPOSITION, IDM_ABOUT, "关于(&A)");
+            InsertMenu(hMenu, 1, MF_SEPARATOR, 0, null);  // 添加分割线
+            InsertMenu(hMenu, 8, MF_BYPOSITION, IDM_ABOUT, "关于(&A)");
         }
 
         /// <summary>

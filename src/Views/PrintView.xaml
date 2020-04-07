@@ -9,6 +9,45 @@
              mc:Ignorable="d" 
              d:DesignWidth="600"
              d:DesignHeight="480">
+
+    <UserControl.Resources>
+        <Style x:Key="SettingsButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Padding" Value="1" />
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="ContentBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="Transparent"
+                                CornerRadius="2"
+                                BorderThickness="1"
+                                SnapsToDevicePixels="True"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter Content="{TemplateBinding Content}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ContentBorder" Property="BorderBrush" Value="LightGray" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ContentBorder" Property="Background" Value="LightSkyBlue" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="ContentBorder" Property="Background" Value="LightGray" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
     
     <Grid Background="White">
         <Grid.ColumnDefinitions>
@@ -21,6 +60,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="0"
                         ToolTip="Test Connect"
@@ -35,6 +75,13 @@
                         Command="{s:Action DoRequest, ActionNotFound=Disable}">
                     <Image Width="20" Height="20" Stretch="Fill"
                            Source="pack://application:,,,/Icons/print.png" />
+                </Button>
+                <Button Grid.Column="2" ToolTip="Print Options"
+                        Style="{StaticResource SettingsButtonStyle}"
+                        s:View.ActionTarget="{Binding}"
+                        Command="{s:Action ShowOptions, ActionNotFound=Disable}">
+                    <Image Width="20" Height="20" Stretch="Fill" 
+                           Source="pack://application:,,,/Icons/settings.png" />
                 </Button>
                 <c:AduLoading SpeedRatio="1" Type="Apple" 
                               Foreground="#2a5caa" Margin="0,-24,0,0"

@@ -256,6 +256,7 @@
         MammoBlueFilm
     }
 
+
     /// <summary>
     /// Film destination.
     /// </summary>
@@ -281,23 +282,11 @@
     /// </item>
     /// </list>
     /// </remarks>
-    public enum FilmDestination
+    public class FilmDestination
     {
-        /// <summary>
-        /// MAGAZINE
-        /// </summary>
-        Magazine,
+        public const string MAGAZINE = "MAGAZINE";
 
-        /// <summary>
-        /// PROCESSOR
-        /// </summary>
-        Processor,
-
-        /// <summary>
-        /// BIN_i
-        /// 暂时不要使用
-        /// </summary>
-        Bin
+        public const string PROCESSOR = "PROCESSOR";
     }
 
     /// <summary>
@@ -459,21 +448,6 @@
             }
         }
 
-        public static string ToStringEx(this FilmDestination self)
-        {
-            switch (self)
-            {
-                case FilmDestination.Magazine:
-                    return "MAGZINE";
-                case FilmDestination.Processor:
-                    return "PROCESSOR";
-                case FilmDestination.Bin:
-                    return "BIN_i";
-                default:
-                    return "";
-            }
-        }
-
         public static string ToStringEx(this PrintPriority self)
         {
             switch (self)
@@ -510,7 +484,7 @@
 
         public MediumType MediumType { get; set; } = MediumType.Paper;
 
-        public FilmDestination FilmDestination { get; set; } = FilmDestination.Magazine;
+        public string FilmDestination  { get; set; } = "MAGAZINE";
 
         public PrintPriority Priority { get; set; } = PrintPriority.Medium;
 

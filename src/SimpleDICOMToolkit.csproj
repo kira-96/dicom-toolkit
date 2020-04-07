@@ -101,9 +101,7 @@
     <Compile Include="IoCModules\ViewModelModule.cs" />
     <Compile Include="Models\DicomObjectLevel.cs" />
     <Compile Include="Models\ServerMessageItem.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BindingProxy.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Client\CEchoSCU.cs" />
@@ -153,6 +151,7 @@
     <Compile Include="ViewModels\IViewModelFactory.cs" />
     <Compile Include="ViewModels\PreviewImageViewModel.cs" />
     <Compile Include="ViewModels\PrintJobsViewModel.cs" />
+    <Compile Include="ViewModels\PrintOptionsViewModel.cs" />
     <Compile Include="ViewModels\PrintPreviewViewModel.cs" />
     <Compile Include="ViewModels\PrintSCPViewModel.cs" />
     <Compile Include="ViewModels\PrintViewModel.cs" />
@@ -187,6 +186,9 @@
     <Compile Include="Views\PrintJobsView.xaml.cs">
       <DependentUpon>PrintJobsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PrintOptionsView.xaml.cs">
+      <DependentUpon>PrintOptionsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PrintPreviewView.xaml.cs">
       <DependentUpon>PrintPreviewView.xaml</DependentUpon>
     </Compile>
@@ -219,10 +221,13 @@
     <None Include="942A.dcm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="app.manifest" />
+    <None Include="Fate.dcm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="app.manifest" />
     <None Include="packages.config" />
     <None Include="App.config" />
   </ItemGroup>
@@ -275,6 +280,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\PrintOptionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\PrintPreviewView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -320,16 +329,18 @@
     <Resource Include="Icons\failed.png" />
     <Resource Include="Icons\item-white.png" />
     <Resource Include="Icons\item.png" />
+    <Resource Include="Icons\okay.png" />
     <Resource Include="Icons\open_folder.png" />
     <Resource Include="Icons\openfile.png" />
     <Resource Include="Icons\package.png" />
     <Resource Include="Icons\preview.png" />
     <Resource Include="Icons\print.png" />
     <Resource Include="Icons\query.png" />
-    <Resource Include="Icons\success.png" />
+    <Resource Include="Icons\settings.png" />
     <Resource Include="Icons\start.png" />
     <Resource Include="Icons\start1.png" />
     <Resource Include="Icons\stop.png" />
+    <Resource Include="Icons\success.png" />
     <Resource Include="Icons\tag-white.png" />
     <Resource Include="Icons\tag.png" />
     <Resource Include="Icons\upload.png" />
