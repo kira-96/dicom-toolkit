@@ -101,7 +101,7 @@
 
             if (IsPixelDataItem(item))
             {
-                ShowDcmImage();
+                ShowDcmImage(item);
             }
             else
             {
@@ -114,9 +114,10 @@
             return item.DcmTag.CompareTo(DicomTag.PixelData) == 0;
         }
 
-        public void ShowDcmImage()
+        public void ShowDcmImage(DcmItem item)
         {
-            _windowManager.ShowDialog(new PreviewImageViewModel(_currentDataset));
+            _currentItem = item;
+            _windowManager.ShowDialog(new PreviewImageViewModel(GetItemDataset(item)));
         }
 
         public void EditDicomItem(DcmItem item)

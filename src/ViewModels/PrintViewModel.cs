@@ -3,6 +3,7 @@
     using Stylet;
     using StyletIoC;
     using System;
+    using System.Diagnostics;
 
     public class PrintViewModel : Screen, IDisposable
     {
@@ -31,7 +32,22 @@
 
         public void ShowOptions()
         {
-            _windowManager.ShowDialog(PrintOptionsViewModel);
+            // _windowManager.ShowDialog(PrintOptionsViewModel);
+
+            string configexe = "Config.exe";
+
+            if (!System.IO.File.Exists(configexe))
+            {
+                _windowManager.ShowMessageBox("找不到 Config.exe");
+                return;
+            }
+
+            ProcessStartInfo info = new ProcessStartInfo(configexe, "0");
+            Process process = new Process()
+            {
+                StartInfo = info
+            };
+            process.Start();
         }
 
         public void Dispose()

@@ -8,9 +8,6 @@ namespace SimpleDICOMToolkit.ViewModels
 {
     public class PrintOptionsViewModel : Screen, IDisposable
     {
-        [Inject]
-        private IWindowManager _windowManager;
-
         public List<string> Orientations { get; } = new List<string>()
         {
             "PROTRAIL",

@@ -1,0 +1,14 @@
+﻿<Application x:Class="Config.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:s="https://github.com/canton7/Stylet"
+             xmlns:app="clr-namespace:Config">
+    
+    <Application.Resources>
+        <s:ApplicationLoader>
+            <s:ApplicationLoader.Bootstrapper>
+                <app:Bootstrapper />
+            </s:ApplicationLoader.Bootstrapper>
+        </s:ApplicationLoader>
+    </Application.Resources>
+</Application>
