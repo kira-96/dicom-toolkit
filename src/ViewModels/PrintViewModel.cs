@@ -4,6 +4,10 @@
     using StyletIoC;
     using System;
     using System.Diagnostics;
+    using MQTT;
+    using System.IO;
+    using Nett;
+    using SimpleDICOMToolkit.Client;
 
     public class PrintViewModel : Screen, IDisposable
     {
@@ -11,23 +15,31 @@
         private IWindowManager _windowManager;
 
         [Inject]
-        public ServerConfigViewModel ServerConfigViewModel { get; private set; }
+        private IMessenger messenger;
 
         [Inject]
-        public PrintOptionsViewModel PrintOptionsViewModel { get; private set; }
+        public ServerConfigViewModel ServerConfigViewModel { get; private set; }
+
+        //[Inject]
+        //public PrintOptionsViewModel PrintOptionsViewModel { get; private set; }
 
         [Inject]
         public PrintPreviewViewModel PrintPreviewViewModel { get; private set; }
 
+        public PrintOptions PrintOptions { get; private set; }
+
         public PrintViewModel()
         {
             DisplayName = "Print";
+            PrintOptions = new PrintOptions();
         }
 
-        protected override void OnInitialActivate()
+        protected override async void OnInitialActivate()
         {
             base.OnInitialActivate();
             ServerConfigViewModel.Init(this);
+            ReloadPrintOptions("config.toml");
+            await messenger.SubscribeAsync(this, "Config", ReloadPrintOptions);
         }
 
         public void ShowOptions()
@@ -50,11 +62,35 @@
             process.Start();
         }
 
-        public void Dispose()
+        private void ReloadPrintOptions(string file)
+        {
+            if (!File.Exists(file))
+            {
+                return;
+            }
+
+            TomlTable table = Toml.ReadFile(file);
+
+            if (table.ContainsKey("PrintOptions"))
+            {
+                TomlTable options = table.Get<TomlTable>("PrintOptions");
+                if (options.ContainsKey("Orientation"))
+                    PrintOptions.Orientation = (FilmOrientation)options.Get<TomlInt>("Orientation").Value;
+                if (options.ContainsKey("Size"))
+                    PrintOptions.FilmSize = (FilmSize)options.Get<TomlInt>("Size").Value;
+                if (options.ContainsKey("Magnification"))
+                    PrintOptions.MagnificationType = (MagnificationType)options.Get<TomlInt>("Magnification").Value;
+                if (options.ContainsKey("Medium"))
+                    PrintOptions.MediumType = (MediumType)options.Get<TomlInt>("Medium").Value;
+            }
+        }
+
+        public async void Dispose()
         {
             // TODO
+            await messenger.UnsubscribeAsync(this, "Config");
             ServerConfigViewModel.Dispose();
-            PrintOptionsViewModel.Dispose();
+            // PrintOptionsViewModel.Dispose();
             PrintPreviewViewModel.Dispose();
         }
     }

@@ -4,12 +4,14 @@
     using StyletIoC;
     using Logging;
     using Utils;
+    using MQTT;
 
     public class ShellViewModel : Conductor<IScreen>.Collection.OneActive
     {
         public static string WindowName = "Simple DICOM Toolkit";
 
         private readonly ILoggerService logger;
+        private readonly ISimpleMqttService mqttService;
 
         public ShellViewModel(
             DcmItemsViewModel dcmItemsViewModel,
@@ -19,10 +21,12 @@
             CStoreSCPViewModel cstoreSCPViewModel,
             PrintViewModel printViewModel,
             PrintSCPViewModel printSCPViewModel,
+            ISimpleMqttService mqttService,
             [Inject(Key = "filelogger")] ILoggerService loggerService)
         {
             DisplayName = WindowName;
             logger = loggerService;
+            this.mqttService = mqttService;
 
             string[] args = ApplicationUtil.CommandLineArgs;
 
@@ -52,9 +56,11 @@
             }
         }
 
-        protected override void OnViewLoaded()
+        protected override async void OnViewLoaded()
         {
             base.OnViewLoaded();
+
+            await mqttService.StartAsync(9629);
 
             ActiveItem = Items.Count > 0 ? Items[0] : null;
         }

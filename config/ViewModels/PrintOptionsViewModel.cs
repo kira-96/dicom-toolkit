@@ -95,11 +95,11 @@ namespace Config.ViewModels
                 if (options.ContainsKey("Orientation"))
                     Orientation = (int)options.Get<TomlInt>("Orientation").Value;
                 if (options.ContainsKey("Size"))
-                    Orientation = (int)options.Get<TomlInt>("Size").Value;
+                    Size = (int)options.Get<TomlInt>("Size").Value;
                 if (options.ContainsKey("Magnification"))
                     Magnification = (int)options.Get<TomlInt>("Magnification").Value;
                 if (options.ContainsKey("Medium"))
-                    Magnification = (int)options.Get<TomlInt>("Medium").Value;
+                    Medium = (int)options.Get<TomlInt>("Medium").Value;
             }
         }
 

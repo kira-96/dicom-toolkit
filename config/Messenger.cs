@@ -4,6 +4,7 @@
     using MQTTnet.Client;
     using MQTTnet.Client.Options;
     using NLog;
+    using System;
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
@@ -62,7 +63,7 @@
         {
             IMqttClientOptions options = new MqttClientOptionsBuilder()
                 .WithCleanSession()
-                .WithClientId("设置客户端 ID: 001")
+                .WithClientId("设置客户端 ID: 002")
                 .WithCredentials("AD*米妮*斯托蕾塔", "^P@$$W0&D$")
                 .WithTcpServer("localhost", 9629)
                 .Build();
@@ -97,14 +98,13 @@
             try
             {
                 await Client.ConnectAsync(options, CancellationTokenSource.Token);
+                return true;
             }
-            catch
+            catch (Exception ex)
             {
-                logger.Error("Could not connect to server.");
+                logger.Error("Could not connect to server: {0}", ex.Message);
                 return false;
             }
-
-            return true;
         }
     }
 }

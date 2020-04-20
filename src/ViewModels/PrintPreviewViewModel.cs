@@ -68,15 +68,7 @@
 
             _eventAggregator.Publish(new BusyStateItem(true), nameof(PrintPreviewViewModel));
 
-            var (orientation, size, magnification, medium) = GetPrintOptions();
-
-            PrintOptions options = new PrintOptions()
-            {
-                Orientation = orientation,
-                FilmSize = size,
-                MagnificationType = magnification,
-                MediumType = medium
-            };
+            PrintOptions options = GetPrintOptions();
 
             List<Bitmap> images = new List<Bitmap>();
             foreach (var image in _images)
@@ -117,10 +109,9 @@
             }
         }
 
-        private (FilmOrientation orientation, FilmSize size, MagnificationType magnification, MediumType medium) GetPrintOptions()
+        private PrintOptions GetPrintOptions()
         {
-            var optionsVm = SimpleIoC.Get<PrintViewModel>().PrintOptionsViewModel;
-            return ((FilmOrientation)optionsVm.Orientation, (FilmSize)optionsVm.Size, (MagnificationType)optionsVm.Magnification, (MediumType)optionsVm.Medium);
+            return SimpleIoC.Get<PrintViewModel>().PrintOptions;
         }
 
         private void AddDcmImage(string file)

@@ -1,12 +1,12 @@
 ﻿using System.Threading.Tasks;
 
-namespace SimpleDICOMToolkit.Services
+namespace SimpleDICOMToolkit.MQTT
 {
     public interface ISimpleMqttService
     {
         int Port { get; }
 
-        Task StartAsync(int port);
+        Task<bool> StartAsync(int port);
 
         Task StopAsync();
     }
