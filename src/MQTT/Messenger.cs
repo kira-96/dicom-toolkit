@@ -47,11 +47,8 @@ namespace SimpleDICOMToolkit.MQTT
         {
             if (!client.IsConnected)
             {
-                if (!await TryConnectAsync())
-                {
-                    logger.Error("Publish message failed.");
-                    return;
-                }
+                logger.Warn("Subscribe [{0}] failed, because client not connected to a server.", topic);
+                return;
             }
 
             await client.SubscribeAsync(topic);
@@ -89,11 +86,8 @@ namespace SimpleDICOMToolkit.MQTT
         {
             if (!client.IsConnected)
             {
-                if (!await TryConnectAsync())
-                {
-                    logger.Error("Publish message failed.");
-                    return;
-                }
+                logger.Warn("Unsubscribe [{0}] failed, because client not connected to a server.", topic);
+                return;
             }
 
             await client.UnsubscribeAsync(topic);

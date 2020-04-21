@@ -14,7 +14,7 @@
 
     <Window.Resources>
         <Style TargetType="{x:Type Button}">
-            <Setter Property="Background" Value="DeepSkyBlue" />
+            <Setter Property="Background" Value="Transparent" />
             <Setter Property="Padding" Value="25 1" />
             <Setter Property="Margin" Value="2" />
             <Setter Property="HorizontalAlignment" Value="Center" />
@@ -73,8 +73,11 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TabControl Grid.Row="0" Style="{StaticResource ConductorTabControl}" />
-        <Button Grid.Row="1" 
+        <Grid x:Name="ContentGrid">
+            <TabControl Grid.Row="0" Style="{StaticResource ConductorTabControl}" />
+        </Grid>
+        <Button x:Name="OkButton" 
+                Grid.Row="1" 
                 Margin="6"
                 ToolTip="OK"
                 HorizontalAlignment="Center"

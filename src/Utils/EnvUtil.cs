@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
+using System.Linq;
 using System.Net;
+using System.Windows;
+using System.Windows.Media;
 
 namespace SimpleDICOMToolkit.Utils
 {
@@ -64,6 +68,38 @@ namespace SimpleDICOMToolkit.Utils
                 double version = versionMajor + (double)versionMinor / 10;
                 return version <= 6.1;
             }
+        }
+
+        public static Color GetAccentColor()
+        {
+            using (RegistryKey dwm = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\DWM", false))
+            {
+                if (dwm.GetValueNames().Contains("AccentColor"))
+                {
+                    int accentColor = (int)dwm.GetValue("AccentColor");
+                    // 注意：读取到的颜色为 AABBGGRR
+                    return Color.FromArgb(
+                        (byte)((accentColor >> 24) & 0xFF),
+                        (byte)(accentColor & 0xFF),
+                        (byte)((accentColor >> 8) & 0xFF),
+                        (byte)((accentColor >> 16) & 0xFF));
+                }
+            }
+
+            return SystemParameters.WindowGlassColor;
+        }
+
+        public static bool AppsUseLightTheme()
+        {
+            using (RegistryKey personalize = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", false))
+            {
+                if (personalize.GetValueNames().Contains("AppsUseLightTheme"))
+                {
+                    return (int)personalize.GetValue("AppsUseLightTheme") == 1;
+                }
+            }
+
+            return true;
         }
     }
 }
