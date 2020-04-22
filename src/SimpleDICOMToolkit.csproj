@@ -134,7 +134,7 @@
     <Compile Include="SimpleIoC.cs" />
     <Compile Include="Utils\BitmapUtil.cs" />
     <Compile Include="Utils\ApplicationUtil.cs" />
-    <Compile Include="Utils\EnvUtil.cs" />
+    <Compile Include="Utils\SysUtil.cs" />
     <Compile Include="Utils\ProcessUtil.cs" />
     <Compile Include="Utils\WindowsAPI.cs" />
     <Compile Include="ViewModels\CStoreFileListViewModel.cs" />

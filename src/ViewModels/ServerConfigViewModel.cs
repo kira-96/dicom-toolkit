@@ -215,7 +215,7 @@
             else if (parentViewModel is CStoreSCPViewModel)
             {
                 _doRequestAction = StartCStoreServer;
-                ServerIP = EnvUtil.LocalIPAddress;
+                ServerIP = SysUtil.LocalIPAddress;
                 ServerPort = "104";
                 LocalAET = ServerAET = "CSTORESCP";
                 IsServerIPEnabled = IsServerAETEnabled = IsModalityEnabled = false;
@@ -223,7 +223,7 @@
             else if (parentViewModel is PrintSCPViewModel)
             {
                 _doRequestAction = StartPrintServer;
-                ServerIP = EnvUtil.LocalIPAddress;
+                ServerIP = SysUtil.LocalIPAddress;
                 ServerPort = "7104";
                 LocalAET = ServerAET = "PRINTSCP";
                 IsServerIPEnabled = IsServerAETEnabled = IsModalityEnabled = false;

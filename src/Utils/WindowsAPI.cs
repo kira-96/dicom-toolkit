@@ -126,13 +126,16 @@ namespace SimpleDICOMToolkit.Utils
         public static extern IntPtr GetWindowLongPtr(IntPtr hWnd, int nIndex);
 
         [DllImport("user32.dll", EntryPoint = "SetWindowLong")]
-        private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+        public static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
 
         [DllImport("user32.dll", EntryPoint = "SetWindowLongPtr")]
-        private static extern IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
+        public static extern IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
+
+        [DllImport("ntdll.dll", EntryPoint = "RtlGetNtVersionNumbers")]
+        public static extern void RtlGetNtVersionNumbers(ref int major, ref int minor, ref int buildNumber);
 
         #endregion
-        
+
         public static void FindWindowAndActive(string classname, string windowname)
         {
             IntPtr hWnd = FindWindow(classname, windowname);

@@ -38,7 +38,7 @@
             if (_isServerStarted)
             {
                 PrintServer.Default.CreateServer(message.ServerPort, message.LocalAET);
-                notificationService.ShowNotification($"Print server is running at: {EnvUtil.LocalIPAddress}:{message.ServerPort}", message.LocalAET);
+                notificationService.ShowNotification($"Print server is running at: {SysUtil.LocalIPAddress}:{message.ServerPort}", message.LocalAET);
             }
             else
             {

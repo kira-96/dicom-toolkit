@@ -64,6 +64,11 @@ namespace Config.Views
 
         private void ApplyTheme()
         {
+            if (!IsWindowPrevalenceAccentColor())
+            {
+                return;
+            }
+
             if (IsActive)
             {
                 var accentBrush = new SolidColorBrush(GetAccentColor());
@@ -94,6 +99,21 @@ namespace Config.Views
             }
 
             return SystemParameters.WindowGlassColor;
+        }
+
+        public bool IsWindowPrevalenceAccentColor()
+        {
+            using (RegistryKey dwm = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\DWM", false))
+            {
+                if (dwm.GetValueNames().Contains("ColorPrevalence"))
+                {
+                    int colorPrevalence = (int)dwm.GetValue("ColorPrevalence");
+
+                    return colorPrevalence == 1;
+                }
+            }
+
+            return false;
         }
     }
 }

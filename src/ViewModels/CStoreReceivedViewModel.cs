@@ -58,7 +58,7 @@
             if (_isServerStarted)
             {
                 CStoreServer.Default.CreateServer(message.ServerPort, message.LocalAET);
-                notificationService.ShowNotification($"C-STORE server is running at: {EnvUtil.LocalIPAddress}:{message.ServerPort}", message.LocalAET);
+                notificationService.ShowNotification($"C-STORE server is running at: {SysUtil.LocalIPAddress}:{message.ServerPort}", message.LocalAET);
             }
             else
             {

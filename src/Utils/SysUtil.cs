@@ -7,7 +7,7 @@ using System.Windows.Media;
 
 namespace SimpleDICOMToolkit.Utils
 {
-    public static class EnvUtil
+    public static class SysUtil
     {
         public static string LocalIPAddress
         {
@@ -70,6 +70,18 @@ namespace SimpleDICOMToolkit.Utils
             }
         }
 
+        public static Version RtlNtVersion
+        {
+            get
+            {
+                int major = 0, minor = 0, buildNumber = 0;
+
+                WindowsAPI.RtlGetNtVersionNumbers(ref major, ref minor, ref buildNumber);
+
+                return new Version(major, minor, buildNumber);
+            }
+        }
+
         public static Color GetAccentColor()
         {
             using (RegistryKey dwm = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\DWM", false))
@@ -100,6 +112,21 @@ namespace SimpleDICOMToolkit.Utils
             }
 
             return true;
+        }
+
+        public static bool IsWindowPrevalenceAccentColor()
+        {
+            using (RegistryKey dwm = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\DWM", false))
+            {
+                if (dwm.GetValueNames().Contains("ColorPrevalence"))
+                {
+                    int colorPrevalence = (int)dwm.GetValue("ColorPrevalence");
+
+                    return colorPrevalence == 1;
+                }
+            }
+
+            return false;
         }
     }
 }

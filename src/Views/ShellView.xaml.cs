@@ -9,7 +9,7 @@
     using System.Windows.Media;
     using Services;
     using static Utils.WindowsAPI;
-    using static Utils.EnvUtil;
+    using static Utils.SysUtil;
 
     /// <summary>
     /// ShellView.xaml 的交互逻辑
@@ -116,11 +116,18 @@
         {
             Version version = Assembly.GetExecutingAssembly().GetName().Version;
 
-            dialogService.ShowMessageBox($"版本: {version}", "关于", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, this);
+            Version osVersion = Environment.OSVersion.Version;
+
+            dialogService.ShowMessageBox($"OS: {osVersion}\r\n软件版本: {version}", "关于", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, this);
         }
 
         private void ApplyTheme()
         {
+            if (!IsWindowPrevalenceAccentColor())
+            {
+                return;
+            }
+
             if (IsActive)
             {
                 ContentGrid.Background = new SolidColorBrush(GetAccentColor());
@@ -179,13 +186,13 @@
 
         private void Window_Activated(object sender, EventArgs e)
         {
-            ContentGrid.Background = new SolidColorBrush(GetAccentColor());
+            ApplyTheme();
         }
 
         private void Window_Deactivated(object s, EventArgs e)
         {
             trayIconContextMenu.IsOpen = false;
-            ContentGrid.Background = new SolidColorBrush(Colors.White);
+            ApplyTheme();
         }
 
         private void TrayIconMouseClick(object s, MouseEventArgs e)
