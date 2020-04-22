@@ -1,15 +1,19 @@
-﻿namespace SimpleDICOMToolkit.Client
+﻿using System.ComponentModel;
+
+namespace SimpleDICOMToolkit.Client
 {
     public enum FilmOrientation
     {
         /// <summary>
         /// 竖向
         /// </summary>
-        Portrail,
+        [Description("Portrait")]
+        Portrait,
 
         /// <summary>
         /// 横向
         /// </summary>
+        [Description("Landscape")]
         Landscape,
     }
 
@@ -41,63 +45,77 @@
     public enum FilmSize
     {
         /// <summary>
-        /// 8INX10IN
+        /// 8英寸*10英寸
+        /// 注意：Description值将作为printSCU中传递到dicom网络的参数值，禁止修改（包括大小写），后续enum值相同。
+        ///      数字不可以开头，故开头加E标识（E -- Enum简称）
         /// </summary>
+        [Description("8INX10IN")]
         E8InX10In,
 
         /// <summary>
-        /// 8_5INX11IN
+        /// 8.5英寸*11英寸
         /// </summary>
+        [Description("8_5INX11IN")]
         E8_5InX11In,
 
         /// <summary>
-        /// 10INX12IN
+        /// 10英寸*12英寸
         /// </summary>
+        [Description("10INX12IN")]
         E10InX12In,
 
         /// <summary>
-        /// 10INX14IN
+        /// 10英寸*14英寸（实际大小：25.7cm*36.4cm）
         /// </summary>
+        [Description("10INX14IN")]
         E10InX14In,
 
         /// <summary>
-        /// 11INX14IN
+        /// 11英寸*14英寸
         /// </summary>
+        [Description("11INX14IN")]
         E11InX14In,
 
         /// <summary>
-        /// 11INX17IN
+        /// 11英寸*17英寸
         /// </summary>
+        [Description("11INX17IN")]
         E11InX17In,
 
         /// <summary>
-        /// 14INX14IN
+        /// 14英寸*14英寸
         /// </summary>
+        [Description("14INX14IN")]
         E14InX14In,
 
         /// <summary>
-        /// 14INX17IN
+        /// 14英寸*17英寸
         /// </summary>
+        [Description("14INX17IN")]
         E14InX17In,
 
         /// <summary>
-        /// 24CMX24CM
+        /// 24厘米*24厘米
         /// </summary>
+        [Description("24CMX24CM")]
         E24CmX24Cm,
 
         /// <summary>
-        /// 24CMX30CM
+        /// 24厘米*30厘米
         /// </summary>
+        [Description("24CMX30CM")]
         E24CmX30Cm,
 
         /// <summary>
-        /// A4
+        /// A4纸(实际大小：210mm*297mm)
         /// </summary>
+        [Description("A4")]
         A4,
 
         /// <summary>
-        /// A3
+        /// A3纸(实际大小：297mm*420mm)
         /// </summary>
+        [Description("A3")]
         A3
     }
 
@@ -119,21 +137,25 @@
         /// <summary>
         /// REPLICATE
         /// </summary>
+        [Description("Replicate")]
         Replicate,
 
         /// <summary>
         /// BILINEAR
         /// </summary>
+        [Description("Bilinear")]
         Bilinear,
 
         /// <summary>
         /// CUBIC
         /// </summary>
+        [Description("Cubic")]
         Cubic,
 
         /// <summary>
         /// NONE
         /// </summary>
+        [Description("None")]
         None
     }
 
@@ -157,11 +179,13 @@
         /// <summary>
         /// BLACK
         /// </summary>
+        [Description("Black")]
         Black,
 
         /// <summary>
         /// WHITE
         /// </summary>
+        [Description("White")]
         White
     }
 
@@ -184,11 +208,13 @@
         /// <summary>
         /// BLACK
         /// </summary>
+        [Description("Black")]
         Black,
 
         /// <summary>
         /// WHITE
         /// </summary>
+        [Description("White")]
         White
     }
 
@@ -207,11 +233,13 @@
         /// <summary>
         /// YES
         /// </summary>
+        [Description("Yes")]
         Yes,
 
         /// <summary>
         /// NO
         /// </summary>
+        [Description("No")]
         No
     }
 
@@ -233,26 +261,31 @@
         /// <summary>
         /// PAPER
         /// </summary>
+        [Description("PaperMedium")]
         Paper,
 
         /// <summary>
         /// CLEAR FILM
         /// </summary>
+        [Description("ClearFilm")]
         ClearFilm,
 
         /// <summary>
         /// BLUE FILM
         /// </summary>
+        [Description("BlueFilm")]
         BlueFilm,
 
         /// <summary>
         /// MAMMO CLEAR FILM
         /// </summary>
+        [Description("MammoClearFilm")]
         MammoClearFilm,
 
         /// <summary>
         /// MAMMO BLUE FILM
         /// </summary>
+        [Description("MammoBlueFilm")]
         MammoBlueFilm
     }
 
@@ -305,23 +338,28 @@
         /// <summary>
         /// HIGH
         /// </summary>
+        [Description("Highest")]
         High,
 
         /// <summary>
         /// MED
         /// </summary>
+        [Description("Medium")]
         Medium,
 
         /// <summary>
         /// LOW
         /// </summary>
+        [Description("Lowest")]
         Low
     }
 
     public enum PrintColorType
     {
+        [Description("GrayScale")]
         GrayScale,
 
+        [Description("Color")]
         Color
     };
 
@@ -331,12 +369,12 @@
         {
             switch (self)
             {
-                case FilmOrientation.Portrail:
-                    return "PROTRAIL";
+                case FilmOrientation.Portrait:
+                    return "PORTRAIT";
                 case FilmOrientation.Landscape:
                     return "LANDSCAPE";
                 default:
-                    return "PROTRAIL";
+                    return "PORTRAIT";
             }
         }
 
@@ -470,7 +508,7 @@
 
         public string ImageDisplayFormat { get; set; } = "STANDARD\\1,1";
 
-        public FilmOrientation Orientation { get; set; } = FilmOrientation.Portrail;
+        public FilmOrientation Orientation { get; set; } = FilmOrientation.Portrait;
 
         public FilmSize FilmSize { get; set; } = FilmSize.A4;
 
