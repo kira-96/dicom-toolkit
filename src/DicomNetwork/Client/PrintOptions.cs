@@ -489,5 +489,7 @@
         public PrintPriority Priority { get; set; } = PrintPriority.Medium;
 
         public PrintColorType ColorType { get; set; } = PrintColorType.GrayScale;
+
+        public int PrintNumberOfCopies { get; set; } = 1;
     }
 }

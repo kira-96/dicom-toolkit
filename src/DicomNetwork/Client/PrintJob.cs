@@ -45,7 +45,7 @@ namespace SimpleDICOMToolkit.Client
             {
                 FilmSessionLabel = options.JobLabel,
                 MediumType = options.MediumType.ToStringEx(),
-                NumberOfCopies = 1,
+                NumberOfCopies = options.PrintNumberOfCopies,
                 IsColor = options.ColorType == PrintColorType.Color,
             };
         }
