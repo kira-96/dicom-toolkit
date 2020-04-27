@@ -6,7 +6,7 @@
 
 - Simple Dicom Dump [**慎用修改和保存功能**]
 
-- Worklist SCU with MPPS
+- Worklist SCU with MPPS [测试功能]
 
 - Query Retrieve SCU [测试功能]
 
