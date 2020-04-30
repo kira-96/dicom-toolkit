@@ -33,6 +33,13 @@ namespace Config.ViewModels
         {
             base.OnViewLoaded();
 
+            GetLocalPrinters();
+        }
+
+        private void GetLocalPrinters()
+        {
+            string temp = Printer;
+
             Printers.Clear();
 
             PrinterSettings.StringCollection printers = PrinterSettings.InstalledPrinters;
@@ -42,9 +49,13 @@ namespace Config.ViewModels
                 Printers.Add(printer);
             }
 
-            if (!Printers.Contains(Printer))
+            if (!Printers.Contains(temp))
             {
                 Printer = "Microsoft XPS Document Writer";  // XPS - Windows 系统都有
+            }
+            else
+            {
+                Printer = temp;
             }
         }
 
