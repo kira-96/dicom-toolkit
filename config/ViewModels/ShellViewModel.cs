@@ -37,11 +37,13 @@
         }
 
         public ShellViewModel(
-            PrintOptionsViewModel printOptionsViewModel)
+            PrintOptionsViewModel printOptionsViewModel,
+            PrinterSettingsViewModel printerSettingsViewModel)
         {
             DisplayName = "Config";
 
             Items.Add(printOptionsViewModel);
+            Items.Add(printerSettingsViewModel);
         }
 
         public async void OkCommand()

@@ -267,12 +267,14 @@ namespace SimpleDICOMToolkit.Server
                 Status = PrintJobStatus.Printing;
                 OnStatusUpdate("QUEUED");
 
-                var printerSettings = new PrinterSettings
-                {
-                    PrinterName = "Microsoft XPS Document Writer",
-                    PrintToFile = true,
-                    PrintFileName = Path.Combine(FullPrintJobFolder, SOPInstanceUID.UID + ".xps")
-                };
+                //var printerSettings = new PrinterSettings
+                //{
+                //    PrinterName = "Microsoft XPS Document Writer",
+                //    PrintToFile = true,
+                //    PrintFileName = Path.Combine(FullPrintJobFolder, SOPInstanceUID.UID + ".xps")
+                //};
+
+                var printerSettings = PrintServer.Default.GetPrinterSettings(Path.Combine(FullPrintJobFolder, SOPInstanceUID.UID));
 
                 printDocument = new PrintDocument
                 {

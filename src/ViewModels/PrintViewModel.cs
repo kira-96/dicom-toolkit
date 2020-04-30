@@ -48,7 +48,7 @@
 
             string configexe = "Config.exe";
 
-            if (!System.IO.File.Exists(configexe))
+            if (!File.Exists(configexe))
             {
                 _windowManager.ShowMessageBox("找不到 Config.exe");
                 return;
@@ -85,10 +85,10 @@
             }
         }
 
-        public async void Dispose()
+        public void Dispose()
         {
             // TODO
-            await messenger.UnsubscribeAsync(this, "Config");
+            // await messenger.UnsubscribeAsync(this, "Config");
             ServerConfigViewModel.Dispose();
             // PrintOptionsViewModel.Dispose();
             PrintPreviewViewModel.Dispose();

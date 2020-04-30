@@ -80,9 +80,9 @@ namespace Config.ViewModels
             DisplayName = "Print Options";
         }
 
-        protected override void OnViewLoaded()
+        protected override void OnInitialActivate()
         {
-            base.OnViewLoaded();
+            base.OnInitialActivate();
 
             LoadConfigs((Parent as ShellViewModel).ConfigTable);
         }

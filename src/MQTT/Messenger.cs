@@ -45,20 +45,23 @@ namespace SimpleDICOMToolkit.MQTT
 
         public async Task SubscribeAsync(object recipient, string topic, Action<string> action)
         {
-            if (!client.IsConnected)
-            {
-                logger.Warn("Subscribe [{0}] failed, because client not connected to a server.", topic);
-                return;
-            }
-
-            await client.SubscribeAsync(topic);
-
             if (recipient == null ||
                 topic == null ||
                 action == null)
             {
                 return;
             }
+
+            if (!client.IsConnected)
+            {
+                if (!await TryConnectAsync())
+                {
+                    logger.Warn("Subscribe [{0}] failed, because client not connected to a server.", topic);
+                    return;
+                }
+            }
+
+            await client.SubscribeAsync(topic);
 
             if (!recipientsStrictAction.ContainsKey(topic))
             {
@@ -84,6 +87,12 @@ namespace SimpleDICOMToolkit.MQTT
 
         public async Task UnsubscribeAsync(object recipient, string topic)
         {
+            if (recipient == null ||
+                !recipientsStrictAction.ContainsKey(topic))
+            {
+                return;
+            }
+
             if (!client.IsConnected)
             {
                 logger.Warn("Unsubscribe [{0}] failed, because client not connected to a server.", topic);
@@ -91,12 +100,6 @@ namespace SimpleDICOMToolkit.MQTT
             }
 
             await client.UnsubscribeAsync(topic);
-
-            if (recipient == null ||
-                !recipientsStrictAction.ContainsKey(topic))
-            {
-                return;
-            }
 
             lock (recipient)
             {

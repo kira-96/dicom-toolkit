@@ -41,6 +41,11 @@ namespace SimpleDICOMToolkit.MQTT
 
         public async Task<bool> StartAsync(int port)
         {
+            if (server.IsStarted)
+            {
+                return true;
+            }
+
             Port = port;
             IMqttServerOptions options = new MqttServerOptionsBuilder()
                 .WithApplicationMessageInterceptor(cv => { cv.AcceptPublish = true; })

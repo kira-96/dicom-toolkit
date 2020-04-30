@@ -131,6 +131,33 @@ namespace SimpleDICOMToolkit.Utils
         [DllImport("user32.dll", EntryPoint = "SetWindowLongPtr")]
         public static extern IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
 
+        [DllImport("user32.dll", EntryPoint = "DefWindowProc")]
+        public static extern IntPtr DefWindowProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("user32.dll", EntryPoint = "SendMessage")]
+        public static extern IntPtr SendMessage(IntPtr hWmd, int msg, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("user32.dll", EntryPoint = "PostMessage")]
+        public static extern IntPtr PostMessage(IntPtr hWmd, int msg, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("user32.dll", EntryPoint = "GetWindowDC")]
+        public static extern IntPtr GetWindowDC(IntPtr hWnd);
+
+        [DllImport("user32.dll", EntryPoint = "ReleaseDC")]
+        public static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
+
+        public const int SM_CXSCREEN = 0;
+        public const int SM_CYSCREEN = 1;
+        public const int SM_CYCAPTION = 4;
+        public const int SM_CXICON = 11;
+        public const int SM_CYICON = 12;
+        public const int SM_CYSIZE = 31;
+        public const int SM_CXFRAME = 32;
+        public const int SM_CYFRAME = 33;
+
+        [DllImport("user32.dll", EntryPoint = "GetSystemMetrics")]
+        public static extern int GetSystemMetrics(int nIndex);
+
         [DllImport("ntdll.dll", EntryPoint = "RtlGetNtVersionNumbers")]
         public static extern void RtlGetNtVersionNumbers(ref int major, ref int minor, ref int buildNumber);
 

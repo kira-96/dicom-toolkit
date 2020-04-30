@@ -32,6 +32,10 @@
 
 - [Microsoft.Xaml.Behaviors](https://github.com/Microsoft/XamlBehaviorsWpf)
 
+- [Nett](https://github.com/paiden/Nett)
+
+- [MQTTnet](https://github.com/chkr1011/MQTTnet)
+
 **部分图标来源于[阿里巴巴矢量图标库](https://www.iconfont.cn/)**
 
 **其它常用软件**

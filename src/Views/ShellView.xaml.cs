@@ -20,7 +20,9 @@
         /// Menu Item ID
         /// </summary>
         private const uint IDM_ABOUT = 1001;
-        private const int WM_DWMCOLORIZATIONCOLORCHANGED = 0x0320;
+        private const uint WM_NCPAINT = 0x0085;
+        private const uint WM_NCACTIVATE = 0x0086;
+        private const uint WM_DWMCOLORIZATIONCOLORCHANGED = 0x0320;
 
         [Inject]
         private INotificationService notificationService;
