@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:s="https://github.com/canton7/Stylet"
         xmlns:v="clr-namespace:SimpleDICOMToolkit.Views"
         mc:Ignorable="d"
         Title="{Binding DisplayName}" 
@@ -10,5 +11,19 @@
         Width="480"
         Height="480" >
 
-    <Image Source="{Binding ImageSource}" />
+    <Image Source="{Binding ImageSource}" 
+           MouseWheel="{s:Action OnMouseWheel}"
+           MouseLeftButtonDown="{s:Action OnMouseLDown}"
+           MouseLeftButtonUp="{s:Action OnMouseLUp}"
+           MouseRightButtonDown="{s:Action OnMouseRDown}"
+           MouseRightButtonUp="{s:Action OnMouseRUp}"
+           MouseMove="{s:Action OnMouseMove}">
+        <Image.RenderTransform>
+            <TransformGroup>
+                <TranslateTransform />
+                <ScaleTransform />
+                <RotateTransform />
+            </TransformGroup>
+        </Image.RenderTransform>
+    </Image>
 </Window>
