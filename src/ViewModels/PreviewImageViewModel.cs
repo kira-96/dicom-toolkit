@@ -3,7 +3,6 @@
     using Dicom;
     using Dicom.Imaging;
     using Stylet;
-    using System;
     using System.IO;
     using System.Windows;
     using System.Windows.Controls;
@@ -13,6 +12,14 @@
 
     public class PreviewImageViewModel : Screen
     {
+        public ImageOrientationViewModel ImageOrientationViewModel { get; private set; }
+
+        private readonly DicomImage dicomImage;
+
+        private Point previousPoint;
+        private bool isMovingImage = false;
+        private bool isUpdatingImage = false;
+
         private WriteableBitmap _imageSource;
 
         public WriteableBitmap ImageSource
@@ -20,12 +27,6 @@
             get => _imageSource;
             private set => SetAndNotify(ref _imageSource, value);
         }
-
-        private readonly DicomImage dicomImage;
-
-        private Point previousPoint;
-        private bool isMovingImage = false;
-        private bool isUpdatingImage = false;
 
         public PreviewImageViewModel(string dcmfilepath)
         {
@@ -42,6 +43,9 @@
             };
 
             RenderImage();
+
+            ImageOrientationViewModel = SimpleIoC.Get<ImageOrientationViewModel>();
+            ImageOrientationViewModel.UpdateOrientation(dcmFile.Dataset);
         }
 
         public PreviewImageViewModel(DicomDataset dataset)
@@ -54,6 +58,9 @@
             };
 
             RenderImage();
+
+            ImageOrientationViewModel = SimpleIoC.Get<ImageOrientationViewModel>();
+            ImageOrientationViewModel.UpdateOrientation(dataset);
         }
 
         public void OnMouseWheel(Image s, MouseWheelEventArgs e)

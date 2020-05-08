@@ -143,6 +143,7 @@
     <Compile Include="ViewModels\CStoreViewModel.cs" />
     <Compile Include="ViewModels\DcmItemsViewModel.cs" />
     <Compile Include="ViewModels\EditDicomItemViewModel.cs" />
+    <Compile Include="ViewModels\ImageOrientationViewModel.cs" />
     <Compile Include="ViewModels\IViewModelFactory.cs" />
     <Compile Include="ViewModels\PreviewImageViewModel.cs" />
     <Compile Include="ViewModels\PrintJobsViewModel.cs" />
@@ -173,6 +174,9 @@
     </Compile>
     <Compile Include="Views\EditDicomItemView.xaml.cs">
       <DependentUpon>EditDicomItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ImageOrientationView.xaml.cs">
+      <DependentUpon>ImageOrientationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PreviewImageView.xaml.cs">
       <DependentUpon>PreviewImageView.xaml</DependentUpon>
@@ -260,6 +264,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EditDicomItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ImageOrientationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

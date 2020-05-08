@@ -11,19 +11,26 @@
         Width="480"
         Height="480" >
 
-    <Image Source="{Binding ImageSource}" 
-           MouseWheel="{s:Action OnMouseWheel}"
-           MouseLeftButtonDown="{s:Action OnMouseLDown}"
-           MouseLeftButtonUp="{s:Action OnMouseLUp}"
-           MouseRightButtonDown="{s:Action OnMouseRDown}"
-           MouseRightButtonUp="{s:Action OnMouseRUp}"
-           MouseMove="{s:Action OnMouseMove}">
-        <Image.RenderTransform>
-            <TransformGroup>
-                <TranslateTransform />
-                <ScaleTransform />
-                <RotateTransform />
-            </TransformGroup>
-        </Image.RenderTransform>
-    </Image>
+    <Grid Background="Black">
+        <Image Source="{Binding ImageSource}" 
+               MouseWheel="{s:Action OnMouseWheel}"
+               MouseLeftButtonDown="{s:Action OnMouseLDown}"
+               MouseLeftButtonUp="{s:Action OnMouseLUp}"
+               MouseRightButtonDown="{s:Action OnMouseRDown}"
+               MouseRightButtonUp="{s:Action OnMouseRUp}"
+               MouseMove="{s:Action OnMouseMove}">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <TranslateTransform />
+                    <ScaleTransform />
+                    <RotateTransform />
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
+
+        <v:ImageOrientationView DataContext="{Binding ImageOrientationViewModel}"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Bottom" 
+                                Margin="6" />
+    </Grid>
 </Window>

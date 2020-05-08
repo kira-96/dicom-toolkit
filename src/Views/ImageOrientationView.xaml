@@ -1,0 +1,75 @@
+﻿<UserControl x:Class="SimpleDICOMToolkit.Views.ImageOrientationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:v="clr-namespace:SimpleDICOMToolkit.Views"
+             mc:Ignorable="d" 
+             Background="Transparent"
+             Foreground="White"
+             Visibility="{Binding OrientationVisibility}"
+             d:DesignWidth="100"
+             d:DesignHeight="100">
+    
+    <Grid Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Rectangle Grid.Row="1" Grid.Column="1" 
+                   Width="24" Height="24"
+                   Stroke="White" 
+                   StrokeThickness="1.2"
+                   StrokeDashArray="2,1" 
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Margin="2" />
+        <Rectangle Grid.Row="1" Grid.Column="1"
+                   Width="5" Height="5" 
+                   Fill="White"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center" />
+        <StackPanel Grid.Row="1" Grid.Column="0" 
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center">
+            <TextBlock FontSize="14" Text="[" />
+            <TextBlock FontSize="14" Text="{Binding LeftMajor}" />
+            <TextBlock FontSize="10" Text="{Binding LeftMinor}" VerticalAlignment="Bottom" />
+            <TextBlock FontSize="14" Text="]" />
+        </StackPanel>
+        <StackPanel Grid.Row="0" Grid.Column="1" 
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom">
+            <TextBlock FontSize="14" Text="[" />
+            <TextBlock FontSize="14" Text="{Binding TopMajor}" />
+            <TextBlock FontSize="10" Text="{Binding TopMinor}" VerticalAlignment="Bottom" />
+            <TextBlock FontSize="14" Text="]" />
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="2" 
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center">
+            <TextBlock FontSize="14" Text="[" />
+            <TextBlock FontSize="14" Text="{Binding RightMajor}" />
+            <TextBlock FontSize="10" Text="{Binding RightMinor}" VerticalAlignment="Bottom" />
+            <TextBlock FontSize="14" Text="]" />
+        </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="1" 
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top">
+            <TextBlock FontSize="14" Text="[" />
+            <TextBlock FontSize="14" Text="{Binding BottomMajor}" />
+            <TextBlock FontSize="10" Text="{Binding BottomMinor}" VerticalAlignment="Bottom" />
+            <TextBlock FontSize="14" Text="]" />
+        </StackPanel>
+    </Grid>
+</UserControl>

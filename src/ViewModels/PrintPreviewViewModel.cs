@@ -7,6 +7,7 @@
     using System.Collections.Generic;
     using System.Drawing;
     using System.IO;
+    using System.Linq;
     using System.Windows;
     using System.Windows.Media.Imaging;
     using Client;
@@ -134,7 +135,20 @@
         {
             _images.RemoveAt(_currentIndex);
 
-            CurrentIndex = _currentIndex;
+            if (!_images.Any())
+            {
+                CurrentIndex = 0;
+                return;
+            }
+
+            if (_currentIndex < _images.Count)
+            {
+                CurrentIndex = _currentIndex;
+            }
+            else
+            {
+                CurrentIndex -= 1;
+            }
         }
 
         public bool CanShowPrev => CurrentIndex > 0;
