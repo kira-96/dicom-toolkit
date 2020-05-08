@@ -78,23 +78,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DicomNetwork\Client\PrintOptions.cs" />
-    <Compile Include="DicomNetwork\Client\RequestFactory.cs" />
+    <Compile Include="Controls\ActiveHeaderAdorner.cs" />
+    <Compile Include="Controls\AduLoading.cs" />
     <Compile Include="Controls\EffectBehavior.cs" />
     <Compile Include="Controls\TextBoxPlaceholderBehavior.cs" />
+    <Compile Include="IoCModules\ServicesModule.cs" />
     <Compile Include="IoCModules\DicomSCUModule.cs" />
     <Compile Include="IoCModules\ViewModelModule.cs" />
-    <Compile Include="Models\DicomObjectLevel.cs" />
-    <Compile Include="Models\ServerMessageItem.cs" />
-    <Compile Include="MQTT\WeakActions\IExecuteWithObject.cs" />
     <Compile Include="MQTT\IMessenger.cs" />
     <Compile Include="MQTT\Messenger.cs" />
+    <Compile Include="MQTT\ISimpleMqttService.cs" />
+    <Compile Include="MQTT\SimpleMqttService.cs" />
+    <Compile Include="MQTT\WeakActions\IExecuteWithObject.cs" />
     <Compile Include="MQTT\WeakActions\WeakActionAndToken.cs" />
     <Compile Include="MQTT\WeakActions\WeakActionGeneric.cs" />
     <Compile Include="MQTT\WeakActions\WeakAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BindingProxy.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="SimpleIoC.cs" />
+    <Compile Include="DicomNetwork\Client\PrintOptions.cs" />
+    <Compile Include="DicomNetwork\Client\RequestFactory.cs" />
     <Compile Include="DicomNetwork\Client\CEchoSCU.cs" />
     <Compile Include="DicomNetwork\Client\QueryRetrieveSCU.cs" />
     <Compile Include="DicomNetwork\Client\CStoreSCU.cs" />
@@ -106,7 +110,6 @@
     <Compile Include="DicomNetwork\Client\PrintJob.cs" />
     <Compile Include="DicomNetwork\Client\PrintSCU.cs" />
     <Compile Include="DicomNetwork\Client\WorklistSCU.cs" />
-    <Compile Include="Controls\AduLoading.cs" />
     <Compile Include="Logging\ILoggerService.cs" />
     <Compile Include="Logging\LoggerService.cs" />
     <Compile Include="Logging\NLogManager.cs" />
@@ -116,6 +119,8 @@
     <Compile Include="Models\SimpleWorklistResult.cs" />
     <Compile Include="Models\UpdateDicomElementItem.cs" />
     <Compile Include="Models\ClientMessageItem.cs" />
+    <Compile Include="Models\DicomObjectLevel.cs" />
+    <Compile Include="Models\ServerMessageItem.cs" />
     <Compile Include="DicomNetwork\Server\CStoreSCP.cs" />
     <Compile Include="DicomNetwork\Server\CStoreServer.cs" />
     <Compile Include="DicomNetwork\Server\FilmBoxExtensions.cs" />
@@ -124,18 +129,15 @@
     <Compile Include="DicomNetwork\Server\PrintJob.cs" />
     <Compile Include="DicomNetwork\Server\PrintSCP.cs" />
     <Compile Include="DicomNetwork\Server\PrintServer.cs" />
-    <Compile Include="IoCModules\ServicesModule.cs" />
     <Compile Include="Services\DialogServiceEx.cs" />
     <Compile Include="Services\IDialogServiceEx.cs" />
     <Compile Include="Services\INotificationService.cs" />
-    <Compile Include="MQTT\ISimpleMqttService.cs" />
     <Compile Include="Services\NotificationService.cs" />
-    <Compile Include="MQTT\SimpleMqttService.cs" />
-    <Compile Include="SimpleIoC.cs" />
     <Compile Include="Utils\BitmapUtil.cs" />
     <Compile Include="Utils\ApplicationUtil.cs" />
     <Compile Include="Utils\SysUtil.cs" />
     <Compile Include="Utils\ProcessUtil.cs" />
+    <Compile Include="Utils\VisualTreeUtil.cs" />
     <Compile Include="Utils\WindowsAPI.cs" />
     <Compile Include="ViewModels\CStoreFileListViewModel.cs" />
     <Compile Include="ViewModels\CStoreReceivedViewModel.cs" />
@@ -147,7 +149,6 @@
     <Compile Include="ViewModels\IViewModelFactory.cs" />
     <Compile Include="ViewModels\PreviewImageViewModel.cs" />
     <Compile Include="ViewModels\PrintJobsViewModel.cs" />
-    <Compile Include="ViewModels\PrintOptionsViewModel.cs" />
     <Compile Include="ViewModels\PrintPreviewViewModel.cs" />
     <Compile Include="ViewModels\PrintSCPViewModel.cs" />
     <Compile Include="ViewModels\PrintViewModel.cs" />
@@ -180,13 +181,9 @@
     </Compile>
     <Compile Include="Views\PreviewImageView.xaml.cs">
       <DependentUpon>PreviewImageView.xaml</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Views\PrintJobsView.xaml.cs">
       <DependentUpon>PrintJobsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PrintOptionsView.xaml.cs">
-      <DependentUpon>PrintOptionsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PrintPreviewView.xaml.cs">
       <DependentUpon>PrintPreviewView.xaml</DependentUpon>
@@ -276,10 +273,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PrintJobsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\PrintOptionsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
