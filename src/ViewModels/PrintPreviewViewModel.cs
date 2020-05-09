@@ -112,7 +112,7 @@
 
         private PrintOptions GetPrintOptions()
         {
-            return SimpleIoC.Get<PrintViewModel>().PrintOptions;
+            return (Parent as PrintViewModel).PrintOptions;
         }
 
         private void AddDcmImage(string file)

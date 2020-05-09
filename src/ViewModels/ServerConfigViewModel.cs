@@ -183,6 +183,8 @@
 
         public void Init(IScreen parentViewModel)
         {
+            Parent = parentViewModel;
+
             if (parentViewModel is WorklistViewModel)
             {
                 _doRequestAction = WorklistQueryRequest;

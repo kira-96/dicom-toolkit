@@ -21,6 +21,7 @@
         {
             base.OnInitialActivate();
             ServerConfigViewModel.Init(this);
+            CStoreReceivedViewModel.Parent = this;
         }
 
         public void Dispose()

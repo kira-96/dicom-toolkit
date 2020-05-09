@@ -21,6 +21,7 @@
         {
             base.OnInitialActivate();
             ServerConfigViewModel.Init(this);
+            WorklistResultViewModel.Parent = this;
         }
 
         public void Dispose()

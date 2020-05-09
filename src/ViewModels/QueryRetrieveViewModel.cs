@@ -21,6 +21,7 @@
         {
             base.OnInitialActivate();
             ServerConfigViewModel.Init(this);
+            QueryResultViewModel.Parent = this;
         }
 
         public void Dispose()

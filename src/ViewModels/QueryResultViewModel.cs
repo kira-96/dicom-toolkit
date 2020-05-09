@@ -94,7 +94,7 @@
 
         private (string serverIp, int serverPort, string serverAet, string localAet) GetServerConfig()
         {
-            var configVm = SimpleIoC.Get<QueryRetrieveViewModel>().ServerConfigViewModel;
+            var configVm = (Parent as QueryRetrieveViewModel).ServerConfigViewModel;
             return (configVm.ServerIP, configVm.ParseServerPort(), configVm.ServerAET, configVm.LocalAET);
         }
 

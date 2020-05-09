@@ -1,13 +1,13 @@
 ﻿namespace SimpleDICOMToolkit.ViewModels
 {
+    using MQTT;
+    using Nett;
     using Stylet;
     using StyletIoC;
     using System;
     using System.Diagnostics;
-    using MQTT;
     using System.IO;
-    using Nett;
-    using SimpleDICOMToolkit.Client;
+    using Client;
 
     public class PrintViewModel : Screen, IDisposable
     {
@@ -38,6 +38,7 @@
         {
             base.OnInitialActivate();
             ServerConfigViewModel.Init(this);
+            PrintPreviewViewModel.Parent = this;
             ReloadPrintOptions("config.toml");
             await messenger.SubscribeAsync(this, "Config", ReloadPrintOptions);
         }

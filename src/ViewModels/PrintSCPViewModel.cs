@@ -8,7 +8,6 @@
     using System;
     using System.Diagnostics;
     using System.IO;
-    using System.Windows.Controls;
 
     public class PrintSCPViewModel : Screen, IDisposable
     {
@@ -33,6 +32,7 @@
         {
             base.OnInitialActivate();
             ServerConfigViewModel.Init(this);
+            PrintJobsViewModel.Parent = this;
             ReloadPrinterSettings("config.toml");
             await messenger.SubscribeAsync(this, "Config", ReloadPrinterSettings);
         }
