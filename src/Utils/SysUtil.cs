@@ -101,6 +101,25 @@ namespace SimpleDICOMToolkit.Utils
             return SystemParameters.WindowGlassColor;
         }
 
+        public static Color GetColorizationColor()
+        {
+            using (RegistryKey dwm = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\DWM", false))
+            {
+                if (dwm.GetValueNames().Contains("ColorizationColor"))
+                {
+                    int accentColor = (int)dwm.GetValue("ColorizationColor");
+                    // 注意：读取到的颜色为 AARRGGBB
+                    return Color.FromArgb(
+                        (byte)((accentColor >> 24) & 0xFF),
+                        (byte)((accentColor >> 16) & 0xFF),
+                        (byte)((accentColor >> 8) & 0xFF),
+                        (byte)(accentColor & 0xFF));
+                }
+            }
+
+            return SystemParameters.WindowGlassColor;
+        }
+
         public static bool AppsUseLightTheme()
         {
             using (RegistryKey personalize = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", false))
