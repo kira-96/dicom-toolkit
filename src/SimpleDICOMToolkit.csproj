@@ -137,6 +137,7 @@
     <Compile Include="Utils\ApplicationUtil.cs" />
     <Compile Include="Utils\SysUtil.cs" />
     <Compile Include="Utils\ProcessUtil.cs" />
+    <Compile Include="Utils\AccentColorSet.cs" />
     <Compile Include="Utils\VisualTreeUtil.cs" />
     <Compile Include="Utils\WindowsAPI.cs" />
     <Compile Include="ViewModels\CStoreFileListViewModel.cs" />
