@@ -22,13 +22,6 @@ namespace Config.ViewModels
             Printers = new BindableCollection<string>();
         }
 
-        protected override void OnInitialActivate()
-        {
-            base.OnInitialActivate();
-
-            LoadConfigs((Parent as ShellViewModel).ConfigTable);
-        }
-
         protected override void OnViewLoaded()
         {
             base.OnViewLoaded();
@@ -59,7 +52,7 @@ namespace Config.ViewModels
             }
         }
 
-        private void LoadConfigs(TomlTable table)
+        public void LoadConfigs(TomlTable table)
         {
             if (table.ContainsKey("PrinterSettings"))
             {

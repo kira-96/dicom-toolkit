@@ -80,14 +80,7 @@ namespace Config.ViewModels
             DisplayName = "Print Options";
         }
 
-        protected override void OnInitialActivate()
-        {
-            base.OnInitialActivate();
-
-            LoadConfigs((Parent as ShellViewModel).ConfigTable);
-        }
-
-        private void LoadConfigs(TomlTable table)
+        public void LoadConfigs(TomlTable table)
         {
             if (table.ContainsKey("PrintOptions"))
             {

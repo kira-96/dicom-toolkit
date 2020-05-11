@@ -63,6 +63,11 @@
             if (Items.Count == 0)
                 return;
 
+            foreach (var item in Items)
+            {
+                (item as IConfigViewModel).LoadConfigs(ConfigTable);
+            }
+
             string[] args = Environment.GetCommandLineArgs();
 
             ActivateItemByArgs(args);
