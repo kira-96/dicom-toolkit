@@ -85,6 +85,24 @@
     </Window.Resources>
 
     <Grid x:Name="ContentGrid">
+        <TextBlock x:Name="TabText" Text="{Binding ActiveItem.DisplayName}" 
+                   HorizontalAlignment="Right" VerticalAlignment="Top" 
+                   Margin="4" />
         <TabControl Style="{StaticResource ConductorTabControl}" />
+        <!--
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <ListView Grid.Column="0"
+                  ItemsSource="{Binding Items}" 
+                  SelectedItem="{Binding ActiveItem}"
+                  DisplayMemberPath="DisplayName" />
+        <ContentControl Grid.Column="1" 
+                        s:View.Model="{Binding ActiveItem}"
+                        Content="{Binding ActiveItem}"
+                        HorizontalContentAlignment="Stretch"
+                        VerticalContentAlignment="Stretch" />
+        -->
     </Grid>
 </Window>

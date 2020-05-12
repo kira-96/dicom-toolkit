@@ -132,11 +132,14 @@
 
             if (IsActive)
             {
-                ContentGrid.Background = new SolidColorBrush(GetAccentColor());
+                Color accentColor = GetAccentColor();
+                ContentGrid.Background = new SolidColorBrush(accentColor);
+                TabText.Foreground = new SolidColorBrush(GetForegroundColor(accentColor));
             }
             else
             {
                 ContentGrid.Background = new SolidColorBrush(Colors.White);
+                TabText.Foreground = new SolidColorBrush(Colors.Gray);
             }
         }
 

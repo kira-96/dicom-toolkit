@@ -120,6 +120,18 @@ namespace SimpleDICOMToolkit.Utils
             return SystemParameters.WindowGlassColor;
         }
 
+        /// <summary>
+        /// 根据背景色计算前景色(白/黑)
+        /// https://github.com/loilo/windows-titlebar-color/blob/master/WindowsAccentColors.js
+        /// </summary>
+        /// <param name="background">背景颜色</param>
+        /// <returns>前景颜色(白/黑)</returns>
+        public static Color GetForegroundColor(Color background)
+        {
+            return (background.R * 2 + background.G * 5 + background.B) <= 1024 /* 8*128 */
+                ? Colors.White : Colors.Black;
+        }
+
         public static bool AppsUseLightTheme()
         {
             using (RegistryKey personalize = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", false))
