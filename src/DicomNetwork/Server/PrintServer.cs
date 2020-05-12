@@ -36,6 +36,8 @@ namespace SimpleDICOMToolkit.Server
 
         public string PrinterName { get; set; } = "Microsoft XPS Document Writer";  // XPS - Windows 系统都有
 
+        public bool IsSaveToImage => PrinterName == "PNG";
+
         private PrintServer()
         {}
 

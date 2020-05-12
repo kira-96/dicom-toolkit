@@ -2,6 +2,7 @@
 // Licensed under the Microsoft Public License (MS-PL).
 
 using Dicom;
+using Dicom.Imaging;
 using Dicom.Log;
 using Dicom.Printing;
 using System;
@@ -10,6 +11,7 @@ using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using SimpleDICOMToolkit.Utils;
 
 namespace SimpleDICOMToolkit.Server
 {
@@ -274,19 +276,26 @@ namespace SimpleDICOMToolkit.Server
                 //    PrintFileName = Path.Combine(FullPrintJobFolder, SOPInstanceUID.UID + ".xps")
                 //};
 
-                var printerSettings = PrintServer.Default.GetPrinterSettings(Path.Combine(FullPrintJobFolder, SOPInstanceUID.UID));
-
-                printDocument = new PrintDocument
+                if (PrintServer.Default.IsSaveToImage)
                 {
-                    PrinterSettings = printerSettings,
-                    DocumentName = Thread.CurrentThread.Name,
-                    PrintController = new StandardPrintController()
-                };
+                    SaveToPng();
+                }
+                else
+                {
+                    var printerSettings = PrintServer.Default.GetPrinterSettings(Path.Combine(FullPrintJobFolder, SOPInstanceUID.UID));
 
-                printDocument.QueryPageSettings += OnQueryPageSettings;
-                printDocument.PrintPage += OnPrintPage;
+                    printDocument = new PrintDocument
+                    {
+                        PrinterSettings = printerSettings,
+                        DocumentName = Thread.CurrentThread.Name,
+                        PrintController = new StandardPrintController()
+                    };
 
-                printDocument.Print();
+                    printDocument.QueryPageSettings += OnQueryPageSettings;
+                    printDocument.PrintPage += OnPrintPage;
+
+                    printDocument.Print();
+                }
 
                 Status = PrintJobStatus.Done;
 
@@ -305,6 +314,26 @@ namespace SimpleDICOMToolkit.Server
                     printDocument.QueryPageSettings -= OnQueryPageSettings;
                     printDocument.PrintPage -= OnPrintPage;
                     printDocument.Dispose();
+                }
+            }
+        }
+
+        private void SaveToPng()
+        {
+            for (int i = 0; i < FilmBoxFolderList.Count; i++)
+            {
+                OnStatusUpdate($"NORMAL");
+                var filmBoxFolder = Path.Combine(FullPrintJobFolder, FilmBoxFolderList[i]);
+                var filmSession = FilmSession.Load(Path.Combine(filmBoxFolder, "FilmSession.dcm"));
+                _currentFilmBox = FilmBox.Load(filmSession, filmBoxFolder);
+
+                for (int j = 0; j < _currentFilmBox.BasicImageBoxes.Count; j++)
+                {
+                    if (_currentFilmBox.BasicImageBoxes[j].ImageSequence.Contains(DicomTag.PixelData))
+                    {
+                        var image = new DicomImage(_currentFilmBox.BasicImageBoxes[j].ImageSequence);
+                        image.RenderImage().AsWriteableBitmap().SavePng(Path.Combine(FullPrintJobFolder, SOPInstanceUID.UID) + $".{i}.{j}.png");
+                    }
                 }
             }
         }

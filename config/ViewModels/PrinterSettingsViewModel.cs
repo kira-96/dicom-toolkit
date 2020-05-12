@@ -42,6 +42,9 @@ namespace Config.ViewModels
                 Printers.Add(printer);
             }
 
+            // 允许保存到图像
+            Printers.Add("PNG");
+
             if (!Printers.Contains(temp))
             {
                 Printer = "Microsoft XPS Document Writer";  // XPS - Windows 系统都有

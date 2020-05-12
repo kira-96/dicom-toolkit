@@ -92,5 +92,20 @@ namespace SimpleDICOMToolkit.Utils
                 return new Bitmap(stream);
             }
         }
+
+        /// <summary>
+        /// Save WriteableBitmap as PNG
+        /// </summary>
+        /// <param name="wbm">WriteableBitmap</param>
+        /// <param name="file">PNG file path</param>
+        public static void SavePng(this WriteableBitmap wbm, string file)
+        {
+            using (FileStream stream = new FileStream(file, FileMode.Create, FileAccess.ReadWrite))
+            {
+                PngBitmapEncoder encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(wbm));
+                encoder.Save(stream);
+            }
+        }
     }
 }

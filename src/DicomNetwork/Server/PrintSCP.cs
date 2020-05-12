@@ -568,16 +568,11 @@ namespace SimpleDICOMToolkit.Server
                     {
 
                         var result = new DicomDataset
-                  {
-                     new DicomSequence(
-                          DicomTag.ReferencedPrintJobSequenceRETIRED,
-                          new DicomDataset(
-                              new DicomUniqueIdentifier(DicomTag.ReferencedSOPClassUID, DicomUID.PrintJobSOPClass)),
-                          new DicomDataset(
-                              new DicomUniqueIdentifier(
-                                  DicomTag.ReferencedSOPInstanceUID,
-                                  printJob.SOPInstanceUID)))
-                  };
+                        {
+                            new DicomSequence(DicomTag.ReferencedPrintJobSequenceRETIRED,
+                            new DicomDataset(new DicomUniqueIdentifier(DicomTag.ReferencedSOPClassUID, DicomUID.PrintJobSOPClass)),
+                            new DicomDataset(new DicomUniqueIdentifier(DicomTag.ReferencedSOPInstanceUID, printJob.SOPInstanceUID)))
+                        };
 
                         var response = new DicomNActionResponse(request, DicomStatus.Success);
                         response.Command.AddOrUpdate(DicomTag.AffectedSOPInstanceUID, request.SOPInstanceUID);
