@@ -2,6 +2,8 @@
 
 *A Simple DICOM Toolkit*
 
+![c-store](screenshot/Snipaste_2020-05-14_15-40-15.png)
+
 ## 功能
 
 - Simple Dicom Dump [**慎用修改和保存功能**]
