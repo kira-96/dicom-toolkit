@@ -79,6 +79,11 @@
 
             await _printSCU.PrintImagesAsync(message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET, options, images);
 
+            foreach (var image in images)
+            {
+                image.Dispose();
+            }
+
             _eventAggregator.Publish(new BusyStateItem(false), nameof(PrintPreviewViewModel));
         }
 
