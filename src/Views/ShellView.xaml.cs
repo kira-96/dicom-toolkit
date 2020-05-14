@@ -20,8 +20,6 @@
         /// Menu Item ID
         /// </summary>
         private const uint IDM_ABOUT = 1001;
-        private const uint WM_NCPAINT = 0x0085;
-        private const uint WM_NCACTIVATE = 0x0086;
         private const uint WM_DWMCOLORIZATIONCOLORCHANGED = 0x0320;
 
         [Inject]
@@ -134,7 +132,7 @@
             {
                 Color accentColor = GetAccentColor();
                 ContentGrid.Background = new SolidColorBrush(accentColor);
-                TabText.Foreground = new SolidColorBrush(GetForegroundColor(accentColor));
+                TabText.Foreground = new SolidColorBrush(GetReverseForegroundColor(accentColor));
             }
             else
             {

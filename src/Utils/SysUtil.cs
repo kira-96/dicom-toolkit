@@ -132,6 +132,19 @@ namespace SimpleDICOMToolkit.Utils
                 ? Colors.White : Colors.Black;
         }
 
+        /// <summary>
+        /// 计算能在任何背景色上清晰显示的前景色
+        /// https://www.cnblogs.com/walterlv/p/10236517.html
+        /// </summary>
+        /// <param name="background">背景颜色</param>
+        /// <returns>前景颜色(黑/白)</returns>
+        public static Color GetReverseForegroundColor(Color background)
+        {
+            double grayLevel = (0.299 * background.R + 0.587 * background.G + 0.114 * background.B) / 255;
+
+            return grayLevel > 0.5 ? Colors.Black : Colors.White;
+        }
+
         public static bool AppsUseLightTheme()
         {
             using (RegistryKey personalize = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", false))
