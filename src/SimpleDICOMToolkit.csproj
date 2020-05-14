@@ -81,7 +81,10 @@
     <Compile Include="Controls\ActiveHeaderAdorner.cs" />
     <Compile Include="Controls\AduLoading.cs" />
     <Compile Include="Controls\EffectBehavior.cs" />
+    <Compile Include="Controls\ProgressRing.cs" />
+    <Compile Include="Controls\TemplateSettingValues.cs" />
     <Compile Include="Controls\TextBoxPlaceholderBehavior.cs" />
+    <Compile Include="Controls\VisualStates.cs" />
     <Compile Include="IoCModules\ServicesModule.cs" />
     <Compile Include="IoCModules\DicomSCUModule.cs" />
     <Compile Include="IoCModules\ViewModelModule.cs" />
@@ -225,6 +228,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\ProgressRing.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\AduLoading.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -17,6 +17,14 @@
         private Dicom.DicomUID AffectedInstanceUID = null;
         private string StudyInstanceUID = null;
 
+        private bool _isBusy = false;
+
+        public bool IsBusy
+        {
+            get => _isBusy;
+            private set => SetAndNotify(ref _isBusy, value);
+        }
+
         public BindableCollection<SimpleWorklistResult> WorklistItems { get; private set; }
 
         public WorklistResultViewModel(IEventAggregator eventAggregator)
@@ -68,6 +76,7 @@
         public async void Handle(ClientMessageItem message)
         {
             _eventAggregator.Publish(new BusyStateItem(true), nameof(WorklistResultViewModel));
+            IsBusy = true;
 
             WorklistItems.Clear();
 
@@ -75,6 +84,7 @@
 
             WorklistItems.AddRange(result);
 
+            IsBusy = false;
             _eventAggregator.Publish(new BusyStateItem(false), nameof(WorklistResultViewModel));
         }
 

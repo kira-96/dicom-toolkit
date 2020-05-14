@@ -76,6 +76,14 @@
             set => SetAndNotify(ref selectedImage, value);
         }
 
+        private bool _isBusy = false;
+
+        public bool IsBusy
+        {
+            get => _isBusy;
+            private set => SetAndNotify(ref _isBusy, value);
+        }
+
         public QueryResultViewModel(IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
@@ -101,6 +109,7 @@
         private async Task QueryPatients(ClientMessageItem message)
         {
             _eventAggregator.Publish(new BusyStateItem(true), nameof(QueryResultViewModel));
+            IsBusy = true;
 
             var result = await queryRetrieveSCU.QueryPatients(
                 message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET);
@@ -117,12 +126,14 @@
                 }
             }
 
+            IsBusy = false;
             _eventAggregator.Publish(new BusyStateItem(false), nameof(QueryResultViewModel));
         }
 
         private async void QueryStudies(IDicomObjectLevel obj)
         {
             _eventAggregator.Publish(new BusyStateItem(true), nameof(QueryResultViewModel));
+            IsBusy = true;
 
             var (serverIp, serverPort, serverAet, localAet) = GetServerConfig();
             var result = await queryRetrieveSCU.QueryStudiesByPatientAsync(serverIp, serverPort, serverAet, localAet, obj.UID);
@@ -142,12 +153,14 @@
                 }
             }
 
+            IsBusy = false;
             _eventAggregator.Publish(new BusyStateItem(false), nameof(QueryResultViewModel));
         }
 
         private async void QuerySeries(IDicomObjectLevel obj)
         {
             _eventAggregator.Publish(new BusyStateItem(true), nameof(QueryResultViewModel));
+            IsBusy = true;
 
             var (serverIp, serverPort, serverAet, localAet) = GetServerConfig();
             var result = await queryRetrieveSCU.QuerySeriesByStudyAsync(serverIp, serverPort, serverAet, localAet, obj.UID);
@@ -167,12 +180,14 @@
                 }
             }
 
+            IsBusy = false;
             _eventAggregator.Publish(new BusyStateItem(false), nameof(QueryResultViewModel));
         }
 
         private async void QueryImages(IDicomObjectLevel obj)
         {
             _eventAggregator.Publish(new BusyStateItem(true), nameof(QueryResultViewModel));
+            IsBusy = true;
 
             var (serverIp, serverPort, serverAet, localAet) = GetServerConfig();
             var result = await queryRetrieveSCU.QueryImagesByStudyAndSeriesAsync(
@@ -193,18 +208,21 @@
                 }
             }
 
+            IsBusy = false;
             _eventAggregator.Publish(new BusyStateItem(false), nameof(QueryResultViewModel));
         }
 
         public async void PreviewImage()
         {
             _eventAggregator.Publish(new BusyStateItem(true), nameof(QueryResultViewModel));
+            IsBusy = true;
 
             var (serverIp, serverPort, serverAet, localAet) = GetServerConfig();
             var result = await queryRetrieveSCU.GetImagesBySOPInstanceAsync(
                 serverIp, serverPort, serverAet, localAet,
                 selectedImage.Parent.Parent.UID, selectedImage.Parent.UID, selectedImage.UID);
 
+            IsBusy = false;
             _eventAggregator.Publish(new BusyStateItem(false), nameof(QueryResultViewModel));
 
             // 有时候查询到的图像没有像素值，无法显示

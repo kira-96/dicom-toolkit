@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:s="https://github.com/canton7/Stylet"
+             xmlns:c="clr-namespace:SimpleDICOMToolkit.Controls"
              xmlns:m="clr-namespace:SimpleDICOMToolkit.Models"
              mc:Ignorable="d" 
              d:DesignWidth="340"
@@ -75,5 +76,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <c:ProgressRing Width="60" Height="60" 
+                        IsActive="{Binding IsBusy}" />
     </Grid>
 </UserControl>
