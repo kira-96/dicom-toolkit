@@ -2,6 +2,10 @@
 
 *A Simple DICOM Toolkit*
 
+![Build Status](https://ci.appveyor.com/api/projects/status/github/kira-96/fo-dicom-samples)
+
+---
+
 ![c-store](screenshot/Snipaste_2020-05-14_15-40-15.png)
 
 ## 功能
