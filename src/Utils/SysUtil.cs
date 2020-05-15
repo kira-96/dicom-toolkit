@@ -122,7 +122,7 @@ namespace SimpleDICOMToolkit.Utils
 
         /// <summary>
         /// 根据背景色计算前景色(白/黑)
-        /// https://github.com/loilo/windows-titlebar-color/blob/master/WindowsAccentColors.js
+        /// https://github.com/loilo/windows-titlebar-color/blob/master/WindowsAccentColors.js#L53
         /// </summary>
         /// <param name="background">背景颜色</param>
         /// <returns>前景颜色(白/黑)</returns>
