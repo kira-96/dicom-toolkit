@@ -9,13 +9,6 @@ branches:
   only:
     - master
 
-  # blacklist
-  except:
-    - gh-pages
-
-# Do not build on tags (GitHub, Bitbucket, GitLab, Gitea)
-skip_tags: false
-
 # Start builds on tags only (GitHub, BitBucket, GitLab, Gitea)
 skip_non_tags: true
 
@@ -99,6 +92,8 @@ deploy:
     draft: true
     force_update: true
     prerelease: false
+    auth_token:
+      secure: fiFaOlgTuu0lwxc8TuIFY02OoAWDtQOJsC0c7QemRR8sZm8xGXqxe1LVMRD7kNFo
     on:
       branch: master                # release from master branch only
       APPVEYOR_REPO_TAG: true       # deploy on tag push only
@@ -107,12 +102,12 @@ deploy:
 #         notifications           #
 #---------------------------------#
 
-notifications:
+# notifications:
 
-  # Email
-  - provider: Email
-    to:
-      - 847320916@qq.com
-    subject: 'Build {{status}}'                  # optional
-    message: "{{message}}, {{commitId}}, ..."    # optional
-    on_build_status_changed: true
+#   # Email
+#   - provider: Email
+#     to:
+#       - 847320916@qq.com
+#     subject: 'Build {{status}}'                  # optional
+#     message: "{{message}}, {{commitId}}, ..."    # optional
+#     on_build_status_changed: true
