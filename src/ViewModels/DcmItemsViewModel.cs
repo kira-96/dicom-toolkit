@@ -22,7 +22,7 @@
         [Inject]
         private IDialogServiceEx _dialogService;
 
-        private IEventAggregator _eventAggregator;
+        private readonly IEventAggregator _eventAggregator;
 
         private DicomDataset _currentDataset;
 
@@ -83,6 +83,9 @@
             DicomItems.Clear();
 
             DicomFile dcmFile = await DicomFile.OpenAsync(file);
+#pragma warning disable CS0618 // 类型或成员已过时
+            dcmFile.Dataset.AutoValidate = false;
+#pragma warning restore CS0618 // 类型或成员已过时
 
             _currentDataset = dcmFile.Dataset;
 
@@ -159,9 +162,11 @@
 
         private void AddOrUpdateDicomItem(DicomDataset dataset, DicomVR vr, DicomTag tag, string[] values)
         {
+            string charset = _currentDataset.GetSingleValueOrDefault(DicomTag.SpecificCharacterSet, "ISO_IR 192");
+
             try
             {
-                dataset.AddOrUpdate(vr, tag, values);
+                dataset.AddOrUpdate(vr, tag, DicomEncoding.GetEncoding(charset), values);
             }
             catch (System.Exception e)
             {
