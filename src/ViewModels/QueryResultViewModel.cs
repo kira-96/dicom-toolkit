@@ -12,11 +12,13 @@
     {
         private readonly IEventAggregator _eventAggregator;
 
+#pragma warning disable IDE0044, 0649
         [Inject]
         private IQueryRetrieveSCU queryRetrieveSCU;
 
         [Inject]
         private IWindowManager _windowManager;
+#pragma warning disable IDE0044, 0649
 
         public BindableCollection<IDicomObjectLevel> QueryResult { get; } = new BindableCollection<IDicomObjectLevel>();
 

@@ -13,6 +13,7 @@
 
     public class DcmItemsViewModel : Screen, IHandle<UpdateDicomElementItem>
     {
+#pragma warning disable IDE0044, 0649
         [Inject(Key = "filelogger")]
         private ILoggerService _logger;
 
@@ -21,6 +22,7 @@
 
         [Inject]
         private IDialogServiceEx _dialogService;
+#pragma warning disable IDE0044, 0649
 
         private readonly IEventAggregator _eventAggregator;
 

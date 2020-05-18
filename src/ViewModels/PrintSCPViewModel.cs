@@ -11,11 +11,13 @@
 
     public class PrintSCPViewModel : Screen, IDisposable
     {
+#pragma warning disable IDE0044, 0649
         [Inject]
         private IWindowManager _windowManager;
 
         [Inject]
         private IMessenger messenger;
+#pragma warning disable IDE0044, 0649
 
         [Inject]
         public ServerConfigViewModel ServerConfigViewModel { get; private set; }

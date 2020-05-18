@@ -3,7 +3,6 @@
     using Stylet;
     using StyletIoC;
     using System;
-    using Logging;
     using Models;
     using Server;
     using Services;
@@ -11,11 +10,10 @@
 
     public class PrintJobsViewModel : Screen, IHandle<ServerMessageItem>, IDisposable
     {
-        [Inject(Key = "filelogger")]
-        private ILoggerService _logger;
-
+#pragma warning disable IDE0044, 0649
         [Inject]
         private INotificationService notificationService;
+#pragma warning restore IDE0044, 0649
 
         private readonly IEventAggregator _eventAggregator;
 

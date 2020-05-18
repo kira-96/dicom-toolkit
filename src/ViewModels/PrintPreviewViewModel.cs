@@ -11,7 +11,6 @@
     using System.Windows;
     using System.Windows.Media.Imaging;
     using Client;
-    using Services;
     using Models;
     using Utils;
 
@@ -19,11 +18,10 @@
     {
         private readonly IEventAggregator _eventAggregator;
 
-        [Inject]
-        private IDialogServiceEx _dialogService;
-
+#pragma warning disable IDE0044, 0649
         [Inject]
         private IPrintSCU _printSCU;
+#pragma warning disable IDE0044, 0649
 
         private List<WriteableBitmap> _images = new List<WriteableBitmap>();
 
