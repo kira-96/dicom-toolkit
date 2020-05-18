@@ -98,7 +98,7 @@
             </Setter>
             <EventSetter Event="MouseDoubleClick" Handler="CStoreItemMouseDoubleClick" />
         </Style>
-        <Style x:Key="AddFilesButtonStyle" TargetType="{x:Type Button}">
+        <Style TargetType="{x:Type Button}">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Padding" Value="2" />
             <Setter Property="Margin" Value="2" />
@@ -164,13 +164,20 @@
                   ItemsSource="{Binding FileList}"
                   ItemContainerStyle="{StaticResource ListItemStyle}"
                   ScrollViewer.VerticalScrollBarVisibility="Hidden" />
-        <Button Grid.Row="2" 
-                ToolTip="Add Files"
-                Style="{StaticResource AddFilesButtonStyle}"
-                s:View.ActionTarget="{Binding}"
-                Command="{s:Action AddFiles, ActionNotFound=Disable}">
-            <Image Width="24" Height="24" Stretch="Fill"
-                   Source="pack://application:,,,/Icons/addfiles.png" />
-        </Button>
+        <StackPanel Grid.Row="2" Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+            <Button ToolTip="Add Files"
+                    s:View.ActionTarget="{Binding}"
+                    Command="{s:Action AddFiles, ActionNotFound=Disable}">
+                <Image Width="24" Height="24" Stretch="Fill"
+                       Source="pack://application:,,,/Icons/addfiles.png" />
+            </Button>
+            <Button ToolTip="Clear All"
+                    s:View.ActionTarget="{Binding}"
+                    Command="{s:Action ClearItems, ActionNotFound=Disable}">
+                <Image Width="24" Height="24" Stretch="Fill" 
+                       Source="pack://application:,,,/Icons/clear.png" />
+            </Button>
+        </StackPanel>
     </Grid>
 </UserControl>

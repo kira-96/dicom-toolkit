@@ -113,6 +113,11 @@
             ReIndexItems();
         }
 
+        public void ClearItems()
+        {
+            FileList.Clear();
+        }
+
         private void AddDcmFilesToList(bool? result, string[] files)
         {
             foreach (string file in files)
