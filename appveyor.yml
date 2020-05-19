@@ -10,7 +10,7 @@ branches:
     - master
 
 # Start builds on tags only (GitHub, BitBucket, GitLab, Gitea)
-skip_non_tags: true
+skip_non_tags: false
 
 # Do not build feature branch with open Pull Requests
 skip_branch_with_pr: true
@@ -75,8 +75,8 @@ before_package:
 artifacts:
 
   # pushing a single file with environment variable in path and "Deployment name" specified
-  - path: $(APPVEYOR_PROJECT_NAME)\$(platform)\$(configuration)
-    name: $(APPVEYOR_PROJECT_NAME)-v$(APPVEYOR_REPO_TAG_NAME)
+  - path: x64\Release
+    name: dicom-toolkit_x64
 
 #---------------------------------#
 #     deployment configuration    #
@@ -89,6 +89,7 @@ deploy:
   - provider: GitHub
     tag: $(APPVEYOR_REPO_TAG_NAME)
     release: $(APPVEYOR_PROJECT_NAME)-v$(APPVEYOR_REPO_TAG_NAME)
+    artifact: dicom-toolkit_x64
     draft: true
     force_update: true
     prerelease: false
