@@ -71,10 +71,7 @@
             if (!File.Exists(path))
                 return;
 
-            string ext = Path.GetExtension(path).ToLower();
-
-            if (ext == ".dcm" ||
-                ext == ".dic")
+            if (DicomFile.HasValidHeader(path))
             {
                 await OpenDcmFile(path);
             }

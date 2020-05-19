@@ -8,6 +8,7 @@
     using Client;
     using Services;
     using Models;
+    using Dicom;
 
     public class CStoreFileListViewModel : Screen, IHandle<ClientMessageItem>, IDisposable
     {
@@ -64,7 +65,7 @@
             if (!e.Data.GetDataPresent(DataFormats.FileDrop))
                 return;
 
-            System.Array files = e.Data.GetData(DataFormats.FileDrop) as System.Array;
+            Array files = e.Data.GetData(DataFormats.FileDrop) as Array;
 
             foreach (object file in files)
             {
@@ -78,27 +79,20 @@
 
                     foreach (FileInfo info in fileinfos)
                     {
-                        string ext = info.Extension;
+                        if (!info.Exists)
+                            continue;
 
-                        if (ext.ToLower() == ".dcm" ||
-                            ext.ToLower() == ".dic")
-                        {
-                            if (!info.Exists)
-                                continue;
+                        if (!DicomFile.HasValidHeader(info.FullName))
+                            continue;
 
-                            FileList.Add(new CStoreItem(FileList.Count, info.FullName));
-                        }
+                        FileList.Add(new CStoreItem(FileList.Count, info.FullName));
                     }
 
                     continue;
                 }
 
-                if (path.ToLower().EndsWith(".dcm") ||
-                    path.ToLower().EndsWith(".dic"))
+                if (File.Exists(path) && DicomFile.HasValidHeader(path))
                 {
-                    if (!File.Exists(path))
-                        continue;
-
                     FileList.Add(new CStoreItem(FileList.Count, path));
                 }
             }
