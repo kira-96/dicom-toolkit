@@ -49,10 +49,18 @@ namespace Dicom.Printing
                 try
                 {
                     var image = new DicomImage(imageBox.ImageSequence);
-                    // var frame = image.RenderImage().As<Image>();
-                    var frame = image.RenderImage().AsWriteableBitmap().AsBitmap();
+                    var iimage = image.RenderImage();
 
-                    bitmap = frame;
+                    if (iimage is WPFImage)
+                    {
+                        var frame = iimage.AsWriteableBitmap().AsBitmap();
+                        bitmap = frame;
+                    }
+                    else
+                    {
+                        var frame = iimage.As<Image>();
+                        bitmap = frame;
+                    }
 
                     DrawBitmap(graphics, boxCopy, bitmap, imageResolution, imageBox.FilmBox.EmptyImageDensity);
                 }
