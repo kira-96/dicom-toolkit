@@ -40,9 +40,14 @@
 
             _eventAggregator.Publish(new BusyStateItem(true), nameof(CStoreFileListViewModel));
 
-            await _cstoreSCU.StoreImageAsync(message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET, FileList);
-
-            _eventAggregator.Publish(new BusyStateItem(false), nameof(CStoreFileListViewModel));
+            try
+            {
+                await _cstoreSCU.StoreImageAsync(message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET, FileList);
+            }
+            finally
+            {
+                _eventAggregator.Publish(new BusyStateItem(false), nameof(CStoreFileListViewModel));
+            }
         }
 
         public void AddFiles()

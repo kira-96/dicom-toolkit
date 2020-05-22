@@ -75,14 +75,19 @@
                 images.Add(image.AsBitmap());
             }
 
-            await _printSCU.PrintImagesAsync(message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET, options, images);
-
-            foreach (var image in images)
+            try
             {
-                image.Dispose();
+                await _printSCU.PrintImagesAsync(message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET, options, images);
             }
+            finally
+            {
+                foreach (var image in images)
+                {
+                    image.Dispose();
+                }
 
-            _eventAggregator.Publish(new BusyStateItem(false), nameof(PrintPreviewViewModel));
+                _eventAggregator.Publish(new BusyStateItem(false), nameof(PrintPreviewViewModel));
+            }
         }
 
         public void OnDragFilesOver(DragEventArgs e)

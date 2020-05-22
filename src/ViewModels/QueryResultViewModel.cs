@@ -4,6 +4,7 @@
     using Stylet;
     using StyletIoC;
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Client;
     using Models;
@@ -113,23 +114,32 @@
             _eventAggregator.Publish(new BusyStateItem(true), nameof(QueryResultViewModel));
             IsBusy = true;
 
-            var result = await queryRetrieveSCU.QueryPatients(
-                message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET);
+            List<DicomDataset> result = null;
 
-            foreach (DicomDataset item in result)
+            try
             {
-                string name = item.GetSingleValueOrDefault(DicomTag.PatientName, string.Empty);
-                string pid = item.GetSingleValueOrDefault(DicomTag.PatientID, string.Empty);
-                if (!string.IsNullOrEmpty(name) || !string.IsNullOrEmpty(pid))
-                {
-                    if (string.IsNullOrEmpty(name)) name = pid;
-                    DicomObjectLevel objectLevel = new DicomObjectLevel(name, pid, Level.Patient, null);
-                    QueryResult.Add(objectLevel);
-                }
+                result = await queryRetrieveSCU.QueryPatients(message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET);
+            }
+            finally
+            {
+                IsBusy = false;
+                _eventAggregator.Publish(new BusyStateItem(false), nameof(QueryResultViewModel));
             }
 
-            IsBusy = false;
-            _eventAggregator.Publish(new BusyStateItem(false), nameof(QueryResultViewModel));
+            if (result != null)
+            {
+                foreach (DicomDataset item in result)
+                {
+                    string name = item.GetSingleValueOrDefault(DicomTag.PatientName, string.Empty);
+                    string pid = item.GetSingleValueOrDefault(DicomTag.PatientID, string.Empty);
+                    if (!string.IsNullOrEmpty(name) || !string.IsNullOrEmpty(pid))
+                    {
+                        if (string.IsNullOrEmpty(name)) name = pid;
+                        DicomObjectLevel objectLevel = new DicomObjectLevel(name, pid, Level.Patient, null);
+                        QueryResult.Add(objectLevel);
+                    }
+                }
+            }
         }
 
         private async void QueryStudies(IDicomObjectLevel obj)
@@ -138,25 +148,36 @@
             IsBusy = true;
 
             var (serverIp, serverPort, serverAet, localAet) = GetServerConfig();
-            var result = await queryRetrieveSCU.QueryStudiesByPatientAsync(serverIp, serverPort, serverAet, localAet, obj.UID);
 
-            foreach (DicomDataset item in result)
+            List<DicomDataset> result = null;
+
+            try
             {
-                string studyDate = item.GetSingleValueOrDefault(DicomTag.StudyDate, string.Empty);
-                string studyUid = item.GetSingleValueOrDefault(DicomTag.StudyInstanceUID, string.Empty);
-
-                if (!string.IsNullOrEmpty(studyDate) || !string.IsNullOrEmpty(studyUid))
-                {
-                    if (string.IsNullOrEmpty(studyDate))
-                    {
-                        studyDate = studyUid;
-                    }
-                    obj.Children.Add(new DicomObjectLevel(studyDate, studyUid, Level.Study, obj));
-                }
+                result = await queryRetrieveSCU.QueryStudiesByPatientAsync(serverIp, serverPort, serverAet, localAet, obj.UID);
+            }
+            finally
+            {
+                IsBusy = false;
+                _eventAggregator.Publish(new BusyStateItem(false), nameof(QueryResultViewModel));
             }
 
-            IsBusy = false;
-            _eventAggregator.Publish(new BusyStateItem(false), nameof(QueryResultViewModel));
+            if (result != null)
+            {
+                foreach (DicomDataset item in result)
+                {
+                    string studyDate = item.GetSingleValueOrDefault(DicomTag.StudyDate, string.Empty);
+                    string studyUid = item.GetSingleValueOrDefault(DicomTag.StudyInstanceUID, string.Empty);
+
+                    if (!string.IsNullOrEmpty(studyDate) || !string.IsNullOrEmpty(studyUid))
+                    {
+                        if (string.IsNullOrEmpty(studyDate))
+                        {
+                            studyDate = studyUid;
+                        }
+                        obj.Children.Add(new DicomObjectLevel(studyDate, studyUid, Level.Study, obj));
+                    }
+                }
+            }
         }
 
         private async void QuerySeries(IDicomObjectLevel obj)
@@ -165,25 +186,36 @@
             IsBusy = true;
 
             var (serverIp, serverPort, serverAet, localAet) = GetServerConfig();
-            var result = await queryRetrieveSCU.QuerySeriesByStudyAsync(serverIp, serverPort, serverAet, localAet, obj.UID);
 
-            foreach (DicomDataset item in result)
+            List<DicomDataset> result = null;
+
+            try
             {
-                string seriesNumber = item.GetSingleValueOrDefault(DicomTag.SeriesNumber, string.Empty);
-                string seriesUid = item.GetSingleValueOrDefault(DicomTag.SeriesInstanceUID, string.Empty);
-
-                if (!string.IsNullOrEmpty(seriesNumber) || !string.IsNullOrEmpty(seriesUid))
-                {
-                    if (string.IsNullOrEmpty(seriesNumber))
-                    {
-                        seriesNumber = seriesUid;
-                    }
-                    obj.Children.Add(new DicomObjectLevel(seriesNumber, seriesUid, Level.Series, obj));
-                }
+                result = await queryRetrieveSCU.QuerySeriesByStudyAsync(serverIp, serverPort, serverAet, localAet, obj.UID);
+            }
+            finally
+            {
+                IsBusy = false;
+                _eventAggregator.Publish(new BusyStateItem(false), nameof(QueryResultViewModel));
             }
 
-            IsBusy = false;
-            _eventAggregator.Publish(new BusyStateItem(false), nameof(QueryResultViewModel));
+            if (result != null)
+            {
+                foreach (DicomDataset item in result)
+                {
+                    string seriesNumber = item.GetSingleValueOrDefault(DicomTag.SeriesNumber, string.Empty);
+                    string seriesUid = item.GetSingleValueOrDefault(DicomTag.SeriesInstanceUID, string.Empty);
+
+                    if (!string.IsNullOrEmpty(seriesNumber) || !string.IsNullOrEmpty(seriesUid))
+                    {
+                        if (string.IsNullOrEmpty(seriesNumber))
+                        {
+                            seriesNumber = seriesUid;
+                        }
+                        obj.Children.Add(new DicomObjectLevel(seriesNumber, seriesUid, Level.Series, obj));
+                    }
+                }
+            }
         }
 
         private async void QueryImages(IDicomObjectLevel obj)
@@ -192,26 +224,36 @@
             IsBusy = true;
 
             var (serverIp, serverPort, serverAet, localAet) = GetServerConfig();
-            var result = await queryRetrieveSCU.QueryImagesByStudyAndSeriesAsync(
-                serverIp, serverPort, serverAet, localAet, obj.Parent.UID, obj.UID);
 
-            foreach (DicomDataset item in result)
+            List<DicomDataset> result = null;
+            try
             {
-                string instanceNumber = item.GetSingleValueOrDefault(DicomTag.InstanceNumber, string.Empty);
-                string instanceUid = item.GetSingleValueOrDefault(DicomTag.SOPInstanceUID, string.Empty);
-
-                if (!string.IsNullOrEmpty(instanceNumber) || !string.IsNullOrEmpty(instanceUid))
-                {
-                    if (string.IsNullOrEmpty(instanceNumber))
-                    {
-                        instanceNumber = instanceUid;
-                    }
-                    obj.Children.Add(new DicomObjectLevel(instanceNumber, instanceUid, Level.Image, obj));
-                }
+                result = await queryRetrieveSCU.QueryImagesByStudyAndSeriesAsync(
+                    serverIp, serverPort, serverAet, localAet, obj.Parent.UID, obj.UID);
+            }
+            finally
+            {
+                IsBusy = false;
+                _eventAggregator.Publish(new BusyStateItem(false), nameof(QueryResultViewModel));
             }
 
-            IsBusy = false;
-            _eventAggregator.Publish(new BusyStateItem(false), nameof(QueryResultViewModel));
+            if (result != null)
+            {
+                foreach (DicomDataset item in result)
+                {
+                    string instanceNumber = item.GetSingleValueOrDefault(DicomTag.InstanceNumber, string.Empty);
+                    string instanceUid = item.GetSingleValueOrDefault(DicomTag.SOPInstanceUID, string.Empty);
+
+                    if (!string.IsNullOrEmpty(instanceNumber) || !string.IsNullOrEmpty(instanceUid))
+                    {
+                        if (string.IsNullOrEmpty(instanceNumber))
+                        {
+                            instanceNumber = instanceUid;
+                        }
+                        obj.Children.Add(new DicomObjectLevel(instanceNumber, instanceUid, Level.Image, obj));
+                    }
+                }
+            }
         }
 
         public async void PreviewImage()
@@ -220,15 +262,21 @@
             IsBusy = true;
 
             var (serverIp, serverPort, serverAet, localAet) = GetServerConfig();
-            var result = await queryRetrieveSCU.GetImagesBySOPInstanceAsync(
-                serverIp, serverPort, serverAet, localAet,
-                selectedImage.Parent.Parent.UID, selectedImage.Parent.UID, selectedImage.UID);
-
-            IsBusy = false;
-            _eventAggregator.Publish(new BusyStateItem(false), nameof(QueryResultViewModel));
+            DicomDataset result = null;
+            try
+            {
+                result = await queryRetrieveSCU.GetImagesBySOPInstanceAsync(
+                    serverIp, serverPort, serverAet, localAet,
+                    selectedImage.Parent.Parent.UID, selectedImage.Parent.UID, selectedImage.UID);
+            }
+            finally
+            {
+                IsBusy = false;
+                _eventAggregator.Publish(new BusyStateItem(false), nameof(QueryResultViewModel));
+            }
 
             // 有时候查询到的图像没有像素值，无法显示
-            if (result.Contains(DicomTag.PixelData))
+            if (result != null && result.Contains(DicomTag.PixelData))
             {
                 _windowManager.ShowDialog(new PreviewImageViewModel(result));
             }

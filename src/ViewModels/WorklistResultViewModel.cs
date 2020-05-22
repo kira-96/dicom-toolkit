@@ -45,13 +45,18 @@
             int port = config.ParseServerPort();
             if (port == 0) return;
 
-            var result = await _worklistSCU.SendMppsInProgressAsync(config.ServerIP, port, config.ServerAET, config.LocalAET, dataset);
-
-            if (result.result)
+            try
             {
-                AffectedInstanceUID = result.affectedInstanceUid;
-                StudyInstanceUID = result.studyInstanceUid;
+                var result = await _worklistSCU.SendMppsInProgressAsync(config.ServerIP, port, config.ServerAET, config.LocalAET, dataset);
+
+                if (result.result)
+                {
+                    AffectedInstanceUID = result.affectedInstanceUid;
+                    StudyInstanceUID = result.studyInstanceUid;
+                }
             }
+            finally
+            {}
         }
 
         public async void CompletePerformance(SimpleWorklistResult item)
@@ -69,7 +74,12 @@
             int port = config.ParseServerPort();
             if (port == 0) return;
 
-            await _worklistSCU.SenMppsCompletedAsync(config.ServerIP, port, config.ServerAET, config.LocalAET, StudyInstanceUID, AffectedInstanceUID, dataset);
+            try
+            {
+                await _worklistSCU.SenMppsCompletedAsync(config.ServerIP, port, config.ServerAET, config.LocalAET, StudyInstanceUID, AffectedInstanceUID, dataset);
+            }
+            finally
+            {}
 
             AffectedInstanceUID = null;
             StudyInstanceUID = null;
@@ -82,12 +92,17 @@
 
             WorklistItems.Clear();
 
-            var result = await _worklistSCU.GetAllResultFromWorklistAsync(message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET, message.Modality);
+            try
+            {
+                var result = await _worklistSCU.GetAllResultFromWorklistAsync(message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET, message.Modality);
 
-            WorklistItems.AddRange(result);
-
-            IsBusy = false;
-            _eventAggregator.Publish(new BusyStateItem(false), nameof(WorklistResultViewModel));
+                WorklistItems.AddRange(result);
+            }
+            finally
+            {
+                IsBusy = false;
+                _eventAggregator.Publish(new BusyStateItem(false), nameof(WorklistResultViewModel));
+            }
         }
 
         public void Dispose()
