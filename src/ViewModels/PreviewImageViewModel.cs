@@ -3,6 +3,7 @@
     using Dicom;
     using Dicom.Imaging;
     using Stylet;
+    using System;
     using System.IO;
     using System.Windows;
     using System.Windows.Controls;
@@ -65,7 +66,15 @@
 
         public void OnMouseWheel(Image s, MouseWheelEventArgs e)
         {
-            ImageScaleTransform(s, e.GetPosition(s), e.Delta / 300.0);
+            if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.LeftShift))
+            {
+                ImageScaleTransform(s, e.GetPosition(s), e.Delta / 300.0);
+            }
+            else
+            {
+                if (e.Delta == 0) return;
+                ShowPrevOrNextFrame(e.Delta < 0);
+            }
         }
 
         public void OnMouseLDown(Image s, MouseButtonEventArgs e)
@@ -79,7 +88,9 @@
             previousPoint = e.GetPosition(s);
         }
 
+#pragma warning disable IDE0060
         public void OnMouseLUp(Image s, MouseButtonEventArgs e)
+#pragma warning restore IDE0060
         {
             if (isUpdatingImage)
             {
@@ -133,6 +144,21 @@
             }
         }
 
+        private void ShowPrevOrNextFrame(bool isNext)
+        {
+            int currentFrame = dicomImage.CurrentFrame;
+            int numberOfFrames = dicomImage.NumberOfFrames;
+
+            int targetFrame = isNext ? currentFrame + 1 : currentFrame - 1;
+
+            if (targetFrame < 0 || targetFrame >= numberOfFrames)
+            {
+                return;
+            }
+
+            RenderImage(targetFrame);
+        }
+
         private void ImageMoveTranform(Image image, double offsetX, double offsetY)
         {
             TransformGroup transformGroup = (image.RenderTransform as TransformGroup).CloneCurrentValue();
@@ -164,6 +190,7 @@
             image.RenderTransform = transformGroup;
         }
 
+        [Obsolete("Use ImageMoveTranform instead.")]
         private void MoveImage(Image image, double offsetX, double offsetY)
         {
             double left = image.Margin.Left + offsetX;
@@ -187,14 +214,14 @@
             RenderImage();
         }
 
-        private void RenderImage()
+        private void RenderImage(int frame = 0)
         {
             if (dicomImage == null)
             {
                 return;
             }
 
-            using (IImage iimage = dicomImage.RenderImage())
+            using (IImage iimage = dicomImage.RenderImage(frame))
             {
                 ImageSource = iimage.AsWriteableBitmap();
             }
