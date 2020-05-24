@@ -10,10 +10,8 @@
 
     public class PrintJobsViewModel : Screen, IHandle<ServerMessageItem>, IDisposable
     {
-#pragma warning disable IDE0044, 0649
         [Inject]
         private INotificationService notificationService;
-#pragma warning restore IDE0044, 0649
 
         private readonly IEventAggregator _eventAggregator;
 

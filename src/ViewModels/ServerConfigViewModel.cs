@@ -12,7 +12,6 @@
     {
         private readonly IEventAggregator _eventAggregator;
 
-#pragma warning disable IDE0044, 0649
         [Inject]
         private IWindowManager _windowManager;
 
@@ -21,7 +20,6 @@
 
         [Inject]
         private ICEchoSCU _cechoSCU;
-#pragma warning disable IDE0044, 0649
 
         private Action _doRequestAction;
 

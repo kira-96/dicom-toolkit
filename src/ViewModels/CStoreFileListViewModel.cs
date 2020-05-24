@@ -14,7 +14,6 @@
     {
         private readonly IEventAggregator _eventAggregator;
 
-#pragma warning disable IDE0044, 0649
         [Inject]
         private IWindowManager _windowManager;
 
@@ -23,7 +22,6 @@
 
         [Inject]
         private ICStoreSCU _cstoreSCU;
-#pragma warning disable IDE0044, 0649
 
         public BindableCollection<CStoreItem> FileList { get; private set; } = new BindableCollection<CStoreItem>();
 

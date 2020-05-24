@@ -20,15 +20,12 @@
         /// Menu Item ID
         /// </summary>
         private const uint IDM_ABOUT = 1001;
-        private const uint WM_DWMCOLORIZATIONCOLORCHANGED = 0x0320;
 
-#pragma warning disable IDE0044, 0649
         [Inject]
         private INotificationService notificationService;
 
         [Inject]
         private IDialogServiceEx dialogService;
-#pragma warning disable IDE0044, 0649
 
         private NotifyIcon notifyIcon;
 

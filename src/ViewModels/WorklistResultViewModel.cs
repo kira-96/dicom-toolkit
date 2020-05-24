@@ -10,10 +10,8 @@
     {
         private readonly IEventAggregator _eventAggregator;
 
-#pragma warning disable IDE0044, 0649
         [Inject]
         private IWorklistSCU _worklistSCU;
-#pragma warning disable IDE0044, 0649
 
         // 由于只是简单测试，这里只做临时保存
         private Dicom.DicomUID AffectedInstanceUID = null;

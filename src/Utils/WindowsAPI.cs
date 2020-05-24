@@ -15,7 +15,10 @@ namespace SimpleDICOMToolkit.Utils
     {
         #region System API
 
-        public const int WM_SYSCOMMAND = 0x112;  // 系统菜单事件消息
+        public const uint WM_COMMAND = 0x0111;
+        public const uint WM_SYSCOMMAND = 0x0112;  // 系统菜单事件消息
+        public const uint WM_INITMENUPOPUP = 0x0117;
+        public const uint WM_DWMCOLORIZATIONCOLORCHANGED = 0x0320;  // 主题色变更消息
 
         [DllImport("user32.dll", EntryPoint = "GetActiveWindow")]
         public static extern IntPtr GetActiveWindow();

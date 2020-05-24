@@ -18,10 +18,8 @@
     {
         private readonly IEventAggregator _eventAggregator;
 
-#pragma warning disable IDE0044, 0649
         [Inject]
         private IPrintSCU _printSCU;
-#pragma warning disable IDE0044, 0649
 
         private List<WriteableBitmap> _images = new List<WriteableBitmap>();
 

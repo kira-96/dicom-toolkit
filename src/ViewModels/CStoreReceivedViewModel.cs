@@ -12,7 +12,6 @@
 
     public class CStoreReceivedViewModel : Screen, IHandle<ServerMessageItem>, IDisposable
     {
-#pragma warning disable IDE0044, 0649
         [Inject(Key = "filelogger")]
         private ILoggerService _logger;
 
@@ -21,7 +20,6 @@
 
         [Inject]
         private INotificationService notificationService;
-#pragma warning disable IDE0044, 0649
 
         private readonly IEventAggregator _eventAggregator;
 
