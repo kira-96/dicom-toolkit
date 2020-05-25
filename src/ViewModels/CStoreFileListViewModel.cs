@@ -1,5 +1,6 @@
 ﻿namespace SimpleDICOMToolkit.ViewModels
 {
+    using Dicom;
     using Stylet;
     using StyletIoC;
     using System;
@@ -8,7 +9,6 @@
     using Client;
     using Services;
     using Models;
-    using Dicom;
 
     public class CStoreFileListViewModel : Screen, IHandle<ClientMessageItem>, IDisposable
     {

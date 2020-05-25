@@ -4,6 +4,7 @@
     using StyletIoC;
     using System.Windows;
     using System.Windows.Threading;
+    using System.Threading;
     using IoCModules;
     using Logging;
     using Utils;
@@ -17,15 +18,22 @@
         /// </summary>
         private const string MUTEX_NAME = "%SimpleDICOMtoolkit%{03804718-95A8-4276-BCE9-76C7B6FE706E}";
 
+#pragma warning disable IDE0052
+        /// <summary>
+        /// 进程互斥
+        /// 必须定义在类内部，一旦被释放就无效了
+        /// </summary>
+        private static Mutex mutex;
+#pragma warning restore IDE0052
+
         protected override void OnStart()
         {
             /**
              * 应用程序单例模式
-             * 在客户端模式下不检测单例模式，可以启动任意数目的客户端
              */
             // #################################################################################
-
-            if (!ApplicationUtil.CheckSingletonPattern(MUTEX_NAME, Args))
+            mutex = new Mutex(true, MUTEX_NAME, out bool createNew);
+            if (!createNew)
             {
                 // 此时还没有配置IoC，不能使用 DialogService
                 MessageBox.Show("程序已在运行中。", "提示", MessageBoxButton.OK, MessageBoxImage.Information);

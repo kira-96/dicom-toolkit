@@ -69,14 +69,16 @@
             if (!File.Exists(path))
                 return;
 
-            if (DicomFile.HasValidHeader(path))
-            {
-                await OpenDcmFile(path);
-            }
+            await OpenDcmFile(path);
         }
 
-        private async Task OpenDcmFile(string file)
+        public async Task OpenDcmFile(string file)
         {
+            if (!DicomFile.HasValidHeader(file))
+            {
+                return;
+            }
+
             DicomItems.Clear();
 
             _currentFile = await DicomFile.OpenAsync(file);
