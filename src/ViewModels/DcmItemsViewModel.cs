@@ -24,7 +24,7 @@
 
         private readonly IEventAggregator _eventAggregator;
 
-        private DicomDataset _currentDataset;
+        private DicomFile _currentFile;
 
         public BindableCollection<DcmItem> DicomItems { get; private set; } = new BindableCollection<DcmItem>();
 
@@ -79,14 +79,17 @@
         {
             DicomItems.Clear();
 
-            DicomFile dcmFile = await DicomFile.OpenAsync(file);
-#pragma warning disable CS0618 // 类型或成员已过时
-            dcmFile.Dataset.AutoValidate = false;
-#pragma warning restore CS0618 // 类型或成员已过时
+            _currentFile = await DicomFile.OpenAsync(file);
+            _currentFile.Dataset.NotValidated();
 
-            _currentDataset = dcmFile.Dataset;
+            var enumerator = _currentFile.FileMetaInfo.GetEnumerator();
 
-            var enumerator = _currentDataset.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                DicomItems.Add(new DcmItem(enumerator.Current));
+            }
+
+            enumerator = _currentFile.Dataset.GetEnumerator();
 
             while (enumerator.MoveNext())
             {
@@ -128,8 +131,11 @@
 
         private DicomDataset GetItemDataset(DcmItem item)
         {
-            if (DicomItems.Contains(item))
-                return _currentDataset;
+            if (_currentFile.FileMetaInfo.Contains(item.DcmTag))
+                return _currentFile.FileMetaInfo;
+
+            if (_currentFile.Dataset.Contains(item.DcmTag))
+                return _currentFile.Dataset;
 
             foreach (DcmItem seq in DicomItems.Where(i => i.TagType == DcmTagType.Sequence))
             {
@@ -137,7 +143,7 @@
                 {
                     if (seq.SequenceItems[i].SequenceItems.Contains(item))
                     {
-                        return _currentDataset.GetDicomItem<DicomSequence>(seq.DcmTag).Items[i];
+                        return _currentFile.Dataset.GetDicomItem<DicomSequence>(seq.DcmTag).Items[i];
                     }
                 }
             }
@@ -152,14 +158,14 @@
                 {
                     if (result == true)
                     {
-                        await new DicomFile(_currentDataset).SaveAsync(path);
+                        await _currentFile.SaveAsync(path);
                     }
                 });
         }
 
         private void AddOrUpdateDicomItem(DicomDataset dataset, DicomVR vr, DicomTag tag, string[] values)
         {
-            string charset = _currentDataset.GetSingleValueOrDefault(DicomTag.SpecificCharacterSet, "ISO_IR 192");
+            string charset = _currentFile.Dataset.GetSingleValueOrDefault(DicomTag.SpecificCharacterSet, "ISO_IR 192");
 
             try
             {
