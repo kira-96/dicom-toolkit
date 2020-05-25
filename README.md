@@ -9,7 +9,7 @@
 
 ## 截图
 
-![dump](screenshot/Snipaste_2020-05-21_13-29-01.png)
+![dump](screenshot/Snipaste_2020-05-25_17-18-23.png)
 ![c-store](screenshot/Snipaste_2020-05-21_13-27-11.png)
 
 ## 功能
@@ -23,12 +23,6 @@
 - C-Store SCU/SCP
 
 - Print SCU/SCP
-
-## 命令行参数
-
-客户端模式 ["-c", "/c", "--client"]
-
-服务端模式 ["-s", "/s", "--server"]
 
 ## dependency packages
 
