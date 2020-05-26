@@ -37,9 +37,9 @@
     {
         public DicomTag DcmTag { get; private set; }
 
-        private DicomVR _dcmVRCode;
+        private string _dcmVRCode;
 
-        public DicomVR DcmVRCode
+        public string DcmVRCode
         {
             get => _dcmVRCode;
             private set
@@ -98,7 +98,7 @@
         public DcmItem(DicomItem item)
         {
             DcmTag = item.Tag;
-            DcmVRCode = item.ValueRepresentation;
+            DcmVRCode = item.ValueRepresentation.Code;
             TagDescription = item.Tag.DictionaryEntry.Name;
 
             if (item is DicomSequence seq)
@@ -122,28 +122,31 @@
                     return;
                 }
 
-                // skip large binary data
                 if (element is DicomOtherByte)
                 {
-                    TagValue = "[Binary Data]";
-                    return;
+                    // skip display large binary data
+                    if (element.Count > 100)
+                    {
+                        TagValue = "[Binary Data]";
+                        return;
+                    }
+                }
+
+                // 校验是否合法
+                try
+                {
+                    element.Validate();
+                }
+                catch (Exception)
+                {
+                    IsValid = false;
                 }
 
                 TagValue = "";
 
                 for (int i = 0; i < element.Count; i++)
                 {
-                    string content = element.Get<string>(i);
-                    TagValue += content + '\\';
-
-                    try
-                    {
-                        DcmVRCode.ValidateString(content);
-                    }
-                    catch (Exception)
-                    {
-                        IsValid = false;
-                    }
+                    TagValue += element.Get<string>(i) + '\\';
                 }
 
                 TagValue = TagValue?.TrimEnd('\\');
@@ -180,23 +183,33 @@
 
         public void UpdateItem(DicomElement element)
         {
-            DcmVRCode = element.ValueRepresentation;
+            DcmVRCode = element.ValueRepresentation.Code;
             IsValid = true;
-            TagValue = "";
 
+            // 校验是否合法
+            try
+            {
+                element.Validate();
+            }
+            catch (Exception)
+            {
+                IsValid = false;
+            }
+
+            if (element is DicomOtherByte)
+            {
+                // skip display large binary data
+                if (element.Count > 100)
+                {
+                    TagValue = "[Binary Data]";
+                    return;
+                }
+            }
+
+            TagValue = "";
             for (int i = 0; i < element.Count; i++)
             {
-                string content = element.Get<string>(i);
-                TagValue += content + '\\';
-
-                try
-                {
-                    DcmVRCode.ValidateString(content);
-                }
-                catch (Exception)
-                {
-                    IsValid = false;
-                }
+                TagValue += element.Get<string>(i) + '\\';
             }
 
             TagValue = TagValue?.TrimEnd('\\');

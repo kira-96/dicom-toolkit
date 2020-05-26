@@ -171,7 +171,19 @@
 
             try
             {
-                dataset.AddOrUpdate(vr, tag, DicomEncoding.GetEncoding(charset), values);
+                if (vr == DicomVR.OB || vr == DicomVR.UN)
+                {
+                    byte[] temp = new byte[values.Length];
+                    for (int i = 0; i < values.Length; i++)
+                    {
+                        temp[i] = byte.Parse(values[i]);
+                    }
+                    dataset.AddOrUpdate(vr, tag, DicomEncoding.GetEncoding(charset), temp);
+                }
+                else
+                {
+                    dataset.AddOrUpdate(vr, tag, DicomEncoding.GetEncoding(charset), values);
+                }
             }
             catch (System.Exception e)
             {
