@@ -25,6 +25,7 @@
                     <StackPanel Orientation="Horizontal" ToolTip="{Binding Path=TagDescription}">
                         <Image x:Name="Icon" Width="18" Height="18" Margin="0,0,4,0" />
                         <TextBlock Text="{Binding Path=Header}" VerticalAlignment="Center" />
+                        <TextBlock Text="{Binding Path=FormattedContent}" x:Name="ContentText" VerticalAlignment="Center" />
                         <StackPanel.InputBindings>
                             <MouseBinding MouseAction="LeftDoubleClick" Command="{s:Action DcmItemTapped}" CommandParameter="{Binding}" />
                         </StackPanel.InputBindings>
@@ -80,6 +81,10 @@
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="Icon" Property="Source" Value="pack://application:,,,/Icons/item.png" />
                         </MultiDataTrigger>
+                        <DataTrigger Binding="{Binding IsValid}">
+                            <DataTrigger.Value>False</DataTrigger.Value>
+                            <Setter TargetName="ContentText" Property="Foreground" Value="Red" />
+                        </DataTrigger>
                     </DataTemplate.Triggers>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
