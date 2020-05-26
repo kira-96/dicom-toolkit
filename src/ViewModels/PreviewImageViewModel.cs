@@ -238,6 +238,7 @@
             using (IImage iimage = dicomImage.RenderImage(frame))
             {
                 ImageSource = iimage.AsWriteableBitmap();
+                ImageSource.Freeze();
             }
         }
     }
