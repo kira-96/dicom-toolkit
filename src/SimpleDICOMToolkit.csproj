@@ -137,6 +137,7 @@
     <Compile Include="Services\IDialogServiceEx.cs" />
     <Compile Include="Services\INotificationService.cs" />
     <Compile Include="Services\NotificationService.cs" />
+    <Compile Include="Utils\BitmapCursor.cs" />
     <Compile Include="Utils\BitmapUtil.cs" />
     <Compile Include="Utils\SysUtil.cs" />
     <Compile Include="Utils\ProcessUtil.cs" />

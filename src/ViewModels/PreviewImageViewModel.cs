@@ -111,24 +111,16 @@
             previousPoint = e.GetPosition(s);
         }
 
+#pragma warning disable IDE0060
         public void OnMouseRUp(Image s, MouseButtonEventArgs e)
+#pragma warning restore IDE0060
         {
             if (isMovingImage)
             {
                 return;
             }
 
-            if (isUpdatingImage)
-            {
-                Point position = e.GetPosition(s);
-
-                double widthOffset = position.X - previousPoint.X;
-                double centerOffset = position.Y - previousPoint.Y;
-
-                TransformWidthAndCenter(widthOffset, centerOffset);
-
-                isUpdatingImage = false;
-            }
+            isUpdatingImage = false;
         }
 
         public void OnMouseMove(Image s, MouseEventArgs e)
@@ -141,6 +133,18 @@
                 double offsetY = position.Y - previousPoint.Y;
 
                 ImageMoveTranform(s, offsetX, offsetY);
+            }
+            else if (isUpdatingImage && e.RightButton == MouseButtonState.Pressed)
+            {
+                Point position = e.GetPosition(s);
+
+                double widthOffset = position.X - previousPoint.X;
+                double centerOffset = position.Y - previousPoint.Y;
+
+                previousPoint.X = position.X;
+                previousPoint.Y = position.Y;
+
+                TransformWidthAndCenter(widthOffset, centerOffset);
             }
         }
 
@@ -208,8 +212,18 @@
                 return;
             }
 
-            dicomImage.WindowWidth += widthOffset;
             dicomImage.WindowCenter += centerOffset;
+
+            // https://dicom.innolitics.com/ciods/mr-image/voi-lut/00281050
+            // Window Width (0028,1051) shall always be greater than or equal to 1.
+            if (dicomImage.WindowWidth + widthOffset < 1)
+            {
+                dicomImage.WindowWidth = 1;
+            }
+            else
+            {
+                dicomImage.WindowWidth += widthOffset;
+            }
 
             RenderImage();
         }
