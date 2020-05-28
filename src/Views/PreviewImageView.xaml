@@ -12,7 +12,8 @@
         Height="480" >
 
     <Grid Background="Black">
-        <Image Source="{Binding ImageSource}" 
+        <Image RenderOptions.BitmapScalingMode="NearestNeighbor" 
+               Source="{Binding ImageSource}" 
                MouseWheel="{s:Action OnMouseWheel}"
                MouseLeftButtonDown="{s:Action OnMouseLDown}"
                MouseLeftButtonUp="{s:Action OnMouseLUp}"

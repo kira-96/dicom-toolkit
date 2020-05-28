@@ -38,10 +38,10 @@
 
             DisplayName = dcmFile.Dataset.GetSingleValueOrDefault(DicomTag.PatientName, string.Empty);
 
-            dicomImage = new DicomImage(dcmFile.Dataset)
-            {
-                OverlayColor = unchecked((int)0xFFF05B72)  // 自定义Overlay的颜色
-            };
+            dicomImage = new DicomImage(dcmFile.Dataset);
+            //{
+            //    OverlayColor = unchecked((int)0xFFF05B72)  // 自定义Overlay的颜色
+            //};
 
             RenderImage();
 
@@ -53,10 +53,10 @@
         {
             DisplayName = dataset.GetSingleValueOrDefault(DicomTag.PatientName, string.Empty);
 
-            dicomImage = new DicomImage(dataset)
-            {
-                OverlayColor = unchecked((int)0xFFF05B72)  // 自定义Overlay的颜色
-            };
+            dicomImage = new DicomImage(dataset);
+            //{
+            //    OverlayColor = unchecked((int)0xFFF05B72)  // 自定义Overlay的颜色
+            //};
 
             RenderImage();
 
@@ -68,7 +68,7 @@
         {
             if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.LeftShift))
             {
-                ImageScaleTransform(s, e.GetPosition(s), e.Delta / 300.0);
+                ImageScaleTransform(s, e.GetPosition(s), e.Delta / 600.0);
             }
             else
             {
@@ -180,8 +180,8 @@
 
             ScaleTransform st = transformGroup.Children[1] as ScaleTransform;
 
-            if (st.ScaleX + scale <= 0 ||
-                st.ScaleY + scale <= 0)
+            if (st.ScaleX + scale <= 0.1 ||
+                st.ScaleY + scale <= 0.1)
             {
                 return;
             }

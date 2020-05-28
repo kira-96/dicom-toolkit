@@ -91,7 +91,7 @@
             }
         }
 
-        public string FormattedContent => string.Format("<{0}>", TagValue);
+        public string FormattedContent => TagType == DcmTagType.Tag ? string.Format("<{0}>", TagValue) : string.Empty;
 
         public BindableCollection<DcmItem> SequenceItems { get; private set; }
 
