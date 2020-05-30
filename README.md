@@ -2,10 +2,10 @@
 
 *A Simple DICOM Toolkit*
 
-![GitHub last commit](https://img.shields.io/github/last-commit/kira-96/fo-dicom-samples)
-![AppVeyor](https://img.shields.io/appveyor/build/kira-96/fo-dicom-samples?label=AppVeyor&style=flat&logo=appveyor)
+![GitHub last commit](https://img.shields.io/github/last-commit/kira-96/dicom-toolkit)
+![AppVeyor](https://img.shields.io/appveyor/build/kira-96/dicom-toolkit?label=AppVeyor&style=flat&logo=appveyor)
 ![visual studio](https://img.shields.io/badge/Visual%20Studio-2019-%235c2d91?logo=Visual%20Studio)
-[![GitHub license](https://img.shields.io/github/license/kira-96/fo-dicom-samples)](https://github.com/kira-96/fo-dicom-samples/blob/master/LICENSE)
+[![GitHub license](https://img.shields.io/github/license/kira-96/dicom-toolkit)](https://github.com/kira-96/dicom-toolkit/blob/master/LICENSE)
 
 ## 截图
 
