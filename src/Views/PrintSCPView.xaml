@@ -111,10 +111,12 @@
                     Command="{s:Action DoRequest, ActionNotFound=Disable}" />
                 <Button HorizontalAlignment="Right"
                         VerticalAlignment="Center"
-                        ToolTip="Printer Settings"
                         Style="{StaticResource SettingsButtonStyle}"
                         s:View.ActionTarget="{Binding}"
                         Command="{s:Action ShowOptions, ActionNotFound=Disable}">
+                    <Button.ToolTip>
+                        <Binding Source="{StaticResource Strings}" XPath="string[@key='PrinterOptions']" />
+                    </Button.ToolTip>
                     <Image Width="20" Height="20" Stretch="Fill" 
                            Source="pack://application:,,,/Icons/settings.png" />
                 </Button>

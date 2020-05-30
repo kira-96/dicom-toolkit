@@ -8,6 +8,7 @@
     using System.Windows.Interop;
     using System.Windows.Media;
     using Services;
+    using static Utils.LanguageHelper;
     using static Utils.WindowsAPI;
     using static Utils.SysUtil;
 
@@ -117,7 +118,10 @@
 
             Version osVersion = Environment.OSVersion.Version;
 
-            dialogService.ShowMessageBox($"OS: {osVersion}\r\n软件版本: {version}", "关于", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, this);
+            string caption = GetXmlStringByKey("About");
+            string softVersion = GetXmlStringByKey("SoftwareVersion");
+
+            dialogService.ShowMessageBox($"OS: {osVersion}\r\n{softVersion}: {version}", caption, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, this);
         }
 
         private void ApplyTheme()
@@ -165,9 +169,12 @@
 
         private void Window_Closing(object s, System.ComponentModel.CancelEventArgs e)
         {
+            string caption = GetXmlStringByKey("ExitCaption");
+            string content = GetXmlStringByKey("ExitContent");
+
             // 弹窗提示是否确定退出
             MessageBoxResult result = dialogService.ShowMessageBox(
-                "确定要退出吗？", "退出应用？", 
+                content, caption, 
                 MessageBoxButton.YesNo, 
                 MessageBoxImage.Information, MessageBoxResult.No, this);
 
@@ -227,6 +234,20 @@
         private void MenuItemExitClick(object s, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void LanguageChecked(object s, RoutedEventArgs e)
+        {
+            var menuItem = s as System.Windows.Controls.MenuItem;
+            LoadXmlStringResourceByCode(menuItem.Tag.ToString());
+
+            var languageItems = (menuItem.Parent as System.Windows.Controls.MenuItem).Items;
+
+            foreach (var item in languageItems)
+            {
+                (item as System.Windows.Controls.MenuItem).IsChecked = false;
+            }
+            menuItem.IsChecked = true;
         }
     }
 }

@@ -10,6 +10,14 @@
                 <app:Bootstrapper />
             </s:ApplicationLoader.Bootstrapper>
             <s:ApplicationLoader.MergedDictionaries>
+                <!-- 语言资源 -->
+                <!-- 这里默认加载的是中文，方便在设计模式下使用 -->
+                <ResourceDictionary>
+                    <XmlDataProvider x:Key="Strings" 
+                                     Source="pack://application:,,,/Strings/zh-CN.xml"
+                                     XPath="language/strings"
+                                     IsAsynchronous="False" />
+                </ResourceDictionary>
                 <ResourceDictionary Source="pack://application:,,,/Themes/Generic.xaml" />
             </s:ApplicationLoader.MergedDictionaries>
         </s:ApplicationLoader>

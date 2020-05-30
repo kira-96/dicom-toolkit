@@ -70,13 +70,38 @@
             </Setter>
         </Style>
         <ContextMenu x:Key="TrayIconContextMenu" Placement="MousePoint">
-            <MenuItem Header="Show Window" ToolTip="show main window" Click="MenuItemShowClick">
+            <MenuItem Click="MenuItemShowClick">
+                <MenuItem.Header>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='ShowMainWindow']" />
+                </MenuItem.Header>
+                <MenuItem.ToolTip>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='ShowMainWindow']" />
+                </MenuItem.ToolTip>
                 <MenuItem.Icon>
                     <Image Width="16" Height="16" Source="pack://application:,,,/Icons/window.png" />
                 </MenuItem.Icon>
             </MenuItem>
+            <MenuItem>
+                <MenuItem.Header>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='LanguageSetting']" />
+                </MenuItem.Header>
+                <MenuItem.ToolTip>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='LanguageSetting']" />
+                </MenuItem.ToolTip>
+                <MenuItem.Icon>
+                    <Image Width="16" Height="16" Source="pack://application:,,,/Icons/earth.png" />
+                </MenuItem.Icon>
+                <MenuItem Header="English" ToolTip="English" Tag="en-US" IsCheckable="True" Click="LanguageChecked" />
+                <MenuItem Header="简体中文" ToolTip="简体中文" Tag="zh-CN" IsCheckable="True" Click="LanguageChecked" IsChecked="True" />
+            </MenuItem>
             <Separator />
-            <MenuItem Header="Exit" ToolTip="exit" Click="MenuItemExitClick">
+            <MenuItem Click="MenuItemExitClick">
+                <MenuItem.Header>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='Exit']" />
+                </MenuItem.Header>
+                <MenuItem.ToolTip>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='Exit']" />
+                </MenuItem.ToolTip>
                 <MenuItem.Icon>
                     <Image Width="16" Height="16" Source="pack://application:,,,/Icons/exit.png" />
                 </MenuItem.Icon>

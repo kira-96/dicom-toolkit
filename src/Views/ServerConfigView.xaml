@@ -22,11 +22,31 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Row="0" Text="Server IP:" Margin="2" VerticalAlignment="Center" />
-            <TextBlock Grid.Row="1" Text="Server Port:" Margin="2" VerticalAlignment="Center" />
-            <TextBlock Grid.Row="2" Text="Server AET:" Margin="2" VerticalAlignment="Center" />
-            <TextBlock Grid.Row="3" Text="Local  AET:" Margin="2" VerticalAlignment="Center" />
-            <TextBlock Grid.Row="4" Text="Modality:" Margin="2" VerticalAlignment="Center" />
+            <TextBlock Grid.Row="0" Margin="2" VerticalAlignment="Center">
+                <TextBlock.Text>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='ServerIP']" />
+                </TextBlock.Text>
+            </TextBlock>
+            <TextBlock Grid.Row="1" Margin="2" VerticalAlignment="Center">
+                <TextBlock.Text>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='ServerPort']" />
+                </TextBlock.Text>
+            </TextBlock>
+            <TextBlock Grid.Row="2" Margin="2" VerticalAlignment="Center">
+                <TextBlock.Text>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='ServerAET']" />
+                </TextBlock.Text>
+            </TextBlock>
+            <TextBlock Grid.Row="3" Margin="2" VerticalAlignment="Center">
+                <TextBlock.Text>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='LocalAET']" />
+                </TextBlock.Text>
+            </TextBlock>
+            <TextBlock Grid.Row="4" Margin="2" VerticalAlignment="Center">
+                <TextBlock.Text>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='Modality']" />
+                </TextBlock.Text>
+            </TextBlock>
             <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ServerIP, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsServerIPEnabled}" Width="120" Margin="2" />
             <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ServerPort, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsServerPortEnabled}" Width="120" Margin="2" />
             <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ServerAET, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsServerAETEnabled}" Width="120" Margin="2" />

@@ -139,6 +139,7 @@
     <Compile Include="Services\NotificationService.cs" />
     <Compile Include="Utils\BitmapCursor.cs" />
     <Compile Include="Utils\BitmapUtil.cs" />
+    <Compile Include="Utils\LanguageHelper.cs" />
     <Compile Include="Utils\SysUtil.cs" />
     <Compile Include="Utils\ProcessUtil.cs" />
     <Compile Include="Utils\AccentColorSet.cs" />
@@ -327,6 +328,7 @@
     <Resource Include="Icons\clear.png" />
     <Resource Include="Icons\connection.png" />
     <Resource Include="Icons\delete.png" />
+    <Resource Include="Icons\earth.png" />
     <Resource Include="Icons\exit.png" />
     <Resource Include="Icons\failed.png" />
     <Resource Include="Icons\item-white.png" />
@@ -351,6 +353,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Icons\icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Strings\en-US.xml" />
+    <Resource Include="Strings\zh-CN.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="fo-dicom.Desktop">

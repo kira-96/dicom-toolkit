@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<language name="简体中文" tag="zh-CN">
+  <strings>
+    <string key="OK">确定</string>
+    <string key="Cancel">关闭</string>
+    <string key="Yes">是</string>
+    <string key="No">否</string>
+    <string key="About">关于</string>
+    <string key="Update">更新</string>
+    <string key="Insert">插入</string>
+    <string key="Delete">删除</string>
+    <string key="Remove">移除</string>
+    <string key="Preview">预览</string>
+    <string key="Explore">浏览</string>
+    <string key="Waiting">等待中</string>
+    <string key="Success">成功</string>
+    <string key="Failed">失败</string>
+    <string key="Start">开始</string>
+    <string key="Complete">完成</string>
+    <string key="ServerIP">服务IP：</string>
+    <string key="ServerPort">服务端口：</string>
+    <string key="ServerAET">服务AET：</string>
+    <string key="LocalAET">本地AET：</string>
+    <string key="Modality">Modality: </string>
+    <string key="TestConnection">测试连接</string>
+    <string key="Query">查询</string>
+    <string key="SendPACS">发送到PACS</string>
+    <string key="Print">打印</string>
+    <string key="PrintOptions">打印设置</string>
+    <string key="PrinterOptions">打印机设置</string>
+    <string key="HeaderName">姓名</string>
+    <string key="HeaderSex">性别</string>
+    <string key="HeaderAge">年龄</string>
+    <string key="HeaderPatientID">患者ID</string>
+    <string key="HeaderPatient">Patient</string>
+    <string key="HeaderStudy">Study</string>
+    <string key="HeaderSeries">Series</string>
+    <string key="HeaderImage">Images</string>
+    <string key="HeaderID">ID</string>
+    <string key="HeaderFile">文件</string>
+    <string key="HeaderStatus">状态</string>
+    <string key="TooltipUpdate">更新当前值</string>
+    <string key="TooltipInsertNew">插入一个新值</string>
+    <string key="TooltipDelete">删除当前值</string>
+    <string key="TooltipRemove">移除当前</string>
+    <string key="TooltipPreviousImage">前一张</string>
+    <string key="TooltipNextImage">后一张</string>
+    <string key="TooltipAddFiles">添加文件</string>
+    <string key="TooltipClearAll">清除全部</string>
+    <string key="TooltipPreview">预览图像</string>
+    <string key="TooltipExplore">浏览文件</string>
+    <string key="LanguageSetting">语言设置</string>
+    <string key="ShowMainWindow">显示主窗口</string>
+    <string key="Exit">退出</string>
+    <string key="ExitCaption">退出应用？</string>
+    <string key="ExitContent">确定要退出吗？</string>
+    <string key="SoftwareVersion">软件版本</string>
+    <string key="TestResult">测试结果</string>
+    <string key="TestSuccess">测试成功</string>
+    <string key="TestFailed">测试失败</string>
+  </strings>
+</language>

@@ -60,9 +60,14 @@
                         <Setter Property="ContextMenu">
                             <Setter.Value>
                                 <ContextMenu>
-                                    <MenuItem Header="Remove" ToolTip="Remove from List"
-                                              s:View.ActionTarget="{Binding}"
+                                    <MenuItem s:View.ActionTarget="{Binding}"
                                               Command="{s:Action RemoveCurrentImage}">
+                                        <MenuItem.Header>
+                                            <Binding Source="{StaticResource Strings}" XPath="string[@key='Remove']" />
+                                        </MenuItem.Header>
+                                        <MenuItem.ToolTip>
+                                            <Binding Source="{StaticResource Strings}" XPath="string[@key='TooltipRemove']" />
+                                        </MenuItem.ToolTip>
                                         <MenuItem.Icon>
                                             <Image Width="16" Height="16" Source="pack://application:,,,/Icons/delete.png" />
                                         </MenuItem.Icon>
@@ -74,16 +79,20 @@
                 </Image.Style>
             </Image>
             <Button HorizontalAlignment="Left" VerticalAlignment="Center" 
-                    ToolTip="Previous" 
                     s:View.ActionTarget="{Binding}"
                     Command="{s:Action ShowPrev}">
+                <Button.ToolTip>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='TooltipPreviousImage']" />
+                </Button.ToolTip>
                 <Path Width="20" Height="20" Stretch="Uniform" Fill="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=Foreground}"
                       Data="M748.307692 163.446154v697.107692c0 19.692308-25.6 33.476923-43.323077 17.723077L287.507692 537.6c-15.753846-11.815385-15.753846-37.415385 0-49.230769L704.984615 143.753846c17.723077-13.784615 43.323077-1.969231 43.323077 19.692308z" />
             </Button>
             <Button HorizontalAlignment="Right" VerticalAlignment="Center" 
-                    ToolTip="Next" 
                     s:View.ActionTarget="{Binding}"
                     Command="{s:Action ShowNext}">
+                <Button.ToolTip>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='TooltipNextImage']" />
+                </Button.ToolTip>
                 <Path Width="20" Height="20" Stretch="Uniform" Fill="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=Foreground}"
                       Data="M275.692308 860.553846V163.446154c0-19.692308 25.6-33.476923 43.323077-17.723077l417.476923 340.676923c15.753846 11.815385 15.753846 37.415385 0 49.230769L319.015385 880.246154c-17.723077 13.784615-43.323077 1.969231-43.323077-19.692308z" />
             </Button>

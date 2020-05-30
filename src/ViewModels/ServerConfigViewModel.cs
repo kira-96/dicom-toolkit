@@ -176,9 +176,11 @@
 
             IsBusy = false;
 
-            _windowManager.ShowMessageBox(
-                result ? "test connection success." : "test connection failed.",
-                "test result");
+            string caption = LanguageHelper.GetXmlStringByKey("TestResult");
+            string success = LanguageHelper.GetXmlStringByKey("TestSuccess");
+            string failed = LanguageHelper.GetXmlStringByKey("TestFailed");
+
+            _windowManager.ShowMessageBox(result ? success : failed, caption);
         }
 
         public void Init(IScreen parentViewModel)

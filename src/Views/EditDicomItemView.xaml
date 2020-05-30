@@ -78,17 +78,52 @@
                 </Grid.RowDefinitions>
                 <TextBox Grid.Row="0" Text="{Binding CurrentEditValue}" />
                 <StackPanel Grid.Row="1" Orientation="Horizontal">
-                    <Button x:Name="UpdateButton" Content="Update" ToolTip="update current value" Command="{s:Action UpdateCurrentValue}" />
-                    <Button x:Name="InserButton" Content="Insert" ToolTip="insert a new value" Command="{s:Action InsertNewValue}" />
-                    <Button x:Name="DeleteButton" Content="Delete" ToolTip="delete current value" Command="{s:Action DeleteCurrentValue}" />
+                    <Button x:Name="UpdateButton" Command="{s:Action UpdateCurrentValue}">
+                        <Button.Content>
+                            <Binding Source="{StaticResource Strings}" XPath="string[@key='Update']" />
+                        </Button.Content>
+                        <Button.ToolTip>
+                            <Binding Source="{StaticResource Strings}" XPath="string[@key='TooltipUpdate']" />
+                        </Button.ToolTip>
+                    </Button>
+                    <Button x:Name="InserButton" Command="{s:Action InsertNewValue}">
+                        <Button.Content>
+                            <Binding Source="{StaticResource Strings}" XPath="string[@key='Insert']" />
+                        </Button.Content>
+                        <Button.ToolTip>
+                            <Binding Source="{StaticResource Strings}" XPath="string[@key='TooltipInsertNew']" />
+                        </Button.ToolTip>
+                    </Button>
+                    <Button x:Name="DeleteButton" Command="{s:Action DeleteCurrentValue}">
+                        <Button.Content>
+                            <Binding Source="{StaticResource Strings}" XPath="string[@key='Delete']" />
+                        </Button.Content>
+                        <Button.ToolTip>
+                            <Binding Source="{StaticResource Strings}" XPath="string[@key='TooltipDelete']" />
+                        </Button.ToolTip>
+                    </Button>
                 </StackPanel>
                 <ListView Grid.Row="2" ItemsSource="{Binding ElementValues}"
                           SelectedIndex="{Binding CurrentValueIndex}" />
             </Grid>
         </GroupBox>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button x:Name="OK" Content="OK" ToolTip="OK" Click="OnOK" />
-            <Button x:Name="Cancel" Content="Cancel" ToolTip="Cancel" Click="OnCancel" />
+            <Button x:Name="OK" Click="OnOK">
+                <Button.Content>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='OK']" />
+                </Button.Content>
+                <Button.ToolTip>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='OK']" />
+                </Button.ToolTip>
+            </Button>
+            <Button x:Name="Cancel" Click="OnCancel">
+                <Button.Content>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='Cancel']" />
+                </Button.Content>
+                <Button.ToolTip>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='Cancel']" />
+                </Button.ToolTip>
+            </Button>
         </StackPanel>
     </Grid>
 </Window>

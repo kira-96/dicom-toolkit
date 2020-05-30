@@ -11,20 +11,28 @@
 
     <UserControl.Resources>
         <ContextMenu x:Key="ListItemContextMenu">
-            <MenuItem Header="Preview"
-                      ToolTip="Preview Image"
-                      s:View.ActionTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ListView}}, Path=DataContext}"
+            <MenuItem s:View.ActionTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ListView}}, Path=DataContext}"
                       Command="{s:Action ShowReceivedFile, ActionNotFound=Disable}"
                       CommandParameter="{Binding}">
+                <MenuItem.Header>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='Preview']" />
+                </MenuItem.Header>
+                <MenuItem.ToolTip>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='TooltipPreview']" />
+                </MenuItem.ToolTip>
                 <MenuItem.Icon>
                     <Image Width="16" Height="16" Source="pack://application:,,,/Icons/preview.png" />
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="Explore"
-                      ToolTip="Explore file"
-                      s:View.ActionTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ListView}}, Path=DataContext}"
+            <MenuItem s:View.ActionTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ListView}}, Path=DataContext}"
                       Command="{s:Action OpenFolder, ActionNotFound=Disable}"
                       CommandParameter="{Binding}">
+                <MenuItem.Header>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='Explore']" />
+                </MenuItem.Header>
+                <MenuItem.ToolTip>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='TooltipExplore']" />
+                </MenuItem.ToolTip>
                 <MenuItem.Icon>
                     <Image Width="16" Height="16" Source="pack://application:,,,/Icons/open_folder.png" />
                 </MenuItem.Icon>

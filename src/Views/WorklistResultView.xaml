@@ -12,20 +12,28 @@
 
     <UserControl.Resources>
         <ContextMenu x:Key="WorklistItemContextMenu">
-            <MenuItem Header="Start"
-                      ToolTip="Start"
-                      s:View.ActionTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext}"
+            <MenuItem s:View.ActionTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext}"
                       Command="{s:Action StartPerformance, ActionNotFound=Disable}"
                       CommandParameter="{Binding}">
+                <MenuItem.Header>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='Start']" />
+                </MenuItem.Header>
+                <MenuItem.ToolTip>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='Start']" />
+                </MenuItem.ToolTip>
                 <MenuItem.Icon>
                     <Image Width="16" Height="16" Source="pack://application:,,,/Icons/start1.png" />
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="Complete"
-                      ToolTip="Complete"
-                      s:View.ActionTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext}"
+            <MenuItem s:View.ActionTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext}"
                       Command="{s:Action CompletePerformance, ActionNotFound=Disable}"
                       CommandParameter="{Binding}">
+                <MenuItem.Header>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='Complete']" />
+                </MenuItem.Header>
+                <MenuItem.ToolTip>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='Complete']" />
+                </MenuItem.ToolTip>
                 <MenuItem.Icon>
                     <Image Width="16" Height="16" Source="pack://application:,,,/Icons/success.png" />
                 </MenuItem.Icon>
@@ -69,10 +77,26 @@
             </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView ColumnHeaderContainerStyle="{StaticResource ListColumnHeaderStyle}">
-                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="128" />
-                    <GridViewColumn Header="Sex" DisplayMemberBinding="{Binding Sex}" Width="32" />
-                    <GridViewColumn Header="Age" DisplayMemberBinding="{Binding Age}" Width="48" />
-                    <GridViewColumn Header="Patient ID" DisplayMemberBinding="{Binding PatientId}" Width="136" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Name}" Width="128">
+                        <GridViewColumn.Header>
+                            <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderName']" />
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Sex}" Width="32">
+                        <GridViewColumn.Header>
+                            <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderSex']" />
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Age}" Width="48">
+                        <GridViewColumn.Header>
+                            <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderAge']" />
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding PatientId}" Width="136">
+                        <GridViewColumn.Header>
+                            <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderPatientID']" />
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>

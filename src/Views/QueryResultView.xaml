@@ -66,10 +66,26 @@
         <Rectangle Grid.Column="1" Fill="DodgerBlue" Margin="0 0 1 0" />
         <Rectangle Grid.Column="2" Fill="DodgerBlue" Margin="0 0 1 0" />
         <Rectangle Grid.Column="3" Fill="DodgerBlue" Margin="0" />
-        <TextBlock Grid.Column="0" Text="Patient" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
-        <TextBlock Grid.Column="1" Text="Study" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
-        <TextBlock Grid.Column="2" Text="Series" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
-        <TextBlock Grid.Column="3" Text="Images" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <TextBlock Grid.Column="0" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock.Text>
+                <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderPatient']" />
+            </TextBlock.Text>
+        </TextBlock>
+        <TextBlock Grid.Column="1" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock.Text>
+                <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderStudy']" />
+            </TextBlock.Text>
+        </TextBlock>
+        <TextBlock Grid.Column="2" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock.Text>
+                <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderSeries']" />
+            </TextBlock.Text>
+        </TextBlock>
+        <TextBlock Grid.Column="3" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock.Text>
+                <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderImage']" />
+            </TextBlock.Text>
+        </TextBlock>
         <ListView x:Name="PatientList" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding QueryResult}" SelectedItem="{Binding SelectedPatient}" />
         <ListView x:Name="StudyList" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding SelectedPatient.Children}" SelectedItem="{Binding SelectedStudy}" />
         <ListView x:Name="SeriesList" Grid.Row="1" Grid.Column="2" ItemsSource="{Binding SelectedStudy.Children}" SelectedItem="{Binding SelectedSeries}" />

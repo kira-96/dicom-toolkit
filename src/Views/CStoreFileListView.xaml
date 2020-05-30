@@ -12,20 +12,28 @@
 
     <UserControl.Resources>
         <ContextMenu x:Key="CStoreItemContextMenu">
-            <MenuItem Header="Preview" 
-                      ToolTip="Preview Image"
-                      s:View.ActionTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext}"
+            <MenuItem s:View.ActionTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext}"
                       Command="{s:Action PreviewCStoreItem, ActionNotFound=Disable}" 
                       CommandParameter="{Binding}">
+                <MenuItem.Header>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='Preview']" />
+                </MenuItem.Header>
+                <MenuItem.ToolTip>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='TooltipPreview']" />
+                </MenuItem.ToolTip>
                 <MenuItem.Icon>
                     <Image Width="16" Height="16" Source="pack://application:,,,/Icons/preview.png" />
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="Delete" 
-                      ToolTip="Delete from list"
-                      s:View.ActionTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ListView}}, Path=DataContext}"
+            <MenuItem s:View.ActionTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ListView}}, Path=DataContext}"
                       Command="{s:Action DeleteCStoreItem, ActionNotFound=Disable}"
                       CommandParameter="{Binding}">
+                <MenuItem.Header>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='Remove']" />
+                </MenuItem.Header>
+                <MenuItem.ToolTip>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='TooltipRemove']" />
+                </MenuItem.ToolTip>
                 <MenuItem.Icon>
                     <Image Width="16" Height="16" Source="pack://application:,,,/Icons/delete.png" />
                 </MenuItem.Icon>
@@ -48,21 +56,33 @@
                         <m:CStoreItemStatus>Waiting</m:CStoreItemStatus>
                     </DataTrigger.Value>
                     <Setter TargetName="StatusImage" Property="Source" Value="pack://application:,,,/Icons/waiting.png" />
-                    <Setter TargetName="StatusImage" Property="ToolTip" Value="waiting" />
+                    <Setter TargetName="StatusImage" Property="ToolTip">
+                        <Setter.Value>
+                            <Binding Source="{StaticResource Strings}" XPath="string[@key='Waiting']" />
+                        </Setter.Value>
+                    </Setter>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Status}">
                     <DataTrigger.Value>
                         <m:CStoreItemStatus>Success</m:CStoreItemStatus>
                     </DataTrigger.Value>
                     <Setter TargetName="StatusImage" Property="Source" Value="pack://application:,,,/Icons/success.png" />
-                    <Setter TargetName="StatusImage" Property="ToolTip" Value="success" />
+                    <Setter TargetName="StatusImage" Property="ToolTip">
+                        <Setter.Value>
+                            <Binding Source="{StaticResource Strings}" XPath="string[@key='Success']" />
+                        </Setter.Value>
+                    </Setter>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Status}">
                     <DataTrigger.Value>
                         <m:CStoreItemStatus>Failed</m:CStoreItemStatus>
                     </DataTrigger.Value>
                     <Setter TargetName="StatusImage" Property="Source" Value="pack://application:,,,/Icons/failed.png" />
-                    <Setter TargetName="StatusImage" Property="ToolTip" Value="failed" />
+                    <Setter TargetName="StatusImage" Property="ToolTip">
+                        <Setter.Value>
+                            <Binding Source="{StaticResource Strings}" XPath="string[@key='Failed']" />
+                        </Setter.Value>
+                    </Setter>
                 </DataTrigger>
             </DataTemplate.Triggers>
         </DataTemplate>
@@ -147,11 +167,23 @@
                 <ColumnDefinition Width="43" />
             </Grid.ColumnDefinitions>
             <Rectangle Grid.Column="0" Fill="DodgerBlue" Margin="0 0 1 0" />
-            <TextBlock Grid.Column="0" Text="ID" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <TextBlock Grid.Column="0" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock.Text>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderID']" />
+                </TextBlock.Text>
+            </TextBlock>
             <Rectangle Grid.Column="1" Fill="DodgerBlue" Margin="0 0 1 0" />
-            <TextBlock Grid.Column="1" Text="File" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <TextBlock Grid.Column="1" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock.Text>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderFile']" />
+                </TextBlock.Text>
+            </TextBlock>
             <Rectangle Grid.Column="2" Fill="DodgerBlue" Margin="0" />
-            <TextBlock Grid.Column="2" Text="Status" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <TextBlock Grid.Column="2" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock.Text>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderStatus']" />
+                </TextBlock.Text>
+            </TextBlock>
         </Grid>
         <ListView x:Name="CStoreItemsList" 
                   Grid.Row="1"
@@ -166,15 +198,19 @@
                   ScrollViewer.VerticalScrollBarVisibility="Hidden" />
         <StackPanel Grid.Row="2" Orientation="Horizontal"
                     HorizontalAlignment="Center">
-            <Button ToolTip="Add Files"
-                    s:View.ActionTarget="{Binding}"
+            <Button s:View.ActionTarget="{Binding}"
                     Command="{s:Action AddFiles, ActionNotFound=Disable}">
+                <Button.ToolTip>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='TooltipAddFiles']" />
+                </Button.ToolTip>
                 <Image Width="24" Height="24" Stretch="Fill"
                        Source="pack://application:,,,/Icons/addfiles.png" />
             </Button>
-            <Button ToolTip="Clear All"
-                    s:View.ActionTarget="{Binding}"
+            <Button s:View.ActionTarget="{Binding}"
                     Command="{s:Action ClearItems, ActionNotFound=Disable}">
+                <Button.ToolTip>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='TooltipClearAll']" />
+                </Button.ToolTip>
                 <Image Width="24" Height="24" Stretch="Fill" 
                        Source="pack://application:,,,/Icons/clear.png" />
             </Button>

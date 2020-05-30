@@ -63,23 +63,30 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="0"
-                        ToolTip="Test Connect"
                         s:View.ActionTarget="{Binding ServerConfigViewModel}"
                         Command="{s:Action DoEcho, ActionNotFound=Disable}">
+                    <Button.ToolTip>
+                        <Binding Source="{StaticResource Strings}" XPath="string[@key='TestConnection']" />
+                    </Button.ToolTip>
                     <Image Width="20" Height="20" Stretch="Fill"
                            Source="pack://application:,,,/Icons/connection.png" />
                 </Button>
                 <Button Grid.Column="1" 
-                        ToolTip="Print"
                         s:View.ActionTarget="{Binding ServerConfigViewModel}"
                         Command="{s:Action DoRequest, ActionNotFound=Disable}">
+                    <Button.ToolTip>
+                        <Binding Source="{StaticResource Strings}" XPath="string[@key='Print']" />
+                    </Button.ToolTip>
                     <Image Width="20" Height="20" Stretch="Fill"
                            Source="pack://application:,,,/Icons/print.png" />
                 </Button>
-                <Button Grid.Column="2" ToolTip="Print Options"
+                <Button Grid.Column="2"
                         Style="{StaticResource SettingsButtonStyle}"
                         s:View.ActionTarget="{Binding}"
                         Command="{s:Action ShowOptions, ActionNotFound=Disable}">
+                    <Button.ToolTip>
+                        <Binding Source="{StaticResource Strings}" XPath="string[@key='PrintOptions']" />
+                    </Button.ToolTip>
                     <Image Width="20" Height="20" Stretch="Fill" 
                            Source="pack://application:,,,/Icons/settings.png" />
                 </Button>

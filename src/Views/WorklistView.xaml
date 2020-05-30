@@ -24,9 +24,11 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="0"
-                        ToolTip="Test Connect"
                         s:View.ActionTarget="{Binding ServerConfigViewModel}"
                         Command="{s:Action DoEcho, ActionNotFound=Disable}">
+                    <Button.ToolTip>
+                        <Binding Source="{StaticResource Strings}" XPath="string[@key='TestConnection']" />
+                    </Button.ToolTip>
                     <Image Width="20" Height="20" Stretch="Fill"
                            Source="pack://application:,,,/Icons/connection.png" />
                     <b:Interaction.Behaviors>
@@ -38,9 +40,11 @@
                     </b:Interaction.Behaviors>
                 </Button>
                 <Button Grid.Column="1" 
-                        ToolTip="Query Worklist"
                         s:View.ActionTarget="{Binding ServerConfigViewModel}"
                         Command="{s:Action DoRequest, ActionNotFound=Disable}">
+                    <Button.ToolTip>
+                        <Binding Source="{StaticResource Strings}" XPath="string[@key='Query']" />
+                    </Button.ToolTip>
                     <Image Width="20" Height="20" Stretch="Fill"
                            Source="pack://application:,,,/Icons/query.png" />
                     <b:Interaction.Behaviors>
