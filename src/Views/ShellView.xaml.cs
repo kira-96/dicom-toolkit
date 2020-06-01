@@ -2,11 +2,15 @@
 {
     using StyletIoC;
     using System;
+    using System.Collections.Generic;
     using System.Reflection;
     using System.Windows;
     using System.Windows.Forms;
     using System.Windows.Interop;
     using System.Windows.Media;
+    using ContextMenu = System.Windows.Controls.ContextMenu;
+    using MenuItem = System.Windows.Controls.MenuItem;
+    using Logging;
     using Services;
     using static Utils.LanguageHelper;
     using static Utils.WindowsAPI;
@@ -25,12 +29,22 @@
         [Inject]
         private INotificationService notificationService;
 
+        [Inject(Key = "filelogger")]
+        private ILoggerService logger;
+
         [Inject]
         private IDialogServiceEx dialogService;
 
         private NotifyIcon notifyIcon;
 
-        private System.Windows.Controls.ContextMenu trayIconContextMenu;
+        private ContextMenu trayIconContextMenu;
+
+        private readonly Dictionary<string, string> supportLanguages = new Dictionary<string, string>()
+        {
+            { "zh-CN", "简体中文" },
+            { "en-US", "English" },
+            /* 添加语言 */
+        };
 
         public ShellView()
         {
@@ -159,17 +173,35 @@
             notifyIcon.MouseClick += TrayIconMouseClick;
             notifyIcon.MouseDoubleClick += TrayIconMouseDoubleClick;
 
-            trayIconContextMenu = (System.Windows.Controls.ContextMenu)FindResource("TrayIconContextMenu");
+            trayIconContextMenu = (ContextMenu)FindResource("TrayIconContextMenu");
         }
 
         private void LoadDefaultLanguage()
         {
             string code = System.Threading.Thread.CurrentThread.CurrentCulture.Name;
-            var languageItems = (trayIconContextMenu.Items[1] as System.Windows.Controls.MenuItem).Items;
+            var languageItems = (trayIconContextMenu.Items[1] as MenuItem).Items;
+
+            if (!supportLanguages.ContainsKey(code))
+            {
+                logger.Warn("Language {0} is not supported, default use zh-CN.", code);
+                return;
+            }
+
             foreach (var item in languageItems)
             {
-                var menuItem = item as System.Windows.Controls.MenuItem;
-                menuItem.IsChecked = menuItem.Tag.ToString() == code;
+                var menuItem = item as MenuItem;
+                if (menuItem.Tag.ToString() == code)
+                {
+                    if (!menuItem.IsChecked)
+                    {
+                        menuItem.IsChecked = true;
+                        LoadXmlStringResourceByCode(code);
+                    }
+                }
+                else
+                {
+                    menuItem.IsChecked = false;
+                }
             }
         }
 
@@ -250,14 +282,14 @@
 
         private void LanguageClick(object s, RoutedEventArgs e)
         {
-            var menuItem = s as System.Windows.Controls.MenuItem;
+            var menuItem = s as MenuItem;
             LoadXmlStringResourceByCode(menuItem.Tag.ToString());
 
-            var languageItems = (menuItem.Parent as System.Windows.Controls.MenuItem).Items;
+            var languageItems = (menuItem.Parent as MenuItem).Items;
 
             foreach (var item in languageItems)
             {
-                (item as System.Windows.Controls.MenuItem).IsChecked = false;
+                (item as MenuItem).IsChecked = false;
             }
             menuItem.IsChecked = true;
         }
