@@ -15,7 +15,7 @@
                 <ResourceDictionary>
                     <XmlDataProvider x:Key="Strings" 
                                      Source="pack://application:,,,/Strings/zh-CN.xml"
-                                     XPath="language/strings"
+                                     XPath="language"
                                      IsAsynchronous="False" />
                 </ResourceDictionary>
                 <ResourceDictionary Source="pack://application:,,,/Themes/Generic.xaml" />

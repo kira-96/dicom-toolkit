@@ -11,6 +11,7 @@
     /// </summary>
     public static class LanguageHelper
     {
+        [Obsolete("Use LoadXmlStringsResource instead.")]
         public static void LoadXamlStringsResource(string resourceName)
         {
             Application.Current.Resources.MergedDictionaries[0] = new ResourceDictionary()

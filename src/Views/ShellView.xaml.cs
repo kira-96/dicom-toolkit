@@ -36,6 +36,7 @@
         {
             InitializeComponent();
             InitializeTrayIcon();
+            LoadDefaultLanguage();
             ApplyTheme();
         }
 
@@ -74,7 +75,7 @@
             //RemoveMenu(hMenu, 1, MF_DISABLED | MF_BYPOSITION);
             //RemoveMenu(hMenu, 1, MF_DISABLED | MF_BYPOSITION);
             InsertMenu(hMenu, 1, MF_SEPARATOR, 0, null);  // 添加分割线
-            InsertMenu(hMenu, 8, MF_BYPOSITION, IDM_ABOUT, "关于(&A)");
+            InsertMenu(hMenu, 8, MF_BYPOSITION, IDM_ABOUT, GetXmlStringByKey("MenuAbout"));
         }
 
         /// <summary>
@@ -161,6 +162,17 @@
             trayIconContextMenu = (System.Windows.Controls.ContextMenu)FindResource("TrayIconContextMenu");
         }
 
+        private void LoadDefaultLanguage()
+        {
+            string code = System.Threading.Thread.CurrentThread.CurrentCulture.Name;
+            var languageItems = (trayIconContextMenu.Items[1] as System.Windows.Controls.MenuItem).Items;
+            foreach (var item in languageItems)
+            {
+                var menuItem = item as System.Windows.Controls.MenuItem;
+                menuItem.IsChecked = menuItem.Tag.ToString() == code;
+            }
+        }
+
         private void Window_Loaded(object s, RoutedEventArgs e)
         {
             notifyIcon.Visible = true;
@@ -236,7 +248,7 @@
             Close();
         }
 
-        private void LanguageChecked(object s, RoutedEventArgs e)
+        private void LanguageClick(object s, RoutedEventArgs e)
         {
             var menuItem = s as System.Windows.Controls.MenuItem;
             LoadXmlStringResourceByCode(menuItem.Tag.ToString());

@@ -72,10 +72,10 @@
         <ContextMenu x:Key="TrayIconContextMenu" Placement="MousePoint">
             <MenuItem Click="MenuItemShowClick">
                 <MenuItem.Header>
-                    <Binding Source="{StaticResource Strings}" XPath="string[@key='ShowMainWindow']" />
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='MenuShowMainWindow']" />
                 </MenuItem.Header>
                 <MenuItem.ToolTip>
-                    <Binding Source="{StaticResource Strings}" XPath="string[@key='ShowMainWindow']" />
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='MenuShowMainWindow']" />
                 </MenuItem.ToolTip>
                 <MenuItem.Icon>
                     <Image Width="16" Height="16" Source="pack://application:,,,/Icons/window.png" />
@@ -83,24 +83,24 @@
             </MenuItem>
             <MenuItem>
                 <MenuItem.Header>
-                    <Binding Source="{StaticResource Strings}" XPath="string[@key='LanguageSetting']" />
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='MenuLanguageSetting']" />
                 </MenuItem.Header>
                 <MenuItem.ToolTip>
-                    <Binding Source="{StaticResource Strings}" XPath="string[@key='LanguageSetting']" />
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='MenuLanguageSetting']" />
                 </MenuItem.ToolTip>
                 <MenuItem.Icon>
                     <Image Width="16" Height="16" Source="pack://application:,,,/Icons/earth.png" />
                 </MenuItem.Icon>
-                <MenuItem Header="English" ToolTip="English" Tag="en-US" IsCheckable="True" Click="LanguageChecked" />
-                <MenuItem Header="简体中文" ToolTip="简体中文" Tag="zh-CN" IsCheckable="True" Click="LanguageChecked" IsChecked="True" />
+                <MenuItem Header="English" ToolTip="English" Tag="en-US" IsCheckable="True" Click="LanguageClick" />
+                <MenuItem Header="简体中文" ToolTip="简体中文" Tag="zh-CN" IsCheckable="True" Click="LanguageClick" IsChecked="True" />
             </MenuItem>
             <Separator />
             <MenuItem Click="MenuItemExitClick">
                 <MenuItem.Header>
-                    <Binding Source="{StaticResource Strings}" XPath="string[@key='Exit']" />
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='MenuExit']" />
                 </MenuItem.Header>
                 <MenuItem.ToolTip>
-                    <Binding Source="{StaticResource Strings}" XPath="string[@key='Exit']" />
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='MenuExit']" />
                 </MenuItem.ToolTip>
                 <MenuItem.Icon>
                     <Image Width="16" Height="16" Source="pack://application:,,,/Icons/exit.png" />
