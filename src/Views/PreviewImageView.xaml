@@ -8,8 +8,9 @@
         mc:Ignorable="d"
         Title="{Binding DisplayName}" 
         ShowInTaskbar="False"
-        Width="480"
-        Height="480" >
+        ResizeMode="CanMinimize"
+        Width="640"
+        Height="640" >
 
     <Grid Background="Black">
         <Image RenderOptions.BitmapScalingMode="NearestNeighbor" 

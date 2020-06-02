@@ -68,7 +68,7 @@
         {
             if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.LeftShift))
             {
-                ImageScaleTransform(s, e.GetPosition(s), e.Delta / 600.0);
+                ImageScaleTransform(s, e.GetPosition(s), e.Delta / 1000.0);
             }
             else
             {
@@ -180,8 +180,8 @@
 
             ScaleTransform st = transformGroup.Children[1] as ScaleTransform;
 
-            if (st.ScaleX + scale <= 0.1 ||
-                st.ScaleY + scale <= 0.1)
+            if (st.ScaleX + scale <= 0.25 ||
+                st.ScaleX + scale >= 2.5)
             {
                 return;
             }
