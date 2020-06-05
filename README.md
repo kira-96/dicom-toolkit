@@ -32,13 +32,13 @@
 
 - [Stylet](https://github.com/canton7/Stylet)
 
-- [ValueTuple](https://www.nuget.org/packages/System.ValueTuple/)
-
-- [Microsoft.Xaml.Behaviors](https://github.com/Microsoft/XamlBehaviorsWpf)
-
 - [Nett](https://github.com/paiden/Nett)
 
 - [MQTTnet](https://github.com/chkr1011/MQTTnet)
+
+- [ookii-dialogs-wpf](https://github.com/augustoproiete/ookii-dialogs-wpf)
+
+- [Microsoft.Xaml.Behaviors](https://github.com/Microsoft/XamlBehaviorsWpf)
 
 **部分图标来源于[阿里巴巴矢量图标库](https://www.iconfont.cn/)**
 
