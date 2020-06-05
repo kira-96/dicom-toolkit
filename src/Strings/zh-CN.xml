@@ -4,7 +4,6 @@
   <string key="Cancel">关闭</string>
   <string key="Yes">是</string>
   <string key="No">否</string>
-  <string key="About">关于</string>
   <string key="Update">更新</string>
   <string key="Insert">插入</string>
   <string key="Delete">删除</string>
@@ -52,6 +51,11 @@
   <string key="MenuLanguageSetting">语言设置</string>
   <string key="MenuShowMainWindow">显示主窗口</string>
   <string key="MenuExit">退出</string>
+  <string key="AboutCaption">关于应用</string>
+  <string key="AboutInstruction">关于此软件</string>
+  <string key="AboutContent">此软件是一套简单的 DICOM 工具，功能仅适用于开发过程中的测试/调试。</string>
+  <string key="AboutVersionFormatter">系统版本：{0}  软件版本：{1}</string>
+  <string key="AboutFooter">您可以在&lt;a href="https://github.com/kira-96/dicom-toolkit"&gt;这里&lt;/a&gt;查看软件的源代码。</string>
   <string key="ExitCaption">退出应用？</string>
   <string key="ExitContent">确定要退出吗？</string>
   <string key="SoftwareVersion">软件版本</string>

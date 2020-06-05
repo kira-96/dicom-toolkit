@@ -21,5 +21,10 @@ namespace SimpleDICOMToolkit.Utils
 
             Process.Start("explorer", "/e");
         }
+
+        public static void OpenHyperlink(string href)
+        {
+            Process.Start(href);
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace SimpleDICOMToolkit.Views
 {
     using StyletIoC;
+    using Ookii.Dialogs.Wpf;
     using System;
     using System.Collections.Generic;
     using System.Reflection;
@@ -133,10 +134,35 @@
 
             Version osVersion = Environment.OSVersion.Version;
 
-            string caption = GetXmlStringByKey("About");
-            string softVersion = GetXmlStringByKey("SoftwareVersion");
+            string caption = GetXmlStringByKey("AboutCaption");
+            string versionInfo = string.Format(GetXmlStringByKey("AboutVersionFormatter"), osVersion, version);
 
-            dialogService.ShowMessageBox($"OS: {osVersion}\r\n{softVersion}: {version}", caption, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, this);
+            if (TaskDialog.OSSupportsTaskDialogs)
+            {
+                using (TaskDialog dialog = new TaskDialog())
+                {
+                    dialog.AllowDialogCancellation = true;
+                    dialog.ExpandedByDefault = true;
+                    dialog.EnableHyperlinks = true;
+                    dialog.WindowTitle = caption;
+                    dialog.MainInstruction = GetXmlStringByKey("AboutInstruction");
+                    dialog.Content = GetXmlStringByKey("AboutContent");
+                    dialog.ExpandedInformation = versionInfo;
+                    dialog.Footer = GetXmlStringByKey("AboutFooter");
+                    dialog.FooterIcon = TaskDialogIcon.Information;
+                    dialog.HyperlinkClicked += (s, e) => Utils.ProcessUtil.OpenHyperlink(e.Href);
+
+                    dialog.Buttons.Add(new TaskDialogButton(ButtonType.Ok));
+                    dialog.ShowDialog(this);
+                }
+            }
+            else
+            {
+                dialogService.ShowMessageBox(
+                    versionInfo, caption, 
+                    MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, this);
+            }
+
         }
 
         private void ApplyTheme()
