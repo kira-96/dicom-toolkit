@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("SimpleDICOMToolkit")]
-[assembly: AssemblyCopyright("Copyright © 2019 - 2020 yzh。保留所有权利。")]
+[assembly: AssemblyCopyright("Copyright © 2019 - 2020 kira。保留所有权利。")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -51,5 +51,5 @@ using System.Windows;
 //可以指定所有这些值，也可以使用“生成号”和“修订号”的默认值
 //通过使用 "*"，如下所示:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.3.0.61")]
-[assembly: AssemblyFileVersion("1.3.0.61")]
+[assembly: AssemblyVersion("1.3.0.62")]
+[assembly: AssemblyFileVersion("1.3.0.62")]

@@ -119,12 +119,13 @@
     <Compile Include="Logging\NLogManager.cs" />
     <Compile Include="Models\BusyStateItem.cs" />
     <Compile Include="Models\CStoreItem.cs" />
-    <Compile Include="Models\DcmItem.cs" />
-    <Compile Include="Models\SimpleWorklistResult.cs" />
-    <Compile Include="Models\UpdateDicomElementItem.cs" />
     <Compile Include="Models\ClientMessageItem.cs" />
+    <Compile Include="Models\DcmItem.cs" />
     <Compile Include="Models\DicomObjectLevel.cs" />
     <Compile Include="Models\ServerMessageItem.cs" />
+    <Compile Include="Models\ServerStateItem.cs" />
+    <Compile Include="Models\SimpleWorklistResult.cs" />
+    <Compile Include="Models\UpdateDicomElementItem.cs" />
     <Compile Include="DicomNetwork\Server\CStoreSCP.cs" />
     <Compile Include="DicomNetwork\Server\CStoreServer.cs" />
     <Compile Include="DicomNetwork\Server\FilmBoxExtensions.cs" />

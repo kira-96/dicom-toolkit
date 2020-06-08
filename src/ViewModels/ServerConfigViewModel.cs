@@ -8,7 +8,7 @@
     using Models;
     using Utils;
 
-    public class ServerConfigViewModel : Screen, IHandle<BusyStateItem>, IDisposable
+    public class ServerConfigViewModel : Screen, IHandle<BusyStateItem>, IHandle<ServerStateItem>, IDisposable
     {
         private readonly IEventAggregator _eventAggregator;
 
@@ -34,6 +34,8 @@
         private bool _isServerAETEnabled = true;
         private bool _isLocalAETEnabled = true;
         private bool _isModalityEnabled = true;
+
+        private (bool isServerIPEnabled, bool isServerPortEnabled, bool isServerAETEnabled, bool isLocalAETEnabled, bool isModalityEnabled) _backupStatus;
 
         public string ServerIP
         {
@@ -168,6 +170,9 @@
             if (port == 0)
                 return;
 
+            _backupStatus = (IsServerIPEnabled, IsServerPortEnabled, IsServerAETEnabled, IsLocalAETEnabled, IsModalityEnabled);
+            IsServerIPEnabled = IsServerPortEnabled = IsServerAETEnabled = IsLocalAETEnabled = IsModalityEnabled = false;
+
             BusyIndicatorColumn = 0;
 
             IsBusy = true;
@@ -175,6 +180,8 @@
             bool result = await _cechoSCU.Echo(_serverIP, port, _serverAET, _localAET);
 
             IsBusy = false;
+
+            (IsServerIPEnabled, IsServerPortEnabled, IsServerAETEnabled, IsLocalAETEnabled, IsModalityEnabled) = _backupStatus;
 
             string caption = LanguageHelper.GetXmlStringByKey("TestResult");
             string success = LanguageHelper.GetXmlStringByKey("TestSuccess");
@@ -219,6 +226,7 @@
             else if (parentViewModel is CStoreSCPViewModel)
             {
                 _doRequestAction = StartCStoreServer;
+                _eventAggregator.Subscribe(this, nameof(CStoreReceivedViewModel));
                 ServerIP = SysUtil.LocalIPAddress;
                 ServerPort = "104";
                 LocalAET = ServerAET = "CSTORESCP";
@@ -227,6 +235,7 @@
             else if (parentViewModel is PrintSCPViewModel)
             {
                 _doRequestAction = StartPrintServer;
+                _eventAggregator.Subscribe(this, nameof(PrintJobsViewModel));
                 ServerIP = SysUtil.LocalIPAddress;
                 ServerPort = "7104";
                 LocalAET = ServerAET = "PRINTSCP";
@@ -302,6 +311,29 @@
             BusyIndicatorColumn = 1;
 
             IsBusy = message.IsBusy;
+
+            if (message.IsBusy)
+            {
+                _backupStatus = (IsServerIPEnabled, IsServerPortEnabled, IsServerAETEnabled, IsLocalAETEnabled, IsModalityEnabled);
+                IsServerIPEnabled = IsServerPortEnabled = IsServerAETEnabled = IsLocalAETEnabled = IsModalityEnabled = false;
+            }
+            else
+            {
+                (IsServerIPEnabled, IsServerPortEnabled, IsServerAETEnabled, IsLocalAETEnabled, IsModalityEnabled) = _backupStatus;
+            }
+        }
+
+        public void Handle(ServerStateItem message)
+        {
+            if (message.IsRuning)
+            {
+                _backupStatus = (IsServerIPEnabled, IsServerPortEnabled, IsServerAETEnabled, IsLocalAETEnabled, IsModalityEnabled);
+                IsServerIPEnabled = IsServerPortEnabled = IsServerAETEnabled = IsLocalAETEnabled = IsModalityEnabled = false;
+            }
+            else
+            {
+                (IsServerIPEnabled, IsServerPortEnabled, IsServerAETEnabled, IsLocalAETEnabled, IsModalityEnabled) = _backupStatus;
+            }
         }
 
         public void Dispose()

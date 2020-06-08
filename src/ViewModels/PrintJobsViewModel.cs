@@ -31,14 +31,16 @@
 
         public void Handle(ServerMessageItem message)
         {
-            if (_isServerStarted)
+            if (IsServerStarted)
             {
                 PrintServer.Default.CreateServer(message.ServerPort, message.LocalAET);
+                _eventAggregator.Publish(new ServerStateItem(true), nameof(PrintJobsViewModel));
                 notificationService.ShowNotification($"Print server is running at: {SysUtil.LocalIPAddress}:{message.ServerPort}", message.LocalAET);
             }
             else
             {
                 PrintServer.Default.StopServer();
+                _eventAggregator.Publish(new ServerStateItem(false), nameof(PrintJobsViewModel));
             }
         }
 
