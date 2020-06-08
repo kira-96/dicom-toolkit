@@ -74,7 +74,7 @@
 
             try
             {
-                await _worklistSCU.SenMppsCompletedAsync(config.ServerIP, port, config.ServerAET, config.LocalAET, StudyInstanceUID, AffectedInstanceUID, dataset);
+                await _worklistSCU.SendMppsCompletedAsync(config.ServerIP, port, config.ServerAET, config.LocalAET, StudyInstanceUID, AffectedInstanceUID, dataset);
             }
             finally
             {}

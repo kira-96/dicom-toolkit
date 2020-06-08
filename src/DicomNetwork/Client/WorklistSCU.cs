@@ -174,7 +174,7 @@
             return (effectedinstamceUid, studyInstanceUID, result);
         }
 
-        public async Task<bool> SenMppsCompletedAsync(string serverIp, int serverPort, string serverAET, string localAET, string studyInstanceUid, DicomUID affectedInstanceUid, DicomDataset worklistItem)
+        public async Task<bool> SendMppsCompletedAsync(string serverIp, int serverPort, string serverAET, string localAET, string studyInstanceUid, DicomUID affectedInstanceUid, DicomDataset worklistItem)
         {
             DicomSequence procedureStepSq = worklistItem.GetSequence(DicomTag.ScheduledProcedureStepSequence);
             // A worklistitem may have a list of scheduledprocedureSteps.
