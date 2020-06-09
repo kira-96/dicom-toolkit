@@ -15,7 +15,8 @@
     {
         public ImageOrientationViewModel ImageOrientationViewModel { get; private set; }
 
-        private readonly DicomImage dicomImage;
+        private readonly DicomDataset Dataset;
+        private DicomImage dicomImage;
 
         private Point previousPoint;
         private bool isMovingImage = false;
@@ -36,32 +37,29 @@
 
             DicomFile dcmFile = DicomFile.Open(dcmfilepath);
 
-            DisplayName = dcmFile.Dataset.GetSingleValueOrDefault(DicomTag.PatientName, string.Empty);
-
-            dicomImage = new DicomImage(dcmFile.Dataset);
-            //{
-            //    OverlayColor = unchecked((int)0xFFF05B72)  // 自定义Overlay的颜色
-            //};
-
-            RenderImage();
-
             ImageOrientationViewModel = SimpleIoC.Get<ImageOrientationViewModel>();
-            ImageOrientationViewModel.UpdateOrientation(dcmFile.Dataset);
+            Dataset = dcmFile.Dataset;
         }
 
         public PreviewImageViewModel(DicomDataset dataset)
         {
-            DisplayName = dataset.GetSingleValueOrDefault(DicomTag.PatientName, string.Empty);
+            ImageOrientationViewModel = SimpleIoC.Get<ImageOrientationViewModel>();
+            Dataset = dataset;
+        }
 
-            dicomImage = new DicomImage(dataset);
-            //{
-            //    OverlayColor = unchecked((int)0xFFF05B72)  // 自定义Overlay的颜色
-            //};
+        protected override void OnViewLoaded()
+        {
+            base.OnViewLoaded();
+
+            DisplayName = Dataset.GetSingleValueOrDefault(DicomTag.PatientName, string.Empty);
+
+            dicomImage = new DicomImage(Dataset);
 
             RenderImage();
 
-            ImageOrientationViewModel = SimpleIoC.Get<ImageOrientationViewModel>();
-            ImageOrientationViewModel.UpdateOrientation(dataset);
+            Dataset.TryGetValues<double>(DicomTag.ImageOrientationPatient, out var orientation);
+
+            ImageOrientationViewModel.UpdateOrientation(orientation);
         }
 
         public void OnMouseWheel(Image s, MouseWheelEventArgs e)

@@ -1,5 +1,4 @@
-﻿using Dicom;
-using Dicom.Imaging.Mathematics;
+﻿using Dicom.Imaging.Mathematics;
 using Stylet;
 using System;
 using System.Windows;
@@ -71,23 +70,6 @@ namespace SimpleDICOMToolkit.ViewModels
         {
             get => bottomMinor;
             private set => SetAndNotify(ref bottomMinor, value);
-        }
-
-        public void UpdateOrientation(DicomDataset dataset)
-        {
-            if (dataset == null ||
-                !dataset.Contains(DicomTag.ImageOrientationPatient))
-            {
-                OrientationVisibility = Visibility.Hidden;
-                return;
-            }
-
-            double[] orientation = dataset.GetValues<double>(DicomTag.ImageOrientationPatient);
-
-            (LeftMajor, LeftMinor) = ComputeOrientation(new Vector3D(-orientation[0], -orientation[1], -orientation[2]));
-            (TopMajor, TopMinor) = ComputeOrientation(new Vector3D(-orientation[3], -orientation[4], -orientation[5]));
-            (RightMajor, RightMinor) = ComputeOrientation(new Vector3D(orientation[0], orientation[1], orientation[2]));
-            (BottomMajor, BottomMinor) = ComputeOrientation(new Vector3D(orientation[3], orientation[4], orientation[5]));
         }
 
         public void UpdateOrientation(double[] orientation)
