@@ -261,8 +261,10 @@ namespace SimpleDICOMToolkit.Client
                 for (int j = 0; j < data.Width; j++)
                 {
                     var pixel = srcLine + j * srcComponents;
-                    int grey = (int)(pixel[0] * 0.3 + pixel[1] * 0.59 + pixel[2] * 0.11);
-                    dstLine[j] = (byte)grey;
+                    // int grey = (int)(pixel[0] * 0.3 + pixel[1] * 0.59 + pixel[2] * 0.11);
+                    // dstLine[j] = (byte)grey;
+                    // see https://www.cnblogs.com/carekee/articles/3629964.html
+                    dstLine[j] = (byte)((pixel[0] * 38 + pixel[1] * 75 + pixel[2] * 15) >> 7);
                 }
 
                 srcLine += data.Stride;
