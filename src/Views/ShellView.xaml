@@ -8,6 +8,8 @@
         mc:Ignorable="d"
         Title="{Binding DisplayName}"
         ResizeMode="CanResizeWithGrip"
+        MinWidth="600"
+        MinHeight="400"
         Width="600"
         Height="480"
         Loaded="Window_Loaded"

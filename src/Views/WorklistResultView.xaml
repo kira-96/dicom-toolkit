@@ -67,6 +67,19 @@
     </UserControl.Resources>
 
     <Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="8*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="9*" />
+                <ColumnDefinition Width="6" />
+            </Grid.ColumnDefinitions>
+            <Grid x:Name="Column1" Grid.Column="0" />
+            <Grid x:Name="Column2" Grid.Column="1" />
+            <Grid x:Name="Column3" Grid.Column="2" />
+            <Grid x:Name="Column4" Grid.Column="3" />
+        </Grid>
         <ListView BorderThickness="0"
                   ItemsSource="{Binding WorklistItems}" 
                   ScrollViewer.VerticalScrollBarVisibility="Hidden">
@@ -77,22 +90,22 @@
             </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView ColumnHeaderContainerStyle="{StaticResource ListColumnHeaderStyle}">
-                    <GridViewColumn DisplayMemberBinding="{Binding Name}" Width="128">
+                    <GridViewColumn DisplayMemberBinding="{Binding Name}" Width="{Binding ElementName=Column1, Path=ActualWidth}">
                         <GridViewColumn.Header>
                             <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderName']" />
                         </GridViewColumn.Header>
                     </GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Sex}" Width="32">
+                    <GridViewColumn DisplayMemberBinding="{Binding Sex}" Width="{Binding ElementName=Column2, Path=ActualWidth}">
                         <GridViewColumn.Header>
                             <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderSex']" />
                         </GridViewColumn.Header>
                     </GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Age}" Width="48">
+                    <GridViewColumn DisplayMemberBinding="{Binding Age}" Width="{Binding ElementName=Column3, Path=ActualWidth}">
                         <GridViewColumn.Header>
                             <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderAge']" />
                         </GridViewColumn.Header>
                     </GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding PatientId}" Width="136">
+                    <GridViewColumn DisplayMemberBinding="{Binding PatientId}" Width="{Binding ElementName=Column4, Path=ActualWidth}">
                         <GridViewColumn.Header>
                             <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderPatientID']" />
                         </GridViewColumn.Header>

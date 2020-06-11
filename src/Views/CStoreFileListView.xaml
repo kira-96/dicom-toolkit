@@ -39,84 +39,30 @@
                 </MenuItem.Icon>
             </MenuItem>
         </ContextMenu>
-        <DataTemplate x:Key="ItemTemplate" DataType="{x:Type m:CStoreItem}">
-            <Grid Height="32">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="30" />
-                    <ColumnDefinition Width="276" />
-                    <ColumnDefinition Width="42" />
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="{Binding Id}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                <TextBlock Grid.Column="1" Text="{Binding FileName}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                <Image x:Name="StatusImage" Grid.Column="2" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center" />
-            </Grid>
-            <DataTemplate.Triggers>
-                <DataTrigger Binding="{Binding Status}">
-                    <DataTrigger.Value>
-                        <m:CStoreItemStatus>Waiting</m:CStoreItemStatus>
-                    </DataTrigger.Value>
-                    <Setter TargetName="StatusImage" Property="Source" Value="pack://application:,,,/Icons/waiting.png" />
-                    <Setter TargetName="StatusImage" Property="ToolTip">
-                        <Setter.Value>
-                            <Binding Source="{StaticResource Strings}" XPath="string[@key='Waiting']" />
-                        </Setter.Value>
-                    </Setter>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding Status}">
-                    <DataTrigger.Value>
-                        <m:CStoreItemStatus>Success</m:CStoreItemStatus>
-                    </DataTrigger.Value>
-                    <Setter TargetName="StatusImage" Property="Source" Value="pack://application:,,,/Icons/success.png" />
-                    <Setter TargetName="StatusImage" Property="ToolTip">
-                        <Setter.Value>
-                            <Binding Source="{StaticResource Strings}" XPath="string[@key='Success']" />
-                        </Setter.Value>
-                    </Setter>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding Status}">
-                    <DataTrigger.Value>
-                        <m:CStoreItemStatus>Failed</m:CStoreItemStatus>
-                    </DataTrigger.Value>
-                    <Setter TargetName="StatusImage" Property="Source" Value="pack://application:,,,/Icons/failed.png" />
-                    <Setter TargetName="StatusImage" Property="ToolTip">
-                        <Setter.Value>
-                            <Binding Source="{StaticResource Strings}" XPath="string[@key='Failed']" />
-                        </Setter.Value>
-                    </Setter>
-                </DataTrigger>
-            </DataTemplate.Triggers>
-        </DataTemplate>
-        <Style x:Key="ListItemStyle" TargetType="{x:Type ListViewItem}">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Padding" Value="0" />
-            <Setter Property="Margin" Value="0,0,0,1" />
+        <Style x:Key="ListColumnHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Background" Value="DodgerBlue" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Padding" Value="0,0,1,0" />
+            <Setter Property="Height" Value="18" />
             <Setter Property="SnapsToDevicePixels" Value="True" />
-            <Setter Property="ContextMenu" Value="{StaticResource CStoreItemContextMenu}" />
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ListViewItem}">
-                        <Border x:Name="ContainerBorder"
-                                BorderThickness="0"
-                                SnapsToDevicePixels="True"
-                                HorizontalAlignment="Left"
-                                Padding="{TemplateBinding Padding}">
-                            <ContentPresenter x:Name="ContentPresenter" 
-                                              Content="{TemplateBinding Content}"
-                                              ContentTemplate="{StaticResource ItemTemplate}" />
+                    <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
+                        <Border Background="{TemplateBinding Background}"
+                                Margin="{TemplateBinding Padding}">
+                            <ContentPresenter Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ContainerBorder" Property="Background" Value="LightSkyBlue" />
-                            </Trigger>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="Foreground" Value="White" />
-                                <Setter TargetName="ContainerBorder" Property="Background" Value="#2a5caa" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <EventSetter Event="MouseDoubleClick" Handler="CStoreItemMouseDoubleClick" />
         </Style>
         <Style TargetType="{x:Type Button}">
             <Setter Property="Background" Value="Transparent" />
@@ -155,38 +101,21 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-
-        <Grid Grid.Row="0" Height="18">
+        <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="31" />
-                <ColumnDefinition Width="276" />
-                <ColumnDefinition Width="43" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="8*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="6" />
             </Grid.ColumnDefinitions>
-            <Rectangle Grid.Column="0" Fill="DodgerBlue" Margin="0 0 1 0" />
-            <TextBlock Grid.Column="0" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock.Text>
-                    <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderID']" />
-                </TextBlock.Text>
-            </TextBlock>
-            <Rectangle Grid.Column="1" Fill="DodgerBlue" Margin="0 0 1 0" />
-            <TextBlock Grid.Column="1" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock.Text>
-                    <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderFile']" />
-                </TextBlock.Text>
-            </TextBlock>
-            <Rectangle Grid.Column="2" Fill="DodgerBlue" Margin="0" />
-            <TextBlock Grid.Column="2" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock.Text>
-                    <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderStatus']" />
-                </TextBlock.Text>
-            </TextBlock>
+            <Grid x:Name="Columns1" Grid.Column="0" />
+            <Grid x:Name="Columns2" Grid.Column="1" />
+            <Grid x:Name="Columns3" Grid.Column="2" />
         </Grid>
         <ListView x:Name="CStoreItemsList" 
-                  Grid.Row="1"
                   BorderThickness="0"
                   s:View.ActionTarget="{Binding}"
                   AllowDrop="True"
@@ -194,9 +123,73 @@
                   DragOver="{s:Action OnDragFilesOver}"
                   Drop="{s:Action OnDropFiles}"
                   ItemsSource="{Binding FileList}"
-                  ItemContainerStyle="{StaticResource ListItemStyle}"
-                  ScrollViewer.VerticalScrollBarVisibility="Hidden" />
-        <StackPanel Grid.Row="2" Orientation="Horizontal"
+                  ScrollViewer.VerticalScrollBarVisibility="Hidden">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="ContextMenu" Value="{StaticResource CStoreItemContextMenu}" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.View>
+                <GridView AllowsColumnReorder="False" ColumnHeaderContainerStyle="{StaticResource ListColumnHeaderStyle}">
+                    <GridViewColumn DisplayMemberBinding="{Binding Id}" Width="{Binding ElementName=Columns1, Path=ActualWidth}">
+                        <GridViewColumn.Header>
+                            <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderID']" />
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding FileName}" Width="{Binding ElementName=Columns2, Path=ActualWidth}">
+                        <GridViewColumn.Header>
+                            <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderFile']" />
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn Width="{Binding ElementName=Columns3, Path=ActualWidth}">
+                        <GridViewColumn.Header>
+                            <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderStatus']" />
+                        </GridViewColumn.Header>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate DataType="{x:Type m:CStoreItem}">
+                                <Image x:Name="StatusImage" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                <DataTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding Status}">
+                                        <DataTrigger.Value>
+                                            <m:CStoreItemStatus>Waiting</m:CStoreItemStatus>
+                                        </DataTrigger.Value>
+                                        <Setter TargetName="StatusImage" Property="Source" Value="pack://application:,,,/Icons/waiting.png" />
+                                        <Setter TargetName="StatusImage" Property="ToolTip">
+                                            <Setter.Value>
+                                                <Binding Source="{StaticResource Strings}" XPath="string[@key='Waiting']" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Status}">
+                                        <DataTrigger.Value>
+                                            <m:CStoreItemStatus>Success</m:CStoreItemStatus>
+                                        </DataTrigger.Value>
+                                        <Setter TargetName="StatusImage" Property="Source" Value="pack://application:,,,/Icons/success.png" />
+                                        <Setter TargetName="StatusImage" Property="ToolTip">
+                                            <Setter.Value>
+                                                <Binding Source="{StaticResource Strings}" XPath="string[@key='Success']" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Status}">
+                                        <DataTrigger.Value>
+                                            <m:CStoreItemStatus>Failed</m:CStoreItemStatus>
+                                        </DataTrigger.Value>
+                                        <Setter TargetName="StatusImage" Property="Source" Value="pack://application:,,,/Icons/failed.png" />
+                                        <Setter TargetName="StatusImage" Property="ToolTip">
+                                            <Setter.Value>
+                                                <Binding Source="{StaticResource Strings}" XPath="string[@key='Failed']" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <StackPanel Grid.Row="1" Orientation="Horizontal"
                     HorizontalAlignment="Center">
             <Button s:View.ActionTarget="{Binding}"
                     Command="{s:Action AddFiles, ActionNotFound=Disable}">
