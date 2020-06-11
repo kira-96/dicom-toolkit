@@ -142,14 +142,8 @@
                     IsValid = false;
                 }
 
-                TagValue = "";
-
-                for (int i = 0; i < element.Count; i++)
-                {
-                    TagValue += element.Get<string>(i) + '\\';
-                }
-
-                TagValue = TagValue?.TrimEnd('\\');
+                var values = element.Get<string[]>();
+                TagValue = string.Join("\\", values);
             }
             else if (item is DicomFragmentSequence fragment)
             {
@@ -206,13 +200,8 @@
                 }
             }
 
-            TagValue = "";
-            for (int i = 0; i < element.Count; i++)
-            {
-                TagValue += element.Get<string>(i) + '\\';
-            }
-
-            TagValue = TagValue?.TrimEnd('\\');
+            var values = element.Get<string[]>();
+            TagValue = string.Join("\\", values);
         }
     }
 }
