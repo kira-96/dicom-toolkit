@@ -54,7 +54,8 @@
             DragOver="{s:Action OnDragFilesOver}"
             Drop="{s:Action OnDropFiles}">
         <Grid>
-            <Image Grid.Row="1" Source="{Binding ImageSource}">
+            <Rectangle x:Name="RectForDragDrop" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="#00FFFFFF" Margin="-2" />
+            <Image Source="{Binding ImageSource}">
                 <Image.Style>
                     <Style TargetType="{x:Type Image}">
                         <Setter Property="ContextMenu">
