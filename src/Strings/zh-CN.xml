@@ -56,6 +56,9 @@
   <string key="AboutContent">此软件是一套简单的 DICOM 工具，功能仅适用于开发过程中的测试/调试。</string>
   <string key="AboutVersionFormatter">系统版本：{0}  软件版本：{1}</string>
   <string key="AboutFooter">您可以在&lt;a href="https://github.com/kira-96/dicom-toolkit"&gt;这里&lt;/a&gt;查看软件的源代码。</string>
+  <string key="InfoCaption">信息</string>
+  <string key="WarnCaption">警告</string>
+  <string key="ErrorCaption">出错了！</string>
   <string key="ExitCaption">退出应用？</string>
   <string key="ExitContent">确定要退出吗？</string>
   <string key="SoftwareVersion">软件版本</string>

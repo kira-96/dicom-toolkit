@@ -56,6 +56,9 @@
   <string key="AboutContent">This software is a set of simple DICOM tools, and its function is only suitable for testing / debugging in the development process.</string>
   <string key="AboutVersionFormatter">OS verison: {0}  Software version: {1}</string>
   <string key="AboutFooter">You can view the source code of this program &lt;a href="https://github.com/kira-96/dicom-toolkit"&gt;here&lt;/a&gt;.</string>
+  <string key="InfoCaption">Information</string>
+  <string key="WarnCaption">Warning</string>
+  <string key="ErrorCaption">An error occurred!</string>
   <string key="ExitCaption">Exit?</string>
   <string key="ExitContent">Are you sure you want to exit?</string>
   <string key="SoftwareVersion">Software Version</string>

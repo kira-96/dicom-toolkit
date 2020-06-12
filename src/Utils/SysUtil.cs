@@ -128,7 +128,7 @@ namespace SimpleDICOMToolkit.Utils
         /// <returns>前景颜色(白/黑)</returns>
         public static Color GetForegroundColor(Color background)
         {
-            return (background.R * 2 + background.G * 5 + background.B) <= 1024 /* 8*128 */
+            return (background.R * 2 + background.G * 5 + background.B) <= 1024 /* 8 * 128 */
                 ? Colors.White : Colors.Black;
         }
 
@@ -152,6 +152,19 @@ namespace SimpleDICOMToolkit.Utils
                 if (personalize.GetValueNames().Contains("AppsUseLightTheme"))
                 {
                     return (int)personalize.GetValue("AppsUseLightTheme") == 1;
+                }
+            }
+
+            return true;
+        }
+
+        public static bool SystemUsesLightTheme()
+        {
+            using (RegistryKey personalize = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", false))
+            {
+                if (personalize.GetValueNames().Contains("SystemUsesLightTheme"))
+                {
+                    return (int)personalize.GetValue("SystemUsesLightTheme") == 1;
                 }
             }
 

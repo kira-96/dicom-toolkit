@@ -66,7 +66,9 @@ namespace SimpleDICOMToolkit.Services
                 WindowsAPI.SetCursorPos((rect.Left + rect.Right) / 2, (rect.Top + rect.Bottom) / 2);  // 设置鼠标位置（按钮中心）
             });
 
-            MessageBoxResult result = MessageBox.Show(owner, content, caption, button, icon, defaultResult);
+            MessageBoxResult result = owner == null ?
+                MessageBox.Show(content, caption, button, icon, defaultResult) :
+                MessageBox.Show(owner, content, caption, button, icon, defaultResult);
 
             messageBoxClosed = true;
 

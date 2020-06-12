@@ -75,7 +75,7 @@
             e.Handled = true;
 
             Container.Get<ILoggerService>("filelogger").Error(e.Exception);
-            Container.Get<IWindowManager>().ShowMessageBox(e.Exception.Message, "出错了!");
+            Container.Get<IWindowManager>().ShowMessageBox(e.Exception.Message, LanguageHelper.GetXmlStringByKey("ErrorCaption"));
         }
     }
 }
