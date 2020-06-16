@@ -5,9 +5,9 @@ pull_requests:
 
 # branches to build
 branches:
-  # whitelist
+  # allow list
   only:
-    - master
+    - main
 
 # Start builds on tags only (GitHub, BitBucket, GitLab, Gitea)
 skip_non_tags: false
@@ -96,7 +96,7 @@ deploy:
     auth_token:
       secure: fiFaOlgTuu0lwxc8TuIFY02OoAWDtQOJsC0c7QemRR8sZm8xGXqxe1LVMRD7kNFo
     on:
-      branch: master                # release from master branch only
+      branch: main                  # release from main branch only
       APPVEYOR_REPO_TAG: true       # deploy on tag push only
 
 #---------------------------------#
