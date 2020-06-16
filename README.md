@@ -1,4 +1,4 @@
-# fo-dicom-samples
+# DICOM Toolkit
 
 *A Simple DICOM Toolkit*
 
