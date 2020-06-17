@@ -5,14 +5,18 @@
     using Stylet;
     using StyletIoC;
     using System;
-    using System.Diagnostics;
     using System.IO;
     using Client;
+    using Logging;
+    using Utils;
 
     public class PrintViewModel : Screen, IDisposable
     {
         [Inject]
         private IWindowManager _windowManager;
+
+        [Inject(Key = "filelogger")]
+        private ILoggerService _logger;
 
         [Inject]
         private IMessenger messenger;
@@ -45,22 +49,19 @@
 
         public void ShowOptions()
         {
-            // _windowManager.ShowDialog(PrintOptionsViewModel);
-
             string configexe = "Config.exe";
 
             if (!File.Exists(configexe))
             {
-                _windowManager.ShowMessageBox("找不到 Config.exe");
+                string info = string.Format(LanguageHelper.GetXmlStringByKey("FileNotFound"), configexe);
+                _windowManager.ShowMessageBox(info);
                 return;
             }
 
-            ProcessStartInfo info = new ProcessStartInfo(configexe, "0");
-            Process process = new Process()
+            if (!ProcessUtil.StartProcess(configexe, "0"))
             {
-                StartInfo = info
-            };
-            process.Start();
+                _logger.Warn("Start process failure. [{0}]", configexe);
+            }
         }
 
         private void ReloadPrintOptions(string file)

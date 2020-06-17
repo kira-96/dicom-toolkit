@@ -7,7 +7,7 @@ namespace SimpleDICOMToolkit.ViewModels
 {
     public class ImageOrientationViewModel : Screen
     {
-        private Visibility orientationVisibility = Visibility.Visible;
+        private Visibility orientationVisibility = Visibility.Hidden;
 
         public Visibility OrientationVisibility
         {
@@ -76,7 +76,6 @@ namespace SimpleDICOMToolkit.ViewModels
         {
             if (orientation == null || orientation.Length != 6)
             {
-                OrientationVisibility = Visibility.Hidden;
                 return;
             }
 
@@ -84,6 +83,7 @@ namespace SimpleDICOMToolkit.ViewModels
             (TopMajor, TopMinor) = ComputeOrientation(new Vector3D(-orientation[3], -orientation[4], -orientation[5]));
             (RightMajor, RightMinor) = ComputeOrientation(new Vector3D(orientation[0], orientation[1], orientation[2]));
             (BottomMajor, BottomMinor) = ComputeOrientation(new Vector3D(orientation[3], orientation[4], orientation[5]));
+            OrientationVisibility = Visibility.Visible;
         }
 
         public static (string major, string minor) ComputeOrientation(Vector3D vector)

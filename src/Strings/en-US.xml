@@ -65,4 +65,5 @@
   <string key="TestResult">Test Result</string>
   <string key="TestSuccess">Test success</string>
   <string key="TestFailed">Test failed</string>
+  <string key="FileNotFound">File not found: {0}</string>
 </language>

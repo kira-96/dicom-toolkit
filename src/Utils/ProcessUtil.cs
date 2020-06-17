@@ -22,6 +22,17 @@ namespace SimpleDICOMToolkit.Utils
             Process.Start("explorer", "/e");
         }
 
+        public static bool StartProcess(string fileName, string args = null)
+        {
+            ProcessStartInfo info = new ProcessStartInfo(fileName, args);
+            Process process = new Process()
+            {
+                StartInfo = info
+            };
+
+            return process.Start();
+        }
+
         public static void OpenHyperlink(string href)
         {
             Process.Start(href);

@@ -1,18 +1,22 @@
 ﻿namespace SimpleDICOMToolkit.ViewModels
 {
     using Nett;
-    using SimpleDICOMToolkit.MQTT;
-    using SimpleDICOMToolkit.Server;
     using Stylet;
     using StyletIoC;
     using System;
-    using System.Diagnostics;
     using System.IO;
+    using Logging;
+    using MQTT;
+    using Server;
+    using Utils;
 
     public class PrintSCPViewModel : Screen, IDisposable
     {
         [Inject]
         private IWindowManager _windowManager;
+
+        [Inject(Key = "filelogger")]
+        private ILoggerService _logger;
 
         [Inject]
         private IMessenger messenger;
@@ -39,23 +43,19 @@
 
         public void ShowOptions()
         {
-            //PrintDialog dlg = new PrintDialog();
-            //dlg.ShowDialog();
-
             string configexe = "Config.exe";
 
             if (!File.Exists(configexe))
             {
-                _windowManager.ShowMessageBox("找不到 Config.exe");
+                string info = string.Format(LanguageHelper.GetXmlStringByKey("FileNotFound"), configexe);
+                _windowManager.ShowMessageBox(info);
                 return;
             }
 
-            ProcessStartInfo info = new ProcessStartInfo(configexe, "1");
-            Process process = new Process()
+            if (!ProcessUtil.StartProcess(configexe, "1"))
             {
-                StartInfo = info
-            };
-            process.Start();
+                _logger.Warn("Start process failure. [{0}]", configexe);
+            }
         }
 
         private void ReloadPrinterSettings(string file)
