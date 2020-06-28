@@ -86,6 +86,14 @@
     <Compile Include="Controls\TemplateSettingValues.cs" />
     <Compile Include="Controls\TextBoxPlaceholderBehavior.cs" />
     <Compile Include="Controls\VisualStates.cs" />
+    <Compile Include="DicomNetwork\Server\Models\IMppsSource.cs" />
+    <Compile Include="DicomNetwork\Server\Models\IWorklistItemsSource.cs" />
+    <Compile Include="DicomNetwork\Server\Models\IWorklistRequestHandler.cs" />
+    <Compile Include="DicomNetwork\Server\Models\MppsHandler.cs" />
+    <Compile Include="DicomNetwork\Server\Models\WorklistItem.cs" />
+    <Compile Include="DicomNetwork\Server\Models\WorklistItemsSource.cs" />
+    <Compile Include="DicomNetwork\Server\WorklistServer.cs" />
+    <Compile Include="DicomNetwork\Server\WorklistService.cs" />
     <Compile Include="IoCModules\ServicesModule.cs" />
     <Compile Include="IoCModules\DicomSCUModule.cs" />
     <Compile Include="IoCModules\ViewModelModule.cs" />
@@ -154,6 +162,7 @@
     <Compile Include="ViewModels\EditDicomItemViewModel.cs" />
     <Compile Include="ViewModels\ImageOrientationViewModel.cs" />
     <Compile Include="ViewModels\IViewModelFactory.cs" />
+    <Compile Include="ViewModels\PatientsViewModel.cs" />
     <Compile Include="ViewModels\PreviewImageViewModel.cs" />
     <Compile Include="ViewModels\PrintJobsViewModel.cs" />
     <Compile Include="ViewModels\PrintPreviewViewModel.cs" />
@@ -161,9 +170,11 @@
     <Compile Include="ViewModels\PrintViewModel.cs" />
     <Compile Include="ViewModels\QueryResultViewModel.cs" />
     <Compile Include="ViewModels\QueryRetrieveViewModel.cs" />
+    <Compile Include="ViewModels\RegistrationViewModel.cs" />
     <Compile Include="ViewModels\ServerConfigViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\WorklistResultViewModel.cs" />
+    <Compile Include="ViewModels\WorklistSCPViewModel.cs" />
     <Compile Include="ViewModels\WorklistViewModel.cs" />
     <Compile Include="Views\CStoreFileListView.xaml.cs">
       <DependentUpon>CStoreFileListView.xaml</DependentUpon>
@@ -186,6 +197,9 @@
     <Compile Include="Views\ImageOrientationView.xaml.cs">
       <DependentUpon>ImageOrientationView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PatientsView.xaml.cs">
+      <DependentUpon>PatientsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PreviewImageView.xaml.cs">
       <DependentUpon>PreviewImageView.xaml</DependentUpon>
     </Compile>
@@ -207,6 +221,9 @@
     <Compile Include="Views\QueryRetrieveView.xaml.cs">
       <DependentUpon>QueryRetrieveView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\RegistrationView.xaml.cs">
+      <DependentUpon>RegistrationView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ServerConfigView.xaml.cs">
       <DependentUpon>ServerConfigView.xaml</DependentUpon>
     </Compile>
@@ -215,6 +232,9 @@
     </Compile>
     <Compile Include="Views\WorklistResultView.xaml.cs">
       <DependentUpon>WorklistResultView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WorklistSCPView.xaml.cs">
+      <DependentUpon>WorklistSCPView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WorklistView.xaml.cs">
       <DependentUpon>WorklistView.xaml</DependentUpon>
@@ -283,6 +303,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\PatientsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\PreviewImageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -311,6 +335,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\RegistrationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ServerConfigView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -320,6 +348,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\WorklistResultView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WorklistSCPView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -333,6 +365,7 @@
     <Resource Include="Icons\clear.png" />
     <Resource Include="Icons\connection.png" />
     <Resource Include="Icons\delete.png" />
+    <Resource Include="Icons\details.png" />
     <Resource Include="Icons\earth.png" />
     <Resource Include="Icons\exit.png" />
     <Resource Include="Icons\failed.png" />
@@ -345,6 +378,7 @@
     <Resource Include="Icons\preview.png" />
     <Resource Include="Icons\print.png" />
     <Resource Include="Icons\query.png" />
+    <Resource Include="Icons\register.png" />
     <Resource Include="Icons\settings.png" />
     <Resource Include="Icons\start.png" />
     <Resource Include="Icons\start1.png" />

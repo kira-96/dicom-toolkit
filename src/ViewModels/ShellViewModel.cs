@@ -14,6 +14,7 @@
         public ShellViewModel(
             DcmItemsViewModel dcmItemsViewModel,
             WorklistViewModel worklistViewModel,
+            WorklistSCPViewModel worklistSCPViewModel,
             QueryRetrieveViewModel queryRetrieveViewModel,
             CStoreViewModel cstoreViewModel,
             CStoreSCPViewModel cstoreSCPViewModel,
@@ -26,6 +27,7 @@
 
             Items.Add(dcmItemsViewModel);
             Items.Add(worklistViewModel);
+            Items.Add(worklistSCPViewModel);
             Items.Add(queryRetrieveViewModel);
             Items.Add(cstoreViewModel);
             Items.Add(cstoreSCPViewModel);

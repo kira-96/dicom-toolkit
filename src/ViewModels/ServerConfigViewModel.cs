@@ -199,6 +199,14 @@
                 _doRequestAction = WorklistQueryRequest;
                 _eventAggregator.Subscribe(this, nameof(WorklistResultViewModel));
             }
+            else if (parentViewModel is WorklistSCPViewModel)
+            {
+                _doRequestAction = StartWorklistServer;
+                _eventAggregator.Subscribe(this, nameof(PatientsViewModel));
+                ServerIP = SysUtil.LocalIPAddress;
+                LocalAET = ServerAET = "RIS";
+                IsServerIPEnabled = IsServerAETEnabled = IsModalityEnabled = false;
+            }
             else if (parentViewModel is QueryRetrieveViewModel)
             {
                 _doRequestAction = QueryRetrieveRequest;
@@ -283,6 +291,11 @@
         private void CStoreRequest()
         {
             PublishClientRequest(nameof(CStoreFileListViewModel));
+        }
+
+        private void StartWorklistServer()
+        {
+            PublishServerRequest(nameof(PatientsViewModel));
         }
 
         private void StartCStoreServer()

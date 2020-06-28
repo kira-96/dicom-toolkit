@@ -1,0 +1,77 @@
+﻿<UserControl x:Class="SimpleDICOMToolkit.Views.WorklistSCPView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:s="https://github.com/canton7/Stylet"
+             xmlns:v="clr-namespace:SimpleDICOMToolkit.Views"
+             mc:Ignorable="d" 
+             d:DesignWidth="600"
+             d:DesignHeight="480">
+
+    <UserControl.Resources>
+        <Style x:Key="ServerToggleButtonStyle" TargetType="{x:Type ToggleButton}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Padding" Value="25 1" />
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Border x:Name="ContentBorder"
+                                Background="DeepSkyBlue"
+                                BorderBrush="Transparent"
+                                BorderThickness="1"
+                                CornerRadius="2"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                Padding="{TemplateBinding Padding}">
+                            <Grid>
+                                <Image x:Name="StartIcon" Width="20" Height="20" Stretch="Fill" Source="pack://application:,,,/Icons/Start.png" />
+                                <Image x:Name="StopIcon" Width="20" Height="20" Stretch="Fill" Source="pack://application:,,,/Icons/Stop.png" />
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ContentBorder" Property="BorderBrush" Value="LightGray" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ContentBorder" Property="Background" Value="LightSkyBlue" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="ContentBorder" Property="Background" Value="LightGray" />
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="StartIcon" Property="Visibility" Value="Hidden" />
+                                <Setter TargetName="StopIcon" Property="Visibility" Value="Visible" />
+                                <Setter TargetName="ContentBorder" Property="Background" Value="OrangeRed" />
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="False">
+                                <Setter TargetName="StartIcon" Property="Visibility" Value="Visible" />
+                                <Setter TargetName="StopIcon" Property="Visibility" Value="Hidden" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="232" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <v:ServerConfigView DataContext="{Binding ServerConfigViewModel}" />
+            <ToggleButton Style="{StaticResource ServerToggleButtonStyle}"
+                          IsChecked="{Binding PatientsViewModel.IsServerStarted, Mode=TwoWay}"
+                          s:View.ActionTarget="{Binding ServerConfigViewModel}"
+                          Command="{s:Action DoRequest, ActionNotFound=Disable}" />
+        </StackPanel>
+        <v:PatientsView Grid.Column="1" DataContext="{Binding PatientsViewModel}" />
+    </Grid>
+</UserControl>
