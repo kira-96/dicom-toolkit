@@ -4,7 +4,6 @@
     using StyletIoC;
     using System;
     using System.Collections.ObjectModel;
-    using Logging;
     using Models;
     using Server;
     using Services;
@@ -12,9 +11,6 @@
 
     public class PatientsViewModel : Screen, IHandle<ServerMessageItem>, IHandle<WorklistItem>, IDisposable
     {
-        [Inject(Key = "filelogger")]
-        private ILoggerService _logger;
-
         [Inject]
         private IWindowManager _windowManager;
 

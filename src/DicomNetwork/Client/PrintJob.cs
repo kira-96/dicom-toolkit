@@ -47,6 +47,8 @@ namespace SimpleDICOMToolkit.Client
                 MediumType = options.MediumType.ToStringEx(),
                 NumberOfCopies = options.PrintNumberOfCopies,
                 IsColor = options.ColorType == PrintColorType.Color,
+                FilmDestination = options.FilmDestination,
+                PrintPriority = options.Priority.ToStringEx()
             };
         }
 
@@ -63,6 +65,8 @@ namespace SimpleDICOMToolkit.Client
                 MagnificationType = options.MagnificationType.ToStringEx(),
                 BorderDensity = options.BorderDensity.ToStringEx(),
                 EmptyImageDensity = options.EmptyImageDensity.ToStringEx(),
+                MinDensity = 0,
+                MaxDensity = 256,
             };
 
             filmBox.Initialize();

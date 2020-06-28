@@ -504,7 +504,7 @@ namespace SimpleDICOMToolkit.Client
 
     public class PrintOptions
     {
-        public string JobLabel { get; set; } = "Lonwin";
+        public string JobLabel { get; set; } = "Simple Print Job";
 
         public string ImageDisplayFormat { get; set; } = "STANDARD\\1,1";
 
