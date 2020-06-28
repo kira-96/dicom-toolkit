@@ -9,14 +9,14 @@
 
 ## 截图
 
-![dump](screenshot/Snipaste_2020-05-25_17-18-23.png)
-![c-store](screenshot/Snipaste_2020-05-21_13-27-11.png)
+![dump](screenshot/Snipaste_2020-06-28_17-45-33.png)
+![c-store](screenshot/Snipaste_2020-06-28_17-41-46.png)
 
 ## 功能
 
 - Simple Dicom Dump [**慎用修改和保存功能**]
 
-- Worklist SCU with MPPS [测试功能]
+- Worklist SCU/SCP with MPPS [测试功能]
 
 - Query Retrieve SCU [测试功能]
 
