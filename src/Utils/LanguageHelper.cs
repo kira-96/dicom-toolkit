@@ -39,7 +39,7 @@
         public static string GetXmlStringByKey(string key)
         {
             if (!(Application.Current.TryFindResource("Strings") is XmlDataProvider provider))
-                return string.Empty;
+                return key;
 
             IEnumerator enumerator = (provider.Data as IEnumerable).GetEnumerator();
             enumerator.MoveNext();
@@ -54,7 +54,7 @@
                 }
             }
 
-            return string.Empty;
+            return key;
         }
     }
 }

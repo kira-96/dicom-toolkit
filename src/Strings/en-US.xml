@@ -80,4 +80,5 @@
   <string key="TestSuccess">Test success</string>
   <string key="TestFailed">Test failed</string>
   <string key="FileNotFound">File not found: {0}</string>
+  <string key="ServerIsRunning">{0} server is running at: {1}:{2}</string>
 </language>

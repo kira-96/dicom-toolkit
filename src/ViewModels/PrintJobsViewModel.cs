@@ -35,7 +35,9 @@
             {
                 PrintServer.Default.CreateServer(message.ServerPort, message.LocalAET);
                 _eventAggregator.Publish(new ServerStateItem(true), nameof(PrintJobsViewModel));
-                notificationService.ShowNotification($"Print server is running at: {SysUtil.LocalIPAddress}:{message.ServerPort}", message.LocalAET);
+                notificationService.ShowNotification(
+                    string.Format(LanguageHelper.GetXmlStringByKey("ServerIsRunning"), "Print", SysUtil.LocalIPAddress, message.ServerPort),
+                    message.LocalAET);
             }
             else
             {

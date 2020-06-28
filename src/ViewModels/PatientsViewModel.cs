@@ -47,10 +47,11 @@
                     PatientID = "001",
                     Age = "027Y",
                     Sex = "M",
+                    DateOfBirth = DateTime.Today,
                     StudyUID = "1.23.456.7890.1234567890.1",
                     Modality = "MR",
                     ScheduledAET = "LOCAL_AET",
-                    ExamDateAndTime = DateTime.Now,
+                    ExamDateAndTime = DateTime.Today,
                     ProcedureID = "DDB620C9F6D7101",
                     ProcedureStepID = "4C599B2EEBB0102"
                 });
@@ -61,10 +62,11 @@
                     PatientID = "002",
                     Age = "028Y",
                     Sex = "F",
+                    DateOfBirth = DateTime.Today,
                     StudyUID = "1.23.456.7890.1234567890.2",
                     Modality = "MR",
                     ScheduledAET = "LOCAL_AET",
-                    ExamDateAndTime = DateTime.Now,
+                    ExamDateAndTime = DateTime.Today,
                     ProcedureID = "779B2791AA56103",
                     ProcedureStepID = "0F4BF697489C104"
                 });
@@ -77,7 +79,9 @@
             {
                 WorklistServer.Default.CreateServer(message.ServerPort, message.LocalAET);
                 _eventAggregator.Publish(new ServerStateItem(true), nameof(PatientsViewModel));
-                notificationService.ShowNotification($"Worklist server is running at: {SysUtil.LocalIPAddress}:{message.ServerPort}", message.LocalAET);
+                notificationService.ShowNotification(
+                    string.Format(LanguageHelper.GetXmlStringByKey("ServerIsRunning"), "Worklist", SysUtil.LocalIPAddress, message.ServerPort), 
+                    message.LocalAET);
             }
             else
             {
@@ -88,7 +92,7 @@
 
         public void ShowRegistrationWindow()
         {
-            _windowManager.ShowDialog(new RegistrationViewModel());
+            _windowManager.ShowDialog(new RegistrationViewModel(), this);
         }
 
         public void Handle(WorklistItem message)
@@ -122,7 +126,7 @@
                 Description = item.ExamDescription
             };
 
-            _windowManager.ShowDialog(vm);
+            _windowManager.ShowDialog(vm, this);
         }
 
         public void Dispose()

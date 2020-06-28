@@ -59,7 +59,9 @@
             {
                 CStoreServer.Default.CreateServer(message.ServerPort, message.LocalAET);
                 _eventAggregator.Publish(new ServerStateItem(true), nameof(CStoreReceivedViewModel));
-                notificationService.ShowNotification($"C-STORE server is running at: {SysUtil.LocalIPAddress}:{message.ServerPort}", message.LocalAET);
+                notificationService.ShowNotification(
+                    string.Format(LanguageHelper.GetXmlStringByKey("ServerIsRunning"), "C-STORE", SysUtil.LocalIPAddress, message.ServerPort),
+                    message.LocalAET);
             }
             else
             {

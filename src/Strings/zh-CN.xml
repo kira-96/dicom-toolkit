@@ -80,4 +80,5 @@
   <string key="TestSuccess">测试成功</string>
   <string key="TestFailed">测试失败</string>
   <string key="FileNotFound">找不到文件：{0}</string>
+  <string key="ServerIsRunning">{0}服务正在运行：{1}:{2}</string>
 </language>
