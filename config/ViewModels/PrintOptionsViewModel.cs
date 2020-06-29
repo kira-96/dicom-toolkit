@@ -1,6 +1,5 @@
 ﻿using Nett;
 using Stylet;
-using System;
 using System.Collections.Generic;
 
 namespace Config.ViewModels
@@ -9,7 +8,7 @@ namespace Config.ViewModels
     {
         public List<string> Orientations { get; } = new List<string>()
         {
-            "PROTRAIL",
+            "PORTRAIT",
             "LANDSCAPE"
         };
 

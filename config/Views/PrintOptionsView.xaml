@@ -9,6 +9,20 @@
              d:DesignHeight="360" 
              d:DesignWidth="360">
 
+    <UserControl.Resources>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="{x:Type ComboBox}">
+            <Setter Property="Width" Value="136" />
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+    </UserControl.Resources>
+    
     <Grid>
         <Grid HorizontalAlignment="Center"
               VerticalAlignment="Center">
@@ -22,14 +36,14 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0" Grid.Column="0" Margin="2" Text="Orientation" HorizontalAlignment="Center" VerticalAlignment="Center" />
-            <TextBlock Grid.Row="1" Grid.Column="0" Margin="2" Text="Film Size" HorizontalAlignment="Center" VerticalAlignment="Center" />
-            <TextBlock Grid.Row="2" Grid.Column="0" Margin="2" Text="Magnification" HorizontalAlignment="Center" VerticalAlignment="Center" />
-            <TextBlock Grid.Row="3" Grid.Column="0" Margin="2" Text="Medium type" HorizontalAlignment="Center" VerticalAlignment="Center" />
-            <ComboBox Grid.Row="0" Grid.Column="1" Margin="2" Width="96" ItemsSource="{Binding Orientations}" SelectedIndex="{Binding Orientation}" />
-            <ComboBox Grid.Row="1" Grid.Column="1" Margin="2" Width="96" ItemsSource="{Binding FilmSize}" SelectedIndex="{Binding Size}" />
-            <ComboBox Grid.Row="2" Grid.Column="1" Margin="2" Width="96" ItemsSource="{Binding MagnificationTypes}" SelectedIndex="{Binding Magnification}" />
-            <ComboBox Grid.Row="3" Grid.Column="1" Margin="2" Width="96" ItemsSource="{Binding MediumTypes}" SelectedIndex="{Binding Medium}" />
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Orientation" />
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Film Size" />
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Magnification" />
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Medium type" />
+            <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Orientations}" SelectedIndex="{Binding Orientation}" />
+            <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding FilmSize}" SelectedIndex="{Binding Size}" />
+            <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding MagnificationTypes}" SelectedIndex="{Binding Magnification}" />
+            <ComboBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding MediumTypes}" SelectedIndex="{Binding Medium}" />
         </Grid>
     </Grid>
 </UserControl>

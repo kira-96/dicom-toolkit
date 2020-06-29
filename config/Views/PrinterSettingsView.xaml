@@ -19,7 +19,11 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Margin="2" Text="Printer" HorizontalAlignment="Center" VerticalAlignment="Center" />
-            <ComboBox Grid.Row="0" Grid.Column="1" Margin="2" Width="196" ItemsSource="{Binding Printers}" SelectedItem="{Binding Printer, Mode=TwoWay}" />
+            <ComboBox Grid.Row="0" Grid.Column="1" Margin="2" Width="196" 
+                      HorizontalContentAlignment="Center"
+                      VerticalContentAlignment="Center"
+                      ItemsSource="{Binding Printers}" 
+                      SelectedItem="{Binding Printer, Mode=TwoWay}" />
         </Grid>
     </Grid>
 </UserControl>
