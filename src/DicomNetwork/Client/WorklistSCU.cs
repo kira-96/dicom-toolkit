@@ -91,7 +91,7 @@
             DicomDataset procedureStep = procedureStepSeq.First();
 
             // get study instance UID from MWL query resault
-            string studyInstanceUID = worklistItem.GetSingleValueOrDefault(DicomTag.StudyInstanceUID, DicomUID.Generate().ToString());
+            string studyInstanceUID = worklistItem.GetSingleValueOrDefault(DicomTag.StudyInstanceUID, DicomUIDGenerator.GenerateDerivedFromUUID().UID);
 
             DicomDataset dataset = new DicomDataset
             {
@@ -115,7 +115,7 @@
                 { DicomTag.PerformedProcedureStepEndTime, string.Empty },
                 { DicomTag.PerformedLocation, string.Empty },
                 { DicomTag.PerformedStationAETitle, localAET },
-                { DicomTag.PerformedStationName, "MRI" },
+                { DicomTag.PerformedStationName, localAET },
                 // get modality from MWL query result
                 { DicomTag.Modality, procedureStep.GetSingleValueOrDefault(DicomTag.Modality, string.Empty) },
                 { DicomTag.PerformedProtocolCodeSequence, new DicomDataset() },
@@ -355,12 +355,13 @@
 
         private SimpleWorklistResult GetWorklistResultFromDataset(DicomDataset dataset)
         {
-            string name = dataset.GetSingleValueOrDefault(DicomTag.PatientName, "");
-            string sex = dataset.GetSingleValueOrDefault(DicomTag.PatientSex, "O");
-            string age = dataset.GetSingleValueOrDefault(DicomTag.PatientAge, "");
-            string patId = dataset.GetSingleValueOrDefault(DicomTag.PatientID, "");
+            string name = dataset.GetSingleValueOrDefault(DicomTag.PatientName, string.Empty);
+            string sex = dataset.GetSingleValueOrDefault(DicomTag.PatientSex, string.Empty);
+            string age = dataset.GetSingleValueOrDefault(DicomTag.PatientAge, string.Empty);
+            string patId = dataset.GetSingleValueOrDefault(DicomTag.PatientID, string.Empty);
+            string studyUid = dataset.GetSingleValueOrDefault(DicomTag.StudyInstanceUID, string.Empty);
 
-            return new SimpleWorklistResult(name, sex, age, patId);
+            return new SimpleWorklistResult(name, sex, age, patId, studyUid);
         }
     }
 }

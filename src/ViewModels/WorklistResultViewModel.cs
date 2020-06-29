@@ -3,6 +3,7 @@
     using Stylet;
     using StyletIoC;
     using System;
+    using System.Collections.Generic;
     using Client;
     using Models;
 
@@ -13,9 +14,7 @@
         [Inject]
         private IWorklistSCU _worklistSCU;
 
-        // 由于只是简单测试，这里只做临时保存
-        private Dicom.DicomUID AffectedInstanceUID = null;
-        private string StudyInstanceUID = null;
+        private Dictionary<string, Dicom.DicomUID> _affectedUidDict;
 
         private bool _isBusy = false;
 
@@ -31,6 +30,7 @@
         {
             _eventAggregator = eventAggregator;
             _eventAggregator.Subscribe(this, nameof(WorklistResultViewModel));
+            _affectedUidDict = new Dictionary<string, Dicom.DicomUID>();
             WorklistItems = new BindableCollection<SimpleWorklistResult>();
         }
 
@@ -49,8 +49,10 @@
 
                 if (result.result)
                 {
-                    AffectedInstanceUID = result.affectedInstanceUid;
-                    StudyInstanceUID = result.studyInstanceUid;
+                    if (_affectedUidDict.ContainsKey(result.studyInstanceUid))
+                        _affectedUidDict[result.studyInstanceUid] = result.affectedInstanceUid;
+                    else
+                        _affectedUidDict.Add(result.studyInstanceUid, result.affectedInstanceUid);
                 }
             }
             finally
@@ -59,8 +61,7 @@
 
         public async void DiscontinuedPerformance(SimpleWorklistResult item)
         {
-            if (AffectedInstanceUID == null ||
-                StudyInstanceUID == null)
+            if (!_affectedUidDict.ContainsKey(item.StudyUID))
             {
                 return;
             }
@@ -74,7 +75,10 @@
 
             try
             {
-                await _worklistSCU.SendMppsDiscontinuedAsync(config.ServerIP, port, config.ServerAET, config.LocalAET, StudyInstanceUID, AffectedInstanceUID, dataset);
+                await _worklistSCU.SendMppsDiscontinuedAsync(config.ServerIP, port, config.ServerAET, config.LocalAET, 
+                    item.StudyUID, _affectedUidDict[item.StudyUID], dataset);
+
+                _affectedUidDict.Remove(item.StudyUID);
             }
             finally
             {}
@@ -82,8 +86,7 @@
 
         public async void CompletePerformance(SimpleWorklistResult item)
         {
-            if (AffectedInstanceUID == null ||
-                StudyInstanceUID == null)
+            if (!_affectedUidDict.ContainsKey(item.StudyUID))
             {
                 return;
             }
@@ -97,13 +100,13 @@
 
             try
             {
-                await _worklistSCU.SendMppsCompletedAsync(config.ServerIP, port, config.ServerAET, config.LocalAET, StudyInstanceUID, AffectedInstanceUID, dataset);
+                await _worklistSCU.SendMppsCompletedAsync(config.ServerIP, port, config.ServerAET, config.LocalAET,
+                    item.StudyUID, _affectedUidDict[item.StudyUID], dataset);
+
+                _affectedUidDict.Remove(item.StudyUID);
             }
             finally
             {}
-
-            AffectedInstanceUID = null;
-            StudyInstanceUID = null;
         }
 
         public async void Handle(ClientMessageItem message)

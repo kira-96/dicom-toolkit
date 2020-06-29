@@ -5,24 +5,28 @@
     /// </summary>
     public class SimpleWorklistResult
     {
-        public string Name { get; private set; }
+        public string Name { get; }
 
-        public string Sex { get; private set; }
+        public string Sex { get; }
 
-        public string Age { get; private set; }
+        public string Age { get; }
 
-        public string PatientId { get; private set; }
+        public string PatientId { get; }
+
+        public string StudyUID { get; }
 
         public SimpleWorklistResult(
             string name,
             string sex,
             string age,
-            string patId)
+            string patId,
+            string studyUid)
         {
             Name = name;
             Sex = sex;
             Age = age;
             PatientId = patId;
+            StudyUID = studyUid;
         }
     }
 }
