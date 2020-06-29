@@ -10,6 +10,8 @@ namespace SimpleDICOMToolkit.Server
 
         private IDicomServer defaultServer = null;
 
+        public IMppsSource MppsSource { get; private set; } = null;
+
         // must set
         public WorklistItemsSource ItemsSource { get; set; } = null;
 
@@ -53,6 +55,7 @@ namespace SimpleDICOMToolkit.Server
             AETitle = serverAET;
 
             defaultServer = DicomServer.Create<WorklistService>(port);
+            MppsSource = new MppsHandler(ItemsSource, defaultServer.Logger);
 
             return IsListening();
         }

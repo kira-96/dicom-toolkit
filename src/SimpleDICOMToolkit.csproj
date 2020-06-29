@@ -90,7 +90,6 @@
     <Compile Include="DicomNetwork\Server\Models\IWorklistItemsSource.cs" />
     <Compile Include="DicomNetwork\Server\Models\IWorklistRequestHandler.cs" />
     <Compile Include="DicomNetwork\Server\Models\MppsHandler.cs" />
-    <Compile Include="DicomNetwork\Server\Models\WorklistItem.cs" />
     <Compile Include="DicomNetwork\Server\Models\WorklistItemsSource.cs" />
     <Compile Include="DicomNetwork\Server\WorklistServer.cs" />
     <Compile Include="DicomNetwork\Server\WorklistService.cs" />
@@ -134,6 +133,7 @@
     <Compile Include="Models\ServerStateItem.cs" />
     <Compile Include="Models\SimpleWorklistResult.cs" />
     <Compile Include="Models\UpdateDicomElementItem.cs" />
+    <Compile Include="Models\WorklistItem.cs" />
     <Compile Include="DicomNetwork\Server\CStoreSCP.cs" />
     <Compile Include="DicomNetwork\Server\CStoreServer.cs" />
     <Compile Include="DicomNetwork\Server\FilmBoxExtensions.cs" />
@@ -369,6 +369,8 @@
     <Resource Include="Icons\earth.png" />
     <Resource Include="Icons\exit.png" />
     <Resource Include="Icons\failed.png" />
+    <Resource Include="Icons\failed1.png" />
+    <Resource Include="Icons\in-progress.png" />
     <Resource Include="Icons\item-white.png" />
     <Resource Include="Icons\item.png" />
     <Resource Include="Icons\okay.png" />

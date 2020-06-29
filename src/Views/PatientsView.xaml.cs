@@ -14,7 +14,7 @@ namespace SimpleDICOMToolkit.Views
 
         private void ItemMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            (DataContext as ViewModels.PatientsViewModel).ViewDetails((sender as ListViewItem).DataContext as Server.WorklistItem);
+            (DataContext as ViewModels.PatientsViewModel).ViewDetails((sender as ListViewItem).DataContext as Models.WorklistItem);
         }
     }
 }

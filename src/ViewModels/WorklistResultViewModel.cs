@@ -57,6 +57,29 @@
             {}
         }
 
+        public async void DiscontinuedPerformance(SimpleWorklistResult item)
+        {
+            if (AffectedInstanceUID == null ||
+                StudyInstanceUID == null)
+            {
+                return;
+            }
+
+            var dataset = (_worklistSCU as WorklistSCU).GetWorklistItemByPID(item.PatientId);
+
+            var config = SimpleIoC.Get<WorklistViewModel>().ServerConfigViewModel;
+
+            int port = config.ParseServerPort();
+            if (port == 0) return;
+
+            try
+            {
+                await _worklistSCU.SendMppsDiscontinuedAsync(config.ServerIP, port, config.ServerAET, config.LocalAET, StudyInstanceUID, AffectedInstanceUID, dataset);
+            }
+            finally
+            {}
+        }
+
         public async void CompletePerformance(SimpleWorklistResult item)
         {
             if (AffectedInstanceUID == null ||

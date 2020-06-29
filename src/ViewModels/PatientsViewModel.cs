@@ -82,6 +82,7 @@
                 notificationService.ShowNotification(
                     string.Format(LanguageHelper.GetXmlStringByKey("ServerIsRunning"), "Worklist", SysUtil.LocalIPAddress, message.ServerPort), 
                     message.LocalAET);
+                WorklistServer.Default.IsListening();
             }
             else
             {

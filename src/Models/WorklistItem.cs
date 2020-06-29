@@ -1,12 +1,21 @@
-﻿using System;
+﻿using Stylet;
+using System;
 
-namespace SimpleDICOMToolkit.Server
+namespace SimpleDICOMToolkit.Models
 {
+    public enum MppsStatus
+    {
+        Waiting,
+        InProgress,
+        Completed,
+        Discontinued
+    }
+
     /// <summary>
     /// This class contains the most important values that are transmitted per worklist
     /// </summary>
     [Serializable]
-    public class WorklistItem
+    public class WorklistItem : PropertyChangedBase
     {
         public string AccessionNumber { get; set; }
 
@@ -41,5 +50,13 @@ namespace SimpleDICOMToolkit.Server
         public string HospitalName { get; set; }
 
         public string ScheduledAET { get; set; }
+
+        private MppsStatus _mppsStatus = MppsStatus.Waiting;
+
+        public MppsStatus MppsStatus
+        {
+            get => _mppsStatus;
+            set => SetAndNotify(ref _mppsStatus, value);
+        }
     }
 }

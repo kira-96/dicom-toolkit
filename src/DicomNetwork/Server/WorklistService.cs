@@ -23,33 +23,16 @@ namespace SimpleDICOMToolkit.Server
             DicomTransferSyntax.ImplicitVRLittleEndian
         };
 
-        private IMppsSource _mppsSource;
-        private IMppsSource MppsSource
-        {
-            get
-            {
-                if (_mppsSource == null)
-                {
-                    _mppsSource = new MppsHandler(WorklistServer.Default.ItemsSource, Logger);
-                }
-
-                return _mppsSource;
-            }
-        }
-
-
         public WorklistService(INetworkStream stream, Encoding fallbackEncoding, Logger log)
             : base(stream, fallbackEncoding, log)
         {
         }
-
 
         public DicomCEchoResponse OnCEchoRequest(DicomCEchoRequest request)
         {
             Logger.Info($"Received verification request from AE {Association.CallingAE} with IP: {Association.RemoteHost}");
             return new DicomCEchoResponse(request, DicomStatus.Success);
         }
-
 
         public IEnumerable<DicomCFindResponse> OnCFindRequest(DicomCFindRequest request)
         {
@@ -65,13 +48,11 @@ namespace SimpleDICOMToolkit.Server
             yield return new DicomCFindResponse(request, DicomStatus.Success);
         }
 
-
         public void OnConnectionClosed(Exception exception)
         {
             Logger.Info($"Worklist connection closed.");
             Clean();
         }
-
 
         public void OnReceiveAbort(DicomAbortSource source, DicomAbortReason reason)
         {
@@ -79,13 +60,11 @@ namespace SimpleDICOMToolkit.Server
             Logger.Error($"Received abort from {source}, reason is {reason}");
         }
 
-
         public Task OnReceiveAssociationReleaseRequestAsync()
         {
             Clean();
             return SendAssociationReleaseResponseAsync();
         }
-
 
         public Task OnReceiveAssociationRequestAsync(DicomAssociation association)
         {
@@ -118,12 +97,10 @@ namespace SimpleDICOMToolkit.Server
             return SendAssociationAcceptAsync(association);
         }
 
-
         public void Clean()
         {
             // cleanup, like cancel outstanding move- or get-jobs
         }
-
 
         public DicomNCreateResponse OnNCreateRequest(DicomNCreateRequest request)
         {
@@ -133,17 +110,16 @@ namespace SimpleDICOMToolkit.Server
             }
             // on N-Create the UID is stored in AffectedSopInstanceUID, in N-Set the UID is stored in RequestedSopInstanceUID
             var affectedSopInstanceUID = request.Command.GetSingleValue<string>(DicomTag.AffectedSOPInstanceUID);
-            Logger.Log(LogLevel.Info, $"reeiving N-Create with SOPUID {affectedSopInstanceUID}");
+            Logger.Log(LogLevel.Info, $"receiving N-Create with SOPUID {affectedSopInstanceUID}");
             // get the procedureStepIds from the request
             var procedureStepId = request.Dataset
                 .GetSequence(DicomTag.ScheduledStepAttributesSequence)
                 .First()
                 .GetSingleValue<string>(DicomTag.ScheduledProcedureStepID);
-            var ok = MppsSource.SetInProgress(affectedSopInstanceUID, procedureStepId);
+            var ok = WorklistServer.Default.MppsSource.SetInProgress(affectedSopInstanceUID, procedureStepId);
 
             return new DicomNCreateResponse(request, ok ? DicomStatus.Success : DicomStatus.ProcessingFailure);
         }
-
 
         public DicomNSetResponse OnNSetRequest(DicomNSetRequest request)
         {
@@ -175,7 +151,7 @@ namespace SimpleDICOMToolkit.Server
                         if (!string.IsNullOrEmpty(instanceUID)) listOfInstanceUIDs.Add(instanceUID);
                     }
                 }
-                var ok = MppsSource.SetCompleted(requestedSopInstanceUID, doseDescription, listOfInstanceUIDs);
+                var ok = WorklistServer.Default.MppsSource.SetCompleted(requestedSopInstanceUID, doseDescription, listOfInstanceUIDs);
 
                 return new DicomNSetResponse(request, ok ? DicomStatus.Success : DicomStatus.ProcessingFailure);
             }
@@ -183,7 +159,7 @@ namespace SimpleDICOMToolkit.Server
             {
                 // some vendors send a reason code or description with the mpps-discontinued message
                 // var reason = request.Dataset.Get(DicomTag.PerformedProcedureStepDiscontinuationReasonCodeSequence);
-                var ok = MppsSource.SetDiscontinued(requestedSopInstanceUID, string.Empty);
+                var ok = WorklistServer.Default.MppsSource.SetDiscontinued(requestedSopInstanceUID, string.Empty);
 
                 return new DicomNSetResponse(request, ok ? DicomStatus.Success : DicomStatus.ProcessingFailure);
             }
@@ -192,7 +168,6 @@ namespace SimpleDICOMToolkit.Server
                 return new DicomNSetResponse(request, DicomStatus.InvalidAttributeValue);
             }
         }
-
 
         #region not supported methods but that are required because of the interface
 

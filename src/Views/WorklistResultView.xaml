@@ -38,6 +38,19 @@
                     <Image Width="16" Height="16" Source="pack://application:,,,/Icons/success.png" />
                 </MenuItem.Icon>
             </MenuItem>
+            <MenuItem s:View.ActionTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext}"
+                      Command="{s:Action DiscontinuedPerformance, ActionNotFound=Disable}"
+                      CommandParameter="{Binding}">
+                <MenuItem.Header>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='Discontinued']" />
+                </MenuItem.Header>
+                <MenuItem.ToolTip>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='Discontinued']" />
+                </MenuItem.ToolTip>
+                <MenuItem.Icon>
+                    <Image Width="16" Height="16" Source="pack://application:,,,/Icons/failed1.png" />
+                </MenuItem.Icon>
+            </MenuItem>
         </ContextMenu>
         <Style x:Key="ListColumnHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
             <Setter Property="HorizontalAlignment" Value="Stretch" />

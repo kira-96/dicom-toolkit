@@ -14,7 +14,9 @@
   <string key="Success">成功</string>
   <string key="Failed">失败</string>
   <string key="Start">开始</string>
+  <string key="InProgress">进行中</string>
   <string key="Complete">完成</string>
+  <string key="Discontinued">终止</string>
   <string key="Details">查看详情</string>
   <string key="ServerIP">服务IP：</string>
   <string key="ServerPort">服务端口：</string>

@@ -14,7 +14,9 @@
   <string key="Success">Success</string>
   <string key="Failed">Failed</string>
   <string key="Start">Start</string>
+  <string key="InProgress">In Progress</string>
   <string key="Complete">Complete</string>
+  <string key="Discontinued">Discontinued</string>
   <string key="Details">Details</string>
   <string key="ServerIP">Server IP: </string>
   <string key="ServerPort">Server Port: </string>

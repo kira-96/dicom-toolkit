@@ -1,7 +1,8 @@
-﻿using System.Collections.ObjectModel;
-
-namespace SimpleDICOMToolkit.Server
+﻿namespace SimpleDICOMToolkit.Server
 {
+    using System.Collections.ObjectModel;
+    using Models;
+
     public interface IWorklistItemsSource
     {
         ObservableCollection<WorklistItem> WorklistItems { get; }

@@ -6,6 +6,7 @@
 using Dicom.Log;
 using System.Collections.Generic;
 using System.Linq;
+using SimpleDICOMToolkit.Models;
 
 namespace SimpleDICOMToolkit.Server
 {
@@ -14,7 +15,7 @@ namespace SimpleDICOMToolkit.Server
     /// </summary>
     public class MppsHandler : IMppsSource
     {
-        public Dictionary<string, WorklistItem> PendingProcedures { get; } = new Dictionary<string, WorklistItem>();
+        private readonly Dictionary<string, WorklistItem> PendingProcedures = new Dictionary<string, WorklistItem>();
 
         private readonly IWorklistItemsSource _itemsSource;
 
@@ -43,6 +44,7 @@ namespace SimpleDICOMToolkit.Server
             // remember the sopInstanceUID and store the worklistitem to which the sopInstanceUID belongs. 
             // You should do this more permanent like in database or in file
             PendingProcedures.Add(sopInstanceUID, workItem);
+            workItem.MppsStatus = MppsStatus.InProgress;
             return true;
         }
 
@@ -61,6 +63,7 @@ namespace SimpleDICOMToolkit.Server
 
             // since the procedure was stopped, we remove it from the list of pending procedures
             PendingProcedures.Remove(sopInstanceUID);
+            workItem.MppsStatus = MppsStatus.Discontinued;
             return true;
         }
 
@@ -83,6 +86,7 @@ namespace SimpleDICOMToolkit.Server
 
             // since the procedure was completed, we remove it from the list of pending procedures
             PendingProcedures.Remove(sopInstanceUID);
+            workItem.MppsStatus = MppsStatus.Completed;
             return true;
         }
     }

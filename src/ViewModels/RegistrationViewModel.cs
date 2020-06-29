@@ -3,8 +3,8 @@
     using Dicom;
     using Stylet;
     using System;
-    using Server;
     using System.Linq;
+    using Models;
 
     public class RegistrationViewModel : Screen
     {

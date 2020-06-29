@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:s="https://github.com/canton7/Stylet"
-             xmlns:local="clr-namespace:SimpleDICOMToolkit.Views"
+             xmlns:m="clr-namespace:SimpleDICOMToolkit.Models"
+             xmlns:v="clr-namespace:SimpleDICOMToolkit.Views"
              mc:Ignorable="d" 
              d:DesignWidth="360"
              d:DesignHeight="420">
@@ -105,16 +106,18 @@
         </Grid.RowDefinitions>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="8*" />
+                <ColumnDefinition Width="7*" />
                 <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="3*" />
-                <ColumnDefinition Width="9*" />
+                <ColumnDefinition Width="8*" />
+                <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="6" />
             </Grid.ColumnDefinitions>
             <Grid x:Name="Column1" Grid.Column="0" />
             <Grid x:Name="Column2" Grid.Column="1" />
             <Grid x:Name="Column3" Grid.Column="2" />
             <Grid x:Name="Column4" Grid.Column="3" />
+            <Grid x:Name="Column5" Grid.Column="4" />
         </Grid>
         <ListView BorderThickness="0"
                   ItemsSource="{Binding WorklistItems}"
@@ -146,6 +149,62 @@
                         <GridViewColumn.Header>
                             <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderPatientID']" />
                         </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn Width="{Binding ElementName=Column5, Path=ActualWidth}">
+                        <GridViewColumn.Header>
+                            <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderStatus']" />
+                        </GridViewColumn.Header>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate DataType="{x:Type m:WorklistItem}">
+                                <Image x:Name="StatusImage" Width="16" Height="16" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                <DataTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding MppsStatus}">
+                                        <DataTrigger.Value>
+                                            <m:MppsStatus>Waiting</m:MppsStatus>
+                                        </DataTrigger.Value>
+                                        <Setter TargetName="StatusImage" Property="Source" Value="pack://application:,,,/Icons/waiting.png" />
+                                        <Setter TargetName="StatusImage" Property="ToolTip">
+                                            <Setter.Value>
+                                                <Binding Source="{StaticResource Strings}" XPath="string[@key='Waiting']" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding MppsStatus}">
+                                        <DataTrigger.Value>
+                                            <m:MppsStatus>InProgress</m:MppsStatus>
+                                        </DataTrigger.Value>
+                                        <Setter TargetName="StatusImage" Property="Source" Value="pack://application:,,,/Icons/in-progress.png" />
+                                        <Setter TargetName="StatusImage" Property="ToolTip">
+                                            <Setter.Value>
+                                                <Binding Source="{StaticResource Strings}" XPath="string[@key='InProgress']" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding MppsStatus}">
+                                        <DataTrigger.Value>
+                                            <m:MppsStatus>Completed</m:MppsStatus>
+                                        </DataTrigger.Value>
+                                        <Setter TargetName="StatusImage" Property="Source" Value="pack://application:,,,/Icons/success.png" />
+                                        <Setter TargetName="StatusImage" Property="ToolTip">
+                                            <Setter.Value>
+                                                <Binding Source="{StaticResource Strings}" XPath="string[@key='Complete']" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding MppsStatus}">
+                                        <DataTrigger.Value>
+                                            <m:MppsStatus>Discontinued</m:MppsStatus>
+                                        </DataTrigger.Value>
+                                        <Setter TargetName="StatusImage" Property="Source" Value="pack://application:,,,/Icons/failed1.png" />
+                                        <Setter TargetName="StatusImage" Property="ToolTip">
+                                            <Setter.Value>
+                                                <Binding Source="{StaticResource Strings}" XPath="string[@key='Discontinued']" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                 </GridView>
             </ListView.View>

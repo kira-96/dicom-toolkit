@@ -196,8 +196,8 @@
                 { DicomTag.ProcedureCodeSequence, new DicomDataset() },
 
                 // dose and reports
-                //{ DicomTag.ImageAndFluoroscopyAreaDoseProduct, 0.0m }, // if there has bee sone dose while examination
-                //{ DicomTag.CommentsOnRadiationDose, string.Empty }, // a free text that contains all dose parameters
+                { DicomTag.ImageAndFluoroscopyAreaDoseProduct, 0.0m }, // if there has bee sone dose while examination
+                { DicomTag.CommentsOnRadiationDose, string.Empty }, // a free text that contains all dose parameters
 
                 { DicomTag.PerformedSeriesSequence, new DicomDataset() 
                 {
@@ -264,6 +264,72 @@
             DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
 
             await client.AddRequestAsync(dicomFinished);
+            await client.SendAsync();
+
+            return result;
+        }
+
+        public async Task<bool> SendMppsDiscontinuedAsync(string serverIp, int serverPort, string serverAET, string localAET, string studyInstanceUid, DicomUID affectedInstanceUid, DicomDataset worklistItem)
+        {
+            DicomSequence procedureStepSq = worklistItem.GetSequence(DicomTag.ScheduledProcedureStepSequence);
+            // A worklistitem may have a list of scheduledprocedureSteps.
+            // For each of them you have to send separate MPPS InProgress- and Completed-messages.
+            // there in this example we will only send for the first procedure step
+            DicomDataset procedureStep = procedureStepSq.First();
+
+            DicomDataset dataset = new DicomDataset()
+            {
+                { DicomTag.StudyInstanceUID, studyInstanceUid },
+                { DicomTag.PerformedProcedureStepEndDate, DateTime.Now },
+                { DicomTag.PerformedProcedureStepEndTime, DateTime.Now },
+                { DicomTag.PerformedProcedureStepStatus, DISCONTINUED },
+                { DicomTag.PerformedProcedureStepDescription, procedureStep.GetSingleValueOrDefault(DicomTag.ScheduledProcedureStepID, string.Empty) },
+                { DicomTag.PerformedProcedureTypeDescription, string.Empty },
+
+                { DicomTag.PerformedProtocolCodeSequence, new DicomDataset() },
+                { DicomTag.ProcedureCodeSequence, new DicomDataset() },
+
+                { DicomTag.PerformedSeriesSequence, new DicomDataset()
+                {
+                    { DicomTag.RetrieveAETitle, string.Empty }, // the aetitle of the archive where the images have been sent to
+                    { DicomTag.SeriesDescription, "serie 1" },
+                    { DicomTag.PerformingPhysicianName, string.Empty },
+                    { DicomTag.OperatorsName, string.Empty },
+                    { DicomTag.ProtocolName, "SCOUT" },
+                    { DicomTag.SeriesInstanceUID, DicomUID.Generate() },
+                    { DicomTag.ReferencedImageSequence, new DicomDataset()
+                    {
+                        { DicomTag.ReferencedSOPClassUID, DicomUID.SecondaryCaptureImageStorage },
+                        { DicomTag.ReferencedSOPInstanceUID, DicomUID.Generate() }
+                    }},
+                }}
+            };
+
+            bool result = false;
+
+            DicomNSetRequest dicomAbort = new DicomNSetRequest(DicomUID.ModalityPerformedProcedureStepSOPClass, affectedInstanceUid)
+            {
+                Dataset = dataset,
+                OnResponseReceived = (req, res) =>
+                {
+                    if (res != null)
+                    {
+                        if (res.Status == DicomStatus.Success)
+                        {
+                            result = true;
+                            _logger.Debug("Set MPPS Discontinued Success.");
+                        }
+                        else
+                        {
+                            _logger.Warn("Set MPPS Discontinued Failed. [{0}]", res.Status);
+                        }
+                    }
+                }
+            };
+
+            DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
+
+            await client.AddRequestAsync(dicomAbort);
             await client.SendAsync();
 
             return result;
