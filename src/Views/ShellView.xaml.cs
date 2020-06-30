@@ -52,6 +52,7 @@
             InitializeComponent();
             InitializeTrayIcon();
             LoadDefaultLanguage();
+            ApplyAccentColor();
             ApplyTheme();
         }
 
@@ -115,6 +116,7 @@
             }
             else if (msg == WM_DWMCOLORIZATIONCOLORCHANGED)
             {
+                ApplyAccentColor();
                 ApplyTheme();
             }
             else
@@ -165,23 +167,30 @@
 
         }
 
-        private void ApplyTheme()
+        private void ApplyAccentColor()
         {
             if (!IsWindowPrevalenceAccentColor())
             {
                 return;
             }
 
+            Color accentColor = GetAccentColor();
+            Color accentForeground = GetReverseForegroundColor(accentColor);
+            Resources["AccentColor"] = new SolidColorBrush(accentColor);
+            Resources["AccentForegroundColor"] = new SolidColorBrush(accentForeground);
+        }
+
+        private void ApplyTheme()
+        {
             if (IsActive)
             {
-                Color accentColor = GetAccentColor();
-                ContentGrid.Background = new SolidColorBrush(accentColor);
-                TabText.Foreground = new SolidColorBrush(GetReverseForegroundColor(accentColor));
+                ContentGrid.Background = (SolidColorBrush)Resources["AccentColor"];
+                TabText.Foreground = (SolidColorBrush)Resources["AccentForegroundColor"];
             }
             else
             {
-                ContentGrid.Background = new SolidColorBrush(Colors.White);
-                TabText.Foreground = new SolidColorBrush(Colors.Gray);
+                ContentGrid.Background = (SolidColorBrush)Resources["NonactiveBackgroundColor"];
+                TabText.Foreground = (SolidColorBrush)Resources["NonactiveForegroundColor"];
             }
         }
 
@@ -199,7 +208,7 @@
             notifyIcon.MouseClick += TrayIconMouseClick;
             notifyIcon.MouseDoubleClick += TrayIconMouseDoubleClick;
 
-            trayIconContextMenu = (ContextMenu)FindResource("TrayIconContextMenu");
+            trayIconContextMenu = (ContextMenu)Resources["TrayIconContextMenu"];
         }
 
         private void LoadDefaultLanguage()

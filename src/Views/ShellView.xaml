@@ -19,6 +19,11 @@
         Deactivated="Window_Deactivated">
 
     <Window.Resources>
+        <SolidColorBrush x:Key="AccentColor" Color="White" />
+        <SolidColorBrush x:Key="AccentForegroundColor" Color="Black" />
+        <SolidColorBrush x:Key="NonactiveBackgroundColor" Color="White" />
+        <SolidColorBrush x:Key="NonactiveForegroundColor" Color="Gray" />
+
         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource DefaultButtonStyle}" />
         <Style x:Key="ConductorTabControl" TargetType="TabControl">
             <Setter Property="Background" Value="White" />
