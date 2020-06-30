@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Config")]
-[assembly: AssemblyCopyright("Copyright © 2020 yzh。")]
+[assembly: AssemblyCopyright("Copyright © 2020 kira。保留所有权利。")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -52,6 +52,6 @@ using System.Windows;
 //通过使用 "*"，如下所示:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.9.6")]
-[assembly: AssemblyFileVersion("2020.6.29.0959")]
+[assembly: AssemblyFileVersion("1.0.9.6")]
 
 [assembly: AssemblyInformationalVersion("1.0.0")]

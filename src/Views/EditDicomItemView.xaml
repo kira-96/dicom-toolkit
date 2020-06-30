@@ -13,46 +13,7 @@
         Height="360">
 
     <Window.Resources>
-        <Style TargetType="{x:Type Button}">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="Padding" Value="12 2" />
-            <Setter Property="Margin" Value="2" />
-            <Setter Property="MinWidth" Value="64" />
-            <Setter Property="MinHeight" Value="24" />
-            <Setter Property="HorizontalContentAlignment" Value="Center" />
-            <Setter Property="VerticalContentAlignment" Value="Center" />
-            <Setter Property="SnapsToDevicePixels" Value="True" />
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border x:Name="ContentBorder"
-                                Background="DodgerBlue"
-                                BorderBrush="Transparent"
-                                BorderThickness="1"
-                                CornerRadius="2"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                Padding="{TemplateBinding Padding}">
-                            <ContentPresenter Content="{TemplateBinding Content}"
-                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ContentBorder" Property="BorderBrush" Value="LightGray" />
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="ContentBorder" Property="Background" Value="LightSkyBlue" />
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="ContentBorder" Property="Background" Value="LightGray" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BlueButtonStyle}" />
     </Window.Resources>
     
     <Grid>

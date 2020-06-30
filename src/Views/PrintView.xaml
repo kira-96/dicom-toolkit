@@ -10,45 +10,6 @@
              d:DesignWidth="600"
              d:DesignHeight="480">
 
-    <UserControl.Resources>
-        <Style x:Key="SettingsButtonStyle" TargetType="{x:Type Button}">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Padding" Value="1" />
-            <Setter Property="Margin" Value="2" />
-            <Setter Property="HorizontalAlignment" Value="Center" />
-            <Setter Property="HorizontalContentAlignment" Value="Center" />
-            <Setter Property="VerticalContentAlignment" Value="Center" />
-            <Setter Property="SnapsToDevicePixels" Value="True" />
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border x:Name="ContentBorder"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="Transparent"
-                                CornerRadius="2"
-                                BorderThickness="1"
-                                SnapsToDevicePixels="True"
-                                Padding="{TemplateBinding Padding}">
-                            <ContentPresenter Content="{TemplateBinding Content}" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ContentBorder" Property="BorderBrush" Value="LightGray" />
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="ContentBorder" Property="Background" Value="LightSkyBlue" />
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="ContentBorder" Property="Background" Value="LightGray" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </UserControl.Resources>
-    
     <Grid Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="232" />
@@ -81,7 +42,7 @@
                            Source="pack://application:,,,/Icons/print.png" />
                 </Button>
                 <Button Grid.Column="2"
-                        Style="{StaticResource SettingsButtonStyle}"
+                        Style="{StaticResource SettingButtonStyle}"
                         s:View.ActionTarget="{Binding}"
                         Command="{s:Action ShowOptions, ActionNotFound=Disable}">
                     <Button.ToolTip>

@@ -8,93 +8,6 @@
              mc:Ignorable="d" 
              d:DesignWidth="600"
              d:DesignHeight="480">
-    
-    <UserControl.Resources>
-        <Style x:Key="ServerToggleButtonStyle" TargetType="{x:Type ToggleButton}">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Padding" Value="25 1" />
-            <Setter Property="Margin" Value="2" />
-            <Setter Property="HorizontalAlignment" Value="Center" />
-            <Setter Property="HorizontalContentAlignment" Value="Center" />
-            <Setter Property="VerticalContentAlignment" Value="Center" />
-            <Setter Property="SnapsToDevicePixels" Value="True" />
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ToggleButton}">
-                        <Border x:Name="ContentBorder"
-                                Background="DeepSkyBlue"
-                                BorderBrush="Transparent"
-                                BorderThickness="1"
-                                CornerRadius="2"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                Padding="{TemplateBinding Padding}">
-                            <Grid>
-                                <Image x:Name="StartIcon" Width="20" Height="20" Stretch="Fill" Source="pack://application:,,,/Icons/Start.png" />
-                                <Image x:Name="StopIcon" Width="20" Height="20" Stretch="Fill" Source="pack://application:,,,/Icons/Stop.png" />
-                            </Grid>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ContentBorder" Property="BorderBrush" Value="LightGray" />
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="ContentBorder" Property="Background" Value="LightSkyBlue" />
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="ContentBorder" Property="Background" Value="LightGray" />
-                            </Trigger>
-                            <Trigger Property="IsChecked" Value="True">
-                                <Setter TargetName="StartIcon" Property="Visibility" Value="Hidden" />
-                                <Setter TargetName="StopIcon" Property="Visibility" Value="Visible" />
-                                <Setter TargetName="ContentBorder" Property="Background" Value="OrangeRed" />
-                            </Trigger>
-                            <Trigger Property="IsChecked" Value="False">
-                                <Setter TargetName="StartIcon" Property="Visibility" Value="Visible" />
-                                <Setter TargetName="StopIcon" Property="Visibility" Value="Hidden" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="SettingsButtonStyle" TargetType="{x:Type Button}">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Padding" Value="1" />
-            <Setter Property="Margin" Value="2" />
-            <Setter Property="HorizontalAlignment" Value="Center" />
-            <Setter Property="HorizontalContentAlignment" Value="Center" />
-            <Setter Property="VerticalContentAlignment" Value="Center" />
-            <Setter Property="SnapsToDevicePixels" Value="True" />
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border x:Name="ContentBorder"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="Transparent"
-                                CornerRadius="2"
-                                BorderThickness="1"
-                                SnapsToDevicePixels="True"
-                                Padding="{TemplateBinding Padding}">
-                            <ContentPresenter Content="{TemplateBinding Content}" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ContentBorder" Property="BorderBrush" Value="LightGray" />
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="ContentBorder" Property="Background" Value="LightSkyBlue" />
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="ContentBorder" Property="Background" Value="LightGray" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </UserControl.Resources>
 
     <Grid Background="White">
         <Grid.ColumnDefinitions>
@@ -111,7 +24,7 @@
                     Command="{s:Action DoRequest, ActionNotFound=Disable}" />
                 <Button HorizontalAlignment="Right"
                         VerticalAlignment="Center"
-                        Style="{StaticResource SettingsButtonStyle}"
+                        Style="{StaticResource SettingButtonStyle}"
                         s:View.ActionTarget="{Binding}"
                         Command="{s:Action ShowOptions, ActionNotFound=Disable}">
                     <Button.ToolTip>

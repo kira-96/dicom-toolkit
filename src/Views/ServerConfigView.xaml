@@ -3,11 +3,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:s="https://github.com/canton7/Stylet"
              mc:Ignorable="d" 
              d:DesignWidth="240"
              d:DesignHeight="420">
 
+    <UserControl.Resources>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Width" Value="120" />
+        </Style>
+    </UserControl.Resources>
+    
     <Grid>
         <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
             <Grid.RowDefinitions>
@@ -22,36 +32,36 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Row="0" Margin="2" VerticalAlignment="Center">
+            <TextBlock Grid.Row="0">
                 <TextBlock.Text>
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='ServerIP']" />
                 </TextBlock.Text>
             </TextBlock>
-            <TextBlock Grid.Row="1" Margin="2" VerticalAlignment="Center">
+            <TextBlock Grid.Row="1">
                 <TextBlock.Text>
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='ServerPort']" />
                 </TextBlock.Text>
             </TextBlock>
-            <TextBlock Grid.Row="2" Margin="2" VerticalAlignment="Center">
+            <TextBlock Grid.Row="2">
                 <TextBlock.Text>
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='ServerAET']" />
                 </TextBlock.Text>
             </TextBlock>
-            <TextBlock Grid.Row="3" Margin="2" VerticalAlignment="Center">
+            <TextBlock Grid.Row="3">
                 <TextBlock.Text>
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='LocalAET']" />
                 </TextBlock.Text>
             </TextBlock>
-            <TextBlock Grid.Row="4" Margin="2" VerticalAlignment="Center">
+            <TextBlock Grid.Row="4">
                 <TextBlock.Text>
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='Modality']" />
                 </TextBlock.Text>
             </TextBlock>
-            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ServerIP, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsServerIPEnabled}" Width="120" Margin="2" />
-            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ServerPort, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsServerPortEnabled}" Width="120" Margin="2" />
-            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ServerAET, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsServerAETEnabled}" Width="120" Margin="2" />
-            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding LocalAET, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsLocalAETEnabled}" Width="120" Margin="2" />
-            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Modality, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsModalityEnabled}" Width="120" Margin="2" />
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ServerIP, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsServerIPEnabled}" />
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ServerPort, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsServerPortEnabled}" />
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ServerAET, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsServerAETEnabled}" />
+            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding LocalAET, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsLocalAETEnabled}" />
+            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Modality, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsModalityEnabled}" />
         </Grid>
     </Grid>
 </UserControl>

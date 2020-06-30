@@ -4,6 +4,8 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Controls/ProgressRing.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Themes/AduLoading.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Themes/ButtonStyle.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Themes/ColumnHeaderStyle.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Themes/NeteaseResizeGrip.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Themes/TooltipStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
