@@ -10,7 +10,8 @@
         ResizeMode="NoResize"
         ShowInTaskbar="False"
         Width="360"
-        Height="360">
+        Height="360"
+        KeyDown="{s:Action OnKeyDown}">
 
     <Window.Resources>
         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BlueButtonStyle}" />
@@ -69,7 +70,7 @@
             </Grid>
         </GroupBox>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button x:Name="OK" Click="OnOK">
+            <Button x:Name="OK" Command="{s:Action OnOK, ActionNotFound=Disable}">
                 <Button.Content>
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='OK']" />
                 </Button.Content>
@@ -77,7 +78,7 @@
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='OK']" />
                 </Button.ToolTip>
             </Button>
-            <Button x:Name="Cancel" Click="OnCancel">
+            <Button x:Name="Cancel" Command="{s:Action OnCancel, ActionNotFound=Disable}">
                 <Button.Content>
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='Cancel']" />
                 </Button.Content>

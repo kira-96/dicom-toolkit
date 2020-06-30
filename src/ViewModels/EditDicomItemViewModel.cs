@@ -148,5 +148,24 @@
                 _eventAggregator.Publish(new UpdateDicomElementItem(_currentDataset, DicomVR.Parse(CurrentVR), _currentTag, ElementValues.ToArray()));
             }
         }
+
+        public void OnKeyDown(System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Escape)
+            {
+                RequestClose();
+            }
+        }
+
+        public void OnOK()
+        {
+            NotifyUpdateDicomItemValues();
+            RequestClose(true);
+        }
+
+        public void OnCancel()
+        {
+            RequestClose(false);
+        }
     }
 }
