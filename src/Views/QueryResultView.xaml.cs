@@ -1,7 +1,6 @@
 ﻿namespace SimpleDICOMToolkit.Views
 {
     using System.Windows.Input;
-    using Models;
     using ViewModels;
 
     /// <summary>

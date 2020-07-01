@@ -1,11 +1,9 @@
-﻿using System.Windows.Controls;
-
-namespace SimpleDICOMToolkit.Views
+﻿namespace SimpleDICOMToolkit.Views
 {
     /// <summary>
     /// PrintPreviewView.xaml 的交互逻辑
     /// </summary>
-    public partial class PrintPreviewView : UserControl
+    public partial class PrintPreviewView
     {
         public PrintPreviewView()
         {

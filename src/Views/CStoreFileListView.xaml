@@ -69,6 +69,7 @@
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <Setter Property="ContextMenu" Value="{StaticResource CStoreItemContextMenu}" />
+                    <EventSetter Event="MouseDoubleClick" Handler="CStoreItemMouseDoubleClick" />
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.View>
