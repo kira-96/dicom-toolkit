@@ -19,15 +19,20 @@
         Deactivated="Window_Deactivated">
 
     <Window.Resources>
-        <SolidColorBrush x:Key="AccentColor" Color="White" />
-        <SolidColorBrush x:Key="AccentForegroundColor" Color="Black" />
-        <SolidColorBrush x:Key="NonactiveBackgroundColor" Color="White" />
-        <SolidColorBrush x:Key="NonactiveForegroundColor" Color="Gray" />
+        <SolidColorBrush x:Key="CommonBackground" Color="White" />
+        <SolidColorBrush x:Key="CommonForeground" Color="Black" />
+        <SolidColorBrush x:Key="HeaderBackground" Color="White" />
+        <SolidColorBrush x:Key="HeaderForeground" Color="Black" />
+        <SolidColorBrush x:Key="ButtonBackground" Color="White" />
+        <SolidColorBrush x:Key="ButtonForeground" Color="Black" />
 
-        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource DefaultButtonStyle}" />
+        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource DefaultButtonStyle}">
+            <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
+            <Setter Property="Foreground" Value="{DynamicResource ButtonForeground}" />
+        </Style>
         <Style x:Key="ConductorTabControl" TargetType="TabControl">
             <Setter Property="Background" Value="White" />
-            <Setter Property="BorderBrush" Value="DodgerBlue" />
+            <Setter Property="BorderBrush" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0,1,0,0" />
             <Setter Property="Padding" Value="1" />
             <Setter Property="ItemsSource" Value="{Binding Items}"/>
@@ -81,8 +86,9 @@
         </ContextMenu>
     </Window.Resources>
 
-    <Grid x:Name="ContentGrid">
+    <Grid x:Name="ContentGrid" Background="{DynamicResource CommonBackground}">
         <TextBlock x:Name="TabText" Text="{Binding ActiveItem.DisplayName}" 
+                   Foreground="{DynamicResource CommonForeground}"
                    HorizontalAlignment="Right" VerticalAlignment="Top" 
                    Margin="4" />
         <TabControl Style="{StaticResource ConductorTabControl}" />

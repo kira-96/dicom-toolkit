@@ -62,26 +62,26 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Rectangle Grid.Column="0" Fill="DodgerBlue" Margin="0 0 1 0" />
-        <Rectangle Grid.Column="1" Fill="DodgerBlue" Margin="0 0 1 0" />
-        <Rectangle Grid.Column="2" Fill="DodgerBlue" Margin="0 0 1 0" />
-        <Rectangle Grid.Column="3" Fill="DodgerBlue" Margin="0" />
-        <TextBlock Grid.Column="0" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Rectangle Grid.Column="0" Fill="{DynamicResource HeaderBackground}" Margin="0 0 1 0" />
+        <Rectangle Grid.Column="1" Fill="{DynamicResource HeaderBackground}" Margin="0 0 1 0" />
+        <Rectangle Grid.Column="2" Fill="{DynamicResource HeaderBackground}" Margin="0 0 1 0" />
+        <Rectangle Grid.Column="3" Fill="{DynamicResource HeaderBackground}" Margin="0" />
+        <TextBlock Grid.Column="0" Foreground="{DynamicResource HeaderForeground}" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock.Text>
                 <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderPatient']" />
             </TextBlock.Text>
         </TextBlock>
-        <TextBlock Grid.Column="1" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock Grid.Column="1" Foreground="{DynamicResource HeaderForeground}" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock.Text>
                 <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderStudy']" />
             </TextBlock.Text>
         </TextBlock>
-        <TextBlock Grid.Column="2" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock Grid.Column="2" Foreground="{DynamicResource HeaderForeground}" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock.Text>
                 <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderSeries']" />
             </TextBlock.Text>
         </TextBlock>
-        <TextBlock Grid.Column="3" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock Grid.Column="3" Foreground="{DynamicResource HeaderForeground}" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock.Text>
                 <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderImage']" />
             </TextBlock.Text>

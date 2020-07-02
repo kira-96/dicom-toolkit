@@ -6,8 +6,8 @@
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="Background" Value="DodgerBlue" />
-        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Background" Value="{DynamicResource HeaderBackground}" />
+        <Setter Property="Foreground" Value="{DynamicResource HeaderForeground}" />
         <Setter Property="Padding" Value="0,0,1,0" />
         <Setter Property="Height" Value="18" />
         <Setter Property="SnapsToDevicePixels" Value="True" />

@@ -25,20 +25,24 @@
                 <Button Grid.Column="0"
                         s:View.ActionTarget="{Binding ServerConfigViewModel}"
                         Command="{s:Action DoEcho, ActionNotFound=Disable}">
+                    <Button.Content>
+                        <Path Style="{StaticResource PathIconStyle}"
+                              Data="{StaticResource ConnectIcon}" />
+                    </Button.Content>
                     <Button.ToolTip>
                         <Binding Source="{StaticResource Strings}" XPath="string[@key='TestConnection']" />
                     </Button.ToolTip>
-                    <Image Width="20" Height="20" Stretch="Fill"
-                           Source="pack://application:,,,/Icons/connection.png" />
                 </Button>
                 <Button Grid.Column="1" 
                         s:View.ActionTarget="{Binding ServerConfigViewModel}"
                         Command="{s:Action DoRequest, ActionNotFound=Disable}">
+                    <Button.Content>
+                        <Path Style="{StaticResource PathIconStyle}"
+                              Data="{StaticResource QueryIcon}" />
+                    </Button.Content>
                     <Button.ToolTip>
                         <Binding Source="{StaticResource Strings}" XPath="string[@key='Query']" />
                     </Button.ToolTip>
-                    <Image Width="20" Height="20" Stretch="Fill"
-                           Source="pack://application:,,,/Icons/query.png" />
                 </Button>
                 <c:AduLoading SpeedRatio="1" Type="Apple" 
                               Foreground="#2a5caa" Margin="0,-24,0,0"

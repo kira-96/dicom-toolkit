@@ -22,7 +22,7 @@
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='Start']" />
                 </MenuItem.ToolTip>
                 <MenuItem.Icon>
-                    <Image Width="16" Height="16" Source="pack://application:,,,/Icons/start1.png" />
+                    <Image Width="16" Height="16" Source="pack://application:,,,/Icons/start.png" />
                 </MenuItem.Icon>
             </MenuItem>
             <MenuItem s:View.ActionTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext}"

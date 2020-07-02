@@ -26,20 +26,24 @@
                 <Button Grid.Column="0"
                         s:View.ActionTarget="{Binding ServerConfigViewModel}"
                         Command="{s:Action DoEcho, ActionNotFound=Disable}">
+                    <Button.Content>
+                        <Path Style="{StaticResource PathIconStyle}"
+                              Data="{StaticResource ConnectIcon}" />
+                    </Button.Content>
                     <Button.ToolTip>
                         <Binding Source="{StaticResource Strings}" XPath="string[@key='TestConnection']" />
                     </Button.ToolTip>
-                    <Image Width="20" Height="20" Stretch="Fill"
-                           Source="pack://application:,,,/Icons/connection.png" />
                 </Button>
                 <Button Grid.Column="1" 
                         s:View.ActionTarget="{Binding ServerConfigViewModel}"
                         Command="{s:Action DoRequest, ActionNotFound=Disable}">
+                    <Button.Content>
+                        <Path Style="{StaticResource PathIconStyle}"
+                              Data="{StaticResource PrintIcon}" />
+                    </Button.Content>
                     <Button.ToolTip>
                         <Binding Source="{StaticResource Strings}" XPath="string[@key='Print']" />
                     </Button.ToolTip>
-                    <Image Width="20" Height="20" Stretch="Fill"
-                           Source="pack://application:,,,/Icons/print.png" />
                 </Button>
                 <Button Grid.Column="2"
                         Style="{StaticResource SettingButtonStyle}"

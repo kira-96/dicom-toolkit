@@ -105,7 +105,6 @@
         /// <returns></returns>
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            // 这里只需要处理“关于”菜单按钮事件
             if (msg == WM_SYSCOMMAND)
             {
                 if (wParam.ToInt32() == IDM_ABOUT)
@@ -167,30 +166,48 @@
 
         }
 
+        private ResourceDictionary CommonResources
+        {
+            get
+            {
+                return System.Windows.Application.Current.Resources.MergedDictionaries[2].MergedDictionaries[1];
+            }
+        }
+
         private void ApplyAccentColor()
         {
-            if (!IsWindowPrevalenceAccentColor())
-            {
-                return;
-            }
-
             Color accentColor = GetAccentColor();
             Color accentForeground = GetReverseForegroundColor(accentColor);
-            Resources["AccentColor"] = new SolidColorBrush(accentColor);
-            Resources["AccentForegroundColor"] = new SolidColorBrush(accentForeground);
+            CommonResources["AccentColor"] = accentColor;
+            CommonResources["AccentForegroundColor"] = accentForeground;
         }
 
         private void ApplyTheme()
         {
             if (IsActive)
             {
-                ContentGrid.Background = (SolidColorBrush)Resources["AccentColor"];
-                TabText.Foreground = (SolidColorBrush)Resources["AccentForegroundColor"];
+                Resources["ButtonBackground"] = new SolidColorBrush((Color)CommonResources["AccentColor"]);
+                Resources["ButtonForeground"] = new SolidColorBrush((Color)CommonResources["AccentForegroundColor"]);
+                Resources["HeaderBackground"] = new SolidColorBrush((Color)CommonResources["AccentColor"]);
+                Resources["HeaderForeground"] = new SolidColorBrush((Color)CommonResources["AccentForegroundColor"]);
+
+                if (IsWindowPrevalenceAccentColor())
+                {
+                    Resources["CommonBackground"] = new SolidColorBrush((Color)CommonResources["AccentColor"]);
+                    Resources["CommonForeground"] = new SolidColorBrush((Color)CommonResources["AccentForegroundColor"]);
+                }
             }
             else
             {
-                ContentGrid.Background = (SolidColorBrush)Resources["NonactiveBackgroundColor"];
-                TabText.Foreground = (SolidColorBrush)Resources["NonactiveForegroundColor"];
+                Resources["ButtonBackground"] = new SolidColorBrush((Color)CommonResources["NonactiveButtonBackgroundColor"]);
+                Resources["HeaderBackground"] = new SolidColorBrush((Color)CommonResources["NonactiveBackgroundColor"]);
+                Resources["HeaderForeground"] = new SolidColorBrush((Color)CommonResources["NonactiveForegroundColor"]);
+
+                if (IsWindowPrevalenceAccentColor())
+                {
+                    Resources["CommonBackground"] = new SolidColorBrush((Color)CommonResources["NonactiveBackgroundColor"]);
+                    Resources["CommonForeground"] = new SolidColorBrush((Color)CommonResources["NonactiveForegroundColor"]);
+                }
             }
         }
 

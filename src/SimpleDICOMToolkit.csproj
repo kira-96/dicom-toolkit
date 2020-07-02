@@ -267,7 +267,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\Common.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Icons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -371,7 +379,6 @@
   <ItemGroup>
     <Resource Include="Icons\addfiles.png" />
     <Resource Include="Icons\clear.png" />
-    <Resource Include="Icons\connection.png" />
     <Resource Include="Icons\delete.png" />
     <Resource Include="Icons\details.png" />
     <Resource Include="Icons\earth.png" />
@@ -383,20 +390,14 @@
     <Resource Include="Icons\item.png" />
     <Resource Include="Icons\okay.png" />
     <Resource Include="Icons\open_folder.png" />
-    <Resource Include="Icons\openfile.png" />
     <Resource Include="Icons\package.png" />
     <Resource Include="Icons\preview.png" />
-    <Resource Include="Icons\print.png" />
-    <Resource Include="Icons\query.png" />
     <Resource Include="Icons\register.png" />
     <Resource Include="Icons\settings.png" />
     <Resource Include="Icons\start.png" />
-    <Resource Include="Icons\start1.png" />
-    <Resource Include="Icons\stop.png" />
     <Resource Include="Icons\success.png" />
     <Resource Include="Icons\tag-white.png" />
     <Resource Include="Icons\tag.png" />
-    <Resource Include="Icons\upload.png" />
     <Resource Include="Icons\waiting.png" />
     <Resource Include="Icons\window.png" />
   </ItemGroup>

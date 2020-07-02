@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Color x:Key="AccentColor">White</Color>
+    <Color x:Key="AccentForegroundColor">Black</Color>
+
+    <Color x:Key="NonactiveBackgroundColor">White</Color>
+    <Color x:Key="NonactiveForegroundColor">Gray</Color>
+
+    <Color x:Key="NonactiveButtonBackgroundColor">LightGray</Color>
+</ResourceDictionary>
