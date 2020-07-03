@@ -199,9 +199,10 @@
             }
             else
             {
-                Resources["ButtonBackground"] = new SolidColorBrush((Color)CommonResources["NonactiveButtonBackgroundColor"]);
-                Resources["HeaderBackground"] = new SolidColorBrush((Color)CommonResources["NonactiveBackgroundColor"]);
-                Resources["HeaderForeground"] = new SolidColorBrush((Color)CommonResources["NonactiveForegroundColor"]);
+                Resources["ButtonBackground"] = new SolidColorBrush((Color)CommonResources["NonactiveControlBackgroundColor"]);
+                Resources["ButtonForeground"] = new SolidColorBrush((Color)CommonResources["NonactiveControlForegroundColor"]);
+                Resources["HeaderBackground"] = new SolidColorBrush((Color)CommonResources["NonactiveControlBackgroundColor"]);
+                Resources["HeaderForeground"] = new SolidColorBrush((Color)CommonResources["NonactiveControlForegroundColor"]);
 
                 if (IsWindowPrevalenceAccentColor())
                 {

@@ -7,5 +7,6 @@
     <Color x:Key="NonactiveBackgroundColor">White</Color>
     <Color x:Key="NonactiveForegroundColor">Gray</Color>
 
-    <Color x:Key="NonactiveButtonBackgroundColor">LightGray</Color>
+    <Color x:Key="NonactiveControlBackgroundColor">LightGray</Color>
+    <Color x:Key="NonactiveControlForegroundColor">White</Color>
 </ResourceDictionary>
