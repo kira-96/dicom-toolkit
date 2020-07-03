@@ -290,7 +290,7 @@
             notifyIcon.Dispose();
         }
 
-        private void Window_Activated(object sender, EventArgs e)
+        private void Window_Activated(object s, EventArgs e)
         {
             ApplyTheme();
         }

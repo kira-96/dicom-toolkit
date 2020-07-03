@@ -11,10 +11,18 @@
         ShowInTaskbar="False"
         Width="360"
         Height="360"
-        KeyDown="{s:Action OnKeyDown}">
+        KeyDown="{s:Action OnKeyDown}"
+        Activated="Window_Activated"
+        Deactivated="Window_Deactivated">
 
     <Window.Resources>
-        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BlueButtonStyle}" />
+        <SolidColorBrush x:Key="ButtonBackground" Color="White" />
+        <SolidColorBrush x:Key="ButtonForeground" Color="Black" />
+
+        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BlueButtonStyle}">
+            <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
+            <Setter Property="Foreground" Value="{DynamicResource ButtonForeground}" />
+        </Style>
     </Window.Resources>
     
     <Grid>
