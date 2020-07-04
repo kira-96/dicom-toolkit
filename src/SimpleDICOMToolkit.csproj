@@ -57,6 +57,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Transactions" />
@@ -146,6 +147,8 @@
     <Compile Include="Services\IDialogServiceEx.cs" />
     <Compile Include="Services\INotificationService.cs" />
     <Compile Include="Services\NotificationService.cs" />
+    <Compile Include="Services\IWindowsIntegrationService.cs" />
+    <Compile Include="Services\WindowsIntegrationService.cs" />
     <Compile Include="Utils\BitmapCursor.cs" />
     <Compile Include="Utils\BitmapUtil.cs" />
     <Compile Include="Utils\LanguageHelper.cs" />

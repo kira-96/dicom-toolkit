@@ -27,14 +27,13 @@
         /// </summary>
         private const uint IDM_ABOUT = 1001;
 
-        [Inject]
-        private INotificationService notificationService;
+        private readonly ILoggerService logger;
 
-        [Inject(Key = "filelogger")]
-        private ILoggerService logger;
+        private readonly IDialogServiceEx dialogService;
 
-        [Inject]
-        private IDialogServiceEx dialogService;
+        private readonly INotificationService notificationService;
+
+        private readonly IWindowsIntegrationService windowsIntegrationService;
 
         private NotifyIcon notifyIcon;
 
@@ -47,9 +46,19 @@
             /* 添加语言 */
         };
 
-        public ShellView()
+        public ShellView(
+            IDialogServiceEx dialogService,
+            INotificationService notificationService,
+            IWindowsIntegrationService windowsIntegrationService,
+            [Inject(Key = "filelogger")] ILoggerService loggerService)
         {
             InitializeComponent();
+
+            this.dialogService = dialogService;
+            this.notificationService = notificationService;
+            this.windowsIntegrationService = windowsIntegrationService;
+            this.logger = loggerService;
+
             InitializeTrayIcon();
             LoadDefaultLanguage();
             ApplyAccentColor();
@@ -191,25 +200,31 @@
                 Resources["HeaderBackground"] = new SolidColorBrush((Color)CommonResources["AccentColor"]);
                 Resources["HeaderForeground"] = new SolidColorBrush((Color)CommonResources["AccentForegroundColor"]);
 
-                if (IsWindowPrevalenceAccentColor())
+                if (windowsIntegrationService.IsWindowPrevalenceAccentColor)
                 {
                     Resources["CommonBackground"] = new SolidColorBrush((Color)CommonResources["AccentColor"]);
                     Resources["CommonForeground"] = new SolidColorBrush((Color)CommonResources["AccentForegroundColor"]);
                 }
+                else
+                {
+                    Resources["CommonBackground"] = new SolidColorBrush(Colors.White);
+                    Resources["CommonForeground"] = new SolidColorBrush(Colors.Black);
+                }
             }
             else
             {
+                Resources["CommonBackground"] = new SolidColorBrush((Color)CommonResources["NonactiveBackgroundColor"]);
+                Resources["CommonForeground"] = new SolidColorBrush((Color)CommonResources["NonactiveForegroundColor"]);
                 Resources["ButtonBackground"] = new SolidColorBrush((Color)CommonResources["NonactiveControlBackgroundColor"]);
                 Resources["ButtonForeground"] = new SolidColorBrush((Color)CommonResources["NonactiveControlForegroundColor"]);
                 Resources["HeaderBackground"] = new SolidColorBrush((Color)CommonResources["NonactiveControlBackgroundColor"]);
                 Resources["HeaderForeground"] = new SolidColorBrush((Color)CommonResources["NonactiveControlForegroundColor"]);
-
-                if (IsWindowPrevalenceAccentColor())
-                {
-                    Resources["CommonBackground"] = new SolidColorBrush((Color)CommonResources["NonactiveBackgroundColor"]);
-                    Resources["CommonForeground"] = new SolidColorBrush((Color)CommonResources["NonactiveForegroundColor"]);
-                }
             }
+        }
+
+        private void WindowPrevalenceAccentColorChanged(object sender, EventArgs e)
+        {
+            System.Windows.Application.Current.Dispatcher.Invoke(() => ApplyTheme());
         }
 
         private void InitializeTrayIcon()
@@ -262,6 +277,8 @@
         {
             notifyIcon.Visible = true;
             notificationService.Initialize(notifyIcon);
+            windowsIntegrationService.StartMonitoringWindowPrevalenceAccentColor();
+            windowsIntegrationService.WindowPrevalenceAccentColorChanged += WindowPrevalenceAccentColorChanged;
         }
 
         private void Window_Closing(object s, System.ComponentModel.CancelEventArgs e)
@@ -285,6 +302,9 @@
 
         private void Window_Closed(object s, EventArgs e)
         {
+            windowsIntegrationService.WindowPrevalenceAccentColorChanged -= WindowPrevalenceAccentColorChanged;
+            windowsIntegrationService.StopMonitoringWindowPrevalenceAccentColor();
+
             notifyIcon.MouseClick -= TrayIconMouseClick;
             notifyIcon.MouseDoubleClick -= TrayIconMouseDoubleClick;
             notifyIcon.Dispose();
