@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SimpleDICOMToolkit.MQTT
 {
-    public class SimpleMqttService : ISimpleMqttService, IDisposable
+    public class SimpleMqttService : ISimpleMqttService
     {
         public int Port { get; private set; }
         private readonly Logger logger = LogManager.GetLogger("LoggerService");

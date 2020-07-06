@@ -132,6 +132,11 @@ namespace SimpleDICOMToolkit.MQTT
 
                     try
                     {
+                        if (CancellationTokenSource.IsCancellationRequested)
+                        {
+                            logger.Debug("### CancellationRequested ###");
+                            return;
+                        }
                         await client.ConnectAsync(options, CancellationTokenSource.Token);
                     }
                     catch
@@ -179,6 +184,16 @@ namespace SimpleDICOMToolkit.MQTT
                 {
                     executeAction.ExecuteWithObject(payload);
                 }
+            }
+        }
+
+        public void Dispose()
+        {
+            CancellationTokenSource.Cancel();
+            if (client.IsConnected)
+            {
+                client.DisconnectAsync();
+                client.Dispose();
             }
         }
     }

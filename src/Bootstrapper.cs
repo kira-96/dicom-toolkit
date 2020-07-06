@@ -7,6 +7,7 @@
     using System.Threading;
     using IoCModules;
     using Logging;
+    using MQTT;
     using Utils;
     using ViewModels;
 
@@ -68,6 +69,14 @@
             SimpleIoC.GetInstance = this.Container.Get;
             SimpleIoC.GetAllInstances = this.Container.GetAll;
             SimpleIoC.BuildUp = this.Container.BuildUp;
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            base.OnExit(e);
+
+            Container.Get<IMessenger>().Dispose();
+            Container.Get<ISimpleMqttService>().Dispose();
         }
 
         protected override void OnUnhandledException(DispatcherUnhandledExceptionEventArgs e)

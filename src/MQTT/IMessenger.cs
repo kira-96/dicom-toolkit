@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace SimpleDICOMToolkit.MQTT
 {
-    public interface IMessenger
+    public interface IMessenger : IDisposable
     {
         Task PublishAsync(string topic, string payload, CancellationToken token);
 

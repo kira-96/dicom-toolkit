@@ -1,8 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace SimpleDICOMToolkit.MQTT
 {
-    public interface ISimpleMqttService
+    public interface ISimpleMqttService : IDisposable
     {
         int Port { get; }
 
