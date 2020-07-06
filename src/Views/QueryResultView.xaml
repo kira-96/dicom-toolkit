@@ -86,10 +86,10 @@
                 <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderImage']" />
             </TextBlock.Text>
         </TextBlock>
-        <ListView x:Name="PatientList" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding QueryResult}" SelectedItem="{Binding SelectedPatient}" />
-        <ListView x:Name="StudyList" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding SelectedPatient.Children}" SelectedItem="{Binding SelectedStudy}" />
-        <ListView x:Name="SeriesList" Grid.Row="1" Grid.Column="2" ItemsSource="{Binding SelectedStudy.Children}" SelectedItem="{Binding SelectedSeries}" />
-        <ListView x:Name="ImagesList" Grid.Row="1" Grid.Column="3" ItemsSource="{Binding SelectedSeries.Children}" SelectedItem="{Binding SelectedImage}">
+        <ListView x:Name="PatientList" Grid.Row="1" Grid.Column="0" IsEnabled="{Binding CanSelectItem}" ItemsSource="{Binding QueryResult}" SelectedItem="{Binding SelectedPatient}" />
+        <ListView x:Name="StudyList" Grid.Row="1" Grid.Column="1" IsEnabled="{Binding CanSelectItem}" ItemsSource="{Binding SelectedPatient.Children}" SelectedItem="{Binding SelectedStudy}" />
+        <ListView x:Name="SeriesList" Grid.Row="1" Grid.Column="2" IsEnabled="{Binding CanSelectItem}" ItemsSource="{Binding SelectedStudy.Children}" SelectedItem="{Binding SelectedSeries}" />
+        <ListView x:Name="ImagesList" Grid.Row="1" Grid.Column="3" IsEnabled="{Binding CanSelectItem}" ItemsSource="{Binding SelectedSeries.Children}" SelectedItem="{Binding SelectedImage}">
             <ListView.Style>
                 <Style TargetType="{x:Type ListView}">
                     <Setter Property="BorderThickness" Value="0" />

@@ -82,8 +82,16 @@
         public bool IsBusy
         {
             get => _isBusy;
-            private set => SetAndNotify(ref _isBusy, value);
+            private set
+            {
+                if (SetAndNotify(ref _isBusy, value))
+                {
+                    NotifyOfPropertyChange(() => CanSelectItem);
+                }
+            }
         }
+
+        public bool CanSelectItem => !IsBusy;
 
         public QueryResultViewModel(IEventAggregator eventAggregator)
         {
