@@ -179,7 +179,7 @@
 
         private void ApplyAccentColor()
         {
-            Color accentColor = GetAccentColor();
+            Color accentColor = IsWindows10 ? GetAccentColor() : Color.FromRgb(0x00, 0x78, 0xd7);
             Color accentForeground = GetReverseForegroundColor(accentColor);
             CommonResources["AccentColor"] = accentColor;
             CommonResources["AccentForegroundColor"] = accentForeground;
