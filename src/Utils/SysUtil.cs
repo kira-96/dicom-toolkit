@@ -126,6 +126,7 @@ namespace SimpleDICOMToolkit.Utils
         /// </summary>
         /// <param name="background">背景颜色</param>
         /// <returns>前景颜色(白/黑)</returns>
+        [Obsolete("Use GetReverseForegroundColor instead.")]
         public static Color GetForegroundColor(Color background)
         {
             return (background.R * 2 + background.G * 5 + background.B) <= 1024 /* 8 * 128 */

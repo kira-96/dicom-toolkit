@@ -34,8 +34,9 @@
         {
             List<DicomDataset> worklistItems = new List<DicomDataset>();
 
-            DicomCFindRequest worklistRequest = RequestFactory.CreateWorklistQuery(null, null, localAET, null, modality,
-                new DicomDateRange(DateTime.Today, DateTime.Today.AddHours(23).AddMinutes(59).AddSeconds(59)));  // 时间限制：当天 00:00:00 ~ 23:59:59
+            DicomCFindRequest worklistRequest = RequestFactory.CreateWorklistQuery(null, null, localAET, null, modality
+                //, new DicomDateRange(DateTime.Today, DateTime.Today.AddHours(23).AddMinutes(59).AddSeconds(59))  // 时间限制：当天 00:00:00 ~ 23:59:59
+                );
 
             worklistRequest.OnResponseReceived += (request, response) => 
             {
@@ -335,16 +336,16 @@
             return result;
         }
 
-        public DicomDataset GetWorklistItemByPID(string pid)
+        public DicomDataset GetWorklistItemByStudyUid(string sid)
         {
-            if (string.IsNullOrEmpty(pid))
+            if (string.IsNullOrEmpty(sid))
                 return null;
 
             foreach (DicomDataset item in worklistItems)
             {
-                string patId = item.GetSingleValueOrDefault(DicomTag.PatientID, "");
+                string stuId = item.GetSingleValueOrDefault(DicomTag.StudyInstanceUID, string.Empty);
 
-                if (patId == pid)
+                if (stuId == sid)
                 {
                     return item;
                 }

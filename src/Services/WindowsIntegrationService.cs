@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Management;
 using System.Security.Principal;
-using Microsoft.Win32;
 using SimpleDICOMToolkit.Logging;
+using SimpleDICOMToolkit.Utils;
 
 namespace SimpleDICOMToolkit.Services
 {
@@ -14,22 +13,11 @@ namespace SimpleDICOMToolkit.Services
         private ManagementEventWatcher systemUsesLightThemeWatcher;
         private ManagementEventWatcher windowPrevalenceAccentColorWatcher;
 
-        public bool IsSystemUsingLightTheme
+        public bool IsSystemUsesLightTheme
         {
             get
             {
-                int registrySystemUsesLightTheme = 0;
-
-                try
-                {
-                    registrySystemUsesLightTheme = (int)Registry.GetValue("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", "SystemUsesLightTheme", 0);
-                }
-                catch (Exception ex)
-                {
-                    Logger.Error("Could not get system uses light theme from registry. Exception: {0}", ex.Message);
-                }
-
-                return registrySystemUsesLightTheme == 1;
+                return SysUtil.SystemUsesLightTheme();
             }
         }
 
@@ -37,17 +25,7 @@ namespace SimpleDICOMToolkit.Services
         {
             get
             {
-                using (RegistryKey dwm = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\DWM", false))
-                {
-                    if (dwm.GetValueNames().Contains("ColorPrevalence"))
-                    {
-                        int colorPrevalence = (int)dwm.GetValue("ColorPrevalence");
-
-                        return colorPrevalence == 1;
-                    }
-                }
-
-                return false;
+                return SysUtil.IsWindowPrevalenceAccentColor();
             }
         }
 

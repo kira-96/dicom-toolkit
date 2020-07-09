@@ -36,7 +36,12 @@
 
         public async void StartPerformance(SimpleWorklistResult item)
         {
-            var dataset = (_worklistSCU as WorklistSCU).GetWorklistItemByPID(item.PatientId);
+            var dataset = (_worklistSCU as WorklistSCU).GetWorklistItemByStudyUid(item.StudyUID);
+
+            if (dataset == null)
+            {
+                return;
+            }
 
             var config = SimpleIoC.Get<WorklistViewModel>().ServerConfigViewModel;
 
@@ -66,7 +71,12 @@
                 return;
             }
 
-            var dataset = (_worklistSCU as WorklistSCU).GetWorklistItemByPID(item.PatientId);
+            var dataset = (_worklistSCU as WorklistSCU).GetWorklistItemByStudyUid(item.StudyUID);
+
+            if (dataset == null)
+            {
+                return;
+            }
 
             var config = SimpleIoC.Get<WorklistViewModel>().ServerConfigViewModel;
 
@@ -91,7 +101,12 @@
                 return;
             }
 
-            var dataset = (_worklistSCU as WorklistSCU).GetWorklistItemByPID(item.PatientId);
+            var dataset = (_worklistSCU as WorklistSCU).GetWorklistItemByStudyUid(item.StudyUID);
+
+            if (dataset == null)
+            {
+                return;
+            }
 
             var config = SimpleIoC.Get<WorklistViewModel>().ServerConfigViewModel;
 

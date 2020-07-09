@@ -79,9 +79,7 @@
         }
 
         /// <summary>
-        /// 注意，移除系统菜单后，相应功能也会被禁用
-        /// 由于本窗口没有调整大小功能，可以只保留“移动”和“关闭”
-        /// 并添加“关于”
+        /// 添加“关于”
         /// </summary>
         private void ModifySystemMenu(IntPtr hWnd)
         {
@@ -95,10 +93,6 @@
              * 最大化
              * 关闭
              */
-            //RemoveMenu(hMenu, 0, MF_DISABLED | MF_BYPOSITION);
-            //RemoveMenu(hMenu, 1, MF_DISABLED | MF_BYPOSITION);
-            //RemoveMenu(hMenu, 1, MF_DISABLED | MF_BYPOSITION);
-            //RemoveMenu(hMenu, 1, MF_DISABLED | MF_BYPOSITION);
             InsertMenu(hMenu, 1, MF_SEPARATOR, 0, null);  // 添加分割线
             InsertMenu(hMenu, 8, MF_BYPOSITION, IDM_ABOUT, GetXmlStringByKey("MenuAbout"));
         }

@@ -4,7 +4,7 @@ namespace SimpleDICOMToolkit.Services
 {
     public interface IWindowsIntegrationService
     {
-        bool IsSystemUsingLightTheme { get; }
+        bool IsSystemUsesLightTheme { get; }
         bool IsWindowPrevalenceAccentColor { get; }
 
         event EventHandler SystemUsesLightThemeChanged;
