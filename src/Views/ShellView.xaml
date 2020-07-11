@@ -8,9 +8,9 @@
         mc:Ignorable="d"
         Title="{Binding DisplayName}"
         ResizeMode="CanResizeWithGrip"
-        MinWidth="648"
+        MinWidth="640"
         MinHeight="400"
-        Width="648"
+        Width="640"
         Height="480"
         Loaded="Window_Loaded"
         Closing="Window_Closing"
@@ -20,20 +20,95 @@
 
     <Window.Resources>
         <SolidColorBrush x:Key="CommonBackground" Color="White" />
-        <SolidColorBrush x:Key="CommonForeground" Color="Black" />
         <SolidColorBrush x:Key="HeaderBackground" Color="White" />
         <SolidColorBrush x:Key="HeaderForeground" Color="Black" />
         <SolidColorBrush x:Key="ButtonBackground" Color="White" />
         <SolidColorBrush x:Key="ButtonForeground" Color="Black" />
+        <SolidColorBrush x:Key="TabItemBackground" Color="White" />
+        <SolidColorBrush x:Key="TabItemForeground" Color="Black" />
+        <SolidColorBrush x:Key="SelectedTabItemBackground" Color="White" />
+        <SolidColorBrush x:Key="SelectedTabItemForeground" Color="Black" />
+        <SolidColorBrush x:Key="IndicatorColor" Color="White" />
 
         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource DefaultButtonStyle}">
             <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
             <Setter Property="Foreground" Value="{DynamicResource ButtonForeground}" />
         </Style>
+        
+        <Style TargetType="{x:Type TabItem}">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="Background" Value="{DynamicResource TabItemBackground}" />
+            <Setter Property="Foreground" Value="{DynamicResource TabItemForeground}" />
+            <Setter Property="Padding" Value="2" />
+            <Setter Property="Margin" Value="0,0,0,0" />
+            <Setter Property="BorderThickness" Value="0,0,1,0" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="UseLayoutRounding" Value="True" />
+            <Setter Property="UseLayoutRounding" Value="True" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Border x:Name="ContainerBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}"
+                                Margin="{TemplateBinding Margin}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                UseLayoutRounding="{TemplateBinding UseLayoutRounding}">
+                            <Grid>
+                                <Rectangle x:Name="ContentBackground" Fill="White" Margin="-2" Opacity="0" />
+                                <Rectangle x:Name="MouseIndicator" Fill="Transparent" Margin="-2" VerticalAlignment="Bottom" Height="2" />
+                                <ContentPresenter 
+                                    x:Name="ContentPresenter"
+                                    Margin="{TemplateBinding Padding}"
+                                    HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                    VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                    ContentSource="Header"
+                                    Focusable="False"
+                                    RecognizesAccessKey="True" />
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter TargetName="MouseIndicator" Property="Fill" Value="{DynamicResource IndicatorColor}" />
+                                <Setter TargetName="ContentBackground" Property="Opacity" Value="0.1" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true" />
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Panel.ZIndex" Value="1" />
+                                <Setter Property="Foreground" Value="{DynamicResource SelectedTabItemForeground}" />
+                                <Setter Property="Background" Value="{DynamicResource SelectedTabItemBackground}" />
+                                <Setter TargetName="MouseIndicator" Property="Fill" Value="{DynamicResource IndicatorColor}" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="False" />
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter TargetName="ContentPresenter" Property="Opacity" Value="0.56" />
+                            </MultiDataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
         <Style x:Key="ConductorTabControl" TargetType="TabControl">
             <Setter Property="Background" Value="White" />
             <Setter Property="BorderBrush" Value="Transparent" />
-            <Setter Property="BorderThickness" Value="0,1,0,0" />
+            <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Padding" Value="1" />
             <Setter Property="ItemsSource" Value="{Binding Items}"/>
             <Setter Property="SelectedItem" Value="{Binding ActiveItem}"/>
@@ -87,25 +162,6 @@
     </Window.Resources>
 
     <Grid x:Name="ContentGrid" Background="{DynamicResource CommonBackground}">
-        <TextBlock x:Name="TabText" Text="{Binding ActiveItem.DisplayName}" 
-                   Foreground="{DynamicResource CommonForeground}"
-                   HorizontalAlignment="Right" VerticalAlignment="Top" 
-                   Margin="4" />
         <TabControl Style="{StaticResource ConductorTabControl}" />
-        <!--
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <ListView Grid.Column="0"
-                  ItemsSource="{Binding Items}" 
-                  SelectedItem="{Binding ActiveItem}"
-                  DisplayMemberPath="DisplayName" />
-        <ContentControl Grid.Column="1" 
-                        s:View.Model="{Binding ActiveItem}"
-                        Content="{Binding ActiveItem}"
-                        HorizontalContentAlignment="Stretch"
-                        VerticalContentAlignment="Stretch" />
-        -->
     </Grid>
 </Window>

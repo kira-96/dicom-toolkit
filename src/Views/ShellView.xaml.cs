@@ -181,6 +181,13 @@
             }
         }
 
+        /// <summary>
+        /// 设置当前窗口控件的颜色
+        /// 由于需要兼容到窗口 激活/非激活
+        /// 以及是否应用AccentColor到窗体的选项
+        /// 所以比较复杂
+        /// * 仅对当前窗体生效
+        /// </summary>
         private void ApplyTheme()
         {
             if (IsActive)
@@ -193,22 +200,34 @@
                 if (appearanceService.IsWindowPrevalenceAccentColor)
                 {
                     Resources["CommonBackground"] = new SolidColorBrush((Color)ApplicationResources["AccentColor"]);
-                    Resources["CommonForeground"] = new SolidColorBrush((Color)ApplicationResources["AccentForegroundColor"]);
+                    Resources["TabItemBackground"] = new SolidColorBrush((Color)ApplicationResources["AccentColor"]);
+                    Resources["TabItemForeground"] = new SolidColorBrush((Color)ApplicationResources["AccentForegroundColor"]);
+                    Resources["SelectedTabItemBackground"] = new SolidColorBrush((Color)ApplicationResources["AccentForegroundColor"]);
+                    Resources["SelectedTabItemForeground"] = new SolidColorBrush((Color)ApplicationResources["AccentColor"]);
+                    Resources["IndicatorColor"] = new SolidColorBrush(Colors.White);
                 }
                 else
                 {
-                    Resources["CommonBackground"] = new SolidColorBrush(Colors.White);
-                    Resources["CommonForeground"] = new SolidColorBrush(Colors.Black);
+                    Resources["CommonBackground"] = new SolidColorBrush((Color)CommonResources["CommonBackgroundColor"]);
+                    Resources["TabItemBackground"] = new SolidColorBrush((Color)CommonResources["CommonBackgroundColor"]);
+                    Resources["TabItemForeground"] = new SolidColorBrush((Color)CommonResources["CommonForegroundColor"]);
+                    Resources["SelectedTabItemBackground"] = new SolidColorBrush((Color)CommonResources["CommonBackgroundColor"]);
+                    Resources["SelectedTabItemForeground"] = new SolidColorBrush((Color)ApplicationResources["AccentColor"]);
+                    Resources["IndicatorColor"] = new SolidColorBrush((Color)ApplicationResources["AccentColor"]);
                 }
             }
             else
             {
                 Resources["CommonBackground"] = new SolidColorBrush((Color)CommonResources["NonactiveBackgroundColor"]);
-                Resources["CommonForeground"] = new SolidColorBrush((Color)CommonResources["NonactiveForegroundColor"]);
                 Resources["ButtonBackground"] = new SolidColorBrush((Color)CommonResources["NonactiveControlBackgroundColor"]);
                 Resources["ButtonForeground"] = new SolidColorBrush((Color)CommonResources["NonactiveControlForegroundColor"]);
                 Resources["HeaderBackground"] = new SolidColorBrush((Color)CommonResources["NonactiveControlBackgroundColor"]);
                 Resources["HeaderForeground"] = new SolidColorBrush((Color)CommonResources["NonactiveControlForegroundColor"]);
+                Resources["TabItemBackground"] = new SolidColorBrush((Color)CommonResources["NonactiveBackgroundColor"]);
+                Resources["TabItemForeground"] = new SolidColorBrush((Color)CommonResources["NonactiveForegroundColor"]);
+                Resources["SelectedTabItemBackground"] = new SolidColorBrush((Color)CommonResources["NonactiveBackgroundColor"]);
+                Resources["SelectedTabItemForeground"] = new SolidColorBrush((Color)ApplicationResources["AccentColor"]);
+                Resources["IndicatorColor"] = new SolidColorBrush((Color)ApplicationResources["AccentColor"]);
             }
         }
 
