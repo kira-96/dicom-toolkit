@@ -15,7 +15,6 @@
     using Services;
     using static Utils.LanguageHelper;
     using static Utils.WindowsAPI;
-    using static Utils.SysUtil;
 
     /// <summary>
     /// ShellView.xaml 的交互逻辑
@@ -33,7 +32,7 @@
 
         private readonly INotificationService notificationService;
 
-        private readonly IWindowsIntegrationService windowsIntegrationService;
+        private readonly IAppearanceService appearanceService;
 
         private NotifyIcon notifyIcon;
 
@@ -49,19 +48,19 @@
         public ShellView(
             IDialogServiceEx dialogService,
             INotificationService notificationService,
-            IWindowsIntegrationService windowsIntegrationService,
+            IAppearanceService appearanceService,
             [Inject(Key = "filelogger")] ILoggerService loggerService)
         {
             InitializeComponent();
 
             this.dialogService = dialogService;
             this.notificationService = notificationService;
-            this.windowsIntegrationService = windowsIntegrationService;
+            this.appearanceService = appearanceService;
             this.logger = loggerService;
 
             InitializeTrayIcon();
             LoadDefaultLanguage();
-            ApplyAccentColor();
+            appearanceService.ApplyAccentColor();
             ApplyTheme();
         }
 
@@ -76,6 +75,8 @@
 
             // 添加窗口消息钩子
             HwndSource.FromHwnd(hWnd).AddHook(new HwndSourceHook(WndProc));
+            appearanceService.WatchWindowsColor(this);
+            appearanceService.AccentColorChanged += OnAccentColorChanged;
         }
 
         /// <summary>
@@ -115,11 +116,6 @@
                     handled = true;
                     ShowAbout();
                 }
-            }
-            else if (msg == WM_DWMCOLORIZATIONCOLORCHANGED)
-            {
-                ApplyAccentColor();
-                ApplyTheme();
             }
             else
             {
@@ -177,27 +173,27 @@
             }
         }
 
-        private void ApplyAccentColor()
+        private ResourceDictionary ApplicationResources
         {
-            Color accentColor = IsWindows10 ? GetAccentColor() : Color.FromRgb(0x00, 0x78, 0xd7);
-            Color accentForeground = GetReverseForegroundColor(accentColor);
-            CommonResources["AccentColor"] = accentColor;
-            CommonResources["AccentForegroundColor"] = accentForeground;
+            get
+            {
+                return System.Windows.Application.Current.Resources;
+            }
         }
 
         private void ApplyTheme()
         {
             if (IsActive)
             {
-                Resources["ButtonBackground"] = new SolidColorBrush((Color)CommonResources["AccentColor"]);
-                Resources["ButtonForeground"] = new SolidColorBrush((Color)CommonResources["AccentForegroundColor"]);
-                Resources["HeaderBackground"] = new SolidColorBrush((Color)CommonResources["AccentColor"]);
-                Resources["HeaderForeground"] = new SolidColorBrush((Color)CommonResources["AccentForegroundColor"]);
+                Resources["ButtonBackground"] = new SolidColorBrush((Color)ApplicationResources["AccentColor"]);
+                Resources["ButtonForeground"] = new SolidColorBrush((Color)ApplicationResources["AccentForegroundColor"]);
+                Resources["HeaderBackground"] = new SolidColorBrush((Color)ApplicationResources["AccentColor"]);
+                Resources["HeaderForeground"] = new SolidColorBrush((Color)ApplicationResources["AccentForegroundColor"]);
 
-                if (windowsIntegrationService.IsWindowPrevalenceAccentColor)
+                if (appearanceService.IsWindowPrevalenceAccentColor)
                 {
-                    Resources["CommonBackground"] = new SolidColorBrush((Color)CommonResources["AccentColor"]);
-                    Resources["CommonForeground"] = new SolidColorBrush((Color)CommonResources["AccentForegroundColor"]);
+                    Resources["CommonBackground"] = new SolidColorBrush((Color)ApplicationResources["AccentColor"]);
+                    Resources["CommonForeground"] = new SolidColorBrush((Color)ApplicationResources["AccentForegroundColor"]);
                 }
                 else
                 {
@@ -216,7 +212,16 @@
             }
         }
 
-        private void WindowPrevalenceAccentColorChanged(object sender, EventArgs e)
+        private void OnAccentColorChanged(object sender, EventArgs e)
+        {
+            System.Windows.Application.Current.Dispatcher.Invoke(() =>
+            {
+                appearanceService.ApplyAccentColor();
+                ApplyTheme();
+            });
+        }
+
+        private void WindowPrevalenceAccentColorChanged(object s, EventArgs e)
         {
             System.Windows.Application.Current.Dispatcher.Invoke(() => ApplyTheme());
         }
@@ -271,8 +276,8 @@
         {
             notifyIcon.Visible = true;
             notificationService.Initialize(notifyIcon);
-            windowsIntegrationService.StartMonitoringWindowPrevalenceAccentColor();
-            windowsIntegrationService.WindowPrevalenceAccentColorChanged += WindowPrevalenceAccentColorChanged;
+            appearanceService.StartMonitoringWindowPrevalenceAccentColor();
+            appearanceService.WindowPrevalenceAccentColorChanged += WindowPrevalenceAccentColorChanged;
         }
 
         private void Window_Closing(object s, System.ComponentModel.CancelEventArgs e)
@@ -296,8 +301,9 @@
 
         private void Window_Closed(object s, EventArgs e)
         {
-            windowsIntegrationService.WindowPrevalenceAccentColorChanged -= WindowPrevalenceAccentColorChanged;
-            windowsIntegrationService.StopMonitoringWindowPrevalenceAccentColor();
+            appearanceService.AccentColorChanged -= OnAccentColorChanged;
+            appearanceService.WindowPrevalenceAccentColorChanged -= WindowPrevalenceAccentColorChanged;
+            appearanceService.StopMonitoringWindowPrevalenceAccentColor();
 
             notifyIcon.MouseClick -= TrayIconMouseClick;
             notifyIcon.MouseDoubleClick -= TrayIconMouseDoubleClick;

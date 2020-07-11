@@ -108,6 +108,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BindingProxy.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Services\AppearanceService.cs" />
+    <Compile Include="Services\IAppearanceService.cs" />
     <Compile Include="SimpleIoC.cs" />
     <Compile Include="DicomNetwork\Client\PrintOptions.cs" />
     <Compile Include="DicomNetwork\Client\RequestFactory.cs" />
@@ -147,8 +149,6 @@
     <Compile Include="Services\IDialogServiceEx.cs" />
     <Compile Include="Services\INotificationService.cs" />
     <Compile Include="Services\NotificationService.cs" />
-    <Compile Include="Services\IWindowsIntegrationService.cs" />
-    <Compile Include="Services\WindowsIntegrationService.cs" />
     <Compile Include="Utils\BitmapCursor.cs" />
     <Compile Include="Utils\BitmapUtil.cs" />
     <Compile Include="Utils\LanguageHelper.cs" />

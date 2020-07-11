@@ -37,8 +37,8 @@ namespace SimpleDICOMToolkit.Views
         {
             if (IsActive)
             {
-                Resources["ButtonBackground"] = new SolidColorBrush((Color)CommonResources["AccentColor"]);
-                Resources["ButtonForeground"] = new SolidColorBrush((Color)CommonResources["AccentForegroundColor"]);
+                Resources["ButtonBackground"] = new SolidColorBrush((Color)Application.Current.Resources["AccentColor"]);
+                Resources["ButtonForeground"] = new SolidColorBrush((Color)Application.Current.Resources["AccentForegroundColor"]);
             }
             else
             {

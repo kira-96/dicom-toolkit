@@ -2,7 +2,7 @@
 
 namespace SimpleDICOMToolkit.Services
 {
-    public interface IWindowsIntegrationService
+    public interface IAppearanceService
     {
         bool IsSystemUsesLightTheme { get; }
         bool IsWindowPrevalenceAccentColor { get; }
@@ -11,11 +11,17 @@ namespace SimpleDICOMToolkit.Services
 
         event EventHandler WindowPrevalenceAccentColorChanged;
 
+        event EventHandler AccentColorChanged;
+
         void StartMonitoringSystemUsesLightTheme();
         void StopMonitoringSystemUsesLightTheme();
+
+        void WatchWindowsColor(object window);
 
         void StartMonitoringWindowPrevalenceAccentColor();
 
         void StopMonitoringWindowPrevalenceAccentColor();
+
+        void ApplyAccentColor();
     }
 }

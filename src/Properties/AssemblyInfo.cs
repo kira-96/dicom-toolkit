@@ -1,6 +1,4 @@
 using System.Reflection;
-using System.Resources;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
 
@@ -51,7 +49,7 @@ using System.Windows;
 //可以指定所有这些值，也可以使用“生成号”和“修订号”的默认值
 //通过使用 "*"，如下所示:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.4.1.166")]
-[assembly: AssemblyFileVersion("1.4.1.166")]
+[assembly: AssemblyVersion("1.4.1.172")]
+[assembly: AssemblyFileVersion("1.4.1.172")]
 
-[assembly: AssemblyInformationalVersion("1.4.0")]
+[assembly: AssemblyInformationalVersion("1.4.1")]
