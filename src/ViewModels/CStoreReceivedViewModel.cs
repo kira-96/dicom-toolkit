@@ -12,11 +12,14 @@
 
     public class CStoreReceivedViewModel : Screen, IHandle<ServerMessageItem>, IDisposable
     {
+        [Inject]
+        private IWindowManager _windowManager;
+
         [Inject(Key = "filelogger")]
         private ILoggerService _logger;
 
         [Inject]
-        private IWindowManager _windowManager;
+        private II18nService i18NService;
 
         [Inject]
         private INotificationService notificationService;
@@ -60,7 +63,7 @@
                 CStoreServer.Default.CreateServer(message.ServerPort, message.LocalAET);
                 _eventAggregator.Publish(new ServerStateItem(true), nameof(CStoreReceivedViewModel));
                 notificationService.ShowNotification(
-                    string.Format(LanguageHelper.GetXmlStringByKey("ServerIsRunning"), "C-STORE", SysUtil.LocalIPAddress, message.ServerPort),
+                    string.Format(i18NService.GetXmlStringByKey("ServerIsRunning"), "C-STORE", SysUtil.LocalIPAddress, message.ServerPort),
                     message.LocalAET);
             }
             else

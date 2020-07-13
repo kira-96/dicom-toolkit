@@ -11,6 +11,9 @@
     public class PrintJobsViewModel : Screen, IHandle<ServerMessageItem>, IDisposable
     {
         [Inject]
+        private II18nService i18NService;
+
+        [Inject]
         private INotificationService notificationService;
 
         private readonly IEventAggregator _eventAggregator;
@@ -36,7 +39,7 @@
                 PrintServer.Default.CreateServer(message.ServerPort, message.LocalAET);
                 _eventAggregator.Publish(new ServerStateItem(true), nameof(PrintJobsViewModel));
                 notificationService.ShowNotification(
-                    string.Format(LanguageHelper.GetXmlStringByKey("ServerIsRunning"), "Print", SysUtil.LocalIPAddress, message.ServerPort),
+                    string.Format(i18NService.GetXmlStringByKey("ServerIsRunning"), "Print", SysUtil.LocalIPAddress, message.ServerPort),
                     message.LocalAET);
             }
             else

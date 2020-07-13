@@ -8,6 +8,7 @@
     using IoCModules;
     using Logging;
     using MQTT;
+    using Services;
     using Utils;
     using ViewModels;
 
@@ -84,7 +85,8 @@
             e.Handled = true;
 
             Container.Get<ILoggerService>("filelogger").Error(e.Exception);
-            Container.Get<IWindowManager>().ShowMessageBox(e.Exception.Message, LanguageHelper.GetXmlStringByKey("ErrorCaption"));
+            Container.Get<IWindowManager>().ShowMessageBox(e.Exception.Message, 
+                Container.Get<II18nService>().GetXmlStringByKey("ErrorCaption"));
         }
     }
 }

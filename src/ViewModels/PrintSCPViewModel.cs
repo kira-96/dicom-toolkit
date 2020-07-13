@@ -8,6 +8,7 @@
     using Logging;
     using MQTT;
     using Server;
+    using Services;
     using Utils;
 
     public class PrintSCPViewModel : Screen, IDisposable
@@ -17,6 +18,9 @@
 
         [Inject(Key = "filelogger")]
         private ILoggerService _logger;
+
+        [Inject]
+        private II18nService i18NService;
 
         [Inject]
         private IMessenger messenger;
@@ -47,7 +51,7 @@
 
             if (!File.Exists(configexe))
             {
-                string info = string.Format(LanguageHelper.GetXmlStringByKey("FileNotFound"), configexe);
+                string info = string.Format(i18NService.GetXmlStringByKey("FileNotFound"), configexe);
                 _windowManager.ShowMessageBox(info);
                 return;
             }

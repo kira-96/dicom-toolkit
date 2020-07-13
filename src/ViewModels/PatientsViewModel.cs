@@ -15,6 +15,9 @@
         private IWindowManager _windowManager;
 
         [Inject]
+        private II18nService i18NService;
+
+        [Inject]
         private INotificationService notificationService;
 
         private readonly IEventAggregator _eventAggregator;
@@ -80,7 +83,7 @@
                 WorklistServer.Default.CreateServer(message.ServerPort, message.LocalAET);
                 _eventAggregator.Publish(new ServerStateItem(true), nameof(PatientsViewModel));
                 notificationService.ShowNotification(
-                    string.Format(LanguageHelper.GetXmlStringByKey("ServerIsRunning"), "Worklist", SysUtil.LocalIPAddress, message.ServerPort), 
+                    string.Format(i18NService.GetXmlStringByKey("ServerIsRunning"), "Worklist", SysUtil.LocalIPAddress, message.ServerPort), 
                     message.LocalAET);
                 WorklistServer.Default.IsListening();
             }

@@ -1,26 +1,22 @@
-﻿namespace SimpleDICOMToolkit.Utils
-{
-    using System;
-    using System.Collections;
-    using System.Windows;
-    using System.Windows.Data;
-    using System.Xml;
+﻿using System;
+using System.Collections;
+using System.Windows;
+using System.Windows.Data;
+using System.Xml;
 
-    /// <summary>
-    /// 动态加载语言资源
-    /// </summary>
-    public static class LanguageHelper
+namespace SimpleDICOMToolkit.Services
+{
+    public class I18nService : II18nService
     {
-        [Obsolete("Use LoadXmlStringsResource instead.")]
-        public static void LoadXamlStringsResource(string resourceName)
+        public void ApplyXamlStringsResource(string resourceName)
         {
-            Application.Current.Resources.MergedDictionaries[0] = new ResourceDictionary()
-            {
-                Source = new Uri(resourceName, UriKind.RelativeOrAbsolute)
-            };
+            //Application.Current.Resources.MergedDictionaries[0] = new ResourceDictionary()
+            //{
+            //    Source = new Uri(resourceName, UriKind.RelativeOrAbsolute)
+            //};
         }
 
-        public static void LoadXmlStringsResource(string resourceName)
+        public void ApplyXmlStringsResource(string resourceName)
         {
             if (!(Application.Current.TryFindResource("Strings") is XmlDataProvider provider))
                 return;
@@ -30,13 +26,18 @@
             provider.Refresh();
         }
 
-        public static void LoadXmlStringResourceByCode(string languageCode)
+        public void ApplyXmlStringsResourceByCode(string languageCode)
         {
             string uri = $"pack://application:,,,/Strings/{languageCode}.xml";
-            LoadXmlStringsResource(uri);
+            ApplyXmlStringsResource(uri);
         }
 
-        public static string GetXmlStringByKey(string key)
+        public string GetSystemLanguageCode()
+        {
+            return System.Threading.Thread.CurrentThread.CurrentCulture.Name;
+        }
+
+        public string GetXmlStringByKey(string key)
         {
             if (!(Application.Current.TryFindResource("Strings") is XmlDataProvider provider))
                 return key;

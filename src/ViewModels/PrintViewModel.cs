@@ -8,6 +8,7 @@
     using System.IO;
     using Client;
     using Logging;
+    using Services;
     using Utils;
 
     public class PrintViewModel : Screen, IDisposable
@@ -19,13 +20,13 @@
         private ILoggerService _logger;
 
         [Inject]
+        private II18nService i18NService;
+
+        [Inject]
         private IMessenger messenger;
 
         [Inject]
         public ServerConfigViewModel ServerConfigViewModel { get; private set; }
-
-        //[Inject]
-        //public PrintOptionsViewModel PrintOptionsViewModel { get; private set; }
 
         [Inject]
         public PrintPreviewViewModel PrintPreviewViewModel { get; private set; }
@@ -53,7 +54,7 @@
 
             if (!File.Exists(configexe))
             {
-                string info = string.Format(LanguageHelper.GetXmlStringByKey("FileNotFound"), configexe);
+                string info = string.Format(i18NService.GetXmlStringByKey("FileNotFound"), configexe);
                 _windowManager.ShowMessageBox(info);
                 return;
             }

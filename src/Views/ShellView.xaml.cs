@@ -13,7 +13,6 @@
     using MenuItem = System.Windows.Controls.MenuItem;
     using Logging;
     using Services;
-    using static Utils.LanguageHelper;
     using static Utils.WindowsAPI;
 
     /// <summary>
@@ -27,6 +26,8 @@
         private const uint IDM_ABOUT = 1001;
 
         private readonly ILoggerService logger;
+
+        private readonly II18nService i18NService;
 
         private readonly IDialogServiceEx dialogService;
 
@@ -46,6 +47,7 @@
         };
 
         public ShellView(
+            II18nService i18NService,
             IDialogServiceEx dialogService,
             INotificationService notificationService,
             IAppearanceService appearanceService,
@@ -53,6 +55,7 @@
         {
             InitializeComponent();
 
+            this.i18NService = i18NService;
             this.dialogService = dialogService;
             this.notificationService = notificationService;
             this.appearanceService = appearanceService;
@@ -95,7 +98,7 @@
              * 关闭
              */
             InsertMenu(hMenu, 1, MF_SEPARATOR, 0, null);  // 添加分割线
-            InsertMenu(hMenu, 8, MF_BYPOSITION, IDM_ABOUT, GetXmlStringByKey("MenuAbout"));
+            InsertMenu(hMenu, 8, MF_BYPOSITION, IDM_ABOUT, i18NService.GetXmlStringByKey("MenuAbout"));
         }
 
         /// <summary>
@@ -134,8 +137,8 @@
 
             Version osVersion = Environment.OSVersion.Version;
 
-            string caption = GetXmlStringByKey("AboutCaption");
-            string versionInfo = string.Format(GetXmlStringByKey("AboutVersionFormatter"), osVersion, version);
+            string caption = i18NService.GetXmlStringByKey("AboutCaption");
+            string versionInfo = string.Format(i18NService.GetXmlStringByKey("AboutVersionFormatter"), osVersion, version);
 
             if (TaskDialog.OSSupportsTaskDialogs)
             {
@@ -145,10 +148,10 @@
                     dialog.ExpandedByDefault = true;
                     dialog.EnableHyperlinks = true;
                     dialog.WindowTitle = caption;
-                    dialog.MainInstruction = GetXmlStringByKey("AboutInstruction");
-                    dialog.Content = GetXmlStringByKey("AboutContent");
+                    dialog.MainInstruction = i18NService.GetXmlStringByKey("AboutInstruction");
+                    dialog.Content = i18NService.GetXmlStringByKey("AboutContent");
                     dialog.ExpandedInformation = versionInfo;
-                    dialog.Footer = GetXmlStringByKey("AboutFooter");
+                    dialog.Footer = i18NService.GetXmlStringByKey("AboutFooter");
                     dialog.FooterIcon = TaskDialogIcon.Information;
                     dialog.HyperlinkClicked += (s, e) => Utils.ProcessUtil.OpenHyperlink(e.Href);
 
@@ -281,7 +284,7 @@
                     if (!menuItem.IsChecked)
                     {
                         menuItem.IsChecked = true;
-                        LoadXmlStringResourceByCode(code);
+                        i18NService.ApplyXmlStringsResourceByCode(code);
                     }
                 }
                 else
@@ -301,8 +304,8 @@
 
         private void Window_Closing(object s, System.ComponentModel.CancelEventArgs e)
         {
-            string caption = GetXmlStringByKey("ExitCaption");
-            string content = GetXmlStringByKey("ExitContent");
+            string caption = i18NService.GetXmlStringByKey("ExitCaption");
+            string content = i18NService.GetXmlStringByKey("ExitContent");
 
             // 弹窗提示是否确定退出
             MessageBoxResult result = dialogService.ShowMessageBox(
@@ -375,7 +378,7 @@
         private void LanguageClick(object s, RoutedEventArgs e)
         {
             var menuItem = s as MenuItem;
-            LoadXmlStringResourceByCode(menuItem.Tag.ToString());
+            i18NService.ApplyXmlStringsResourceByCode(menuItem.Tag.ToString());
 
             var languageItems = (menuItem.Parent as MenuItem).Items;
 

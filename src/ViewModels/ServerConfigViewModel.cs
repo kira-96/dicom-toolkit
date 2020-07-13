@@ -6,6 +6,7 @@
     using Client;
     using Logging;
     using Models;
+    using Services;
     using Utils;
 
     public class ServerConfigViewModel : Screen, IHandle<BusyStateItem>, IHandle<ServerStateItem>, IDisposable
@@ -17,6 +18,9 @@
 
         [Inject(Key = "filelogger")]
         private ILoggerService _logger;
+
+        [Inject]
+        private II18nService i18NService;
 
         [Inject]
         private ICEchoSCU _cechoSCU;
@@ -183,9 +187,9 @@
 
             (IsServerIPEnabled, IsServerPortEnabled, IsServerAETEnabled, IsLocalAETEnabled, IsModalityEnabled) = _backupStatus;
 
-            string caption = LanguageHelper.GetXmlStringByKey("TestResult");
-            string success = LanguageHelper.GetXmlStringByKey("TestSuccess");
-            string failed = LanguageHelper.GetXmlStringByKey("TestFailed");
+            string caption = i18NService.GetXmlStringByKey("TestResult");
+            string success = i18NService.GetXmlStringByKey("TestSuccess");
+            string failed = i18NService.GetXmlStringByKey("TestFailed");
 
             _windowManager.ShowMessageBox(result ? success : failed, caption);
         }
