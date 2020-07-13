@@ -29,7 +29,7 @@ namespace SimpleDICOMToolkit.Views
         {
             get
             {
-                return Application.Current.Resources.MergedDictionaries[2].MergedDictionaries[1];
+                return Application.Current.Resources.MergedDictionaries[2].MergedDictionaries[0];
             }
         }
 

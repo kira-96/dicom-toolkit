@@ -169,7 +169,7 @@
         {
             get
             {
-                return System.Windows.Application.Current.Resources.MergedDictionaries[2].MergedDictionaries[1];
+                return System.Windows.Application.Current.Resources.MergedDictionaries[2].MergedDictionaries[0];
             }
         }
 

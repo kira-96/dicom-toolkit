@@ -110,6 +110,7 @@ namespace SimpleDICOMToolkit.Services
             Color accentForeground = GetReverseForegroundColor(accentColor);
             Application.Current.Resources["AccentColor"] = accentColor;
             Application.Current.Resources["AccentForegroundColor"] = accentForeground;
+            Application.Current.Resources["AccentBrush"] = new SolidColorBrush(accentColor);
         }
 
         private void AppsUseLightThemeWatcher_EventArrived(object s, EventArrivedEventArgs e)

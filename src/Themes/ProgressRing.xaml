@@ -6,8 +6,10 @@
     <Style TargetType="{x:Type local:ProgressRing}">
         <Setter Property="Background"
                 Value="Transparent" />
+        <!-- <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" /> -->
         <Setter Property="Foreground"
-                Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                Value="{DynamicResource AccentBrush}" />
         <Setter Property="IsHitTestVisible"
                 Value="False" />
         <Setter Property="HorizontalAlignment"
