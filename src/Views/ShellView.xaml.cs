@@ -267,7 +267,7 @@
 
         private void LoadDefaultLanguage()
         {
-            string code = System.Threading.Thread.CurrentThread.CurrentCulture.Name;
+            string code = i18NService.GetSystemLanguageCode();
             var languageItems = (trayIconContextMenu.Items[1] as MenuItem).Items;
 
             if (!supportLanguages.ContainsKey(code))

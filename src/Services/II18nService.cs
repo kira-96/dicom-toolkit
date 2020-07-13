@@ -14,5 +14,7 @@ namespace SimpleDICOMToolkit.Services
         string GetSystemLanguageCode();
 
         string GetXmlStringByKey(string key);
+
+        event EventHandler LanguageChanged;
     }
 }

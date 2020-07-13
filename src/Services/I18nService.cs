@@ -8,12 +8,16 @@ namespace SimpleDICOMToolkit.Services
 {
     public class I18nService : II18nService
     {
+        public event EventHandler LanguageChanged;
+
         public void ApplyXamlStringsResource(string resourceName)
         {
             //Application.Current.Resources.MergedDictionaries[0] = new ResourceDictionary()
             //{
             //    Source = new Uri(resourceName, UriKind.RelativeOrAbsolute)
             //};
+
+            //LanguageChanged?.Invoke(this, new EventArgs());
         }
 
         public void ApplyXmlStringsResource(string resourceName)
@@ -24,6 +28,8 @@ namespace SimpleDICOMToolkit.Services
             provider.Source = new Uri(resourceName, UriKind.RelativeOrAbsolute);
 
             provider.Refresh();
+
+            LanguageChanged?.Invoke(this, new EventArgs());
         }
 
         public void ApplyXmlStringsResourceByCode(string languageCode)
