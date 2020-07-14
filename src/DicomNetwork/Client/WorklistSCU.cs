@@ -1,14 +1,15 @@
 ﻿namespace SimpleDICOMToolkit.Client
 {
+    using StyletIoC;
     using Dicom;
     using Dicom.Network;
     using DicomClient = Dicom.Network.Client.DicomClient;
+    using System;
+    using System.Linq;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Logging;
     using Models;
-    using System;
-    using System.Linq;
 
     public class WorklistSCU : IWorklistSCU
     {
@@ -16,9 +17,14 @@
         private const string DISCONTINUED = "DISCONTINUED";
         private const string COMPLETED = "COMPLETED";
 
-        private readonly ILoggerService _logger = SimpleIoC.Get<ILoggerService>("filelogger");
+        private readonly ILoggerService Logger;
 
         private List<DicomDataset> worklistItems;
+
+        public WorklistSCU([Inject(Key = "filelogger")] ILoggerService loggerService)
+        {
+            Logger = loggerService;
+        }
 
         /// <summary>
         /// 参考
@@ -43,9 +49,9 @@
                 if (!response.HasDataset)
                 {
                     if (response.Status == DicomStatus.Success)
-                        _logger.Debug("worklist response END.");
+                        Logger.Debug("Worklist response END.");
                     else
-                        _logger.Debug("worklist response has [NO DATASET].");
+                        Logger.Debug("Worklist response has [NO DATASET].");
 
                     return;
                 }
@@ -54,7 +60,7 @@
                     response.Status != DicomStatus.Pending && 
                     response.Status != DicomStatus.QueryRetrieveOptionalKeysNotSupported)
                 {
-                    _logger.Error("worklist response error - [{0}]", response.Status);
+                    Logger.Error("Worklist response error - [{0}]", response.Status);
                     return;
                 }
 
@@ -157,13 +163,13 @@
                 {
                     if (res.Status == DicomStatus.Success)
                     {
-                        _logger.Debug("Set MPPS In Progress Success.");
+                        Logger.Debug("Set study [{0}] [In Progress] Success.", studyInstanceUID);
 
                         result = true;
                     }
                     else
                     {
-                        _logger.Warn("Set MPPS In Progress Failed. [{0}]", res.Status);
+                        Logger.Warn("Set study [{0}] [In Progress] Failed. [{1}]", studyInstanceUID, res.Status);
                     }
                 }
             };
@@ -203,10 +209,10 @@
                 { DicomTag.PerformedSeriesSequence, new DicomDataset() 
                 {
                     { DicomTag.RetrieveAETitle, string.Empty }, // the aetitle of the archive where the images have been sent to
-                    { DicomTag.SeriesDescription, "serie 1" },
+                    { DicomTag.SeriesDescription, "series 1" },
                     { DicomTag.PerformingPhysicianName, string.Empty },
                     { DicomTag.OperatorsName, string.Empty },
-                    { DicomTag.ProtocolName, "SCOUT" },
+                    { DicomTag.ProtocolName, "protocol 1" },
                     { DicomTag.SeriesInstanceUID, DicomUID.Generate() },
                     { DicomTag.ReferencedImageSequence, new DicomDataset()
                     {
@@ -252,11 +258,11 @@
                         if (res.Status == DicomStatus.Success)
                         {
                             result = true;
-                            _logger.Debug("Set MPPS Complete Success.");
+                            Logger.Debug("Set study [{0}] [Complete] Success.", studyInstanceUid);
                         }
                         else
                         {
-                            _logger.Warn("Set MPPS Complete Failed. [{0}]", res.Status);
+                            Logger.Warn("Set study [{0}] [Complete] Failed. [{1}]", studyInstanceUid, res.Status);
                         }
                     }
                 }
@@ -293,10 +299,10 @@
                 { DicomTag.PerformedSeriesSequence, new DicomDataset()
                 {
                     { DicomTag.RetrieveAETitle, string.Empty }, // the aetitle of the archive where the images have been sent to
-                    { DicomTag.SeriesDescription, "serie 1" },
+                    { DicomTag.SeriesDescription, "series 1" },
                     { DicomTag.PerformingPhysicianName, string.Empty },
                     { DicomTag.OperatorsName, string.Empty },
-                    { DicomTag.ProtocolName, "SCOUT" },
+                    { DicomTag.ProtocolName, "protocol 1" },
                     { DicomTag.SeriesInstanceUID, DicomUID.Generate() },
                     { DicomTag.ReferencedImageSequence, new DicomDataset()
                     {
@@ -318,11 +324,11 @@
                         if (res.Status == DicomStatus.Success)
                         {
                             result = true;
-                            _logger.Debug("Set MPPS Discontinued Success.");
+                            Logger.Debug("Set study [{0}] [Discontinued] Success.", studyInstanceUid);
                         }
                         else
                         {
-                            _logger.Warn("Set MPPS Discontinued Failed. [{0}]", res.Status);
+                            Logger.Warn("Set study [{0}] [Discontinued] Failed. [{1}]", studyInstanceUid, res.Status);
                         }
                     }
                 }

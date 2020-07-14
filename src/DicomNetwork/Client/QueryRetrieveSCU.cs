@@ -1,5 +1,6 @@
 ﻿namespace SimpleDICOMToolkit.Client
 {
+    using StyletIoC;
     using Dicom;
     using Dicom.Network;
     using DicomClient = Dicom.Network.Client.DicomClient;
@@ -9,7 +10,12 @@
 
     public class QueryRetrieveSCU : IQueryRetrieveSCU
     {
-        private readonly ILoggerService logger = SimpleIoC.Get<ILoggerService>("filelogger");
+        private readonly ILoggerService logger;
+
+        public QueryRetrieveSCU([Inject(Key = "filelogger")] ILoggerService loggerService)
+        {
+            logger = loggerService;
+        }
 
         public async Task<List<DicomDataset>> QueryPatients(string serverIp, int serverPort, string serverAET, string localAET, string patientId = null, string patientName = null)
         {

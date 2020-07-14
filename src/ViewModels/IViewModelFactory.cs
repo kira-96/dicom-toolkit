@@ -6,6 +6,8 @@
 
         WorklistViewModel GetWorklistViewModel(string key = null);
 
+        WorklistSCPViewModel GetWorklistSCPViewModel(string key = null);
+
         PrintViewModel GetPrintViewModel(string key = null);
 
         CStoreViewModel GetCStoreViewModel(string key = null);

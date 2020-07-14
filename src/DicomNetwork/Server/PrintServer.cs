@@ -56,7 +56,7 @@ namespace SimpleDICOMToolkit.Server
 
             AETitle = serverAET;
 
-            defaultServer = DicomServer.Create<PrintSCP>(port);
+            defaultServer = DicomServer.Create<PrintService>(port);
 
             Printer = new Printer(serverAET);
 

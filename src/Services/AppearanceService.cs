@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StyletIoC;
+using System;
 using System.Management;
 using System.Security.Principal;
 using System.Windows;
@@ -12,7 +13,7 @@ namespace SimpleDICOMToolkit.Services
 {
     public class AppearanceService : IAppearanceService
     {
-        private ILoggerService Logger => SimpleIoC.Get<ILoggerService>("filelogger");
+        private readonly ILoggerService Logger;
 
         private ManagementEventWatcher systemUsesLightThemeWatcher;
         private ManagementEventWatcher windowPrevalenceAccentColorWatcher;
@@ -24,6 +25,11 @@ namespace SimpleDICOMToolkit.Services
         public event EventHandler SystemUsesLightThemeChanged = delegate { };
         public event EventHandler WindowPrevalenceAccentColorChanged = delegate { };
         public event EventHandler AccentColorChanged = delegate { };
+
+        public AppearanceService([Inject("filelogger")] ILoggerService loggerService)
+        {
+            Logger = loggerService;
+        }
 
         public void StartMonitoringSystemUsesLightTheme()
         {

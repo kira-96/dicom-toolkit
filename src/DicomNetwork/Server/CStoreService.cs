@@ -10,7 +10,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class CStoreSCP : DicomService, IDicomServiceProvider, IDicomCEchoProvider, IDicomCStoreProvider
+    internal class CStoreService : DicomService, IDicomServiceProvider, IDicomCEchoProvider, IDicomCStoreProvider
     {
         private static readonly DicomTransferSyntax[] AcceptedTransferSyntaxes = new DicomTransferSyntax[]
         {
@@ -40,7 +40,7 @@
 
         private readonly List<string> receivedFiles;
 
-        public CStoreSCP(INetworkStream stream, Encoding fallbackEncoding, Logger log)
+        public CStoreService(INetworkStream stream, Encoding fallbackEncoding, Logger log)
             : base(stream, fallbackEncoding, log)
         {
             receivedFiles = new List<string>();

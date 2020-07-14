@@ -9,6 +9,7 @@
         {
             Bind<IViewModelFactory>().ToAbstractFactory();
             Bind<WorklistViewModel>().ToSelf().InSingletonScope();
+            Bind<WorklistSCPViewModel>().ToSelf().InSingletonScope();
             Bind<QueryRetrieveViewModel>().ToSelf().InSingletonScope();
             Bind<CStoreViewModel>().ToSelf().InSingletonScope();
             Bind<CStoreSCPViewModel>().ToSelf().InSingletonScope();

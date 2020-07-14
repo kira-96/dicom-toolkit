@@ -14,7 +14,7 @@ namespace SimpleDICOMToolkit.Server
     using System.Text;
     using System.Threading.Tasks;
 
-    public class WorklistService : DicomService, IDicomServiceProvider, IDicomCEchoProvider, IDicomCFindProvider, IDicomNServiceProvider
+    internal class WorklistService : DicomService, IDicomServiceProvider, IDicomCEchoProvider, IDicomCFindProvider, IDicomNServiceProvider
     {
         private static readonly DicomTransferSyntax[] AcceptedTransferSyntaxes = new DicomTransferSyntax[]
         {

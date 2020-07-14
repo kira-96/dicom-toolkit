@@ -66,7 +66,7 @@ namespace SimpleDICOMToolkit.Server
                 }
             }
 
-            defaultServer = DicomServer.Create<CStoreSCP>(port);
+            defaultServer = DicomServer.Create<CStoreService>(port);
 
             return IsListening();
         }

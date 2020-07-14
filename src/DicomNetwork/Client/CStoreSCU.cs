@@ -1,5 +1,6 @@
 ﻿namespace SimpleDICOMToolkit.Client
 {
+    using StyletIoC;
     using Dicom.Network;
     using DicomClient = Dicom.Network.Client.DicomClient;
     using System.Collections.Generic;
@@ -9,7 +10,12 @@
 
     public class CStoreSCU : ICStoreSCU
     {
-        private readonly ILoggerService _logger = SimpleIoC.Get<ILoggerService>("filelogger");
+        private readonly ILoggerService Logger;
+
+        public CStoreSCU([Inject(Key = "filelogger")] ILoggerService loggerService)
+        {
+            Logger = loggerService;
+        }
 
         public async Task StoreImageAsync(string serverIp, int serverPort, string serverAET, string localAET, IEnumerable<CStoreItem> items)
         {
@@ -24,7 +30,7 @@
                 {
                     if (res.Status != DicomStatus.Success)
                     {
-                        _logger.Error("C-STORE send failed. Instance UID - [{0}]", req.SOPInstanceUID);
+                        Logger.Error("C-STORE send failed. Instance UID - [{0}]", req.SOPInstanceUID);
                         item.Status = CStoreItemStatus.Failed;
                     }
                     else

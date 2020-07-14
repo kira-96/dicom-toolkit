@@ -80,12 +80,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Controls\ActiveHeaderAdorner.cs" />
     <Compile Include="Controls\AduLoading.cs" />
     <Compile Include="Controls\EffectBehavior.cs" />
     <Compile Include="Controls\ProgressRing.cs" />
     <Compile Include="Controls\TemplateSettingValues.cs" />
-    <Compile Include="Controls\TextBoxPlaceholderBehavior.cs" />
     <Compile Include="Controls\VisualStates.cs" />
     <Compile Include="DicomNetwork\Server\Models\IMppsSource.cs" />
     <Compile Include="DicomNetwork\Server\Models\IWorklistItemsSource.cs" />
@@ -139,20 +137,20 @@
     <Compile Include="Models\SimpleWorklistResult.cs" />
     <Compile Include="Models\UpdateDicomElementItem.cs" />
     <Compile Include="Models\WorklistItem.cs" />
-    <Compile Include="DicomNetwork\Server\CStoreSCP.cs" />
+    <Compile Include="DicomNetwork\Server\CStoreService.cs" />
     <Compile Include="DicomNetwork\Server\CStoreServer.cs" />
     <Compile Include="DicomNetwork\Server\FilmBoxExtensions.cs" />
     <Compile Include="DicomNetwork\Server\ImageBoxExtensions.cs" />
     <Compile Include="DicomNetwork\Server\Printer.cs" />
     <Compile Include="DicomNetwork\Server\PrintJob.cs" />
-    <Compile Include="DicomNetwork\Server\PrintSCP.cs" />
+    <Compile Include="DicomNetwork\Server\PrintService.cs" />
     <Compile Include="DicomNetwork\Server\PrintServer.cs" />
     <Compile Include="Services\DialogServiceEx.cs" />
     <Compile Include="Services\IDialogServiceEx.cs" />
     <Compile Include="Services\INotificationService.cs" />
     <Compile Include="Services\NotificationService.cs" />
     <Compile Include="Utils\BitmapCursor.cs" />
-    <Compile Include="Utils\BitmapUtil.cs" />
+    <Compile Include="Utils\BitmapExtensions.cs" />
     <Compile Include="Utils\SysUtil.cs" />
     <Compile Include="Utils\ProcessUtil.cs" />
     <Compile Include="Utils\AccentColorSet.cs" />

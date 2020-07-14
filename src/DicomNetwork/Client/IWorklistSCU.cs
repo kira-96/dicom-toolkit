@@ -16,7 +16,7 @@
         /// <param name="localAET">Local AET</param>
         /// <param name="modality">Modality</param>
         /// <returns>Dataset</returns>
-        /// Task<List<DicomDataset>> GetAllItemsFromWorklistAsync(string serverIp, int serverPort, string serverAET, string localAET, string modality = null);
+        Task<List<DicomDataset>> GetAllItemsFromWorklistAsync(string serverIp, int serverPort, string serverAET, string localAET, string modality = null);
 
         /// <summary>
         /// Get Simple Worklist Items Info

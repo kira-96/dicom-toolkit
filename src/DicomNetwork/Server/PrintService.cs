@@ -4,14 +4,13 @@ using Dicom.Network;
 using Dicom.Printing;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SimpleDICOMToolkit.Server
 {
-    public class PrintSCP : DicomService, IDicomServiceProvider, IDicomCEchoProvider, IDicomNServiceProvider
+    internal class PrintService : DicomService, IDicomServiceProvider, IDicomCEchoProvider, IDicomNServiceProvider
     {
         #region Properties and Attributes
 
@@ -40,7 +39,7 @@ namespace SimpleDICOMToolkit.Server
 
         #region Constructors and Initialization
 
-        public PrintSCP(INetworkStream stream, Encoding fallbackEncoding, Logger log)
+        public PrintService(INetworkStream stream, Encoding fallbackEncoding, Logger log)
             : base(stream, fallbackEncoding, log)
         {
             var pi = stream.GetType().GetProperty("Socket", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
