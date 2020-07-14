@@ -9,7 +9,7 @@ namespace SimpleDICOMToolkit.Utils
     /// 扩展类
     /// Bitmap 类型转换
     /// </summary>
-    public static class BitmapUtil
+    public static class BitmapExtensions
     {
         /// <summary>
         /// WriteableBitmap to BitmapImage

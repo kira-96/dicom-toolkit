@@ -6,7 +6,7 @@ namespace SimpleDICOMToolkit.Controls
 {
     public partial class ProgressRing
     {
-        public class TemplateSettingValues : System.Windows.DependencyObject
+        public class TemplateSettingValues : DependencyObject
         {
             // Using a DependencyProperty as the backing store for MaxSideLength.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty MaxSideLengthProperty =
@@ -31,7 +31,7 @@ namespace SimpleDICOMToolkit.Controls
                     EllipseDiameter = width / 10;
                 }
                 MaxSideLength = width - EllipseDiameter;
-                EllipseOffset = new System.Windows.Thickness(0, EllipseDiameter * 2.5, 0, 0);
+                EllipseOffset = new Thickness(0, EllipseDiameter * 2.5, 0, 0);
             }
 
             public double MaxSideLength

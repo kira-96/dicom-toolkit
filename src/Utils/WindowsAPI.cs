@@ -201,10 +201,5 @@ namespace SimpleDICOMToolkit.Utils
 
             SetWindowLongPtr(hWnd, GWL_STYLE, new IntPtr(windowLong));
         }
-
-        public static IntPtr HookSystemMenu(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-        {
-            return IntPtr.Zero;
-        }
     }
 }
