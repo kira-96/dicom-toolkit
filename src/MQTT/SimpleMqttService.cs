@@ -1,24 +1,26 @@
-﻿using MQTTnet;
-using MQTTnet.Protocol;
-using MQTTnet.Server;
-using NLog;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SimpleDICOMToolkit.MQTT
+﻿namespace SimpleDICOMToolkit.MQTT
 {
+    using StyletIoC;
+    using MQTTnet;
+    using MQTTnet.Protocol;
+    using MQTTnet.Server;
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Logging;
+
     public class SimpleMqttService : ISimpleMqttService
     {
         public int Port { get; private set; }
-        private readonly Logger logger = LogManager.GetLogger("LoggerService");
+        private readonly ILoggerService logger;
 
         private readonly IMqttServer server;
         private readonly Dictionary<string, string> users;
 
-        public SimpleMqttService()
+        public SimpleMqttService([Inject(Key = "filelogger")] ILoggerService loggerService)
         {
+            logger = loggerService;
             users = new Dictionary<string, string>()
             {
                 { "AD*米妮*斯托蕾塔", "^P@$$W0&D$" }

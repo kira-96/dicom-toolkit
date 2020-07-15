@@ -81,10 +81,10 @@
             }
         }
 
-        public void Dispose()
+        public async void Dispose()
         {
             // TODO
-            // await messenger.UnsubscribeAsync(this, "Config");
+            await messenger.UnsubscribeAsync(this, "Config");
             ServerConfigViewModel.Dispose();
             PrintJobsViewModel.Dispose();
         }

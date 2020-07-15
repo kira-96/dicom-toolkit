@@ -1,26 +1,27 @@
-﻿using MQTTnet;
-using MQTTnet.Client;
-using MQTTnet.Client.Options;
-using NLog;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace SimpleDICOMToolkit.MQTT
+﻿namespace SimpleDICOMToolkit.MQTT
 {
+    using StyletIoC;
+    using MQTTnet;
+    using MQTTnet.Client;
+    using MQTTnet.Client.Options;
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Logging;
     using WeakActions;
 
     public class Messenger : IMessenger
     {
         private readonly Dictionary<string, List<WeakActionAndToken>> recipientsStrictAction = new Dictionary<string, List<WeakActionAndToken>>();
         private readonly CancellationTokenSource CancellationTokenSource = new CancellationTokenSource();
-        private readonly Logger logger = LogManager.GetLogger("LoggerService");
+        private readonly ILoggerService logger;
         private readonly IMqttClient client;
 
-        public Messenger()
+        public Messenger([Inject(Key = "filelogger")] ILoggerService loggerService)
         {
+            logger = loggerService;
             client = new MqttFactory().CreateMqttClient();
         }
 

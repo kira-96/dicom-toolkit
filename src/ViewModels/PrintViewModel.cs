@@ -44,6 +44,7 @@
             base.OnInitialActivate();
             ServerConfigViewModel.Init(this);
             PrintPreviewViewModel.Parent = this;
+            await PrintPreviewViewModel.AddSampleImage();
             ReloadPrintOptions("config.toml");
             await messenger.SubscribeAsync(this, "Config", ReloadPrintOptions);
         }
@@ -88,12 +89,11 @@
             }
         }
 
-        public void Dispose()
+        public async void Dispose()
         {
             // TODO
-            // await messenger.UnsubscribeAsync(this, "Config");
+            await messenger.UnsubscribeAsync(this, "Config");
             ServerConfigViewModel.Dispose();
-            // PrintOptionsViewModel.Dispose();
             PrintPreviewViewModel.Dispose();
         }
     }

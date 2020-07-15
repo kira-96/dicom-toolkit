@@ -1,5 +1,6 @@
 ﻿namespace SimpleDICOMToolkit.ViewModels
 {
+    using Dicom;
     using Dicom.Imaging;
     using Stylet;
     using StyletIoC;
@@ -8,6 +9,7 @@
     using System.Drawing;
     using System.IO;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Media.Imaging;
     using Client;
@@ -54,8 +56,6 @@
         {
             _eventAggregator = eventAggregator;
             _eventAggregator.Subscribe(this, nameof(PrintPreviewViewModel));
-
-            AddDcmImage(Environment.CurrentDirectory + "\\Fate.dcm");
         }
 
         public async void Handle(ClientMessageItem message)
@@ -98,7 +98,7 @@
             e.Handled = true;
         }
 
-        public void OnDropFiles(DragEventArgs e)
+        public async void OnDropFiles(DragEventArgs e)
         {
             if (!e.Data.GetDataPresent(DataFormats.FileDrop))
                 return;
@@ -112,8 +112,13 @@
                     continue;
                 }
 
-                AddDcmImage(file.ToString());
+                await AddDcmImage(file.ToString());
             }
+        }
+
+        public async Task AddSampleImage()
+        {
+            await AddDcmImage(Environment.CurrentDirectory + "\\Fate.dcm");
         }
 
         private PrintOptions GetPrintOptions()
@@ -121,12 +126,14 @@
             return (Parent as PrintViewModel).PrintOptions;
         }
 
-        private void AddDcmImage(string file)
+        private async Task AddDcmImage(string file)
         {
             if (!File.Exists(file))
                 return;
 
-            DicomImage image = new DicomImage(file);
+            DicomFile dicomFile = await DicomFile.OpenAsync(file);
+
+            DicomImage image = new DicomImage(dicomFile.Dataset);
 
             using (IImage iimage = image.RenderImage())
             {
