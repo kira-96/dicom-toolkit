@@ -60,7 +60,7 @@
         {
             base.ConfigureIoC(builder);
 
-            builder.AddModules(new ServicesModule(), new DicomSCUModule(), new ViewModelModule());
+            builder.AddModules(new ServicesModule(), new DicomSCUModule(), new ViewModelModule(), new ValidatorModule());
         }
 
         protected override void Configure()

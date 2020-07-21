@@ -144,7 +144,7 @@
             private set => SetAndNotify(ref _busyIndicatorColumn, value);
         }
 
-        public ServerConfigViewModel(IEventAggregator eventAggregator)
+        public ServerConfigViewModel(IEventAggregator eventAggregator, IModelValidator<ServerConfigViewModel> validator) : base(validator)
         {
             _eventAggregator = eventAggregator;
         }

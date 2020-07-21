@@ -95,6 +95,7 @@
     <Compile Include="DicomNetwork\Server\WorklistService.cs" />
     <Compile Include="IoCModules\ServicesModule.cs" />
     <Compile Include="IoCModules\DicomSCUModule.cs" />
+    <Compile Include="IoCModules\ValidatorModule.cs" />
     <Compile Include="IoCModules\ViewModelModule.cs" />
     <Compile Include="MQTT\IMessenger.cs" />
     <Compile Include="MQTT\Messenger.cs" />
@@ -157,6 +158,8 @@
     <Compile Include="Utils\AccentColorSet.cs" />
     <Compile Include="Utils\VisualTreeUtil.cs" />
     <Compile Include="Utils\WindowsAPI.cs" />
+    <Compile Include="Validators\FluentModelValidator.cs" />
+    <Compile Include="Validators\ServerConfigViewModelValidator.cs" />
     <Compile Include="ViewModels\CStoreFileListViewModel.cs" />
     <Compile Include="ViewModels\CStoreReceivedViewModel.cs" />
     <Compile Include="ViewModels\CStoreSCPViewModel.cs" />
@@ -412,6 +415,9 @@
     <Resource Include="Strings\zh-CN.xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="FluentValidation">
+      <Version>9.0.1</Version>
+    </PackageReference>
     <PackageReference Include="fo-dicom.Desktop">
       <Version>4.0.5</Version>
     </PackageReference>
