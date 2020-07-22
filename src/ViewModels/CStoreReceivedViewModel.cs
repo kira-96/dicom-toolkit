@@ -22,6 +22,9 @@
         private II18nService i18NService;
 
         [Inject]
+        private IViewModelFactory viewModelFactory;
+
+        [Inject]
         private INotificationService notificationService;
 
         private readonly IEventAggregator _eventAggregator;
@@ -75,7 +78,10 @@
 
         public void ShowReceivedFile(string file)
         {
-            _windowManager.ShowDialog(new PreviewImageViewModel(file));
+            var preview = viewModelFactory.GetPreviewImageViewModel();
+            preview.Initialize(file);
+
+            _windowManager.ShowDialog(preview);
         }
 
         public void OpenFolder(string file)

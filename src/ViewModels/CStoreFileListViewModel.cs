@@ -18,6 +18,9 @@
         private IWindowManager _windowManager;
 
         [Inject]
+        private IViewModelFactory _viewModelFactory;
+
+        [Inject]
         private IDialogServiceEx _dialogService;
 
         [Inject]
@@ -103,7 +106,10 @@
 
         public void PreviewCStoreItem(CStoreItem item)
         {
-            _windowManager.ShowDialog(new PreviewImageViewModel(item.File));
+            var preview = _viewModelFactory.GetPreviewImageViewModel();
+            preview.Initialize(item.File);
+
+            _windowManager.ShowDialog(preview);
         }
 
         public void DeleteCStoreItem(CStoreItem item)

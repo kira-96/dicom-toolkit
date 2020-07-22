@@ -8,7 +8,7 @@
 
     public class RegistrationViewModel : Screen
     {
-        private readonly IEventAggregator _eventAggregator = SimpleIoC.Get<IEventAggregator>();
+        private readonly IEventAggregator _eventAggregator;
 
         private bool _canEdit = true;
 
@@ -138,8 +138,10 @@
             set => SetAndNotify(ref _description, value);
         }
 
-        public RegistrationViewModel()
+        public RegistrationViewModel(IEventAggregator eventAggregator)
         {
+            _eventAggregator = eventAggregator;
+
             BirthDate = DateTime.Today.ToString("yyyyMMdd");
             ScheduledDate = DateTime.Today.ToString("yyyyMMdd");
             ExamRoom = "MR";

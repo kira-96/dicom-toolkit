@@ -14,10 +14,13 @@
         private readonly IEventAggregator _eventAggregator;
 
         [Inject]
-        private IQueryRetrieveSCU queryRetrieveSCU;
+        private IWindowManager _windowManager;
 
         [Inject]
-        private IWindowManager _windowManager;
+        private IViewModelFactory _viewModelFactory;
+
+        [Inject]
+        private IQueryRetrieveSCU queryRetrieveSCU;
 
         public BindableCollection<IDicomObjectLevel> QueryResult { get; } = new BindableCollection<IDicomObjectLevel>();
 
@@ -284,7 +287,9 @@
             // 有时候查询到的图像没有像素值，无法显示
             if (result != null && result.Contains(DicomTag.PixelData))
             {
-                _windowManager.ShowDialog(new PreviewImageViewModel(result));
+                var preview = _viewModelFactory.GetPreviewImageViewModel();
+                preview.Initialize(result);
+                _windowManager.ShowDialog(preview);
             }
         }
     }

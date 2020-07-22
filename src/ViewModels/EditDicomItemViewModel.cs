@@ -8,7 +8,7 @@
 
     public class EditDicomItemViewModel : Screen
     {
-        private readonly IEventAggregator _eventAggregator = SimpleIoC.Get<IEventAggregator>();
+        private readonly IEventAggregator _eventAggregator;
 
         private DicomDataset _currentDataset;
 
@@ -65,7 +65,12 @@
 
         public BindableCollection<string> ElementValues { get; private set; }
 
-        public EditDicomItemViewModel(DicomDataset dataset, DicomTag dicomTag)
+        public EditDicomItemViewModel(IEventAggregator eventAggregator)
+        {
+            _eventAggregator = eventAggregator;
+        }
+
+        public void Initialize(DicomDataset dataset, DicomTag dicomTag)
         {
             Initialize();
 

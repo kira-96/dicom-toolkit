@@ -43,7 +43,7 @@
                 return;
             }
 
-            var config = SimpleIoC.Get<WorklistViewModel>().ServerConfigViewModel;
+            var config = (Parent as WorklistViewModel).ServerConfigViewModel;
 
             int port = config.ParseServerPort();
             if (port == 0) return;
@@ -78,7 +78,7 @@
                 return;
             }
 
-            var config = SimpleIoC.Get<WorklistViewModel>().ServerConfigViewModel;
+            var config = (Parent as WorklistViewModel).ServerConfigViewModel;
 
             int port = config.ParseServerPort();
             if (port == 0) return;
@@ -108,7 +108,7 @@
                 return;
             }
 
-            var config = SimpleIoC.Get<WorklistViewModel>().ServerConfigViewModel;
+            var config = (Parent as WorklistViewModel).ServerConfigViewModel;
 
             int port = config.ParseServerPort();
             if (port == 0) return;

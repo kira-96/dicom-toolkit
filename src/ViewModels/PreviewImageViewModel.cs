@@ -13,9 +13,9 @@
 
     public class PreviewImageViewModel : Screen
     {
-        public ImageOrientationViewModel ImageOrientationViewModel { get; private set; }
+        public ImageOrientationViewModel ImageOrientationViewModel { get; }
 
-        private readonly DicomDataset Dataset;
+        private DicomDataset Dataset;
         private DicomImage dicomImage;
 
         private Point previousPoint;
@@ -30,26 +30,33 @@
             private set => SetAndNotify(ref _imageSource, value);
         }
 
-        public PreviewImageViewModel(string dcmfilepath)
+        public PreviewImageViewModel(ImageOrientationViewModel imageOrientationViewModel)
+        {
+            ImageOrientationViewModel = imageOrientationViewModel;
+            ImageOrientationViewModel.Parent = this;
+        }
+
+        public void Initialize(string dcmfilepath)
         {
             if (!File.Exists(dcmfilepath))
                 return;
 
-            DicomFile dcmFile = DicomFile.Open(dcmfilepath);
-
-            ImageOrientationViewModel = SimpleIoC.Get<ImageOrientationViewModel>();
-            Dataset = dcmFile.Dataset;
+            Initialize(DicomFile.Open(dcmfilepath).Dataset);
         }
 
-        public PreviewImageViewModel(DicomDataset dataset)
+        public void Initialize(DicomDataset dataset)
         {
-            ImageOrientationViewModel = SimpleIoC.Get<ImageOrientationViewModel>();
             Dataset = dataset;
         }
 
         protected override void OnViewLoaded()
         {
             base.OnViewLoaded();
+
+            if (Dataset == null)
+            {
+                return;
+            }
 
             DisplayName = Dataset.GetSingleValueOrDefault(DicomTag.PatientName, string.Empty);
 

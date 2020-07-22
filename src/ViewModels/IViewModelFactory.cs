@@ -17,5 +17,11 @@
         PrintSCPViewModel GetPrintSCPViewModel(string key = null);
 
         QueryRetrieveViewModel GetQueryRetrieveViewModel(string key = null);
+
+        PreviewImageViewModel GetPreviewImageViewModel();
+
+        EditDicomItemViewModel GetEditDicomItemViewModel();
+
+        RegistrationViewModel GetRegistrationViewModel();
     }
 }

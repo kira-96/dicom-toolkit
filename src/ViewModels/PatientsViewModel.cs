@@ -18,6 +18,9 @@
         private II18nService i18NService;
 
         [Inject]
+        private IViewModelFactory viewModelFactory;
+
+        [Inject]
         private INotificationService notificationService;
 
         private readonly IEventAggregator _eventAggregator;
@@ -96,7 +99,9 @@
 
         public void ShowRegistrationWindow()
         {
-            _windowManager.ShowDialog(new RegistrationViewModel(), this);
+            var register = viewModelFactory.GetRegistrationViewModel();
+
+            _windowManager.ShowDialog(register, this);
         }
 
         public void Handle(WorklistItem message)
@@ -111,26 +116,25 @@
 
         public void ViewDetails(WorklistItem item)
         {
-            RegistrationViewModel vm = new RegistrationViewModel()
-            {
-                CanEdit = false,
-                HospitalName = item.HospitalName,
-                ExamRoom = item.ExamRoom,
-                ReferringPhysicianName = item.ReferringPhysician,
-                PatientName = item.PatientName,
-                PatientID = item.PatientID,
-                AccessionNumber = item.AccessionNumber,
-                Sex = item.Sex,
-                Age = item.Age,
-                BirthDate = item.DateOfBirth.ToString("yyyyMMdd"),
-                Modality = item.Modality,
-                ScheduledAET = item.ScheduledAET,
-                ScheduledDate = item.ExamDateAndTime.ToString("yyyyMMdd"),
-                PerformingPhysicianName = item.PerformingPhysician,
-                Description = item.ExamDescription
-            };
+            var register = viewModelFactory.GetRegistrationViewModel();
 
-            _windowManager.ShowDialog(vm, this);
+            register.CanEdit = false;
+            register.HospitalName = item.HospitalName;
+            register.ExamRoom = item.ExamRoom;
+            register.ReferringPhysicianName = item.ReferringPhysician;
+            register.PatientName = item.PatientName;
+            register.PatientID = item.PatientID;
+            register.AccessionNumber = item.AccessionNumber;
+            register.Sex = item.Sex;
+            register.Age = item.Age;
+            register.BirthDate = item.DateOfBirth.ToString("yyyyMMdd");
+            register.Modality = item.Modality;
+            register.ScheduledAET = item.ScheduledAET;
+            register.ScheduledDate = item.ExamDateAndTime.ToString("yyyyMMdd");
+            register.PerformingPhysicianName = item.PerformingPhysician;
+            register.Description = item.ExamDescription;
+
+            _windowManager.ShowDialog(register, this);
         }
 
         public void Dispose()

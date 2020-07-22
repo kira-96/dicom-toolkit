@@ -13,11 +13,14 @@
 
     public class DcmItemsViewModel : Screen, IHandle<UpdateDicomElementItem>
     {
+        [Inject]
+        private IWindowManager _windowManager;
+
         [Inject(Key = "filelogger")]
         private ILoggerService _logger;
 
         [Inject]
-        private IWindowManager _windowManager;
+        private IViewModelFactory _viewModelFactory;
 
         [Inject]
         private IDialogServiceEx _dialogService;
@@ -122,13 +125,21 @@
         public void ShowDcmImage(DcmItem item)
         {
             _currentItem = item;
-            _windowManager.ShowDialog(new PreviewImageViewModel(GetItemDataset(item)));
+
+            var preview = _viewModelFactory.GetPreviewImageViewModel();
+            preview.Initialize(GetItemDataset(item));
+
+            _windowManager.ShowDialog(preview);
         }
 
         public void EditDicomItem(DcmItem item)
         {
             _currentItem = item;
-            _windowManager.ShowDialog(new EditDicomItemViewModel(GetItemDataset(item), item.DcmTag));
+
+            var editor = _viewModelFactory.GetEditDicomItemViewModel();
+            editor.Initialize(GetItemDataset(item), item.DcmTag);
+
+            _windowManager.ShowDialog(editor);
         }
 
         private DicomDataset GetItemDataset(DcmItem item)
