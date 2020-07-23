@@ -81,7 +81,7 @@
             var preview = viewModelFactory.GetPreviewImageViewModel();
             preview.Initialize(file);
 
-            _windowManager.ShowDialog(preview);
+            _windowManager.ShowDialog(preview, this);
         }
 
         public void OpenFolder(string file)

@@ -79,6 +79,7 @@
         {
             if (!DicomFile.HasValidHeader(file))
             {
+                _logger.Warn("{0} is not a valid DICOM file.", file);
                 return;
             }
 
@@ -129,7 +130,7 @@
             var preview = _viewModelFactory.GetPreviewImageViewModel();
             preview.Initialize(GetItemDataset(item));
 
-            _windowManager.ShowDialog(preview);
+            _windowManager.ShowDialog(preview, this);
         }
 
         public void EditDicomItem(DcmItem item)
@@ -139,7 +140,7 @@
             var editor = _viewModelFactory.GetEditDicomItemViewModel();
             editor.Initialize(GetItemDataset(item), item.DcmTag);
 
-            _windowManager.ShowDialog(editor);
+            _windowManager.ShowDialog(editor, this);
         }
 
         private DicomDataset GetItemDataset(DcmItem item)

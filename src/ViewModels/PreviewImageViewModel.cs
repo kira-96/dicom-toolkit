@@ -13,8 +13,6 @@
 
     public class PreviewImageViewModel : Screen
     {
-        public ImageOrientationViewModel ImageOrientationViewModel { get; }
-
         private DicomDataset Dataset;
         private DicomImage dicomImage;
 
@@ -29,6 +27,8 @@
             get => _imageSource;
             private set => SetAndNotify(ref _imageSource, value);
         }
+
+        public ImageOrientationViewModel ImageOrientationViewModel { get; }
 
         public PreviewImageViewModel(ImageOrientationViewModel imageOrientationViewModel)
         {
@@ -197,17 +197,6 @@
             st.ScaleY += scale;
 
             image.RenderTransform = transformGroup;
-        }
-
-        [Obsolete("Use ImageMoveTranform instead.")]
-        private void MoveImage(Image image, double offsetX, double offsetY)
-        {
-            double left = image.Margin.Left + offsetX;
-            double top = image.Margin.Top + offsetY;
-            double right = image.Margin.Right - offsetX;
-            double bottom = image.Margin.Bottom - offsetY;
-
-            image.Margin = new Thickness(left, top, right, bottom);
         }
 
         private void TransformWidthAndCenter(double widthOffset, double centerOffset)

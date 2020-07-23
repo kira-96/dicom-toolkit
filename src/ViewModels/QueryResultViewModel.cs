@@ -289,7 +289,7 @@
             {
                 var preview = _viewModelFactory.GetPreviewImageViewModel();
                 preview.Initialize(result);
-                _windowManager.ShowDialog(preview);
+                _windowManager.ShowDialog(preview, this);
             }
         }
     }

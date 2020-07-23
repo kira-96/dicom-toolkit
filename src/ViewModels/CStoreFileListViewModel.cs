@@ -109,7 +109,7 @@
             var preview = _viewModelFactory.GetPreviewImageViewModel();
             preview.Initialize(item.File);
 
-            _windowManager.ShowDialog(preview);
+            _windowManager.ShowDialog(preview, this);
         }
 
         public void DeleteCStoreItem(CStoreItem item)
