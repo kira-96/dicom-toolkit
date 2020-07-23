@@ -26,6 +26,7 @@
                         <Image x:Name="Icon" Width="18" Height="18" Margin="0,0,4,0" />
                         <TextBlock Text="{Binding Path=Header}" VerticalAlignment="Center" />
                         <TextBlock Text="{Binding Path=FormattedContent}" x:Name="ContentText" VerticalAlignment="Center" />
+                        <TextBlock Text="{Binding Path=AdditionalInfo}" VerticalAlignment="Center" />
                         <StackPanel.InputBindings>
                             <MouseBinding MouseAction="LeftDoubleClick" Command="{s:Action DcmItemTapped}" CommandParameter="{Binding}" />
                         </StackPanel.InputBindings>

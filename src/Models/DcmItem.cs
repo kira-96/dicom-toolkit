@@ -44,8 +44,10 @@
             get => _dcmVRCode;
             private set
             {
-                SetAndNotify(ref _dcmVRCode, value);
-                NotifyOfPropertyChange(() => Header);
+                if (SetAndNotify(ref _dcmVRCode, value))
+                {
+                    NotifyOfPropertyChange(() => Header);
+                }
             }
         }
 
@@ -58,8 +60,21 @@
             get => _tagValue;
             private set
             {
-                SetAndNotify(ref _tagValue, value);
-                NotifyOfPropertyChange(() => FormattedContent);
+                if (SetAndNotify(ref _tagValue, value))
+                {
+                    NotifyOfPropertyChange(() => FormattedContent);
+                }
+            }
+        }
+
+        private string _additionalInfo;
+
+        public string AdditionalInfo
+        {
+            get => _additionalInfo;
+            private set
+            {
+                SetAndNotify(ref _additionalInfo, value);
             }
         }
 
@@ -98,8 +113,8 @@
         public DcmItem(DicomItem item)
         {
             DcmTag = item.Tag;
-            DcmVRCode = item.ValueRepresentation.Code;
             TagDescription = item.Tag.DictionaryEntry.Name;
+            _dcmVRCode = item.ValueRepresentation.Code;
 
             if (item is DicomSequence seq)
             {
@@ -116,9 +131,9 @@
             }
             else if (item is DicomElement element)
             {
-                if (element.Tag.CompareTo(DicomTag.PixelData) == 0)
+                if (element.Tag == DicomTag.PixelData)
                 {
-                    TagValue = "[Binary Pixel Data]";
+                    _tagValue = "[Binary Pixel Data]";
                     return;
                 }
 
@@ -139,15 +154,19 @@
                 }
                 catch (Exception)
                 {
-                    IsValid = false;
+                    _isValid = false;
                 }
 
-                var values = element.Get<string[]>();
-                TagValue = string.Join("\\", values);
+                _tagValue = string.Join("\\", element.Get<string[]>());
+
+                if (element.ValueRepresentation == DicomVR.UI && element.Count > 0)
+                {
+                    SetUidAdditionalInfo(element);
+                }
             }
             else if (item is DicomFragmentSequence fragment)
             {
-                if (fragment.Tag.CompareTo(DicomTag.PixelData) == 0)
+                if (fragment.Tag == DicomTag.PixelData)
                 {
                     TagValue = "[Binary Pixel Data]";
                     return;
@@ -200,8 +219,22 @@
                 }
             }
 
-            var values = element.Get<string[]>();
-            TagValue = string.Join("\\", values);
+            TagValue = string.Join("\\", element.Get<string[]>());
+
+            if (element.ValueRepresentation == DicomVR.UI && element.Count > 0)
+            {
+                SetUidAdditionalInfo(element);
+            }
+        }
+
+        private void SetUidAdditionalInfo(DicomElement element)
+        {
+            var uid = element.Get<DicomUID>(0);
+            var name = uid.Name;
+            if (name != "Unknown")
+            {
+                AdditionalInfo = $" ({name})";
+            }
         }
     }
 }
