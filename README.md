@@ -9,7 +9,7 @@
 
 ## 截图
 
-![dump](screenshot/Snipaste_2020-07-11_16-00-30.png)
+![dump](screenshot/Snipaste_2020-07-23_15-19-06.png)
 ![c-store](screenshot/Snipaste_2020-07-11_15-59-13.png)
 
 ## 功能
