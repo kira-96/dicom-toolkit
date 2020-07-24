@@ -1,27 +1,31 @@
 ﻿namespace SimpleDICOMToolkit.MQTT
 {
-    using StyletIoC;
+    using GalaSoft.MvvmLight.Helpers;
     using MQTTnet;
     using MQTTnet.Client;
     using MQTTnet.Client.Options;
+    using StyletIoC;
     using System;
     using System.Collections.Generic;
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
     using Logging;
-    using WeakActions;
+    using Services;
 
-    public class Messenger : IMessenger
+    public class MessengerService : IMessengerService
     {
         private readonly Dictionary<string, List<WeakActionAndToken>> recipientsStrictAction = new Dictionary<string, List<WeakActionAndToken>>();
         private readonly CancellationTokenSource CancellationTokenSource = new CancellationTokenSource();
         private readonly ILoggerService logger;
+        private readonly IConfigurationService configurationService;
         private readonly IMqttClient client;
 
-        public Messenger([Inject(Key = "filelogger")] ILoggerService loggerService)
+        public MessengerService([Inject(Key = "filelogger")] ILoggerService loggerService,
+            IConfigurationService configurationService)
         {
             logger = loggerService;
+            this.configurationService = configurationService;
             client = new MqttFactory().CreateMqttClient();
         }
 
@@ -118,11 +122,13 @@
 
         private async Task<bool> TryConnectAsync()
         {
+            AppConfiguration appConfiguration = configurationService.GetConfiguration<AppConfiguration>();
+
             IMqttClientOptions options = new MqttClientOptionsBuilder()
                 .WithCleanSession()
                 .WithClientId("主客户端 ID: 001")
                 .WithCredentials("AD*米妮*斯托蕾塔", "^P@$$W0&D$")
-                .WithTcpServer("localhost", 9629)
+                .WithTcpServer("localhost", appConfiguration.ListenPort)
                 .Build();
 
             client.UseConnectedHandler(e => { logger.Debug("Successfully connected to: {0}", e.AuthenticateResult.ResultCode); })
@@ -147,14 +153,16 @@
                 })
                 .UseApplicationMessageReceivedHandler(e =>
                 {
-                    //string message =
-                    // "\r\n### RECEIVED APPLICATION MESSAGE ###\r\n" +
-                    // $"+ Topic = {e.ApplicationMessage.Topic}\r\n" +
-                    // $"+ Payload = {Encoding.UTF8.GetString(e.ApplicationMessage.Payload)}\r\n" +
-                    // $"+ QoS = {e.ApplicationMessage.QualityOfServiceLevel}\r\n" +
-                    // $"+ Retain = {e.ApplicationMessage.Retain}\r\n";
+#if DEBUG
+                    string message =
+                     "\r\n### RECEIVED APPLICATION MESSAGE ###\r\n" +
+                     $"+ Topic = {e.ApplicationMessage.Topic}\r\n" +
+                     $"+ Payload = {Encoding.UTF8.GetString(e.ApplicationMessage.Payload)}\r\n" +
+                     $"+ QoS = {e.ApplicationMessage.QualityOfServiceLevel}\r\n" +
+                     $"+ Retain = {e.ApplicationMessage.Retain}\r\n";
 
-                    //logger.Info(message);
+                    System.Diagnostics.Debug.WriteLine(message);
+#endif
                     ExecuteMessage(e.ApplicationMessage.Topic, Encoding.UTF8.GetString(e.ApplicationMessage.Payload));
                 });
 

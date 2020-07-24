@@ -1,4 +1,4 @@
-﻿// original source https://github.com/canton7/Stylet/blob/master/Samples/Stylet.Samples.ModelValidation/FluentModelValidator.cs
+﻿// https://github.com/canton7/Stylet/wiki/FluentValidationAdapter
 
 using FluentValidation;
 using Stylet;

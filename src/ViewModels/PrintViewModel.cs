@@ -1,13 +1,12 @@
 ﻿namespace SimpleDICOMToolkit.ViewModels
 {
-    using MQTT;
-    using Nett;
     using Stylet;
     using StyletIoC;
     using System;
     using System.IO;
     using Client;
     using Logging;
+    using MQTT;
     using Services;
     using Utils;
 
@@ -23,7 +22,10 @@
         private II18nService i18NService;
 
         [Inject]
-        private IMessenger messenger;
+        private IConfigurationService configurationService;
+
+        [Inject]
+        private IMessengerService messenger;
 
         [Inject]
         public ServerConfigViewModel ServerConfigViewModel { get; private set; }
@@ -45,7 +47,7 @@
             ServerConfigViewModel.Init(this);
             PrintPreviewViewModel.Parent = this;
             await PrintPreviewViewModel.AddSampleImage();
-            ReloadPrintOptions("config.toml");
+            PrintOptions = configurationService.GetConfiguration<PrintOptions>("PrintOptions");
             await messenger.SubscribeAsync(this, "Config", ReloadPrintOptions);
         }
 
@@ -68,25 +70,8 @@
 
         private void ReloadPrintOptions(string file)
         {
-            if (!File.Exists(file))
-            {
-                return;
-            }
-
-            TomlTable table = Toml.ReadFile(file);
-
-            if (table.ContainsKey("PrintOptions"))
-            {
-                TomlTable options = table.Get<TomlTable>("PrintOptions");
-                if (options.ContainsKey("Orientation"))
-                    PrintOptions.Orientation = (FilmOrientation)options.Get<TomlInt>("Orientation").Value;
-                if (options.ContainsKey("Size"))
-                    PrintOptions.FilmSize = (FilmSize)options.Get<TomlInt>("Size").Value;
-                if (options.ContainsKey("Magnification"))
-                    PrintOptions.MagnificationType = (MagnificationType)options.Get<TomlInt>("Magnification").Value;
-                if (options.ContainsKey("Medium"))
-                    PrintOptions.MediumType = (MediumType)options.Get<TomlInt>("Medium").Value;
-            }
+            configurationService.Load("PrintOptions");
+            PrintOptions = configurationService.GetConfiguration<PrintOptions>("PrintOptions");
         }
 
         public async void Dispose()

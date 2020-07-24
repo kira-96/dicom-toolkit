@@ -4,14 +4,17 @@
     using System;
     using System.Threading.Tasks;
     using MQTT;
+    using Services;
 
     public class ShellViewModel : Conductor<IScreen>.Collection.OneActive
     {
         public static string WindowName = "Simple DICOM Toolkit";
 
+        private readonly IConfigurationService configurationService;
         private readonly ISimpleMqttService mqttService;
 
         public ShellViewModel(
+            IConfigurationService configurationService,
             DcmItemsViewModel dcmItemsViewModel,
             WorklistViewModel worklistViewModel,
             WorklistSCPViewModel worklistSCPViewModel,
@@ -23,6 +26,7 @@
             ISimpleMqttService mqttService)
         {
             DisplayName = WindowName;
+            this.configurationService = configurationService;
             this.mqttService = mqttService;
 
             Items.Add(dcmItemsViewModel);
@@ -39,7 +43,9 @@
         {
             base.OnViewLoaded();
 
-            await mqttService.StartAsync(9629);
+            var appConfiguration = configurationService.GetConfiguration<AppConfiguration>();
+
+            await mqttService.StartAsync(appConfiguration.ListenPort);
 
             ActiveItem = Items.Count > 0 ? Items[0] : null;
 

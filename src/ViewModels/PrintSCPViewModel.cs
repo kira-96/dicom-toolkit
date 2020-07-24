@@ -23,7 +23,10 @@
         private II18nService i18NService;
 
         [Inject]
-        private IMessenger messenger;
+        private IConfigurationService configurationService;
+
+        [Inject]
+        private IMessengerService messenger;
 
         [Inject]
         public ServerConfigViewModel ServerConfigViewModel { get; private set; }
@@ -41,7 +44,7 @@
             base.OnInitialActivate();
             ServerConfigViewModel.Init(this);
             PrintJobsViewModel.Parent = this;
-            ReloadPrinterSettings("config.toml");
+            PrintServer.Default.PrinterName = configurationService.GetConfiguration<string>("PrinterSettings");
             await messenger.SubscribeAsync(this, "Config", ReloadPrinterSettings);
         }
 
@@ -64,21 +67,8 @@
 
         private void ReloadPrinterSettings(string file)
         {
-            if (!File.Exists(file))
-            {
-                return;
-            }
-
-            TomlTable table = Toml.ReadFile(file);
-
-            if (table.ContainsKey("PrinterSettings"))
-            {
-                TomlTable settings = table.Get<TomlTable>("PrinterSettings");
-                if (settings.ContainsKey("Printer"))
-                {
-                    PrintServer.Default.PrinterName = settings.Get<TomlString>("Printer").Value;
-                }
-            }
+            configurationService.Load("PrinterSettings");
+            PrintServer.Default.PrinterName = configurationService.GetConfiguration<string>("PrinterSettings");
         }
 
         public async void Dispose()

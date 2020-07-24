@@ -68,6 +68,7 @@
 
                     cv.ReasonCode = MqttConnectReasonCode.Success;
                 })
+                .WithEncryptionSslProtocol(System.Security.Authentication.SslProtocols.Tls12)
                 .WithDefaultEndpointPort(port)
                 .WithSubscriptionInterceptor(cv => { cv.AcceptSubscription = true; })
                 .Build();

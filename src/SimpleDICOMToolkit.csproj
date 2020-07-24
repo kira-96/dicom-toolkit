@@ -81,6 +81,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AppConfiguration.cs" />
     <Compile Include="Controls\AduLoading.cs" />
     <Compile Include="Controls\EffectBehavior.cs" />
     <Compile Include="Controls\ProgressRing.cs" />
@@ -97,8 +98,8 @@
     <Compile Include="IoCModules\DicomSCUModule.cs" />
     <Compile Include="IoCModules\ValidatorModule.cs" />
     <Compile Include="IoCModules\ViewModelModule.cs" />
-    <Compile Include="MQTT\IMessenger.cs" />
-    <Compile Include="MQTT\Messenger.cs" />
+    <Compile Include="MQTT\IMessengerService.cs" />
+    <Compile Include="MQTT\MessengerService.cs" />
     <Compile Include="MQTT\ISimpleMqttService.cs" />
     <Compile Include="MQTT\SimpleMqttService.cs" />
     <Compile Include="MQTT\WeakActions\IExecuteWithObject.cs" />
@@ -109,8 +110,10 @@
     <Compile Include="BindingProxy.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Services\AppearanceService.cs" />
+    <Compile Include="Services\ConfigurationService.cs" />
     <Compile Include="Services\I18nService.cs" />
     <Compile Include="Services\IAppearanceService.cs" />
+    <Compile Include="Services\IConfigurationService.cs" />
     <Compile Include="Services\II18nService.cs" />
     <Compile Include="SimpleIoC.cs" />
     <Compile Include="DicomNetwork\Client\PrintOptions.cs" />

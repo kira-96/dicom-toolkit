@@ -76,7 +76,7 @@
         {
             base.OnExit(e);
 
-            Container.Get<IMessenger>().Dispose();
+            Container.Get<IMessengerService>().Dispose();
             Container.Get<ISimpleMqttService>().Dispose();
         }
 
