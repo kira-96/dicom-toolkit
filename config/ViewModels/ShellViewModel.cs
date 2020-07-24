@@ -36,6 +36,8 @@
             }
         }
 
+        public int ServerPort { get; private set; } = 9629;
+
         public ShellViewModel(
             PrintOptionsViewModel printOptionsViewModel,
             PrinterSettingsViewModel printerSettingsViewModel)
@@ -63,10 +65,7 @@
             if (Items.Count == 0)
                 return;
 
-            foreach (var item in Items)
-            {
-                (item as IConfigViewModel).LoadConfigs(ConfigTable);
-            }
+            LoadConfig();
 
             string[] args = Environment.GetCommandLineArgs();
 
@@ -91,11 +90,38 @@
             ActiveItem = Items[0];
         }
 
-        private void SaveConfig()
+        private void LoadConfig()
         {
+            if (ConfigTable.ContainsKey("Application"))
+            {
+                TomlTable appSettings = ConfigTable.Get<TomlTable>("Application");
+
+                if (appSettings.ContainsKey("ListenPort"))
+                {
+                    ServerPort = (int)appSettings.Get<TomlInt>("ListenPort").Value;
+                    Messenger.Default.ServerPort = ServerPort;
+                }
+            }
+
             foreach (var item in Items)
             {
-                (item as IConfigViewModel).SaveConfig();
+                (item as IConfigViewModel).LoadConfigs(ConfigTable);
+            }
+        }
+
+        private void SaveConfig()
+        {
+            TomlTable appSettings = Toml.Create();
+            appSettings.Add("ListenPort", ServerPort);
+
+            if (ConfigTable.ContainsKey("Application"))
+                ConfigTable.Remove("Application");
+
+            ConfigTable.Add("Application", appSettings);
+
+            foreach (var item in Items)
+            {
+                (item as IConfigViewModel).SaveConfig(ConfigTable);
             }
 
             Toml.WriteFile(ConfigTable, CONFIG_FILE);

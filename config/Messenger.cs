@@ -33,6 +33,8 @@
             }
         }
 
+        public int ServerPort { get; set; } = 9629;
+
         private readonly CancellationTokenSource CancellationTokenSource = new CancellationTokenSource();
         private readonly Logger logger = LogManager.GetLogger("ConfigLogger");
 
@@ -65,7 +67,7 @@
                 .WithCleanSession()
                 .WithClientId("设置客户端 ID: 002")
                 .WithCredentials("AD*米妮*斯托蕾塔", "^P@$$W0&D$")
-                .WithTcpServer("localhost", 9629)
+                .WithTcpServer("localhost", ServerPort)
                 .Build();
 
             Client.UseConnectedHandler(e => { logger.Debug("Successfully connected to: {0}", e.AuthenticateResult.ResultCode); })

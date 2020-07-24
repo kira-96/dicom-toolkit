@@ -67,12 +67,10 @@ namespace Config.ViewModels
             }
         }
 
-        public void SaveConfig()
+        public void SaveConfig(TomlTable table)
         {
             TomlTable settings = Toml.Create();
             settings.Add("Printer", Printer);
-
-            TomlTable table = (Parent as ShellViewModel).ConfigTable;
 
             if (table.ContainsKey("PrinterSettings"))
                 table.Remove("PrinterSettings");

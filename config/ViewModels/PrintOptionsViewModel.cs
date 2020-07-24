@@ -95,15 +95,13 @@ namespace Config.ViewModels
             }
         }
 
-        public void SaveConfig()
+        public void SaveConfig(TomlTable table)
         {
             TomlTable options = Toml.Create();
             options.Add("Orientation", Orientation);
             options.Add("Size", Size);
             options.Add("Magnification", Magnification);
             options.Add("Medium", Medium);
-
-            TomlTable table = (Parent as ShellViewModel).ConfigTable;
 
             if (table.ContainsKey("PrintOptions"))
                 table.Remove("PrintOptions");

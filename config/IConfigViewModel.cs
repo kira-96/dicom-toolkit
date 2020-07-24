@@ -6,6 +6,6 @@ namespace Config
     {
         void LoadConfigs(TomlTable table);
 
-        void SaveConfig();
+        void SaveConfig(TomlTable table);
     }
 }
