@@ -1,6 +1,26 @@
-﻿using System;
+﻿// ****************************************************************************
+// <copyright file="WeakActionGeneric.cs" company="GalaSoft Laurent Bugnion">
+// Copyright © GalaSoft Laurent Bugnion 2009-2016
+// </copyright>
+// ****************************************************************************
+// <author>Laurent Bugnion</author>
+// <email>laurent@galasoft.ch</email>
+// <date>18.9.2009</date>
+// <project>GalaSoft.MvvmLight</project>
+// <web>http://www.mvvmlight.net</web>
+// <license>
+// See license.txt in this solution or http://www.galasoft.ch/license_MIT.txt
+// </license>
+// ****************************************************************************
 
-namespace SimpleDICOMToolkit.WeakActions
+using System;
+using System.Diagnostics.CodeAnalysis;
+// ReSharper disable RedundantUsingDirective
+using System.Reflection;
+
+// ReSharper restore RedundantUsingDirective
+
+namespace GalaSoft.MvvmLight.Helpers
 {
     /// <summary>
     /// Stores an Action without causing a hard reference
@@ -8,8 +28,11 @@ namespace SimpleDICOMToolkit.WeakActions
     /// </summary>
     /// <typeparam name="T">The type of the Action's parameter.</typeparam>
     ////[ClassInfo(typeof(WeakAction))]
-    internal class WeakAction<T> : WeakAction, IExecuteWithObject
+    public class WeakAction<T> : WeakAction, IExecuteWithObject
     {
+#if SILVERLIGHT
+        private Action<T> _action;
+#endif
         private Action<T> _staticAction;
 
         /// <summary>
@@ -21,19 +44,69 @@ namespace SimpleDICOMToolkit.WeakActions
             {
                 if (_staticAction != null)
                 {
+#if NETFX_CORE
+                    return _staticAction.GetMethodInfo().Name;
+#else
                     return _staticAction.Method.Name;
+#endif
                 }
+
+#if SILVERLIGHT
+                if (_action != null)
+                {
+                    return _action.Method.Name;
+                }
+
+                if (Method != null)
+                {
+                    return Method.Name;
+                }
+
+                return string.Empty;
+#else
                 return Method.Name;
+#endif
             }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether the Action's owner is still alive, or if it was collected
+        /// by the Garbage Collector already.
+        /// </summary>
+        public override bool IsAlive
+        {
+            get
+            {
+                if (_staticAction == null
+                    && Reference == null)
+                {
+                    return false;
+                }
+
+                if (_staticAction != null)
+                {
+                    if (Reference != null)
+                    {
+                        return Reference.IsAlive;
+                    }
+
+                    return true;
+                }
+
+                return Reference.IsAlive;
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the WeakAction class.
         /// </summary>
         /// <param name="action">The action that will be associated to this instance.</param>
-        public WeakAction(Action<T> action)
-            : this(action?.Target, action)
+        /// <param name="keepTargetAlive">If true, the target of the Action will
+        /// be kept as a hard reference, which might cause a memory leak. You should only set this
+        /// parameter to true if the action is using closures. See
+        /// http://galasoft.ch/s/mvvmweakaction. </param>
+        public WeakAction(Action<T> action, bool keepTargetAlive = false)
+            : this(action == null ? null : action.Target, action, keepTargetAlive)
         {
         }
 
@@ -42,9 +115,22 @@ namespace SimpleDICOMToolkit.WeakActions
         /// </summary>
         /// <param name="target">The action's owner.</param>
         /// <param name="action">The action that will be associated to this instance.</param>
-        public WeakAction(object target, Action<T> action)
+        /// <param name="keepTargetAlive">If true, the target of the Action will
+        /// be kept as a hard reference, which might cause a memory leak. You should only set this
+        /// parameter to true if the action is using closures. See
+        /// http://galasoft.ch/s/mvvmweakaction. </param>
+        [SuppressMessage(
+            "Microsoft.Design",
+            "CA1062:Validate arguments of public methods",
+            MessageId = "1",
+            Justification = "Method should fail with an exception if action is null.")]
+        public WeakAction(object target, Action<T> action, bool keepTargetAlive = false)
         {
+#if NETFX_CORE
+            if (action.GetMethodInfo().IsStatic)
+#else
             if (action.Method.IsStatic)
+#endif
             {
                 _staticAction = action;
 
@@ -58,10 +144,57 @@ namespace SimpleDICOMToolkit.WeakActions
                 return;
             }
 
+#if SILVERLIGHT
+            if (!action.Method.IsPublic
+                || (target != null
+                    && !target.GetType().IsPublic
+                    && !target.GetType().IsNestedPublic))
+            {
+                _action = action;
+            }
+            else
+            {
+                var name = action.Method.Name;
+
+                if (name.Contains("<")
+                    && name.Contains(">"))
+                {
+                    _action = action;
+                }
+                else
+                {
+                    Method = action.Method;
+                    ActionReference = new WeakReference(action.Target);
+                    LiveReference = keepTargetAlive ? action.Target : null;
+                }
+            }
+#else
+#if NETFX_CORE
+            Method = action.GetMethodInfo();
+#else
             Method = action.Method;
+#endif
             ActionReference = new WeakReference(action.Target);
-            Target = action.Target;
+#endif
+
+            LiveReference = keepTargetAlive ? action.Target : null;
             Reference = new WeakReference(target);
+
+#if DEBUG
+            if (ActionReference != null
+                && ActionReference.Target != null
+                && !keepTargetAlive)
+            {
+                var type = ActionReference.Target.GetType();
+
+                if (type.Name.StartsWith("<>")
+                    && type.Name.Contains("DisplayClass"))
+                {
+                    System.Diagnostics.Debug.WriteLine(
+                        "You are attempting to register a lambda with a closure without using keepTargetAlive. Are you sure? Check http://galasoft.ch/s/mvvmweakaction for more info.");
+                }
+            }
+#endif
         }
 
         /// <summary>
@@ -75,7 +208,7 @@ namespace SimpleDICOMToolkit.WeakActions
 
         /// <summary>
         /// Executes the action. This only happens if the action's owner
-        /// is still alive.(remove param alive, it is not necessary)
+        /// is still alive.
         /// </summary>
         /// <param name="parameter">A parameter to be passed to the action.</param>
         public void Execute(T parameter)
@@ -86,16 +219,29 @@ namespace SimpleDICOMToolkit.WeakActions
                 return;
             }
 
-            var actionTarget = Target;
-            if (Method != null
-                    && actionTarget != null)
+            var actionTarget = ActionTarget;
+
+            if (IsAlive)
             {
-                Method.Invoke(
-                    actionTarget,
-                    new object[]
-                    {
+                if (Method != null
+                    && (LiveReference != null
+                        || ActionReference != null)
+                    && actionTarget != null)
+                {
+                    Method.Invoke(
+                        actionTarget,
+                        new object[]
+                        {
                             parameter
-                    });
+                        });
+                }
+
+#if SILVERLIGHT
+                if (_action != null)
+                {
+                    _action(parameter);
+                }
+#endif
             }
         }
 
@@ -120,6 +266,9 @@ namespace SimpleDICOMToolkit.WeakActions
         /// </summary>
         public new void MarkForDeletion()
         {
+#if SILVERLIGHT
+            _action = null;
+#endif
             _staticAction = null;
             base.MarkForDeletion();
         }
