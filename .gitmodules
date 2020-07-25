@@ -1,0 +1,3 @@
+[submodule "build/SimplifiedChinese"]
+	path = build/SimplifiedChinese
+	url = https://github.com/kira-96/Inno-Setup-Chinese-Simplified-Translation
