@@ -6,8 +6,8 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 using SimpleDICOMToolkit.Logging;
-using SimpleDICOMToolkit.Utils;
-using static SimpleDICOMToolkit.Utils.SysUtil;
+using SimpleDICOMToolkit.Helpers;
+using static SimpleDICOMToolkit.Helpers.SystemHelper;
 
 namespace SimpleDICOMToolkit.Services
 {
@@ -131,7 +131,7 @@ namespace SimpleDICOMToolkit.Services
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            if (msg == WindowsAPI.WM_DWMCOLORIZATIONCOLORCHANGED)
+            if (msg == InteropHelper.WM_DWMCOLORIZATIONCOLORCHANGED)
             {
                 AccentColorChanged(this, new EventArgs());
             }

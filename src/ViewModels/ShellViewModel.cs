@@ -1,19 +1,21 @@
 ﻿namespace SimpleDICOMToolkit.ViewModels
 {
     using Stylet;
+    using StyletIoC;
     using System;
     using System.Threading.Tasks;
-    using MQTT;
     using Services;
 
     public class ShellViewModel : Conductor<IScreen>.Collection.OneActive
     {
-        public static string WindowName = "Simple DICOM Toolkit";
+        public const string WindowName = "Simple DICOM Toolkit";
 
+        private readonly IContainer container;
         private readonly IConfigurationService configurationService;
         private readonly ISimpleMqttService mqttService;
 
         public ShellViewModel(
+            IContainer container,
             IConfigurationService configurationService,
             DcmItemsViewModel dcmItemsViewModel,
             WorklistViewModel worklistViewModel,
@@ -26,6 +28,7 @@
             ISimpleMqttService mqttService)
         {
             DisplayName = WindowName;
+            this.container = container;
             this.configurationService = configurationService;
             this.mqttService = mqttService;
 
@@ -50,6 +53,14 @@
             ActiveItem = Items.Count > 0 ? Items[0] : null;
 
             await HandleCommandLineArgs(Environment.GetCommandLineArgs());
+        }
+
+        protected override void OnClose()
+        {
+            base.OnClose();
+
+            container.Get<IMessengerService>().Dispose();
+            mqttService.Dispose();
         }
 
         private async Task HandleCommandLineArgs(string[] args)

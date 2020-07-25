@@ -1,5 +1,6 @@
 ﻿using StyletIoC;
 using Nett;
+using System;
 using System.IO;
 using SimpleDICOMToolkit.Client;
 using SimpleDICOMToolkit.Logging;
@@ -29,7 +30,15 @@ namespace SimpleDICOMToolkit.Services
 
             if (File.Exists(CONFIG_FILE))
             {
-                configTable = Toml.ReadFile(CONFIG_FILE);
+                try
+                {
+                    configTable = Toml.ReadFile(CONFIG_FILE);
+                }
+                catch (Exception ex)
+                {
+                    loggerService.Error(ex, "Read configuration file error.");
+                    configTable = null;
+                }
             }
             else
             {

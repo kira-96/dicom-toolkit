@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace SimpleDICOMToolkit.Utils
+namespace SimpleDICOMToolkit.Helpers
 {
-    public struct MyRect
+    public struct RECT
     {
         public int Left;
         public int Top;
@@ -11,7 +11,7 @@ namespace SimpleDICOMToolkit.Utils
         public int Bottom;
     }
 
-    public static class WindowsAPI
+    public static class InteropHelper
     {
         #region System API
 
@@ -74,7 +74,7 @@ namespace SimpleDICOMToolkit.Utils
         public static extern void MoveWindow(IntPtr hwnd, int x, int y, int width, int height, bool repaient);
 
         [DllImport("user32.dll", EntryPoint = "GetWindowRect")]
-        public static extern bool GetWindowRect(IntPtr hwnd, out MyRect rect);
+        public static extern bool GetWindowRect(IntPtr hwnd, out RECT rect);
 
         [DllImport("user32.dll", EntryPoint = "SetCursorPos")]
         public static extern int SetCursorPos(int x, int y);

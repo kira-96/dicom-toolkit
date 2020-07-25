@@ -8,7 +8,7 @@
     using Models;
     using Server;
     using Services;
-    using Utils;
+    using Helpers;
 
     public class CStoreReceivedViewModel : Screen, IHandle<ServerMessageItem>, IDisposable
     {
@@ -66,7 +66,7 @@
                 CStoreServer.Default.CreateServer(message.ServerPort, message.LocalAET);
                 _eventAggregator.Publish(new ServerStateItem(true), nameof(CStoreReceivedViewModel));
                 notificationService.ShowNotification(
-                    string.Format(i18NService.GetXmlStringByKey("ServerIsRunning"), "C-STORE", SysUtil.LocalIPAddress, message.ServerPort),
+                    string.Format(i18NService.GetXmlStringByKey("ServerIsRunning"), "C-STORE", SystemHelper.LocalIPAddress, message.ServerPort),
                     message.LocalAET);
             }
             else
@@ -86,7 +86,7 @@
 
         public void OpenFolder(string file)
         {
-            ProcessUtil.Explore(file);
+            ProcessHelper.Explore(file);
         }
 
         public void Dispose()

@@ -6,9 +6,8 @@
     using System.IO;
     using Client;
     using Logging;
-    using MQTT;
     using Services;
-    using Utils;
+    using Helpers;
 
     public class PrintViewModel : Screen, IDisposable
     {
@@ -62,7 +61,7 @@
                 return;
             }
 
-            if (!ProcessUtil.StartProcess(configexe, "0"))
+            if (!ProcessHelper.StartProcess(configexe, "0"))
             {
                 _logger.Warn("Start process failure. [{0}]", configexe);
             }
@@ -76,7 +75,6 @@
 
         public async void Dispose()
         {
-            // TODO
             await messenger.UnsubscribeAsync(this, "Config");
             ServerConfigViewModel.Dispose();
             PrintPreviewViewModel.Dispose();

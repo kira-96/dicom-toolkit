@@ -14,7 +14,7 @@
     using System.Windows.Media.Imaging;
     using Client;
     using Models;
-    using Utils;
+    using Helpers;
 
     public class PrintPreviewViewModel : Screen, IHandle<ClientMessageItem>, IDisposable
     {

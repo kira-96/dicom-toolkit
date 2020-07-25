@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics;
 using System.IO;
 
-namespace SimpleDICOMToolkit.Utils
+namespace SimpleDICOMToolkit.Helpers
 {
-    public static class ProcessUtil
+    public static class ProcessHelper
     {
         public static void Explore(string path)
         {

@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Media;
 
-namespace SimpleDICOMToolkit.Utils
+namespace SimpleDICOMToolkit.Helpers
 {
-    public static class VisualTreeUtil
+    public static class VisualTreeHelper
     {
         public static FrameworkElement GetDescendantFromName(DependencyObject parent, string name)
         {
-            int count = VisualTreeHelper.GetChildrenCount(parent);
+            int count = System.Windows.Media.VisualTreeHelper.GetChildrenCount(parent);
 
             if (count < 1)
             {
@@ -17,7 +16,7 @@ namespace SimpleDICOMToolkit.Utils
 
             for (int i = 0; i < count; i++)
             {
-                if (VisualTreeHelper.GetChild(parent, i) is FrameworkElement frameworkElement)
+                if (System.Windows.Media.VisualTreeHelper.GetChild(parent, i) is FrameworkElement frameworkElement)
                 {
                     if (frameworkElement.Name == name)
                     {
@@ -43,12 +42,12 @@ namespace SimpleDICOMToolkit.Utils
         /// <returns></returns>
         public static List<T> FindVisualChild<T>(DependencyObject obj) where T : FrameworkElement
         {
-            int count = VisualTreeHelper.GetChildrenCount(obj);
+            int count = System.Windows.Media.VisualTreeHelper.GetChildrenCount(obj);
 
             List<T> TList = new List<T>();
             for (int i = 0; i < count; i++)
             {
-                DependencyObject child = VisualTreeHelper.GetChild(obj, i);
+                DependencyObject child = System.Windows.Media.VisualTreeHelper.GetChild(obj, i);
 
                 if (child != null && child is T)
                 {
@@ -73,7 +72,7 @@ namespace SimpleDICOMToolkit.Utils
         {
             List<T> TList = new List<T> { };
 
-            DependencyObject parent = VisualTreeHelper.GetParent(obj);
+            DependencyObject parent = System.Windows.Media.VisualTreeHelper.GetParent(obj);
             if (parent != null && parent is T)
             {
                 TList.Add((T)parent);

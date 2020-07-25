@@ -1,4 +1,4 @@
-﻿namespace SimpleDICOMToolkit.MQTT
+﻿namespace SimpleDICOMToolkit.Services
 {
     using StyletIoC;
     using MQTTnet;

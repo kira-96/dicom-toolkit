@@ -7,7 +7,7 @@
     using Logging;
     using Models;
     using Services;
-    using Utils;
+    using Helpers;
 
     public class ServerConfigViewModel : Screen, IHandle<BusyStateItem>, IHandle<ServerStateItem>, IDisposable
     {
@@ -207,7 +207,7 @@
             {
                 _doRequestAction = StartWorklistServer;
                 _eventAggregator.Subscribe(this, nameof(PatientsViewModel));
-                ServerIP = SysUtil.LocalIPAddress;
+                ServerIP = SystemHelper.LocalIPAddress;
                 LocalAET = ServerAET = "RIS";
                 IsServerIPEnabled = IsServerAETEnabled = IsModalityEnabled = false;
             }
@@ -239,7 +239,7 @@
             {
                 _doRequestAction = StartCStoreServer;
                 _eventAggregator.Subscribe(this, nameof(CStoreReceivedViewModel));
-                ServerIP = SysUtil.LocalIPAddress;
+                ServerIP = SystemHelper.LocalIPAddress;
                 ServerPort = "104";
                 LocalAET = ServerAET = "CSTORESCP";
                 IsServerIPEnabled = IsServerAETEnabled = IsModalityEnabled = false;
@@ -248,7 +248,7 @@
             {
                 _doRequestAction = StartPrintServer;
                 _eventAggregator.Subscribe(this, nameof(PrintJobsViewModel));
-                ServerIP = SysUtil.LocalIPAddress;
+                ServerIP = SystemHelper.LocalIPAddress;
                 ServerPort = "7104";
                 LocalAET = ServerAET = "PRINTSCP";
                 IsServerIPEnabled = IsServerAETEnabled = IsModalityEnabled = false;

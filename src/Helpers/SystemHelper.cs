@@ -5,9 +5,9 @@ using System.Net;
 using System.Windows;
 using System.Windows.Media;
 
-namespace SimpleDICOMToolkit.Utils
+namespace SimpleDICOMToolkit.Helpers
 {
-    public static class SysUtil
+    public static class SystemHelper
     {
         public static string LocalIPAddress
         {
@@ -76,7 +76,7 @@ namespace SimpleDICOMToolkit.Utils
             {
                 int major = 0, minor = 0, buildNumber = 0;
 
-                WindowsAPI.RtlGetNtVersionNumbers(ref major, ref minor, ref buildNumber);
+                InteropHelper.RtlGetNtVersionNumbers(ref major, ref minor, ref buildNumber);
 
                 return new Version(major, minor, buildNumber);
             }

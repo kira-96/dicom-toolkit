@@ -1,4 +1,4 @@
-﻿namespace SimpleDICOMToolkit.MQTT
+﻿namespace SimpleDICOMToolkit.Services
 {
     using GalaSoft.MvvmLight.Helpers;
     using MQTTnet;
@@ -11,7 +11,6 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Logging;
-    using Services;
 
     public class MessengerService : IMessengerService
     {

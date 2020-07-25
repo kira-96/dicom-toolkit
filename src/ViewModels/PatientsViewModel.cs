@@ -7,7 +7,7 @@
     using Models;
     using Server;
     using Services;
-    using Utils;
+    using Helpers;
 
     public class PatientsViewModel : Screen, IHandle<ServerMessageItem>, IHandle<WorklistItem>, IDisposable
     {
@@ -86,7 +86,7 @@
                 WorklistServer.Default.CreateServer(message.ServerPort, message.LocalAET);
                 _eventAggregator.Publish(new ServerStateItem(true), nameof(PatientsViewModel));
                 notificationService.ShowNotification(
-                    string.Format(i18NService.GetXmlStringByKey("ServerIsRunning"), "Worklist", SysUtil.LocalIPAddress, message.ServerPort), 
+                    string.Format(i18NService.GetXmlStringByKey("ServerIsRunning"), "Worklist", SystemHelper.LocalIPAddress, message.ServerPort), 
                     message.LocalAET);
                 WorklistServer.Default.IsListening();
             }

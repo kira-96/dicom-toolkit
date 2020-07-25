@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Input;
 using System.Windows.Interop;
 
-namespace SimpleDICOMToolkit.Utils
+namespace SimpleDICOMToolkit.Helpers
 {
     /// <summary>
     /// This class allow you create a Cursor form a Bitmap

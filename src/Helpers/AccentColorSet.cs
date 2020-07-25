@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows.Media;
 
-namespace SimpleDICOMToolkit.Utils
+namespace SimpleDICOMToolkit.Helpers
 {
     // TODO: Add a listener for WM_SETTINGCHANGE to detect changes of the active color scheme automatically.
     //   Add a listener for WM_SETTINGCHANGE and trigger an event, like ActiveSetChanged.

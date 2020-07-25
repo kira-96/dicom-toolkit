@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SimpleDICOMToolkit.MQTT
+namespace SimpleDICOMToolkit.Services
 {
     public interface IMessengerService : IDisposable
     {

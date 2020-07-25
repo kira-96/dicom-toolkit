@@ -6,7 +6,7 @@
     using Models;
     using Server;
     using Services;
-    using Utils;
+    using Helpers;
 
     public class PrintJobsViewModel : Screen, IHandle<ServerMessageItem>, IDisposable
     {
@@ -39,7 +39,7 @@
                 PrintServer.Default.CreateServer(message.ServerPort, message.LocalAET);
                 _eventAggregator.Publish(new ServerStateItem(true), nameof(PrintJobsViewModel));
                 notificationService.ShowNotification(
-                    string.Format(i18NService.GetXmlStringByKey("ServerIsRunning"), "Print", SysUtil.LocalIPAddress, message.ServerPort),
+                    string.Format(i18NService.GetXmlStringByKey("ServerIsRunning"), "Print", SystemHelper.LocalIPAddress, message.ServerPort),
                     message.LocalAET);
             }
             else
@@ -51,7 +51,7 @@
 
         public void Explore()
         {
-            ProcessUtil.Explore("PrintJobs");
+            ProcessHelper.Explore("PrintJobs");
         }
 
         public void Dispose()

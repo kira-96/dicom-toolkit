@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace SimpleDICOMToolkit.MQTT
+namespace SimpleDICOMToolkit.Services
 {
     public interface ISimpleMqttService : IDisposable
     {

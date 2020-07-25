@@ -1,15 +1,13 @@
 ﻿namespace SimpleDICOMToolkit.ViewModels
 {
-    using Nett;
     using Stylet;
     using StyletIoC;
     using System;
     using System.IO;
     using Logging;
-    using MQTT;
     using Server;
     using Services;
-    using Utils;
+    using Helpers;
 
     public class PrintSCPViewModel : Screen, IDisposable
     {
@@ -59,7 +57,7 @@
                 return;
             }
 
-            if (!ProcessUtil.StartProcess(configexe, "1"))
+            if (!ProcessHelper.StartProcess(configexe, "1"))
             {
                 _logger.Warn("Start process failure. [{0}]", configexe);
             }
@@ -73,7 +71,6 @@
 
         public async void Dispose()
         {
-            // TODO
             await messenger.UnsubscribeAsync(this, "Config");
             ServerConfigViewModel.Dispose();
             PrintJobsViewModel.Dispose();

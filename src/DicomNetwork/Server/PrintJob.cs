@@ -11,7 +11,7 @@ using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using SimpleDICOMToolkit.Utils;
+using SimpleDICOMToolkit.Helpers;
 
 namespace SimpleDICOMToolkit.Server
 {

@@ -8,7 +8,7 @@ namespace Dicom.Printing
 
     using Dicom.Imaging;
     using Dicom.Imaging.Mathematics;
-    using SimpleDICOMToolkit.Utils;
+    using SimpleDICOMToolkit.Helpers;
 
     /// <summary>
     /// Extension methods to support <see cref="ImageBox"/> class.

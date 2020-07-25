@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 using System.Windows;
-using SimpleDICOMToolkit.Utils;
+using SimpleDICOMToolkit.Helpers;
 
 namespace SimpleDICOMToolkit.Services
 {
@@ -23,8 +23,8 @@ namespace SimpleDICOMToolkit.Services
                     Task.Delay(100);
                     if (messageBoxClosed) return;
                     // 暂时只能通过名称查找窗口
-                    messageBoxHandle = WindowsAPI.FindWindow(null, caption);  // 查找对话框窗口
-                    activeWindow = WindowsAPI.GetForegroundWindow();  // 查找当前激活窗口，MessageBox会弹出到最前
+                    messageBoxHandle = InteropHelper.FindWindow(null, caption);  // 查找对话框窗口
+                    activeWindow = InteropHelper.GetForegroundWindow();  // 查找当前激活窗口，MessageBox会弹出到最前
                 }
 
                 IntPtr defaultButtonHandle = IntPtr.Zero;
@@ -33,28 +33,28 @@ namespace SimpleDICOMToolkit.Services
                 switch (button)
                 {
                     case MessageBoxButton.OK:
-                        defaultButtonHandle = WindowsAPI.FindWindowEx(messageBoxHandle, IntPtr.Zero, buttonClassName, null);
+                        defaultButtonHandle = InteropHelper.FindWindowEx(messageBoxHandle, IntPtr.Zero, buttonClassName, null);
                         break;
                     case MessageBoxButton.OKCancel:
                         {
-                            IntPtr okHandle = WindowsAPI.FindWindowEx(messageBoxHandle, IntPtr.Zero, buttonClassName, null);
-                            if (defaultResult == MessageBoxResult.Cancel) defaultButtonHandle = WindowsAPI.FindWindowEx(messageBoxHandle, okHandle, buttonClassName, null);
+                            IntPtr okHandle = InteropHelper.FindWindowEx(messageBoxHandle, IntPtr.Zero, buttonClassName, null);
+                            if (defaultResult == MessageBoxResult.Cancel) defaultButtonHandle = InteropHelper.FindWindowEx(messageBoxHandle, okHandle, buttonClassName, null);
                             else defaultButtonHandle = okHandle;
                         }
                         break;
                     case MessageBoxButton.YesNoCancel:
                         {
-                            IntPtr yesHandle = WindowsAPI.FindWindowEx(messageBoxHandle, IntPtr.Zero, buttonClassName, null);
-                            IntPtr noHandle = WindowsAPI.FindWindowEx(messageBoxHandle, yesHandle, buttonClassName, null);
-                            if (defaultResult == MessageBoxResult.Cancel) defaultButtonHandle = WindowsAPI.FindWindowEx(messageBoxHandle, noHandle, buttonClassName, null);
+                            IntPtr yesHandle = InteropHelper.FindWindowEx(messageBoxHandle, IntPtr.Zero, buttonClassName, null);
+                            IntPtr noHandle = InteropHelper.FindWindowEx(messageBoxHandle, yesHandle, buttonClassName, null);
+                            if (defaultResult == MessageBoxResult.Cancel) defaultButtonHandle = InteropHelper.FindWindowEx(messageBoxHandle, noHandle, buttonClassName, null);
                             else if (defaultResult == MessageBoxResult.No) defaultButtonHandle = noHandle;
                             else defaultButtonHandle = yesHandle;
                         }
                         break;
                     case MessageBoxButton.YesNo:
                         {
-                            IntPtr yesHandle = WindowsAPI.FindWindowEx(messageBoxHandle, IntPtr.Zero, buttonClassName, null);
-                            if (defaultResult == MessageBoxResult.No) defaultButtonHandle = WindowsAPI.FindWindowEx(messageBoxHandle, yesHandle, buttonClassName, null);
+                            IntPtr yesHandle = InteropHelper.FindWindowEx(messageBoxHandle, IntPtr.Zero, buttonClassName, null);
+                            if (defaultResult == MessageBoxResult.No) defaultButtonHandle = InteropHelper.FindWindowEx(messageBoxHandle, yesHandle, buttonClassName, null);
                             else defaultButtonHandle = yesHandle;
                         }
                         break;
@@ -62,8 +62,8 @@ namespace SimpleDICOMToolkit.Services
                         break;
                 }
 
-                WindowsAPI.GetWindowRect(defaultButtonHandle, out MyRect rect);  // 获取按钮所在矩形
-                WindowsAPI.SetCursorPos((rect.Left + rect.Right) / 2, (rect.Top + rect.Bottom) / 2);  // 设置鼠标位置（按钮中心）
+                InteropHelper.GetWindowRect(defaultButtonHandle, out RECT rect);  // 获取按钮所在矩形
+                InteropHelper.SetCursorPos((rect.Left + rect.Right) / 2, (rect.Top + rect.Bottom) / 2);  // 设置鼠标位置（按钮中心）
             });
 
             MessageBoxResult result = owner == null ?

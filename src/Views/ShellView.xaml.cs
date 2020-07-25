@@ -13,7 +13,7 @@
     using MenuItem = System.Windows.Controls.MenuItem;
     using Logging;
     using Services;
-    using static Utils.WindowsAPI;
+    using static Helpers.InteropHelper;
 
     /// <summary>
     /// ShellView.xaml 的交互逻辑
@@ -153,7 +153,7 @@
                     dialog.ExpandedInformation = versionInfo;
                     dialog.Footer = i18NService.GetXmlStringByKey("AboutFooter");
                     dialog.FooterIcon = TaskDialogIcon.Information;
-                    dialog.HyperlinkClicked += (s, e) => Utils.ProcessUtil.OpenHyperlink(e.Href);
+                    dialog.HyperlinkClicked += (s, e) => Helpers.ProcessHelper.OpenHyperlink(e.Href);
 
                     dialog.Buttons.Add(new TaskDialogButton(ButtonType.Ok));
                     dialog.ShowDialog(this);

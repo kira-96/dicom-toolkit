@@ -2,7 +2,6 @@
 {
     using StyletIoC;
     using Logging;
-    using MQTT;
     using Services;
 
     internal class ServicesModule : StyletIoCModule

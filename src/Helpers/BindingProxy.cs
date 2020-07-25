@@ -1,4 +1,4 @@
-﻿namespace SimpleDICOMToolkit
+﻿namespace SimpleDICOMToolkit.Helpers
 {
     using System.Windows;
 

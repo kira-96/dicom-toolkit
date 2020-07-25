@@ -2,14 +2,14 @@
 {
     using Stylet;
     using StyletIoC;
+    using System;
     using System.Windows;
     using System.Windows.Threading;
     using System.Threading;
     using IoCModules;
     using Logging;
-    using MQTT;
     using Services;
-    using Utils;
+    using Helpers;
     using ViewModels;
 
     public class Bootstrapper : Bootstrapper<ShellViewModel>
@@ -39,21 +39,24 @@
             {
                 // 此时还没有配置IoC，不能使用 DialogService
                 MessageBox.Show("程序已在运行中。", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
-                WindowsAPI.FindWindowAndActive(null, ShellViewModel.WindowName);  // 激活已经存在的实例窗口
+                InteropHelper.FindWindowAndActive(null, ShellViewModel.WindowName);  // 激活已经存在的实例窗口
 
                 // 退出当前应用程序
                 // 尽量不要使用
                 // Application.Shutdown();
                 // 因为在这里使用会触发主窗口的Closing事件
-                System.Environment.Exit(0);
+                Environment.Exit(0);
             }
 
             // #################################################################################
 
             base.OnStart();
 
-            Dicom.Imaging.ImageManager.SetImplementation(Dicom.Imaging.WPFImageManager.Instance);
-            Dicom.Log.LogManager.SetImplementation(Dicom.Log.NLogManager.Instance);
+            mutex.ReleaseMutex();
+
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+
+            Initializer.Initialize();
         }
 
         protected override void ConfigureIoC(IStyletIoCBuilder builder)
@@ -67,26 +70,27 @@
         {
             base.Configure();
 
-            SimpleIoC.GetInstance = this.Container.Get;
-            SimpleIoC.GetAllInstances = this.Container.GetAll;
-            SimpleIoC.BuildUp = this.Container.BuildUp;
-        }
-
-        protected override void OnExit(ExitEventArgs e)
-        {
-            base.OnExit(e);
-
-            Container.Get<IMessengerService>().Dispose();
-            Container.Get<ISimpleMqttService>().Dispose();
+            SimpleIoC.GetInstance = Container.Get;
+            SimpleIoC.GetAllInstances = Container.GetAll;
+            SimpleIoC.BuildUp = Container.BuildUp;
         }
 
         protected override void OnUnhandledException(DispatcherUnhandledExceptionEventArgs e)
         {
             e.Handled = true;
 
-            Container.Get<ILoggerService>("filelogger").Error(e.Exception);
-            Container.Get<IWindowManager>().ShowMessageBox(e.Exception.Message, 
-                Container.Get<II18nService>().GetXmlStringByKey("ErrorCaption"));
+            ExecuteOnUnhandledException(e.Exception);
+        }
+
+        private void CurrentDomain_UnhandledException(object s, UnhandledExceptionEventArgs e)
+        {
+            ExecuteOnUnhandledException(e.ExceptionObject as Exception);
+        }
+
+        private void ExecuteOnUnhandledException(Exception ex)
+        {
+            Container.Get<ILoggerService>("filelogger").Error(ex);
+            Container.Get<IWindowManager>().ShowMessageBox(ex.Message, Container.Get<II18nService>().GetXmlStringByKey("ErrorCaption"));
         }
     }
 }
