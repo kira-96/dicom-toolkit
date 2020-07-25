@@ -4,14 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:s="https://github.com/canton7/Stylet"
-        xmlns:v="clr-namespace:SimpleDICOMToolkit.Views"
+        xmlns:vm="clr-namespace:SimpleDICOMToolkit.ViewModels"
         mc:Ignorable="d"
         ResizeMode="CanResizeWithGrip"
         MinWidth="500"
         MinHeight="400"
         Width="600"
         Height="480"
-        KeyDown="{s:Action OnKeyDown}">
+        KeyDown="{s:Action OnKeyDown}"
+        d:DataContext="{d:DesignInstance Type=vm:RegistrationViewModel, IsDesignTimeCreatable=True}">
 
     <Window.Title>
         <Binding Source="{StaticResource Strings}" XPath="string[@key='RegisterCaption']" />

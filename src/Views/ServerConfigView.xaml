@@ -3,9 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:SimpleDICOMToolkit.ViewModels"
              mc:Ignorable="d" 
              d:DesignWidth="240"
-             d:DesignHeight="420">
+             d:DesignHeight="420"
+             d:DataContext="{d:DesignInstance Type=vm:ServerConfigViewModel, IsDesignTimeCreatable=True}">
 
     <UserControl.Resources>
         <Style TargetType="{x:Type TextBlock}">

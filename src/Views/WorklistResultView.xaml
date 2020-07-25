@@ -5,8 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:s="https://github.com/canton7/Stylet"
              xmlns:c="clr-namespace:SimpleDICOMToolkit.Controls"
-             xmlns:m="clr-namespace:SimpleDICOMToolkit.Models"
+             xmlns:vm="clr-namespace:SimpleDICOMToolkit.ViewModels"
              mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=vm:WorklistResultViewModel, IsDesignTimeCreatable=True}"
              d:DesignWidth="340"
              d:DesignHeight="420">
 
