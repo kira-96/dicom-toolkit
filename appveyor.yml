@@ -70,6 +70,7 @@ after_build:
 before_package:
 
 after_test:
+  - cmd: git submodule update --init --recursive
   - cmd: set PATH=%PATH%;%INNO_SETUP%
   - cmd: iscc build\toolkit.iss
 
