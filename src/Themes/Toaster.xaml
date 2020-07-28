@@ -1,0 +1,125 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:c="clr-namespace:SimpleDICOMToolkit.Controls"
+                    xmlns:conv="clr-namespace:SimpleDICOMToolkit.Converters">
+
+    <conv:MathMultipleConverter x:Key="MathMultipleConverter" Operation="Multiply" />
+
+    <Style TargetType="{x:Type c:ToastMessage}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type c:ToastMessage}">
+                    <DockPanel>
+                        <Image x:Name="Icon" 
+                               Width="18" Height="18" 
+                               Margin="0 -2 2 -2"
+                               Source="pack://application:,,,/Icons/info.png"
+                               VerticalAlignment="Center"
+                               DockPanel.Dock="Left" />
+                        <ContentPresenter Content="{TemplateBinding Content}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <ContentPresenter.Resources>
+                                <DataTemplate DataType="{x:Type sys:String}">
+                                    <TextBlock Text="{Binding}" />
+                                </DataTemplate>
+                            </ContentPresenter.Resources>
+                        </ContentPresenter>
+                    </DockPanel>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource self}, Path=Level}">
+                            <DataTrigger.Value>
+                                <c:ToastType>Info</c:ToastType>
+                            </DataTrigger.Value>
+                            <Setter TargetName="Icon" Property="Source" Value="pack://application:,,,/Icons/info.png" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource self}, Path=Level}">
+                            <DataTrigger.Value>
+                                <c:ToastType>Error</c:ToastType>
+                            </DataTrigger.Value>
+                            <Setter TargetName="Icon" Property="Source" Value="pack://application:,,,/Icons/error.png" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type c:Toaster}">
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Background" Value="Black" />
+        <Setter Property="Padding" Value="6,2" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Bottom" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="ClipToBounds" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type c:Toaster}">
+                    <ControlTemplate.Resources>
+                        <Storyboard x:Key="ActivateStoryboard" Duration="0:0:0.3">
+                            <DoubleAnimation Storyboard.TargetName="Root" Storyboard.TargetProperty="Tag" From="0" To="1" Duration="0:0:0.3">
+                                <DoubleAnimation.EasingFunction>
+                                    <SineEase EasingMode="EaseOut" />
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                            <DoubleAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Opacity" To="0" BeginTime="0" Duration="0" />
+                            <DoubleAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Opacity" From="0" To="1" BeginTime="0:0:0.075"
+                                             Duration="0:0:0.225">
+                                <DoubleAnimation.EasingFunction>
+                                    <SineEase EasingMode="EaseOut" />
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                        <Storyboard x:Key="DeactivateStoryboard" Duration="0:0:0.3">
+                            <DoubleAnimation Storyboard.TargetName="Root" Storyboard.TargetProperty="Tag" From="1" To="0" Duration="0:0:0.3">
+                                <DoubleAnimation.EasingFunction>
+                                    <SineEase EasingMode="EaseOut" />
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </ControlTemplate.Resources>
+                    <StackPanel x:Name="Root">
+                        <StackPanel.Tag>
+                            <sys:Double>0.0</sys:Double>
+                        </StackPanel.Tag>
+                        <StackPanel.Height>
+                            <MultiBinding Converter="{StaticResource MathMultipleConverter}">
+                                <Binding ElementName="ContentBorder" Path="ActualHeight" />
+                                <Binding RelativeSource="{RelativeSource Self}" Path="Tag" />
+                            </MultiBinding>
+                        </StackPanel.Height>
+                        <Border x:Name="ContentBorder"
+                                CornerRadius="9"
+                                Background="{TemplateBinding Background}"
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter x:Name="ContentPresenter" 
+                                              Content="{TemplateBinding Message}"
+                                              Margin="{TemplateBinding Padding}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        </Border>
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsActive" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource ActivateStoryboard}" />
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource DeactivateStoryboard}" />
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="HorizontalAlignment" Value="Stretch">
+                            <Setter TargetName="ContentBorder" Property="CornerRadius" Value="0" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="HorizontalAlignment" Value="Stretch">
+                <Setter Property="MaxWidth" Value="{x:Static sys:Double.MaxValue}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

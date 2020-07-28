@@ -298,6 +298,7 @@
         {
             notifyIcon.Visible = true;
             notificationService.Initialize(notifyIcon);
+            notificationService.Register(MainToaster);
             appearanceService.StartMonitoringWindowPrevalenceAccentColor();
             appearanceService.WindowPrevalenceAccentColorChanged += WindowPrevalenceAccentColorChanged;
         }

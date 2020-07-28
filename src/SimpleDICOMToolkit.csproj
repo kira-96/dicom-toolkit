@@ -86,7 +86,11 @@
     <Compile Include="Controls\EffectBehavior.cs" />
     <Compile Include="Controls\ProgressRing.cs" />
     <Compile Include="Controls\TemplateSettingValues.cs" />
+    <Compile Include="Controls\Toaster.cs" />
+    <Compile Include="Controls\ToastMessage.cs" />
+    <Compile Include="Controls\ToastMessageEventArgs.cs" />
     <Compile Include="Controls\VisualStates.cs" />
+    <Compile Include="Converters\MathMultipleConverter.cs" />
     <Compile Include="DicomNetwork\Server\Models\IMppsSource.cs" />
     <Compile Include="DicomNetwork\Server\Models\IWorklistItemsSource.cs" />
     <Compile Include="DicomNetwork\Server\Models\IWorklistRequestHandler.cs" />
@@ -107,8 +111,13 @@
     <Compile Include="Helpers\WeakActions\WeakActionAndToken.cs" />
     <Compile Include="Helpers\WeakActions\WeakActionGeneric.cs" />
     <Compile Include="Helpers\WeakActions\WeakAction.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\BindingProxy.cs" />
+    <Compile Include="Helpers\BitmapExtensions.cs" />
+    <Compile Include="Helpers\SystemHelper.cs" />
+    <Compile Include="Helpers\ProcessHelper.cs" />
+    <Compile Include="Helpers\VisualTreeHelper.cs" />
+    <Compile Include="Helpers\InteropHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Services\AppearanceService.cs" />
     <Compile Include="Services\ConfigurationService.cs" />
@@ -155,11 +164,6 @@
     <Compile Include="Services\IDialogServiceEx.cs" />
     <Compile Include="Services\INotificationService.cs" />
     <Compile Include="Services\NotificationService.cs" />
-    <Compile Include="Helpers\BitmapExtensions.cs" />
-    <Compile Include="Helpers\SystemHelper.cs" />
-    <Compile Include="Helpers\ProcessHelper.cs" />
-    <Compile Include="Helpers\VisualTreeHelper.cs" />
-    <Compile Include="Helpers\InteropHelper.cs" />
     <Compile Include="Validators\FluentModelValidator.cs" />
     <Compile Include="Validators\ServerConfigViewModelValidator.cs" />
     <Compile Include="ViewModels\CStoreFileListViewModel.cs" />
@@ -295,6 +299,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\Toaster.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\TooltipStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -390,10 +398,12 @@
     <Resource Include="Icons\delete.png" />
     <Resource Include="Icons\details.png" />
     <Resource Include="Icons\earth.png" />
+    <Resource Include="Icons\error.png" />
     <Resource Include="Icons\exit.png" />
     <Resource Include="Icons\failed.png" />
     <Resource Include="Icons\failed1.png" />
     <Resource Include="Icons\in-progress.png" />
+    <Resource Include="Icons\info.png" />
     <Resource Include="Icons\item-white.png" />
     <Resource Include="Icons\item.png" />
     <Resource Include="Icons\okay.png" />
