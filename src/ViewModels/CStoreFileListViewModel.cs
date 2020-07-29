@@ -7,8 +7,8 @@
     using System.IO;
     using System.Windows;
     using Client;
-    using Services;
     using Models;
+    using Services;
 
     public class CStoreFileListViewModel : Screen, IHandle<ClientMessageItem>, IDisposable
     {
@@ -16,6 +16,12 @@
 
         [Inject]
         private IWindowManager _windowManager;
+
+        [Inject]
+        private II18nService _i18NService;
+
+        [Inject]
+        private INotificationService _notificationService;
 
         [Inject]
         private IViewModelFactory _viewModelFactory;
@@ -44,6 +50,12 @@
             try
             {
                 await _cstoreSCU.StoreImageAsync(message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET, FileList);
+
+                string content = string.Format(
+                                    _i18NService.GetXmlStringByKey("ToastStoreResult"),
+                                    _i18NService.GetXmlStringByKey("Success"));
+                // 这里不使用 await，否则当前线程会阻塞直到toast显示完成
+                _ = _notificationService.ShowToastAsync(content, new TimeSpan(0, 0, 3));
             }
             finally
             {

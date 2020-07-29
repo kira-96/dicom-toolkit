@@ -4,6 +4,7 @@
   <string key="Cancel">关闭</string>
   <string key="Yes">是</string>
   <string key="No">否</string>
+  <string key="CheckUpdate">检查更新</string>
   <string key="Update">更新</string>
   <string key="Insert">插入</string>
   <string key="Delete">删除</string>
@@ -50,6 +51,10 @@
   <string key="HeaderID">ID</string>
   <string key="HeaderFile">文件</string>
   <string key="HeaderStatus">状态</string>
+  <string key="ToastWorklistResult">刷新Worklist{0}</string>
+  <string key="ToastQueryResult">查询远程数据{0}</string>
+  <string key="ToastStoreResult">发送文件{0}</string>
+  <string key="ToastPrintResult">打印{0}</string>
   <string key="TooltipUpdate">更新当前值</string>
   <string key="TooltipInsertNew">插入一个新值</string>
   <string key="TooltipDelete">删除当前值</string>

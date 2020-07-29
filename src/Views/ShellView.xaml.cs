@@ -155,8 +155,15 @@
                     dialog.FooterIcon = TaskDialogIcon.Information;
                     dialog.HyperlinkClicked += (s, e) => Helpers.ProcessHelper.OpenHyperlink(e.Href);
 
+                    var checkUpdateButton = new TaskDialogButton(i18NService.GetXmlStringByKey("CheckUpdate"));
+                    dialog.Buttons.Add(checkUpdateButton);
                     dialog.Buttons.Add(new TaskDialogButton(ButtonType.Ok));
-                    dialog.ShowDialog(this);
+                    var result = dialog.ShowDialog(this);
+
+                    if (result == checkUpdateButton)
+                    {
+
+                    }
                 }
             }
             else

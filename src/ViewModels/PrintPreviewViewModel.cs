@@ -13,12 +13,19 @@
     using System.Windows;
     using System.Windows.Media.Imaging;
     using Client;
-    using Models;
     using Helpers;
+    using Models;
+    using Services;
 
     public class PrintPreviewViewModel : Screen, IHandle<ClientMessageItem>, IDisposable
     {
         private readonly IEventAggregator _eventAggregator;
+
+        [Inject]
+        private II18nService _i18NService;
+
+        [Inject]
+        private INotificationService _notificationService;
 
         [Inject]
         private IPrintSCU _printSCU;
@@ -76,6 +83,12 @@
             try
             {
                 await _printSCU.PrintImagesAsync(message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET, options, images);
+
+                string content = string.Format(
+                    _i18NService.GetXmlStringByKey("ToastPrintResult"),
+                    _i18NService.GetXmlStringByKey("Success"));
+                // 这里不使用 await，否则当前线程会阻塞直到toast显示完成
+                _ = _notificationService.ShowToastAsync(content, new TimeSpan(0, 0, 3));
             }
             finally
             {

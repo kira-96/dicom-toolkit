@@ -6,10 +6,17 @@
     using System.Collections.Generic;
     using Client;
     using Models;
+    using Services;
 
     public class WorklistResultViewModel : Screen, IHandle<ClientMessageItem>, IDisposable
     {
         private readonly IEventAggregator _eventAggregator;
+
+        [Inject]
+        private II18nService _i18NService;
+
+        [Inject]
+        private INotificationService _notificationService;
 
         [Inject]
         private IWorklistSCU _worklistSCU;
@@ -136,6 +143,12 @@
                 var result = await _worklistSCU.GetAllResultFromWorklistAsync(message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET, message.Modality);
 
                 WorklistItems.AddRange(result);
+
+                string content = string.Format(
+                    _i18NService.GetXmlStringByKey("ToastWorklistResult"),
+                    _i18NService.GetXmlStringByKey("Success"));
+                // 这里不使用 await，否则当前线程会阻塞直到toast显示完成
+                _ = _notificationService.ShowToastAsync(content, new TimeSpan(0, 0, 3));
             }
             finally
             {
