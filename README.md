@@ -30,6 +30,7 @@
 - [NLog](https://nlog-project.org/)
 - [Stylet](https://github.com/canton7/Stylet)
 - [FluentValidation](https://fluentvalidation.net/)
+- [Newtonsoft.Json](https://www.newtonsoft.com/json)
 - [Nett](https://github.com/paiden/Nett)
 - [MQTTnet](https://github.com/chkr1011/MQTTnet)
 - [ookii-dialogs-wpf](https://github.com/augustoproiete/ookii-dialogs-wpf)
@@ -40,13 +41,8 @@
 **其它常用软件**
 
 - [DICOM Dump](http://www.makhaon.com/index.php?lng=en&p=products&id=dicomdump)
-
 - [Print SCP](http://www.charruasoft.com/products/printscp/)
-
 - [ClearCanvas](https://www.clearcanvas.ca/)
-
 - [jDicom](http://members.chello.at/petra.kirchdorfer/jdicom/)
-
 - [ITK-SNAP](http://www.itksnap.org/pmwiki/pmwiki.php)
-
 - [Medical Connections](https://www.dicomserver.co.uk/)
