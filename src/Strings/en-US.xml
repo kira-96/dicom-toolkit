@@ -51,6 +51,11 @@
   <string key="HeaderID">ID</string>
   <string key="HeaderFile">File</string>
   <string key="HeaderStatus">Status</string>
+  <string key="ToastCheckUpdateResult">Check for updates {0}</string>
+  <string key="ToastAlreadyLatestVersion">Already the latest version</string>
+  <string key="ToastStartDownload">Start downloading...</string>
+  <string key="ToastDownloadUpdateResult">Download update {0}</string>
+  <string key="ToastDownloadComplete">Download complete</string>
   <string key="ToastWorklistResult">Refresh worklist {0}</string>
   <string key="ToastQueryResult">Query remote data {0}</string>
   <string key="ToastStoreResult">Send files {0}</string>
@@ -82,6 +87,7 @@
   <string key="ErrorCaption">An error occurred!</string>
   <string key="ExitCaption">Exit?</string>
   <string key="ExitContent">Are you sure you want to exit?</string>
+  <string key="UpdateAvailableContent">A newer version is available. Would you like to download it now?</string>
   <string key="SoftwareVersion">Software Version</string>
   <string key="TestResult">Test Result</string>
   <string key="TestSuccess">Test success</string>

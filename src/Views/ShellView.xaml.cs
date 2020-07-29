@@ -34,7 +34,7 @@
         private readonly INotificationService notificationService;
 
         private readonly IAppearanceService appearanceService;
-
+        private readonly IUpdateService updateService;
         private NotifyIcon notifyIcon;
 
         private ContextMenu trayIconContextMenu;
@@ -51,6 +51,7 @@
             IDialogServiceEx dialogService,
             INotificationService notificationService,
             IAppearanceService appearanceService,
+            IUpdateService updateService,
             [Inject(Key = "filelogger")] ILoggerService loggerService)
         {
             InitializeComponent();
@@ -59,6 +60,7 @@
             this.dialogService = dialogService;
             this.notificationService = notificationService;
             this.appearanceService = appearanceService;
+            this.updateService = updateService;
             this.logger = loggerService;
 
             InitializeTrayIcon();
@@ -162,7 +164,7 @@
 
                     if (result == checkUpdateButton)
                     {
-
+                        updateService.CheckForUpdate();
                     }
                 }
             }

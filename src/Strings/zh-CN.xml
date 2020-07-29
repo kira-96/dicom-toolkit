@@ -23,7 +23,7 @@
   <string key="ServerPort">服务端口：</string>
   <string key="ServerAET">服务AET：</string>
   <string key="LocalAET">本地AET：</string>
-  <string key="Modality">Modality: </string>
+  <string key="Modality">Modality：</string>
   <string key="TestConnection">测试连接</string>
   <string key="Query">查询</string>
   <string key="SendPACS">发送到PACS</string>
@@ -51,6 +51,11 @@
   <string key="HeaderID">ID</string>
   <string key="HeaderFile">文件</string>
   <string key="HeaderStatus">状态</string>
+  <string key="ToastCheckUpdateResult">检查更新{0}</string>
+  <string key="ToastAlreadyLatestVersion">已经是最新版本</string>
+  <string key="ToastStartDownload">开始下载...</string>
+  <string key="ToastDownloadUpdateResult">下载更新{0}</string>
+  <string key="ToastDownloadComplete">下载更新完成</string>
   <string key="ToastWorklistResult">刷新Worklist{0}</string>
   <string key="ToastQueryResult">查询远程数据{0}</string>
   <string key="ToastStoreResult">发送文件{0}</string>
@@ -82,6 +87,7 @@
   <string key="ErrorCaption">出错了！</string>
   <string key="ExitCaption">退出应用？</string>
   <string key="ExitContent">确定要退出吗？</string>
+  <string key="UpdateAvailableContent">有更新的版本可用，是否现在下载？</string>
   <string key="SoftwareVersion">软件版本</string>
   <string key="TestResult">测试结果</string>
   <string key="TestSuccess">测试成功</string>
