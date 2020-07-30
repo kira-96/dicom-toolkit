@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using StyletIoC;
+﻿using StyletIoC;
 using System;
 using System.IO;
 using System.Linq;
@@ -71,12 +70,23 @@ namespace SimpleDICOMToolkit.Services
                     content = await reader.ReadToEndAsync();
                 }
 
-                JObject jObject = JObject.Parse(content);
+                // Newtonsoft.Json
+                //JObject jObject = JObject.Parse(content);
 
-                Version version = Version.Parse((string)jObject["tag_name"]);
+                //Version version = Version.Parse((string)jObject["tag_name"]);
 
-                NewVersion = version;
-                url = (string)jObject["assets"].First["browser_download_url"];
+                //NewVersion = version;
+                //url = (string)jObject["assets"].First["browser_download_url"];
+
+                int index = content.IndexOf("\"tag_name\":");
+                int startIndex = content.IndexOf('"', index + 11 /* "\"tag_name\":".Length */) + 1;
+                int endIndex = content.IndexOf('"', startIndex);
+                NewVersion = Version.Parse(content.Substring(startIndex, endIndex - startIndex));
+
+                index = content.IndexOf("\"browser_download_url\":");
+                startIndex = content.IndexOf('"', index + 23 /* "\"browser_download_url\":".Length */) + 1;
+                endIndex = content.IndexOf('"', startIndex);
+                url = content.Substring(startIndex, endIndex - startIndex);
 
                 VersionAvaliable(NewVersion);
             }

@@ -30,7 +30,6 @@
 - [NLog](https://nlog-project.org/)
 - [Stylet](https://github.com/canton7/Stylet)
 - [FluentValidation](https://fluentvalidation.net/)
-- [Newtonsoft.Json](https://www.newtonsoft.com/json)
 - [Nett](https://github.com/paiden/Nett)
 - [MQTTnet](https://github.com/chkr1011/MQTTnet)
 - [ookii-dialogs-wpf](https://github.com/augustoproiete/ookii-dialogs-wpf)
