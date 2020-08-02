@@ -51,6 +51,7 @@
   <string key="HeaderID">ID</string>
   <string key="HeaderFile">File</string>
   <string key="HeaderStatus">Status</string>
+  <string key="ToastNetworkOffline">No network connection</string>
   <string key="ToastCheckUpdateResult">Check for updates {0}</string>
   <string key="ToastAlreadyLatestVersion">Already the latest version</string>
   <string key="ToastStartDownload">Start downloading...</string>

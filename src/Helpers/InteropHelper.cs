@@ -164,6 +164,15 @@ namespace SimpleDICOMToolkit.Helpers
         [DllImport("ntdll.dll", EntryPoint = "RtlGetNtVersionNumbers")]
         public static extern void RtlGetNtVersionNumbers(ref int major, ref int minor, ref int buildNumber);
 
+
+        public const int INTERNET_CONNECTION_MODEM = 1;
+        public const int INTERNET_CONNECTION_LAN = 2;
+        public const int INTERNET_CONNECTION_PROXY = 4;
+        public const int INTERNET_CONNECTION_MODEM_BUSY = 8;
+
+        [DllImport("wininet.dll", EntryPoint = "InternetGetConnectedState")]
+        public static extern bool InternetGetConnectedState(out int flag, int dwReserved);
+
         #endregion
 
         public static void FindWindowAndActive(string classname, string windowname)

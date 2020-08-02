@@ -25,6 +25,14 @@ namespace SimpleDICOMToolkit.Helpers
             }
         }
 
+        public static bool IsNetworkConnected
+        {
+            get
+            {
+                return InteropHelper.InternetGetConnectedState(out int flag, 0);
+            }
+        }
+
         /// <summary>
         /// Gets if the Operating System is Windows 10
         /// </summary>

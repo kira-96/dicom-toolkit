@@ -51,6 +51,7 @@
   <string key="HeaderID">ID</string>
   <string key="HeaderFile">文件</string>
   <string key="HeaderStatus">状态</string>
+  <string key="ToastNetworkOffline">网络连接断开</string>
   <string key="ToastCheckUpdateResult">检查更新{0}</string>
   <string key="ToastAlreadyLatestVersion">已经是最新版本</string>
   <string key="ToastStartDownload">开始下载...</string>

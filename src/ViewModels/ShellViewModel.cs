@@ -75,7 +75,7 @@
 
             await HandleCommandLineArgs(Environment.GetCommandLineArgs());
 
-            await updateService.CheckForUpdate();
+            await CheckForUpdate();
         }
 
         protected override void OnClose()
@@ -99,6 +99,18 @@
                 {
                     await (Items[0] as DcmItemsViewModel).OpenDcmFile(args[1]);
                 }
+            }
+        }
+
+        private async Task CheckForUpdate()
+        {
+            if (Helpers.SystemHelper.IsNetworkConnected)
+            {
+                await updateService.CheckForUpdate();
+            }
+            else
+            {
+                await notificationService.ShowToastAsync(i18NService.GetXmlStringByKey("ToastNetworkOffline"), new TimeSpan(0, 0, 3), Controls.ToastType.Error);
             }
         }
 
