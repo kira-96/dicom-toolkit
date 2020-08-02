@@ -13,14 +13,14 @@
     {
         private readonly IEventAggregator _eventAggregator;
 
-        [Inject]
-        private IWindowManager _windowManager;
-
         [Inject(Key = "filelogger")]
         private ILoggerService _logger;
 
         [Inject]
         private II18nService i18NService;
+
+        [Inject]
+        private INotificationService notificationService;
 
         [Inject]
         private ICEchoSCU _cechoSCU;
@@ -187,11 +187,14 @@
 
             (IsServerIPEnabled, IsServerPortEnabled, IsServerAETEnabled, IsLocalAETEnabled, IsModalityEnabled) = _backupStatus;
 
-            string caption = i18NService.GetXmlStringByKey("TestResult");
-            string success = i18NService.GetXmlStringByKey("TestSuccess");
-            string failed = i18NService.GetXmlStringByKey("TestFailed");
-
-            _windowManager.ShowMessageBox(result ? success : failed, caption);
+            if (result)
+            {
+                await notificationService.ShowToastAsync(i18NService.GetXmlStringByKey("TestSuccess"), new TimeSpan(0, 0, 3), Controls.ToastType.Info);
+            }
+            else
+            {
+                await notificationService.ShowToastAsync(i18NService.GetXmlStringByKey("TestFailed"), new TimeSpan(0, 0, 3), Controls.ToastType.Error);
+            }
         }
 
         public void Init(IScreen parentViewModel)

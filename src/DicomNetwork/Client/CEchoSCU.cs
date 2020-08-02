@@ -1,11 +1,20 @@
 ﻿namespace SimpleDICOMToolkit.Client
 {
+    using StyletIoC;
     using Dicom.Network;
     using DicomClient = Dicom.Network.Client.DicomClient;
     using System.Threading.Tasks;
+    using Logging;
 
     public class CEchoSCU : ICEchoSCU
     {
+        private ILoggerService loggerService;
+
+        public CEchoSCU([Inject("filelogger")] ILoggerService loggerService)
+        {
+            this.loggerService = loggerService;
+        }
+
         /// <summary>
         /// 测试请求
         /// </summary>
@@ -36,8 +45,9 @@
             {
                 await client.SendAsync();
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                loggerService.Error(ex);
                 return false;
             }
 
