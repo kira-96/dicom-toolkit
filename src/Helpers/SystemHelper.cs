@@ -9,6 +9,9 @@ namespace SimpleDICOMToolkit.Helpers
 {
     public static class SystemHelper
     {
+        /// <summary>
+        /// 获取当前IP地址
+        /// </summary>
         public static string LocalIPAddress
         {
             get
@@ -25,11 +28,14 @@ namespace SimpleDICOMToolkit.Helpers
             }
         }
 
+        /// <summary>
+        /// 当前是否有网络连接
+        /// </summary>
         public static bool IsNetworkConnected
         {
             get
             {
-                return InteropHelper.InternetGetConnectedState(out int flag, 0);
+                return InteropHelper.InternetGetConnectedState(out _, 0);
             }
         }
 

@@ -12,6 +12,8 @@ namespace SimpleDICOMToolkit.Services
 
         public void ApplyXamlStringsResource(string resourceName)
         {
+            throw new NotImplementedException();
+
             //Application.Current.Resources.MergedDictionaries[0] = new ResourceDictionary()
             //{
             //    Source = new Uri(resourceName, UriKind.RelativeOrAbsolute)

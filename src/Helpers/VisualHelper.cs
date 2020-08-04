@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Media;
 
 namespace SimpleDICOMToolkit.Helpers
 {
-    public static class VisualTreeHelper
+    public static class VisualHelper
     {
         public static FrameworkElement GetDescendantFromName(DependencyObject parent, string name)
         {
-            int count = System.Windows.Media.VisualTreeHelper.GetChildrenCount(parent);
+            int count = VisualTreeHelper.GetChildrenCount(parent);
 
             if (count < 1)
             {
@@ -16,7 +17,7 @@ namespace SimpleDICOMToolkit.Helpers
 
             for (int i = 0; i < count; i++)
             {
-                if (System.Windows.Media.VisualTreeHelper.GetChild(parent, i) is FrameworkElement frameworkElement)
+                if (VisualTreeHelper.GetChild(parent, i) is FrameworkElement frameworkElement)
                 {
                     if (frameworkElement.Name == name)
                     {
@@ -42,16 +43,16 @@ namespace SimpleDICOMToolkit.Helpers
         /// <returns></returns>
         public static List<T> FindVisualChild<T>(DependencyObject obj) where T : FrameworkElement
         {
-            int count = System.Windows.Media.VisualTreeHelper.GetChildrenCount(obj);
+            int count = VisualTreeHelper.GetChildrenCount(obj);
 
             List<T> TList = new List<T>();
             for (int i = 0; i < count; i++)
             {
-                DependencyObject child = System.Windows.Media.VisualTreeHelper.GetChild(obj, i);
+                DependencyObject child = VisualTreeHelper.GetChild(obj, i);
 
-                if (child != null && child is T)
+                if (child != null && child is T t)
                 {
-                    TList.Add((T)child);
+                    TList.Add(t);
                 }
                 else
                 {
@@ -72,10 +73,10 @@ namespace SimpleDICOMToolkit.Helpers
         {
             List<T> TList = new List<T> { };
 
-            DependencyObject parent = System.Windows.Media.VisualTreeHelper.GetParent(obj);
-            if (parent != null && parent is T)
+            DependencyObject parent = VisualTreeHelper.GetParent(obj);
+            if (parent != null && parent is T t)
             {
-                TList.Add((T)parent);
+                TList.Add(t);
                 List<T> parentOfParent = FindVisualParent<T>(parent);
                 if (parentOfParent != null)
                 {
