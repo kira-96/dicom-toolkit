@@ -82,6 +82,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppConfiguration.cs" />
+    <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Initializer.cs" />
+    <Compile Include="SimpleIoC.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controls\AduLoading.cs" />
     <Compile Include="Controls\EffectBehavior.cs" />
     <Compile Include="Controls\ProgressRing.cs" />
@@ -91,43 +95,6 @@
     <Compile Include="Controls\ToastMessageEventArgs.cs" />
     <Compile Include="Controls\VisualStates.cs" />
     <Compile Include="Converters\MathMultipleConverter.cs" />
-    <Compile Include="DicomNetwork\Server\Models\IMppsSource.cs" />
-    <Compile Include="DicomNetwork\Server\Models\IWorklistItemsSource.cs" />
-    <Compile Include="DicomNetwork\Server\Models\IWorklistRequestHandler.cs" />
-    <Compile Include="DicomNetwork\Server\Models\MppsHandler.cs" />
-    <Compile Include="DicomNetwork\Server\Models\WorklistItemsSource.cs" />
-    <Compile Include="DicomNetwork\Server\WorklistServer.cs" />
-    <Compile Include="DicomNetwork\Server\WorklistService.cs" />
-    <Compile Include="Initializer.cs" />
-    <Compile Include="IoCModules\ServicesModule.cs" />
-    <Compile Include="IoCModules\DicomSCUModule.cs" />
-    <Compile Include="IoCModules\ValidatorModule.cs" />
-    <Compile Include="IoCModules\ViewModelModule.cs" />
-    <Compile Include="Services\IMessengerService.cs" />
-    <Compile Include="Services\IUpdateService.cs" />
-    <Compile Include="Services\MessengerService.cs" />
-    <Compile Include="Services\ISimpleMqttService.cs" />
-    <Compile Include="Services\SimpleMqttService.cs" />
-    <Compile Include="Helpers\WeakActions\IExecuteWithObject.cs" />
-    <Compile Include="Helpers\WeakActions\WeakActionAndToken.cs" />
-    <Compile Include="Helpers\WeakActions\WeakActionGeneric.cs" />
-    <Compile Include="Helpers\WeakActions\WeakAction.cs" />
-    <Compile Include="Helpers\BindingProxy.cs" />
-    <Compile Include="Helpers\BitmapExtensions.cs" />
-    <Compile Include="Helpers\SystemHelper.cs" />
-    <Compile Include="Helpers\ProcessHelper.cs" />
-    <Compile Include="Helpers\VisualTreeHelper.cs" />
-    <Compile Include="Helpers\InteropHelper.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Services\AppearanceService.cs" />
-    <Compile Include="Services\ConfigurationService.cs" />
-    <Compile Include="Services\I18nService.cs" />
-    <Compile Include="Services\IAppearanceService.cs" />
-    <Compile Include="Services\IConfigurationService.cs" />
-    <Compile Include="Services\II18nService.cs" />
-    <Compile Include="Services\UpdateService.cs" />
-    <Compile Include="SimpleIoC.cs" />
     <Compile Include="DicomNetwork\Client\PrintOptions.cs" />
     <Compile Include="DicomNetwork\Client\RequestFactory.cs" />
     <Compile Include="DicomNetwork\Client\CEchoSCU.cs" />
@@ -141,6 +108,35 @@
     <Compile Include="DicomNetwork\Client\PrintJob.cs" />
     <Compile Include="DicomNetwork\Client\PrintSCU.cs" />
     <Compile Include="DicomNetwork\Client\WorklistSCU.cs" />
+    <Compile Include="DicomNetwork\Server\Models\IMppsSource.cs" />
+    <Compile Include="DicomNetwork\Server\Models\IWorklistItemsSource.cs" />
+    <Compile Include="DicomNetwork\Server\Models\IWorklistRequestHandler.cs" />
+    <Compile Include="DicomNetwork\Server\Models\MppsHandler.cs" />
+    <Compile Include="DicomNetwork\Server\Models\WorklistItemsSource.cs" />
+    <Compile Include="DicomNetwork\Server\CStoreService.cs" />
+    <Compile Include="DicomNetwork\Server\CStoreServer.cs" />
+    <Compile Include="DicomNetwork\Server\FilmBoxExtensions.cs" />
+    <Compile Include="DicomNetwork\Server\ImageBoxExtensions.cs" />
+    <Compile Include="DicomNetwork\Server\Printer.cs" />
+    <Compile Include="DicomNetwork\Server\PrintJob.cs" />
+    <Compile Include="DicomNetwork\Server\PrintService.cs" />
+    <Compile Include="DicomNetwork\Server\PrintServer.cs" />
+    <Compile Include="DicomNetwork\Server\WorklistServer.cs" />
+    <Compile Include="DicomNetwork\Server\WorklistService.cs" />
+    <Compile Include="Helpers\WeakActions\IExecuteWithObject.cs" />
+    <Compile Include="Helpers\WeakActions\WeakActionAndToken.cs" />
+    <Compile Include="Helpers\WeakActions\WeakActionGeneric.cs" />
+    <Compile Include="Helpers\WeakActions\WeakAction.cs" />
+    <Compile Include="Helpers\BindingProxy.cs" />
+    <Compile Include="Helpers\BitmapExtensions.cs" />
+    <Compile Include="Helpers\SystemHelper.cs" />
+    <Compile Include="Helpers\ProcessHelper.cs" />
+    <Compile Include="Helpers\VisualHelper.cs" />
+    <Compile Include="Helpers\InteropHelper.cs" />
+    <Compile Include="IoCModules\ServicesModule.cs" />
+    <Compile Include="IoCModules\DicomSCUModule.cs" />
+    <Compile Include="IoCModules\ValidatorModule.cs" />
+    <Compile Include="IoCModules\ViewModelModule.cs" />
     <Compile Include="Logging\ILoggerService.cs" />
     <Compile Include="Logging\LoggerService.cs" />
     <Compile Include="Logging\NLogManager.cs" />
@@ -154,18 +150,22 @@
     <Compile Include="Models\SimpleWorklistResult.cs" />
     <Compile Include="Models\UpdateDicomElementItem.cs" />
     <Compile Include="Models\WorklistItem.cs" />
-    <Compile Include="DicomNetwork\Server\CStoreService.cs" />
-    <Compile Include="DicomNetwork\Server\CStoreServer.cs" />
-    <Compile Include="DicomNetwork\Server\FilmBoxExtensions.cs" />
-    <Compile Include="DicomNetwork\Server\ImageBoxExtensions.cs" />
-    <Compile Include="DicomNetwork\Server\Printer.cs" />
-    <Compile Include="DicomNetwork\Server\PrintJob.cs" />
-    <Compile Include="DicomNetwork\Server\PrintService.cs" />
-    <Compile Include="DicomNetwork\Server\PrintServer.cs" />
+    <Compile Include="Services\Interfaces\IAppearanceService.cs" />
+    <Compile Include="Services\Interfaces\IConfigurationService.cs" />
+    <Compile Include="Services\Interfaces\IDialogServiceEx.cs" />
+    <Compile Include="Services\Interfaces\II18nService.cs" />
+    <Compile Include="Services\Interfaces\IMessengerService.cs" />
+    <Compile Include="Services\Interfaces\INotificationService.cs" />
+    <Compile Include="Services\Interfaces\ISimpleMqttService.cs" />
+    <Compile Include="Services\Interfaces\IUpdateService.cs" />
+    <Compile Include="Services\AppearanceService.cs" />
+    <Compile Include="Services\ConfigurationService.cs" />
     <Compile Include="Services\DialogServiceEx.cs" />
-    <Compile Include="Services\IDialogServiceEx.cs" />
-    <Compile Include="Services\INotificationService.cs" />
+    <Compile Include="Services\I18nService.cs" />
+    <Compile Include="Services\MessengerService.cs" />
     <Compile Include="Services\NotificationService.cs" />
+    <Compile Include="Services\SimpleMqttService.cs" />
+    <Compile Include="Services\UpdateService.cs" />
     <Compile Include="Validators\FluentModelValidator.cs" />
     <Compile Include="Validators\ServerConfigViewModelValidator.cs" />
     <Compile Include="ViewModels\CStoreFileListViewModel.cs" />
@@ -451,7 +451,7 @@
       <Version>0.15.0</Version>
     </PackageReference>
     <PackageReference Include="NLog">
-      <Version>4.7.2</Version>
+      <Version>4.7.3</Version>
     </PackageReference>
     <PackageReference Include="Ookii.Dialogs.Wpf">
       <Version>1.1.0</Version>
