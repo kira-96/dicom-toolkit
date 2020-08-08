@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Dicom toolkit"
-#define MyAppVersion "1.4.3"
+#define MyAppVersion "1.4.4"
 #define MyAppPublisher "kira"
 #define MyAppURL "https://github.com/kira-96/dicom-toolkit/"
 #define MyAppExeName "Simple DICOM Toolkit.exe"
