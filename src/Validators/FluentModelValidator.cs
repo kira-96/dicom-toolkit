@@ -28,7 +28,9 @@ namespace SimpleDICOMToolkit.Validators
         {
             // If someone's calling us synchronously, and ValidationAsync does not complete synchronously,
             // we'll deadlock unless we continue on another thread.
-            return (await this.validator.ValidateAsync(this.subject, CancellationToken.None, propertyName).ConfigureAwait(false))
+            //return (await this.validator.ValidateAsync(this.subject, CancellationToken.None, propertyName).ConfigureAwait(false))
+            //    .Errors.Select(x => x.ErrorMessage);
+            return (await validator.ValidateAsync(subject, options => options.IncludeProperties(propertyName), CancellationToken.None).ConfigureAwait(false))
                 .Errors.Select(x => x.ErrorMessage);
         }
 

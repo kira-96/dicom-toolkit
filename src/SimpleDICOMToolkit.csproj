@@ -430,7 +430,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FluentValidation">
-      <Version>9.0.1</Version>
+      <Version>9.1.1</Version>
     </PackageReference>
     <PackageReference Include="fo-dicom.Desktop">
       <Version>4.0.6</Version>
