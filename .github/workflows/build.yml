@@ -1,0 +1,37 @@
+name: build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest  # For a list of available runner types, refer to
+                             # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    # Setup Nuget
+    - name: Setup Nuget
+      uses: nuget/setup-nuget@v1
+
+    # Add MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1
+
+    # Nuget Restore
+    - name: Restore nuget packages
+      run: nuget restore Toolkit.sln
+    
+    # Build Config
+    - name: Build Config
+      run: msbuild Toolkit.sln -target:"Config" -p:Configuration=Release -p:Platform="x64" -maxCpuCount
+    
+    # Build Toolkit
+    - name: Build Toolkit
+      run: msbuild Toolkit.sln -target:"SimpleDICOMToolkit" -p:Configuration=Release -p:Platform="x64" -maxCpuCount
