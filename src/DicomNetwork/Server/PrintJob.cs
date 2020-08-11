@@ -332,7 +332,12 @@ namespace SimpleDICOMToolkit.Server
                     if (_currentFilmBox.BasicImageBoxes[j].ImageSequence.Contains(DicomTag.PixelData))
                     {
                         var image = new DicomImage(_currentFilmBox.BasicImageBoxes[j].ImageSequence);
+#if NET_CORE
+                        image.RenderImage().AsSharedBitmap().Save(Path.Combine(FullPrintJobFolder, SOPInstanceUID.UID) + $".{i}.{j}.png",
+                            System.Drawing.Imaging.ImageFormat.Png);
+#else
                         image.RenderImage().AsWriteableBitmap().SavePng(Path.Combine(FullPrintJobFolder, SOPInstanceUID.UID) + $".{i}.{j}.png");
+#endif
                     }
                 }
             }
@@ -372,9 +377,9 @@ namespace SimpleDICOMToolkit.Server
             }
         }
 
-        #endregion
+#endregion
 
-        #region Notification Methods
+#region Notification Methods
 
         protected virtual void OnStatusUpdate(string info)
         {
@@ -392,7 +397,7 @@ namespace SimpleDICOMToolkit.Server
             StatusUpdate?.Invoke(this, new StatusUpdateEventArgs((ushort)Status, info, FilmSessionLabel, PrinterName));
         }
 
-        #endregion
+#endregion
 
     }
 }

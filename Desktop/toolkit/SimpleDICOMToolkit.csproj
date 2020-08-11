@@ -1,0 +1,808 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D4D4C24F-0043-4342-89C0-38ED7052AC44}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>SimpleDICOMToolkit</RootNamespace>
+    <AssemblyName>Simple DICOM Toolkit</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NoWarn>IDE0044, 0649</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>..\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NoWarn>IDE0044, 0649</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>..\..\src\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>..\..\src\Icons\icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>SimpleDICOMToolkit.App</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="..\..\src\App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\..\src\AppConfiguration.cs" />
+    <Compile Include="..\..\src\Bootstrapper.cs" />
+    <Compile Include="..\..\src\Initializer.cs">
+      <Link>Initializer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\SimpleIoC.cs" />
+    <Compile Include="..\..\src\Controls\AduLoading.cs">
+      <Link>Controls\AduLoading.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Controls\EffectBehavior.cs">
+      <Link>Controls\EffectBehavior.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Controls\ProgressRing.cs">
+      <Link>Controls\ProgressRing.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Controls\TemplateSettingValues.cs">
+      <Link>Controls\TemplateSettingValues.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Controls\Toaster.cs">
+      <Link>Controls\Toaster.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Controls\ToastMessage.cs">
+      <Link>Controls\ToastMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Controls\ToastMessageEventArgs.cs">
+      <Link>Controls\ToastMessageEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Controls\VisualStates.cs">
+      <Link>Controls\VisualStates.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Converters\MathMultipleConverter.cs">
+      <Link>Converters\MathMultipleConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Client\PrintOptions.cs">
+      <Link>DicomNetwork\Client\PrintOptions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Client\RequestFactory.cs">
+      <Link>DicomNetwork\Client\RequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Client\CEchoSCU.cs">
+      <Link>DicomNetwork\Client\CEchoSCU.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Client\QueryRetrieveSCU.cs">
+      <Link>DicomNetwork\Client\QueryRetrieveSCU.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Client\CStoreSCU.cs">
+      <Link>DicomNetwork\Client\CStoreSCU.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Client\ICEchoSCU.cs">
+      <Link>DicomNetwork\Client\ICEchoSCU.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Client\IQueryRetrieveSCU.cs">
+      <Link>DicomNetwork\Client\IQueryRetrieveSCU.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Client\ICStoreSCU.cs">
+      <Link>DicomNetwork\Client\ICStoreSCU.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Client\IPrintSCU.cs">
+      <Link>DicomNetwork\Client\IPrintSCU.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Client\IWorklistSCU.cs">
+      <Link>DicomNetwork\Client\IWorklistSCU.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Client\PrintJob.cs">
+      <Link>DicomNetwork\Client\PrintJob.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Client\PrintSCU.cs">
+      <Link>DicomNetwork\Client\PrintSCU.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Client\WorklistSCU.cs">
+      <Link>DicomNetwork\Client\WorklistSCU.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Server\Models\IMppsSource.cs">
+      <Link>DicomNetwork\Server\Models\IMppsSource.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Server\Models\IWorklistItemsSource.cs">
+      <Link>DicomNetwork\Server\Models\IWorklistItemsSource.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Server\Models\IWorklistRequestHandler.cs">
+      <Link>DicomNetwork\Server\Models\IWorklistRequestHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Server\Models\MppsHandler.cs">
+      <Link>DicomNetwork\Server\Models\MppsHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Server\Models\WorklistItemsSource.cs">
+      <Link>DicomNetwork\Server\Models\WorklistItemsSource.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Server\CStoreService.cs">
+      <Link>DicomNetwork\Server\CStoreService.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Server\CStoreServer.cs">
+      <Link>DicomNetwork\Server\CStoreServer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Server\FilmBoxExtensions.cs">
+      <Link>DicomNetwork\Server\FilmBoxExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Server\ImageBoxExtensions.cs">
+      <Link>DicomNetwork\Server\ImageBoxExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Server\Printer.cs">
+      <Link>DicomNetwork\Server\Printer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Server\PrintJob.cs">
+      <Link>DicomNetwork\Server\PrintJob.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Server\PrintService.cs">
+      <Link>DicomNetwork\Server\PrintService.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Server\PrintServer.cs">
+      <Link>DicomNetwork\Server\PrintServer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Server\WorklistServer.cs">
+      <Link>DicomNetwork\Server\WorklistServer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Server\WorklistService.cs">
+      <Link>DicomNetwork\Server\WorklistService.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Helpers\WeakActions\IExecuteWithObject.cs">
+      <Link>Helpers\WeakActions\IExecuteWithObject.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Helpers\WeakActions\WeakActionAndToken.cs">
+      <Link>Helpers\WeakActions\WeakActionAndToken.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Helpers\WeakActions\WeakActionGeneric.cs">
+      <Link>Helpers\WeakActions\WeakActionGeneric.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Helpers\WeakActions\WeakAction.cs">
+      <Link>Helpers\WeakActions\WeakAction.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Helpers\BindingProxy.cs">
+      <Link>Helpers\BindingProxy.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Helpers\BitmapExtensions.cs">
+      <Link>Helpers\BitmapExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Helpers\SystemHelper.cs">
+      <Link>Helpers\SystemHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Helpers\ProcessHelper.cs">
+      <Link>Helpers\ProcessHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Helpers\VisualHelper.cs">
+      <Link>Helpers\VisualHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Helpers\InteropHelper.cs">
+      <Link>Helpers\InteropHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\IoCModules\ServicesModule.cs">
+      <Link>IoCModules\ServicesModule.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\IoCModules\DicomSCUModule.cs">
+      <Link>IoCModules\DicomSCUModule.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\IoCModules\ValidatorModule.cs">
+      <Link>IoCModules\ValidatorModule.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\IoCModules\ViewModelModule.cs">
+      <Link>IoCModules\ViewModelModule.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Logging\ILoggerService.cs">
+      <Link>Logging\ILoggerService.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Logging\LoggerService.cs">
+      <Link>Logging\LoggerService.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Logging\NLogManager.cs">
+      <Link>Logging\NLogManager.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Models\BusyStateItem.cs">
+      <Link>Models\BusyStateItem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Models\CStoreItem.cs">
+      <Link>Models\CStoreItem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Models\ClientMessageItem.cs">
+      <Link>Models\ClientMessageItem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Models\DcmItem.cs">
+      <Link>Models\DcmItem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Models\DicomObjectLevel.cs">
+      <Link>Models\DicomObjectLevel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Models\ServerMessageItem.cs">
+      <Link>Models\ServerMessageItem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Models\ServerStateItem.cs">
+      <Link>Models\ServerStateItem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Models\SimpleWorklistResult.cs">
+      <Link>Models\SimpleWorklistResult.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Models\UpdateDicomElementItem.cs">
+      <Link>Models\UpdateDicomElementItem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Models\WorklistItem.cs">
+      <Link>Models\WorklistItem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Services\Interfaces\IAppearanceService.cs">
+      <Link>Services\Interfaces\IAppearanceService.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Services\Interfaces\IConfigurationService.cs">
+      <Link>Services\Interfaces\IConfigurationService.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Services\Interfaces\IDialogServiceEx.cs">
+      <Link>Services\Interfaces\IDialogServiceEx.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Services\Interfaces\II18nService.cs">
+      <Link>Services\Interfaces\II18nService.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Services\Interfaces\IMessengerService.cs">
+      <Link>Services\Interfaces\IMessengerService.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Services\Interfaces\INotificationService.cs">
+      <Link>Services\Interfaces\INotificationService.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Services\Interfaces\ISimpleMqttService.cs">
+      <Link>Services\Interfaces\ISimpleMqttService.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Services\Interfaces\IUpdateService.cs">
+      <Link>Services\Interfaces\IUpdateService.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Services\AppearanceService.cs">
+      <Link>Services\AppearanceService.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Services\ConfigurationService.cs">
+      <Link>Services\ConfigurationService.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Services\DialogServiceEx.cs">
+      <Link>Services\DialogServiceEx.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Services\I18nService.cs">
+      <Link>Services\I18nService.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Services\MessengerService.cs">
+      <Link>Services\MessengerService.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Services\NotificationService.cs">
+      <Link>Services\NotificationService.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Services\SimpleMqttService.cs">
+      <Link>Services\SimpleMqttService.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Services\UpdateService.cs">
+      <Link>Services\UpdateService.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Validators\FluentModelValidator.cs">
+      <Link>Validators\FluentModelValidator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Validators\ServerConfigViewModelValidator.cs">
+      <Link>Validators\ServerConfigViewModelValidator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\ViewModels\CStoreFileListViewModel.cs">
+      <Link>ViewModels\CStoreFileListViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\ViewModels\CStoreReceivedViewModel.cs">
+      <Link>ViewModels\CStoreReceivedViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\ViewModels\CStoreSCPViewModel.cs">
+      <Link>ViewModels\CStoreSCPViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\ViewModels\CStoreViewModel.cs">
+      <Link>ViewModels\CStoreViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\ViewModels\DcmItemsViewModel.cs">
+      <Link>ViewModels\DcmItemsViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\ViewModels\EditDicomItemViewModel.cs">
+      <Link>ViewModels\EditDicomItemViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\ViewModels\ImageOrientationViewModel.cs">
+      <Link>ViewModels\ImageOrientationViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\ViewModels\IViewModelFactory.cs">
+      <Link>ViewModels\IViewModelFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\ViewModels\PatientsViewModel.cs">
+      <Link>ViewModels\PatientsViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\ViewModels\PreviewImageViewModel.cs">
+      <Link>ViewModels\PreviewImageViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\ViewModels\PrintJobsViewModel.cs">
+      <Link>ViewModels\PrintJobsViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\ViewModels\PrintPreviewViewModel.cs">
+      <Link>ViewModels\PrintPreviewViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\ViewModels\PrintSCPViewModel.cs">
+      <Link>ViewModels\PrintSCPViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\ViewModels\PrintViewModel.cs">
+      <Link>ViewModels\PrintViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\ViewModels\QueryResultViewModel.cs">
+      <Link>ViewModels\QueryResultViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\ViewModels\QueryRetrieveViewModel.cs">
+      <Link>ViewModels\QueryRetrieveViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\ViewModels\RegistrationViewModel.cs">
+      <Link>ViewModels\RegistrationViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\ViewModels\ServerConfigViewModel.cs">
+      <Link>ViewModels\ServerConfigViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\ViewModels\ShellViewModel.cs">
+      <Link>ViewModels\ShellViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\ViewModels\WorklistResultViewModel.cs">
+      <Link>ViewModels\WorklistResultViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\ViewModels\WorklistSCPViewModel.cs">
+      <Link>ViewModels\WorklistSCPViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\ViewModels\WorklistViewModel.cs">
+      <Link>ViewModels\WorklistViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Views\CStoreFileListView.xaml.cs">
+      <DependentUpon>CStoreFileListView.xaml</DependentUpon>
+      <Link>Views\CStoreFileListView.xaml.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Views\CStoreReceivedView.xaml.cs">
+      <DependentUpon>CStoreReceivedView.xaml</DependentUpon>
+      <Link>Views\CStoreReceivedView.xaml.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Views\CStoreSCPView.xaml.cs">
+      <DependentUpon>CStoreSCPView.xaml</DependentUpon>
+      <Link>Views\CStoreSCPView.xaml.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Views\CStoreView.xaml.cs">
+      <DependentUpon>CStoreView.xaml</DependentUpon>
+      <Link>Views\CStoreView.xaml.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Views\DcmItemsView.xaml.cs">
+      <DependentUpon>DcmItemsView.xaml</DependentUpon>
+      <Link>Views\DcmItemsView.xaml.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Views\EditDicomItemView.xaml.cs">
+      <DependentUpon>EditDicomItemView.xaml</DependentUpon>
+      <Link>Views\EditDicomItemView.xaml.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Views\ImageOrientationView.xaml.cs">
+      <DependentUpon>ImageOrientationView.xaml</DependentUpon>
+      <Link>Views\ImageOrientationView.xaml.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Views\PatientsView.xaml.cs">
+      <DependentUpon>PatientsView.xaml</DependentUpon>
+      <Link>Views\PatientsView.xaml.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Views\PreviewImageView.xaml.cs">
+      <DependentUpon>PreviewImageView.xaml</DependentUpon>
+      <Link>Views\PreviewImageView.xaml.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Views\PrintJobsView.xaml.cs">
+      <DependentUpon>PrintJobsView.xaml</DependentUpon>
+      <Link>Views\PrintJobsView.xaml.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Views\PrintPreviewView.xaml.cs">
+      <DependentUpon>PrintPreviewView.xaml</DependentUpon>
+      <Link>Views\PrintPreviewView.xaml.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Views\PrintSCPView.xaml.cs">
+      <DependentUpon>PrintSCPView.xaml</DependentUpon>
+      <Link>Views\PrintSCPView.xaml.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Views\PrintView.xaml.cs">
+      <DependentUpon>PrintView.xaml</DependentUpon>
+      <Link>Views\PrintView.xaml.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Views\QueryResultView.xaml.cs">
+      <DependentUpon>QueryResultView.xaml</DependentUpon>
+      <Link>Views\QueryResultView.xaml.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Views\QueryRetrieveView.xaml.cs">
+      <DependentUpon>QueryRetrieveView.xaml</DependentUpon>
+      <Link>Views\QueryRetrieveView.xaml.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Views\RegistrationView.xaml.cs">
+      <DependentUpon>RegistrationView.xaml</DependentUpon>
+      <Link>Views\RegistrationView.xaml.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Views\ServerConfigView.xaml.cs">
+      <DependentUpon>ServerConfigView.xaml</DependentUpon>
+      <Link>Views\ServerConfigView.xaml.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Views\ShellView.xaml.cs">
+      <DependentUpon>ShellView.xaml</DependentUpon>
+      <Link>Views\ShellView.xaml.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Views\WorklistResultView.xaml.cs">
+      <DependentUpon>WorklistResultView.xaml</DependentUpon>
+      <Link>Views\WorklistResultView.xaml.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Views\WorklistSCPView.xaml.cs">
+      <DependentUpon>WorklistSCPView.xaml</DependentUpon>
+      <Link>Views\WorklistSCPView.xaml.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Views\WorklistView.xaml.cs">
+      <DependentUpon>WorklistView.xaml</DependentUpon>
+      <Link>Views\WorklistView.xaml.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\Fate.dcm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\src\NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\src\app.manifest" />
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="..\..\src\Themes\ProgressRing.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>Themes\ProgressRing.xaml</Link>
+    </Page>
+    <Page Include="..\..\src\Themes\AduLoading.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>Themes\AduLoading.xaml</Link>
+    </Page>
+    <Page Include="..\..\src\Themes\ButtonStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>Themes\ButtonStyle.xaml</Link>
+    </Page>
+    <Page Include="..\..\src\Themes\ColumnHeaderStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>Themes\ColumnHeaderStyle.xaml</Link>
+    </Page>
+    <Page Include="..\..\src\Themes\Common.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>Themes\Common.xaml</Link>
+    </Page>
+    <Page Include="..\..\src\Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>Themes\Generic.xaml</Link>
+    </Page>
+    <Page Include="..\..\src\Themes\Icons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>Themes\Icons.xaml</Link>
+    </Page>
+    <Page Include="..\..\src\Themes\NeteaseResizeGrip.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>Themes\NeteaseResizeGrip.xaml</Link>
+    </Page>
+    <Page Include="..\..\src\Themes\SingleRound.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>Themes\SingleRound.xaml</Link>
+    </Page>
+    <Page Include="..\..\src\Themes\Toaster.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>Themes\Toaster.xaml</Link>
+    </Page>
+    <Page Include="..\..\src\Themes\TooltipStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>Themes\TooltipStyle.xaml</Link>
+    </Page>
+    <Page Include="..\..\src\Views\CStoreFileListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>Views\CStoreFileListView.xaml</Link>
+    </Page>
+    <Page Include="..\..\src\Views\CStoreReceivedView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>Views\CStoreReceivedView.xaml</Link>
+    </Page>
+    <Page Include="..\..\src\Views\CStoreSCPView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>Views\CStoreSCPView.xaml</Link>
+    </Page>
+    <Page Include="..\..\src\Views\CStoreView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>Views\CStoreView.xaml</Link>
+    </Page>
+    <Page Include="..\..\src\Views\DcmItemsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>Views\DcmItemsView.xaml</Link>
+    </Page>
+    <Page Include="..\..\src\Views\EditDicomItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>Views\EditDicomItemView.xaml</Link>
+    </Page>
+    <Page Include="..\..\src\Views\ImageOrientationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>Views\ImageOrientationView.xaml</Link>
+    </Page>
+    <Page Include="..\..\src\Views\PatientsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>Views\PatientsView.xaml</Link>
+    </Page>
+    <Page Include="..\..\src\Views\PreviewImageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>Views\PreviewImageView.xaml</Link>
+    </Page>
+    <Page Include="..\..\src\Views\PrintJobsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>Views\PrintJobsView.xaml</Link>
+    </Page>
+    <Page Include="..\..\src\Views\PrintPreviewView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>Views\PrintPreviewView.xaml</Link>
+    </Page>
+    <Page Include="..\..\src\Views\PrintSCPView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>Views\PrintSCPView.xaml</Link>
+    </Page>
+    <Page Include="..\..\src\Views\PrintView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>Views\PrintView.xaml</Link>
+    </Page>
+    <Page Include="..\..\src\Views\QueryResultView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>Views\QueryResultView.xaml</Link>
+    </Page>
+    <Page Include="..\..\src\Views\QueryRetrieveView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>Views\QueryRetrieveView.xaml</Link>
+    </Page>
+    <Page Include="..\..\src\Views\RegistrationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>Views\RegistrationView.xaml</Link>
+    </Page>
+    <Page Include="..\..\src\Views\ServerConfigView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>Views\ServerConfigView.xaml</Link>
+    </Page>
+    <Page Include="..\..\src\Views\ShellView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>Views\ShellView.xaml</Link>
+    </Page>
+    <Page Include="..\..\src\Views\WorklistResultView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>Views\WorklistResultView.xaml</Link>
+    </Page>
+    <Page Include="..\..\src\Views\WorklistSCPView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>Views\WorklistSCPView.xaml</Link>
+    </Page>
+    <Page Include="..\..\src\Views\WorklistView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Link>Views\WorklistView.xaml</Link>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\src\Icons\addfiles.png">
+      <Link>Icons\addfiles.png</Link>
+    </Resource>
+    <Resource Include="..\..\src\Icons\clear.png">
+      <Link>Icons\clear.png</Link>
+    </Resource>
+    <Resource Include="..\..\src\Icons\delete.png">
+      <Link>Icons\delete.png</Link>
+    </Resource>
+    <Resource Include="..\..\src\Icons\details.png">
+      <Link>Icons\details.png</Link>
+    </Resource>
+    <Resource Include="..\..\src\Icons\earth.png">
+      <Link>Icons\earth.png</Link>
+    </Resource>
+    <Resource Include="..\..\src\Icons\error.png">
+      <Link>Icons\error.png</Link>
+    </Resource>
+    <Resource Include="..\..\src\Icons\exit.png">
+      <Link>Icons\exit.png</Link>
+    </Resource>
+    <Resource Include="..\..\src\Icons\failed.png">
+      <Link>Icons\failed.png</Link>
+    </Resource>
+    <Resource Include="..\..\src\Icons\failed1.png">
+      <Link>Icons\failed1.png</Link>
+    </Resource>
+    <Resource Include="..\..\src\Icons\in-progress.png">
+      <Link>Icons\in-progress.png</Link>
+    </Resource>
+    <Resource Include="..\..\src\Icons\info.png">
+      <Link>Icons\info.png</Link>
+    </Resource>
+    <Resource Include="..\..\src\Icons\item-white.png">
+      <Link>Icons\item-white.png</Link>
+    </Resource>
+    <Resource Include="..\..\src\Icons\item.png">
+      <Link>Icons\item.png</Link>
+    </Resource>
+    <Resource Include="..\..\src\Icons\okay.png">
+      <Link>Icons\okay.png</Link>
+    </Resource>
+    <Resource Include="..\..\src\Icons\open_folder.png">
+      <Link>Icons\open_folder.png</Link>
+    </Resource>
+    <Resource Include="..\..\src\Icons\package.png">
+      <Link>Icons\package.png</Link>
+    </Resource>
+    <Resource Include="..\..\src\Icons\preview.png">
+      <Link>Icons\preview.png</Link>
+    </Resource>
+    <Resource Include="..\..\src\Icons\register.png">
+      <Link>Icons\register.png</Link>
+    </Resource>
+    <Resource Include="..\..\src\Icons\settings.png">
+      <Link>Icons\settings.png</Link>
+    </Resource>
+    <Resource Include="..\..\src\Icons\start.png">
+      <Link>Icons\start.png</Link>
+    </Resource>
+    <Resource Include="..\..\src\Icons\success.png">
+      <Link>Icons\success.png</Link>
+    </Resource>
+    <Resource Include="..\..\src\Icons\tag-white.png">
+      <Link>Icons\tag-white.png</Link>
+    </Resource>
+    <Resource Include="..\..\src\Icons\tag.png">
+      <Link>Icons\tag.png</Link>
+    </Resource>
+    <Resource Include="..\..\src\Icons\waiting.png">
+      <Link>Icons\waiting.png</Link>
+    </Resource>
+    <Resource Include="..\..\src\Icons\window.png">
+      <Link>Icons\window.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\src\Icons\icon.ico">
+      <Link>Icons\icon.ico</Link>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\src\Strings\en-US.xml">
+      <Link>Strings\en-US.xml</Link>
+    </Resource>
+    <Resource Include="..\..\src\Strings\zh-CN.xml">
+      <Link>Strings\zh-CN.xml</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="FluentValidation">
+      <Version>9.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="fo-dicom.Desktop">
+      <Version>4.0.6</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NETCore.Platforms">
+      <Version>3.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf">
+      <Version>1.1.19</Version>
+    </PackageReference>
+    <PackageReference Include="MQTTnet">
+      <Version>3.0.12</Version>
+    </PackageReference>
+    <PackageReference Include="NETStandard.Library">
+      <Version>2.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="Nett">
+      <Version>0.15.0</Version>
+    </PackageReference>
+    <PackageReference Include="NLog">
+      <Version>4.7.3</Version>
+    </PackageReference>
+    <PackageReference Include="Ookii.Dialogs.Wpf">
+      <Version>1.1.0</Version>
+    </PackageReference>
+    <PackageReference Include="Stylet">
+      <Version>1.3.4</Version>
+    </PackageReference>
+    <PackageReference Include="System.Net.Security">
+      <Version>4.3.2</Version>
+    </PackageReference>
+    <PackageReference Include="System.Net.WebSockets">
+      <Version>4.3.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.Net.WebSockets.Client">
+      <Version>4.3.2</Version>
+    </PackageReference>
+    <PackageReference Include="System.Security.Cryptography.Algorithms">
+      <Version>4.3.1</Version>
+    </PackageReference>
+    <PackageReference Include="System.Security.Cryptography.Encoding">
+      <Version>4.3.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.Security.Cryptography.Primitives">
+      <Version>4.3.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.Security.Cryptography.X509Certificates">
+      <Version>4.3.2</Version>
+    </PackageReference>
+    <PackageReference Include="System.ValueTuple">
+      <Version>4.5.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

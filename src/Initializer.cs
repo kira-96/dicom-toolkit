@@ -8,7 +8,11 @@
             Stylet.Logging.LogManager.Enabled = true;
 #endif
 
+#if NET_CORE
+            Dicom.Imaging.ImageManager.SetImplementation(Dicom.Imaging.WinFormsImageManager.Instance);
+#else
             Dicom.Imaging.ImageManager.SetImplementation(Dicom.Imaging.WPFImageManager.Instance);
+#endif
             Dicom.Log.LogManager.SetImplementation(Dicom.Log.NLogManager.Instance);
 
             // Set your own Class UID here

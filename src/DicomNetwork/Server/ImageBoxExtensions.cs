@@ -51,12 +51,14 @@ namespace Dicom.Printing
                     var image = new DicomImage(imageBox.ImageSequence);
                     var iimage = image.RenderImage();
 
+#if !NET_CORE
                     if (iimage is WPFImage)
                     {
                         var frame = iimage.AsWriteableBitmap().AsBitmap();
                         bitmap = frame;
                     }
                     else
+#endif
                     {
                         var frame = iimage.As<Image>();
                         bitmap = frame;
@@ -161,6 +163,6 @@ namespace Dicom.Printing
             }
         }
 
-        #endregion
+#endregion
     }
 }

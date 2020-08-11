@@ -3,7 +3,6 @@
     using Dicom;
     using Dicom.Imaging;
     using Stylet;
-    using System;
     using System.IO;
     using System.Windows;
     using System.Windows.Controls;
@@ -20,9 +19,9 @@
         private bool isMovingImage = false;
         private bool isUpdatingImage = false;
 
-        private WriteableBitmap _imageSource;
+        private BitmapSource _imageSource;
 
-        public WriteableBitmap ImageSource
+        public BitmapSource ImageSource
         {
             get => _imageSource;
             private set => SetAndNotify(ref _imageSource, value);
@@ -231,8 +230,13 @@
 
             using (IImage iimage = dicomImage.RenderImage(frame))
             {
-                ImageSource = iimage.AsWriteableBitmap();
-                ImageSource.Freeze();
+#if NET_CORE
+                ImageSource = iimage.AsSharedBitmap().AsBitmapImage();
+#else
+                var wbm = iimage.AsWriteableBitmap();
+                ImageSource = wbm;
+                wbm.Freeze();
+#endif
             }
         }
     }

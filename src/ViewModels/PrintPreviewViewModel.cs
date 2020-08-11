@@ -30,7 +30,7 @@
         [Inject]
         private IPrintSCU _printSCU;
 
-        private List<WriteableBitmap> _images = new List<WriteableBitmap>();
+        private List<BitmapSource> _images = new List<BitmapSource>();
 
         private int _currentIndex = 0;
 
@@ -46,7 +46,7 @@
             }
         }
 
-        public WriteableBitmap ImageSource
+        public BitmapSource ImageSource
         {
             get
             {
@@ -77,7 +77,11 @@
             List<Bitmap> images = new List<Bitmap>();
             foreach (var image in _images)
             {
-                images.Add(image.AsBitmap());
+#if NET_CORE
+                images.Add(((BitmapImage)image).AsBitmap());
+#else
+                images.Add(((WriteableBitmap)image).AsBitmap());
+#endif
             }
 
             try
@@ -150,7 +154,11 @@
 
             using (IImage iimage = image.RenderImage())
             {
+#if NET_CORE
+                _images.Add(iimage.AsSharedBitmap().AsBitmapImage());
+#else
                 _images.Add(iimage.AsWriteableBitmap());
+#endif
             }
 
             // update Display
