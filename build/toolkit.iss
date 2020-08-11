@@ -43,7 +43,7 @@ Name: "chinesesimplified"; MessagesFile: "SimplifiedChinese\ChineseSimplified.is
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "{#SourceDir}\x64\Release\*"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#SourceDir}\Desktop\x64\Release\*"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourceDir}\LICENSE"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourceDir}\README.md"; DestDir: "{app}"; Flags: ignoreversion
 

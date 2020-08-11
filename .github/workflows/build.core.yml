@@ -1,0 +1,31 @@
+name: .NET Core Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build:
+    runs-on: windows-latest  # For a list of available runner types, refer to
+                             # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    # Install the .NET Core workload
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.1.x'
+
+    - name: Build Config
+      run: dotnet build ./config/Config.csproj --configuration Release --framework netcoreapp3.1
+
+    - name: Build Toolkit
+      run: dotnet build ./src/SimpleDICOMToolkit.csproj --configuration Release --framework netcoreapp3.1

@@ -56,6 +56,7 @@ install:
 # "project" is relative to the original build directory and not influenced by directory changes in "before_build".
 build:
   parallel: true                  # enable MSBuild parallel builds
+  project: Toolkit.sln
   # MSBuild verbosity level
   verbosity: minimal
 
@@ -86,7 +87,7 @@ after_test:
 artifacts:
 
   # pushing a single file with environment variable in path and "Deployment name" specified
-  - path: x64\Release
+  - path: Desktop\x64\Release
     name: dicom-toolkit_x64
   
   - path: build\dicom-toolkit.exe
