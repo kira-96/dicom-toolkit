@@ -21,21 +21,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Icons\icon.ico" />
-    <None Remove="Icons\okay.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Icons\icon.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="MQTTnet" Version="3.0.12" />
     <PackageReference Include="Nett" Version="0.15.0" />
     <PackageReference Include="NLog" Version="4.7.3" />
     <PackageReference Include="Stylet" Version="1.3.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\icon.ico" />
+  </ItemGroup>
+  
   <ItemGroup>
     <Resource Include="Icons\okay.png" />
   </ItemGroup>
