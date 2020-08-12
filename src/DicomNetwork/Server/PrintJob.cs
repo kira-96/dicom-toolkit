@@ -332,11 +332,12 @@ namespace SimpleDICOMToolkit.Server
                     if (_currentFilmBox.BasicImageBoxes[j].ImageSequence.Contains(DicomTag.PixelData))
                     {
                         var image = new DicomImage(_currentFilmBox.BasicImageBoxes[j].ImageSequence);
+                        using IImage iimage = image.RenderImage();
 #if NET_CORE
-                        image.RenderImage().AsSharedBitmap().Save(Path.Combine(FullPrintJobFolder, SOPInstanceUID.UID) + $".{i}.{j}.png",
+                        iimage.AsSharedBitmap().Save(Path.Combine(FullPrintJobFolder, SOPInstanceUID.UID) + $".{i}.{j}.png",
                             System.Drawing.Imaging.ImageFormat.Png);
 #else
-                        image.RenderImage().AsWriteableBitmap().SavePng(Path.Combine(FullPrintJobFolder, SOPInstanceUID.UID) + $".{i}.{j}.png");
+                        iimage.AsWriteableBitmap().SavePng(Path.Combine(FullPrintJobFolder, SOPInstanceUID.UID) + $".{i}.{j}.png");
 #endif
                     }
                 }

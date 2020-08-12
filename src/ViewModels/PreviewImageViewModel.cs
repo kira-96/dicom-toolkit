@@ -229,16 +229,14 @@
                 return;
             }
 
-            using (IImage iimage = dicomImage.RenderImage(frame))
-            {
+            using IImage iimage = dicomImage.RenderImage(frame);
 #if NET_CORE
-                ImageSource = iimage.AsSharedBitmap().AsBitmapImage();
+            var image = iimage.AsSharedBitmap().AsBitmapImage();
 #else
-                var wbm = iimage.AsWriteableBitmap();
-                ImageSource = wbm;
-                wbm.Freeze();
+            var image = iimage.AsWriteableBitmap();
 #endif
-            }
+            ImageSource = image;
+            image.Freeze();
         }
     }
 }

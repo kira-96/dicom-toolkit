@@ -7,8 +7,8 @@
     <ApplicationIcon>Icons\icon.ico</ApplicationIcon>
     <Version>1.0.10</Version>
     <Copyright>Copyright © 2020 kira。保留所有权利。</Copyright>
-    <AssemblyVersion>1.0.10.14</AssemblyVersion>
-    <FileVersion>1.0.10.14</FileVersion>
+    <AssemblyVersion>1.0.10.15</AssemblyVersion>
+    <FileVersion>1.0.10.15</FileVersion>
     <Platforms>x64</Platforms>
   </PropertyGroup>
 
