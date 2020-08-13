@@ -1,4 +1,9 @@
-﻿using Dicom;
+﻿// https://github.com/fo-dicom/fo-dicom-samples/blob/master/Desktop/Print%20SCP/PrintService.cs
+
+// Copyright (c) 2012-2020 fo-dicom contributors.
+// Licensed under the Microsoft Public License (MS-PL).
+
+using Dicom;
 using Dicom.Log;
 using Dicom.Network;
 using Dicom.Printing;

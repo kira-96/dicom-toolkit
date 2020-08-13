@@ -1,4 +1,9 @@
-﻿namespace SimpleDICOMToolkit.Server
+﻿// https://github.com/fo-dicom/fo-dicom-samples/blob/master/Desktop/C-Store%20SCP/Program.cs#L36
+
+// Copyright (c) 2012-2020 fo-dicom contributors.
+// Licensed under the Microsoft Public License (MS-PL).
+
+namespace SimpleDICOMToolkit.Server
 {
     using Dicom;
     using Dicom.Log;
