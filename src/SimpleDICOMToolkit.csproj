@@ -8,14 +8,17 @@
     <RootNamespace>SimpleDICOMToolkit</RootNamespace>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Icons\icon.ico</ApplicationIcon>
-    <AssemblyVersion>1.4.4.255</AssemblyVersion>
-    <FileVersion>1.4.4.255</FileVersion>
+    <AssemblyVersion>1.4.4.256</AssemblyVersion>
+    <FileVersion>1.4.4.256</FileVersion>
     <Version>1.4.4</Version>
     <Copyright>Copyright © 2019 - 2020 kira。保留所有权利。</Copyright>
     <Platforms>x64</Platforms>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DefineConstants>TRACE;NET_CORE</DefineConstants>
     <NoWarn>1701;1702;0649;IDE0044</NoWarn>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>toolkit.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>false</DelaySign>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
