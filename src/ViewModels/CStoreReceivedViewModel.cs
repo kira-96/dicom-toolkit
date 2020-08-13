@@ -50,7 +50,7 @@
         {
             _logger.Debug("files received, count: {0}", files.Count);
 
-            int currentDirPathLength = System.Environment.CurrentDirectory.Length + 1;
+            int currentDirPathLength = Environment.CurrentDirectory.Length + 1;
 
             foreach (string file in files)
             {

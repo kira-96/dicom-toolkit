@@ -144,28 +144,28 @@
 
             if (TaskDialog.OSSupportsTaskDialogs)
             {
-                using (TaskDialog dialog = new TaskDialog())
+                using TaskDialog dialog = new TaskDialog
                 {
-                    dialog.AllowDialogCancellation = true;
-                    dialog.ExpandedByDefault = true;
-                    dialog.EnableHyperlinks = true;
-                    dialog.WindowTitle = caption;
-                    dialog.MainInstruction = i18NService.GetXmlStringByKey("AboutInstruction");
-                    dialog.Content = i18NService.GetXmlStringByKey("AboutContent");
-                    dialog.ExpandedInformation = versionInfo;
-                    dialog.Footer = i18NService.GetXmlStringByKey("AboutFooter");
-                    dialog.FooterIcon = TaskDialogIcon.Information;
-                    dialog.HyperlinkClicked += (s, e) => Helpers.ProcessHelper.OpenHyperlink(e.Href);
+                    AllowDialogCancellation = true,
+                    ExpandedByDefault = true,
+                    EnableHyperlinks = true,
+                    WindowTitle = caption,
+                    MainInstruction = i18NService.GetXmlStringByKey("AboutInstruction"),
+                    Content = i18NService.GetXmlStringByKey("AboutContent"),
+                    ExpandedInformation = versionInfo,
+                    Footer = i18NService.GetXmlStringByKey("AboutFooter"),
+                    FooterIcon = TaskDialogIcon.Information
+                };
 
-                    var checkUpdateButton = new TaskDialogButton(i18NService.GetXmlStringByKey("CheckUpdate"));
-                    dialog.Buttons.Add(checkUpdateButton);
-                    dialog.Buttons.Add(new TaskDialogButton(ButtonType.Ok));
-                    var result = dialog.ShowDialog(this);
+                var checkUpdateButton = new TaskDialogButton(i18NService.GetXmlStringByKey("CheckUpdate"));
+                dialog.Buttons.Add(checkUpdateButton);
+                dialog.Buttons.Add(new TaskDialogButton(ButtonType.Ok) { Default = true });
+                dialog.HyperlinkClicked += (s, e) => Helpers.ProcessHelper.OpenHyperlink(e.Href);
+                var result = dialog.ShowDialog(this);
 
-                    if (result == checkUpdateButton)
-                    {
-                        updateService.CheckForUpdate();
-                    }
+                if (result == checkUpdateButton)
+                {
+                    updateService.CheckForUpdate();
                 }
             }
             else

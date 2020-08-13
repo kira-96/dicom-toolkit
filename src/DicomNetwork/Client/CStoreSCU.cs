@@ -24,18 +24,19 @@
 
             foreach (CStoreItem item in items)
             {
-                DicomCStoreRequest request = new DicomCStoreRequest(item.File);
-
-                request.OnResponseReceived = (req, res) =>
+                DicomCStoreRequest request = new DicomCStoreRequest(item.File)
                 {
-                    if (res.Status != DicomStatus.Success)
+                    OnResponseReceived = (req, res) =>
                     {
-                        Logger.Error("C-STORE send failed. Instance UID - [{0}]", req.SOPInstanceUID);
-                        item.Status = CStoreItemStatus.Failed;
-                    }
-                    else
-                    {
-                        item.Status = CStoreItemStatus.Success;
+                        if (res.Status != DicomStatus.Success)
+                        {
+                            Logger.Error("C-STORE send failed. Instance UID - [{0}]", req.SOPInstanceUID);
+                            item.Status = CStoreItemStatus.Failed;
+                        }
+                        else
+                        {
+                            item.Status = CStoreItemStatus.Success;
+                        }
                     }
                 };
 

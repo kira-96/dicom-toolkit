@@ -26,7 +26,6 @@
 
         public void Dispose()
         {
-            // TODO
             ServerConfigViewModel.Dispose();
             CStoreFileListViewModel.Dispose();
         }
