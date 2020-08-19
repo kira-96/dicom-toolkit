@@ -8,6 +8,7 @@
 #define MyAppExeName "Simple DICOM Toolkit.exe"
 
 #define SourceDir ".."
+#define ReleaseDir "Desktop\x64\Release"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
@@ -43,9 +44,28 @@ Name: "chinesesimplified"; MessagesFile: "SimplifiedChinese\ChineseSimplified.is
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "{#SourceDir}\Desktop\x64\Release\*"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#SourceDir}\{#ReleaseDir}\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#SourceDir}\{#ReleaseDir}\Config.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#SourceDir}\{#ReleaseDir}\Dicom.Core.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#SourceDir}\{#ReleaseDir}\Dicom.Native64.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#SourceDir}\{#ReleaseDir}\FluentValidation.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#SourceDir}\{#ReleaseDir}\Microsoft.Xaml.Behaviors.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#SourceDir}\{#ReleaseDir}\MQTTnet.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#SourceDir}\{#ReleaseDir}\Nett.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#SourceDir}\{#ReleaseDir}\NLog.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#SourceDir}\{#ReleaseDir}\Ookii.Dialogs.Wpf.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#SourceDir}\{#ReleaseDir}\Stylet.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#SourceDir}\{#ReleaseDir}\System.Net.Security.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#SourceDir}\{#ReleaseDir}\System.Net.WebSockets.Client.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#SourceDir}\{#ReleaseDir}\System.Net.WebSockets.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#SourceDir}\{#ReleaseDir}\System.Security.Cryptography.Algorithms.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#SourceDir}\{#ReleaseDir}\System.Security.Cryptography.Encoding.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#SourceDir}\{#ReleaseDir}\System.Security.Cryptography.Primitives.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#SourceDir}\{#ReleaseDir}\System.Security.Cryptography.X509Certificates.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#SourceDir}\{#ReleaseDir}\System.ValueTuple.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#SourceDir}\{#ReleaseDir}\NLog.config"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#SourceDir}\{#ReleaseDir}\Fate.dcm"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourceDir}\LICENSE"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#SourceDir}\README.md"; DestDir: "{app}"; Flags: ignoreversion
 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
