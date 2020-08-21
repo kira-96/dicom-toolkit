@@ -214,7 +214,7 @@
                     Resources["CommonBackground"] = new SolidColorBrush((Color)ApplicationResources["AccentColor"]);
                     Resources["TabItemBackground"] = new SolidColorBrush((Color)ApplicationResources["AccentColor"]);
                     Resources["TabItemForeground"] = new SolidColorBrush((Color)ApplicationResources["AccentForegroundColor"]);
-                    Resources["SelectedTabItemBackground"] = new SolidColorBrush((Color)ApplicationResources["AccentForegroundColor"]);
+                    Resources["SelectedTabItemBackground"] = new SolidColorBrush(Colors.White);
                     Resources["SelectedTabItemForeground"] = new SolidColorBrush((Color)ApplicationResources["AccentColor"]);
                     Resources["IndicatorColor"] = new SolidColorBrush(Colors.White);
                 }
