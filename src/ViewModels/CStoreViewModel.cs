@@ -12,16 +12,25 @@
         [Inject]
         public CStoreFileListViewModel CStoreFileListViewModel { get; private set; }
 
-        public CStoreViewModel()
+        private readonly IEventAggregator eventAggregator;
+
+        public CStoreViewModel(IEventAggregator eventAggregator)
         {
             DisplayName = "C-Store";
+            this.eventAggregator = eventAggregator;
         }
 
         protected override void OnInitialActivate()
         {
             base.OnInitialActivate();
-            ServerConfigViewModel.Init(this);
+
             CStoreFileListViewModel.Parent = this;
+            ServerConfigViewModel.Parent = this;
+            ServerConfigViewModel.ServerPort = "104";
+            ServerConfigViewModel.ServerAET = "CSTORESCP";
+            ServerConfigViewModel.IsModalityEnabled = false;
+            ServerConfigViewModel.RequestAction = () => ServerConfigViewModel.PublishClientRequest(nameof(ViewModels.CStoreFileListViewModel));
+            eventAggregator.Subscribe(ServerConfigViewModel, nameof(ViewModels.CStoreFileListViewModel));
         }
 
         public void Dispose()

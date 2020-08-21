@@ -3,6 +3,7 @@
     using Stylet;
     using StyletIoC;
     using System;
+    using Helpers;
 
     public class WorklistSCPViewModel : Screen, IDisposable
     {
@@ -12,17 +13,25 @@
         [Inject]
         public PatientsViewModel PatientsViewModel { get; private set; }
 
-        public WorklistSCPViewModel()
+        private readonly IEventAggregator eventAggregator;
+
+        public WorklistSCPViewModel(IEventAggregator eventAggregator)
         {
             DisplayName = "Worklist SCP";
+            this.eventAggregator = eventAggregator;
         }
 
         protected override void OnInitialActivate()
         {
             base.OnInitialActivate();
 
-            ServerConfigViewModel.Init(this);
             PatientsViewModel.Parent = this;
+            ServerConfigViewModel.Parent = this;
+            ServerConfigViewModel.RequestAction = () => ServerConfigViewModel.PublishServerRequest(nameof(ViewModels.PatientsViewModel));
+            ServerConfigViewModel.ServerIP = SystemHelper.LocalIPAddress;
+            ServerConfigViewModel.LocalAET = ServerConfigViewModel.ServerAET = "RIS";
+            ServerConfigViewModel.IsServerIPEnabled = ServerConfigViewModel.IsServerAETEnabled = ServerConfigViewModel.IsModalityEnabled = false;
+            eventAggregator.Subscribe(ServerConfigViewModel, nameof(ViewModels.PatientsViewModel));
         }
 
         public void Dispose()

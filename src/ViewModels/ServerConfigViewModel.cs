@@ -7,7 +7,6 @@
     using Logging;
     using Models;
     using Services;
-    using Helpers;
 
     public class ServerConfigViewModel : Screen, IHandle<BusyStateItem>, IHandle<ServerStateItem>, IDisposable
     {
@@ -24,8 +23,6 @@
 
         [Inject]
         private ICEchoSCU _cechoSCU;
-
-        private Action _doRequestAction;
 
         private string _serverIP = "localhost";
         private string _serverPort = "6104";
@@ -94,31 +91,31 @@
         public bool IsServerIPEnabled
         {
             get => _isServerIPEnabled;
-            private set => SetAndNotify(ref _isServerIPEnabled, value);
+            set => SetAndNotify(ref _isServerIPEnabled, value);
         }
 
         public bool IsServerPortEnabled
         {
             get => _isServerPortEnabled;
-            private set => SetAndNotify(ref _isServerPortEnabled, value);
+            set => SetAndNotify(ref _isServerPortEnabled, value);
         }
 
         public bool IsServerAETEnabled
         {
             get => _isServerAETEnabled;
-            private set => SetAndNotify(ref _isServerAETEnabled, value);
+            set => SetAndNotify(ref _isServerAETEnabled, value);
         }
 
         public bool IsLocalAETEnabled
         {
             get => _isLocalAETEnabled;
-            private set => SetAndNotify(ref _isLocalAETEnabled, value);
+            set => SetAndNotify(ref _isLocalAETEnabled, value);
         }
 
         public bool IsModalityEnabled
         {
             get => _isModalityEnabled;
-            private set => SetAndNotify(ref _isModalityEnabled, value);
+            set => SetAndNotify(ref _isModalityEnabled, value);
         }
 
         private bool _isBusy = false;
@@ -144,6 +141,8 @@
             private set => SetAndNotify(ref _busyIndicatorColumn, value);
         }
 
+        public Action RequestAction { get; set; }
+
         public ServerConfigViewModel(IEventAggregator eventAggregator, IModelValidator<ServerConfigViewModel> validator) : base(validator)
         {
             _eventAggregator = eventAggregator;
@@ -158,7 +157,7 @@
 
         public void DoRequest()
         {
-            _doRequestAction?.Invoke();
+            RequestAction?.Invoke();
         }
 
         public bool CanDoEcho =>
@@ -197,72 +196,7 @@
             }
         }
 
-        public void Init(IScreen parentViewModel)
-        {
-            Parent = parentViewModel;
-
-            if (parentViewModel is WorklistViewModel)
-            {
-                _doRequestAction = WorklistQueryRequest;
-                _eventAggregator.Subscribe(this, nameof(WorklistResultViewModel));
-            }
-            else if (parentViewModel is WorklistSCPViewModel)
-            {
-                _doRequestAction = StartWorklistServer;
-                _eventAggregator.Subscribe(this, nameof(PatientsViewModel));
-                ServerIP = SystemHelper.LocalIPAddress;
-                LocalAET = ServerAET = "RIS";
-                IsServerIPEnabled = IsServerAETEnabled = IsModalityEnabled = false;
-            }
-            else if (parentViewModel is QueryRetrieveViewModel)
-            {
-                _doRequestAction = QueryRetrieveRequest;
-                _eventAggregator.Subscribe(this, nameof(QueryResultViewModel));
-                ServerIP = "www.dicomserver.co.uk";
-                ServerPort = "104";  // 104/11112
-                ServerAET = "QRSCP";
-            }
-            else if (parentViewModel is CStoreViewModel)
-            {
-                _doRequestAction = CStoreRequest;
-                _eventAggregator.Subscribe(this, nameof(CStoreFileListViewModel));
-                ServerPort = "104";
-                ServerAET = "CSTORESCP";
-                IsModalityEnabled = false;
-            }
-            else if (parentViewModel is PrintViewModel)
-            {
-                _doRequestAction = PrintRequest;
-                _eventAggregator.Subscribe(this, nameof(PrintPreviewViewModel));
-                ServerPort = "7104";
-                ServerAET = "PRINTSCP";
-                IsModalityEnabled = false;
-            }
-            else if (parentViewModel is CStoreSCPViewModel)
-            {
-                _doRequestAction = StartCStoreServer;
-                _eventAggregator.Subscribe(this, nameof(CStoreReceivedViewModel));
-                ServerIP = SystemHelper.LocalIPAddress;
-                ServerPort = "104";
-                LocalAET = ServerAET = "CSTORESCP";
-                IsServerIPEnabled = IsServerAETEnabled = IsModalityEnabled = false;
-            }
-            else if (parentViewModel is PrintSCPViewModel)
-            {
-                _doRequestAction = StartPrintServer;
-                _eventAggregator.Subscribe(this, nameof(PrintJobsViewModel));
-                ServerIP = SystemHelper.LocalIPAddress;
-                ServerPort = "7104";
-                LocalAET = ServerAET = "PRINTSCP";
-                IsServerIPEnabled = IsServerAETEnabled = IsModalityEnabled = false;
-            }
-            else
-            {
-                // ...
-            }
-        }
-
-        private void PublishClientRequest(string channel)
+        public void PublishClientRequest(string channel)
         {
             int port = ParseServerPort();
             if (port == 0)
@@ -271,48 +205,13 @@
             _eventAggregator.Publish(new ClientMessageItem(_serverIP, port, _serverAET, _localAET, _modality), channel);
         }
 
-        private void PublishServerRequest(string channel)
+        public void PublishServerRequest(string channel)
         {
             int port = ParseServerPort();
             if (port == 0)
                 return;
 
             _eventAggregator.Publish(new ServerMessageItem(port, _localAET), channel);
-        }
-
-        private void WorklistQueryRequest()
-        {
-            PublishClientRequest(nameof(WorklistResultViewModel));
-        }
-
-        private void QueryRetrieveRequest()
-        {
-            PublishClientRequest(nameof(QueryResultViewModel));
-        }
-
-        private void PrintRequest()
-        {
-            PublishClientRequest(nameof(PrintPreviewViewModel));
-        }
-
-        private void CStoreRequest()
-        {
-            PublishClientRequest(nameof(CStoreFileListViewModel));
-        }
-
-        private void StartWorklistServer()
-        {
-            PublishServerRequest(nameof(PatientsViewModel));
-        }
-
-        private void StartCStoreServer()
-        {
-            PublishServerRequest(nameof(CStoreReceivedViewModel));
-        }
-
-        private void StartPrintServer()
-        {
-            PublishServerRequest(nameof(PrintJobsViewModel));
         }
 
         public int ParseServerPort()

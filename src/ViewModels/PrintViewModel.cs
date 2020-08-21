@@ -34,16 +34,25 @@
 
         public PrintOptions PrintOptions { get; private set; }
 
-        public PrintViewModel()
+        private readonly IEventAggregator eventAggregator;
+
+        public PrintViewModel(IEventAggregator eventAggregator)
         {
             DisplayName = "Print";
             PrintOptions = new PrintOptions();
+            this.eventAggregator = eventAggregator;
         }
 
         protected override async void OnInitialActivate()
         {
             base.OnInitialActivate();
-            ServerConfigViewModel.Init(this);
+
+            ServerConfigViewModel.Parent = this;
+            ServerConfigViewModel.ServerPort = "7104";
+            ServerConfigViewModel.ServerAET = "PRINTSCP"; ;
+            ServerConfigViewModel.IsModalityEnabled = false;
+            ServerConfigViewModel.RequestAction = () => ServerConfigViewModel.PublishClientRequest(nameof(ViewModels.PrintPreviewViewModel));
+            eventAggregator.Subscribe(ServerConfigViewModel, nameof(ViewModels.PrintPreviewViewModel));
             PrintPreviewViewModel.Parent = this;
             await PrintPreviewViewModel.AddSampleImage();
             PrintOptions = configurationService.GetConfiguration<PrintOptions>("PrintOptions");

@@ -32,16 +32,26 @@
         [Inject]
         public PrintJobsViewModel PrintJobsViewModel { get; private set; }
 
-        public PrintSCPViewModel()
+        private readonly IEventAggregator eventAggregator;
+
+        public PrintSCPViewModel(IEventAggregator eventAggregator)
         {
             DisplayName = "Print SCP";
+            this.eventAggregator = eventAggregator;
         }
 
         protected override async void OnInitialActivate()
         {
             base.OnInitialActivate();
-            ServerConfigViewModel.Init(this);
+
             PrintJobsViewModel.Parent = this;
+            ServerConfigViewModel.Parent = this;
+            ServerConfigViewModel.ServerIP = SystemHelper.LocalIPAddress;
+            ServerConfigViewModel.ServerPort = "7104";
+            ServerConfigViewModel.LocalAET = ServerConfigViewModel.ServerAET = "PRINTSCP";
+            ServerConfigViewModel.IsServerIPEnabled = ServerConfigViewModel.IsServerAETEnabled = ServerConfigViewModel.IsModalityEnabled = false;
+            ServerConfigViewModel.RequestAction = () => ServerConfigViewModel.PublishServerRequest(nameof(ViewModels.PrintJobsViewModel));
+            eventAggregator.Subscribe(ServerConfigViewModel, nameof(ViewModels.PrintJobsViewModel));
             PrintServer.Default.PrinterName = configurationService.GetConfiguration<string>("PrinterSettings");
             await messenger.SubscribeAsync(this, "Config", ReloadPrinterSettings);
         }

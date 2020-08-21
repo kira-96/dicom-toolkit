@@ -12,21 +12,26 @@
         [Inject]
         public WorklistResultViewModel WorklistResultViewModel { get; private set; }
 
-        public WorklistViewModel()
+        private readonly IEventAggregator eventAggregator;
+
+        public WorklistViewModel(IEventAggregator eventAggregator)
         {
             DisplayName = "Worklist";
+            this.eventAggregator = eventAggregator;
         }
 
         protected override void OnInitialActivate()
         {
             base.OnInitialActivate();
-            ServerConfigViewModel.Init(this);
+
             WorklistResultViewModel.Parent = this;
+            ServerConfigViewModel.Parent = this;
+            ServerConfigViewModel.RequestAction = () => ServerConfigViewModel.PublishClientRequest(nameof(ViewModels.WorklistResultViewModel));
+            eventAggregator.Subscribe(ServerConfigViewModel, nameof(ViewModels.WorklistResultViewModel));
         }
 
         public void Dispose()
         {
-            // TODO
             ServerConfigViewModel.Dispose();
             WorklistResultViewModel.Dispose();
         }

@@ -12,16 +12,25 @@
         [Inject]
         public QueryResultViewModel QueryResultViewModel { get; private set; }
 
-        public QueryRetrieveViewModel()
+        private readonly IEventAggregator eventAggregator;
+
+        public QueryRetrieveViewModel(IEventAggregator eventAggregator)
         {
             DisplayName = "Query";
+            this.eventAggregator = eventAggregator;
         }
 
         protected override void OnInitialActivate()
         {
             base.OnInitialActivate();
-            ServerConfigViewModel.Init(this);
+
             QueryResultViewModel.Parent = this;
+            ServerConfigViewModel.Parent = this;
+            ServerConfigViewModel.ServerIP = "www.dicomserver.co.uk";
+            ServerConfigViewModel.ServerPort = "104";  // 104/11112
+            ServerConfigViewModel.ServerAET = "QRSCP";
+            ServerConfigViewModel.RequestAction = () => ServerConfigViewModel.PublishClientRequest(nameof(ViewModels.QueryResultViewModel));
+            eventAggregator.Subscribe(ServerConfigViewModel, nameof(ViewModels.QueryResultViewModel));
         }
 
         public void Dispose()
