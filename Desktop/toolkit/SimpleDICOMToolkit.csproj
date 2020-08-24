@@ -118,41 +118,41 @@
     <Compile Include="..\..\src\Converters\MathMultipleConverter.cs">
       <Link>Converters\MathMultipleConverter.cs</Link>
     </Compile>
-    <Compile Include="..\..\src\DicomNetwork\Client\PrintOptions.cs">
-      <Link>DicomNetwork\Client\PrintOptions.cs</Link>
+    <Compile Include="..\..\src\DicomNetwork\Client\Interfaces\ICEchoSCU.cs">
+      <Link>DicomNetwork\Client\Interfaces\ICEchoSCU.cs</Link>
     </Compile>
-    <Compile Include="..\..\src\DicomNetwork\Client\RequestFactory.cs">
-      <Link>DicomNetwork\Client\RequestFactory.cs</Link>
+    <Compile Include="..\..\src\DicomNetwork\Client\Interfaces\IQueryRetrieveSCU.cs">
+      <Link>DicomNetwork\Client\Interfaces\IQueryRetrieveSCU.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Client\Interfaces\ICStoreSCU.cs">
+      <Link>DicomNetwork\Client\Interfaces\ICStoreSCU.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Client\Interfaces\IPrintSCU.cs">
+      <Link>DicomNetwork\Client\Interfaces\IPrintSCU.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Client\Interfaces\IWorklistSCU.cs">
+      <Link>DicomNetwork\Client\Interfaces\IWorklistSCU.cs</Link>
     </Compile>
     <Compile Include="..\..\src\DicomNetwork\Client\CEchoSCU.cs">
       <Link>DicomNetwork\Client\CEchoSCU.cs</Link>
     </Compile>
-    <Compile Include="..\..\src\DicomNetwork\Client\QueryRetrieveSCU.cs">
-      <Link>DicomNetwork\Client\QueryRetrieveSCU.cs</Link>
-    </Compile>
     <Compile Include="..\..\src\DicomNetwork\Client\CStoreSCU.cs">
       <Link>DicomNetwork\Client\CStoreSCU.cs</Link>
-    </Compile>
-    <Compile Include="..\..\src\DicomNetwork\Client\ICEchoSCU.cs">
-      <Link>DicomNetwork\Client\ICEchoSCU.cs</Link>
-    </Compile>
-    <Compile Include="..\..\src\DicomNetwork\Client\IQueryRetrieveSCU.cs">
-      <Link>DicomNetwork\Client\IQueryRetrieveSCU.cs</Link>
-    </Compile>
-    <Compile Include="..\..\src\DicomNetwork\Client\ICStoreSCU.cs">
-      <Link>DicomNetwork\Client\ICStoreSCU.cs</Link>
-    </Compile>
-    <Compile Include="..\..\src\DicomNetwork\Client\IPrintSCU.cs">
-      <Link>DicomNetwork\Client\IPrintSCU.cs</Link>
-    </Compile>
-    <Compile Include="..\..\src\DicomNetwork\Client\IWorklistSCU.cs">
-      <Link>DicomNetwork\Client\IWorklistSCU.cs</Link>
     </Compile>
     <Compile Include="..\..\src\DicomNetwork\Client\PrintJob.cs">
       <Link>DicomNetwork\Client\PrintJob.cs</Link>
     </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Client\PrintOptions.cs">
+      <Link>DicomNetwork\Client\PrintOptions.cs</Link>
+    </Compile>
     <Compile Include="..\..\src\DicomNetwork\Client\PrintSCU.cs">
       <Link>DicomNetwork\Client\PrintSCU.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Client\QueryRetrieveSCU.cs">
+      <Link>DicomNetwork\Client\QueryRetrieveSCU.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\DicomNetwork\Client\RequestFactory.cs">
+      <Link>DicomNetwork\Client\RequestFactory.cs</Link>
     </Compile>
     <Compile Include="..\..\src\DicomNetwork\Client\WorklistSCU.cs">
       <Link>DicomNetwork\Client\WorklistSCU.cs</Link>
@@ -777,7 +777,7 @@
       <Version>0.15.0</Version>
     </PackageReference>
     <PackageReference Include="NLog">
-      <Version>4.7.3</Version>
+      <Version>4.7.4</Version>
     </PackageReference>
     <PackageReference Include="Ookii.Dialogs.Wpf">
       <Version>1.1.0</Version>
