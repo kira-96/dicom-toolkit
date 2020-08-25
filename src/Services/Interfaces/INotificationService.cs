@@ -7,15 +7,15 @@ namespace SimpleDICOMToolkit.Services
 {
     public interface INotificationService
     {
-        bool IsInitialized { get; }
+        bool CanNotify { get; }
 
-        bool IsRegisted { get; }
+        bool CanToast { get; }
 
-        void Initialize(NotifyIcon notifyIcon);
+        void RegistNotify(NotifyIcon notifyIcon);
+
+        void RegistToast(object toaster);
 
         void ShowNotification(string content, string title, ToolTipIcon icon = ToolTipIcon.Info);
-
-        void Register(object toaster);
 
         Task ShowToastAsync(string content, TimeSpan duration, ToastType level = ToastType.Info);
     }

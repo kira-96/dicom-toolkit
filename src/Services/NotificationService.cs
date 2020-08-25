@@ -8,41 +8,41 @@ namespace SimpleDICOMToolkit.Services
 {
     public class NotificationService : INotificationService
     {
-        public bool IsInitialized { get; private set; }
+        public bool CanNotify { get; private set; }
 
-        public bool IsRegisted { get; private set; }
+        public bool CanToast { get; private set; }
 
         private NotifyIcon notifyIcon;
 
         private Toaster toaster;
 
-        public void Initialize(NotifyIcon notifyIcon)
+        public void RegistNotify(NotifyIcon notifyIcon)
         {
             this.notifyIcon = notifyIcon;
-            IsInitialized = true;
+            CanNotify = true;
+        }
+
+        public void RegistToast(object toaster)
+        {
+            if (toaster is Toaster t)
+            {
+                this.toaster = t;
+                CanToast = true;
+            }
         }
 
         public void ShowNotification(string content, string title, ToolTipIcon icon = ToolTipIcon.Info)
         {
-            if (!IsInitialized) return;
+            if (!CanNotify) return;
 
             // BalloonTip 在 Win7上显示为气泡通知
             // 在 Win10上显示为 Toast 通知
             notifyIcon.ShowBalloonTip(0, title, content, icon);
         }
 
-        public void Register(object toaster)
-        {
-            if (toaster is Toaster t)
-            {
-                this.toaster = t;
-                IsRegisted = true;
-            }
-        }
-
         public async Task ShowToastAsync(string content, TimeSpan duration, ToastType level = ToastType.Info)
         {
-            if (!IsRegisted)
+            if (!CanToast)
             {
                 return;
             }

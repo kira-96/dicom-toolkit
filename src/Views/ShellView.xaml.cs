@@ -306,8 +306,8 @@
         private void Window_Loaded(object s, RoutedEventArgs e)
         {
             notifyIcon.Visible = true;
-            notificationService.Initialize(notifyIcon);
-            notificationService.Register(MainToaster);
+            notificationService.RegistNotify(notifyIcon);
+            notificationService.RegistToast(MainToaster);
             appearanceService.StartMonitoringWindowPrevalenceAccentColor();
             appearanceService.WindowPrevalenceAccentColorChanged += WindowPrevalenceAccentColorChanged;
         }
