@@ -10,8 +10,8 @@
 
 ## 截图
 
-![dump](screenshot/Snipaste_2020-07-23_15-19-06.png)
-![c-store](screenshot/Snipaste_2020-07-11_15-59-13.png)
+![dump](screenshot/Snipaste_2020-08-25_11-05-40.png)
+![c-store](screenshot/Snipaste_2020-08-25_11-06-51.png)
 
 ## 功能
 
@@ -21,7 +21,7 @@
 
 - Query Retrieve SCU [测试功能]
 
-- C-Store SCU/SCP
+- C-STORE SCU/SCP
 
 - Print SCU/SCP
 
