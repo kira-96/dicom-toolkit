@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="SimpleDICOMToolkit.Views.CStoreView"
+﻿<UserControl x:Class="SimpleDICOMToolkit.Views.StoreView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -45,12 +45,13 @@
                     </Button.ToolTip>
                 </Button>
                 <c:AduLoading SpeedRatio="1" Type="Apple" 
-                              Foreground="#2a5caa" Margin="0,-24,0,0"
+                              Foreground="{DynamicResource AccentBrush}" 
+                              Margin="0,-24,0,0"
                               DataContext="{Binding ServerConfigViewModel}"
                               Grid.Column="{Binding BusyIndicatorColumn}"
                               IsActived="{Binding IsBusy}" />
             </Grid>
         </StackPanel>
-        <v:CStoreFileListView Grid.Column="1" DataContext="{Binding CStoreFileListViewModel}" />
+        <v:StoreFileListView Grid.Column="1" DataContext="{Binding StoreFileListViewModel}" />
     </Grid>
 </UserControl>

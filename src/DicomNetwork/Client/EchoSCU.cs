@@ -6,11 +6,11 @@
     using System.Threading.Tasks;
     using Logging;
 
-    public class CEchoSCU : ICEchoSCU
+    public class EchoSCU : IEchoSCU
     {
         private ILoggerService loggerService;
 
-        public CEchoSCU([Inject("filelogger")] ILoggerService loggerService)
+        public EchoSCU([Inject("filelogger")] ILoggerService loggerService)
         {
             this.loggerService = loggerService;
         }

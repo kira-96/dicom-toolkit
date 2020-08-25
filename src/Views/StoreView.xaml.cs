@@ -3,9 +3,9 @@
     /// <summary>
     /// CStoreView.xaml 的交互逻辑
     /// </summary>
-    public partial class CStoreView
+    public partial class StoreView
     {
-        public CStoreView()
+        public StoreView()
         {
             InitializeComponent();
         }

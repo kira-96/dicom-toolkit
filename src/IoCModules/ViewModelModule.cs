@@ -11,8 +11,8 @@
             Bind<WorklistViewModel>().ToSelf().InSingletonScope();
             Bind<WorklistSCPViewModel>().ToSelf().InSingletonScope();
             Bind<QueryRetrieveViewModel>().ToSelf().InSingletonScope();
-            Bind<CStoreViewModel>().ToSelf().InSingletonScope();
-            Bind<CStoreSCPViewModel>().ToSelf().InSingletonScope();
+            Bind<StoreViewModel>().ToSelf().InSingletonScope();
+            Bind<StoreSCPViewModel>().ToSelf().InSingletonScope();
             Bind<PrintViewModel>().ToSelf().InSingletonScope();
             Bind<PrintSCPViewModel>().ToSelf().InSingletonScope();
         }

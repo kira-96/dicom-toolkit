@@ -118,14 +118,14 @@
     <Compile Include="..\..\src\Converters\MathMultipleConverter.cs">
       <Link>Converters\MathMultipleConverter.cs</Link>
     </Compile>
-    <Compile Include="..\..\src\DicomNetwork\Client\Interfaces\ICEchoSCU.cs">
-      <Link>DicomNetwork\Client\Interfaces\ICEchoSCU.cs</Link>
+    <Compile Include="..\..\src\DicomNetwork\Client\Interfaces\IEchoSCU.cs">
+      <Link>DicomNetwork\Client\Interfaces\IEchoSCU.cs</Link>
     </Compile>
     <Compile Include="..\..\src\DicomNetwork\Client\Interfaces\IQueryRetrieveSCU.cs">
       <Link>DicomNetwork\Client\Interfaces\IQueryRetrieveSCU.cs</Link>
     </Compile>
-    <Compile Include="..\..\src\DicomNetwork\Client\Interfaces\ICStoreSCU.cs">
-      <Link>DicomNetwork\Client\Interfaces\ICStoreSCU.cs</Link>
+    <Compile Include="..\..\src\DicomNetwork\Client\Interfaces\IStoreSCU.cs">
+      <Link>DicomNetwork\Client\Interfaces\IStoreSCU.cs</Link>
     </Compile>
     <Compile Include="..\..\src\DicomNetwork\Client\Interfaces\IPrintSCU.cs">
       <Link>DicomNetwork\Client\Interfaces\IPrintSCU.cs</Link>
@@ -133,11 +133,11 @@
     <Compile Include="..\..\src\DicomNetwork\Client\Interfaces\IWorklistSCU.cs">
       <Link>DicomNetwork\Client\Interfaces\IWorklistSCU.cs</Link>
     </Compile>
-    <Compile Include="..\..\src\DicomNetwork\Client\CEchoSCU.cs">
-      <Link>DicomNetwork\Client\CEchoSCU.cs</Link>
+    <Compile Include="..\..\src\DicomNetwork\Client\EchoSCU.cs">
+      <Link>DicomNetwork\Client\EchoSCU.cs</Link>
     </Compile>
-    <Compile Include="..\..\src\DicomNetwork\Client\CStoreSCU.cs">
-      <Link>DicomNetwork\Client\CStoreSCU.cs</Link>
+    <Compile Include="..\..\src\DicomNetwork\Client\StoreSCU.cs">
+      <Link>DicomNetwork\Client\StoreSCU.cs</Link>
     </Compile>
     <Compile Include="..\..\src\DicomNetwork\Client\PrintJob.cs">
       <Link>DicomNetwork\Client\PrintJob.cs</Link>
@@ -172,11 +172,11 @@
     <Compile Include="..\..\src\DicomNetwork\Server\Models\WorklistItemsSource.cs">
       <Link>DicomNetwork\Server\Models\WorklistItemsSource.cs</Link>
     </Compile>
-    <Compile Include="..\..\src\DicomNetwork\Server\CStoreService.cs">
-      <Link>DicomNetwork\Server\CStoreService.cs</Link>
+    <Compile Include="..\..\src\DicomNetwork\Server\StoreService.cs">
+      <Link>DicomNetwork\Server\StoreService.cs</Link>
     </Compile>
-    <Compile Include="..\..\src\DicomNetwork\Server\CStoreServer.cs">
-      <Link>DicomNetwork\Server\CStoreServer.cs</Link>
+    <Compile Include="..\..\src\DicomNetwork\Server\StoreServer.cs">
+      <Link>DicomNetwork\Server\StoreServer.cs</Link>
     </Compile>
     <Compile Include="..\..\src\DicomNetwork\Server\FilmBoxExtensions.cs">
       <Link>DicomNetwork\Server\FilmBoxExtensions.cs</Link>
@@ -337,17 +337,17 @@
     <Compile Include="..\..\src\Validators\ServerConfigViewModelValidator.cs">
       <Link>Validators\ServerConfigViewModelValidator.cs</Link>
     </Compile>
-    <Compile Include="..\..\src\ViewModels\CStoreFileListViewModel.cs">
-      <Link>ViewModels\CStoreFileListViewModel.cs</Link>
+    <Compile Include="..\..\src\ViewModels\StoreFileListViewModel.cs">
+      <Link>ViewModels\StoreFileListViewModel.cs</Link>
     </Compile>
-    <Compile Include="..\..\src\ViewModels\CStoreReceivedViewModel.cs">
-      <Link>ViewModels\CStoreReceivedViewModel.cs</Link>
+    <Compile Include="..\..\src\ViewModels\StoreReceivedViewModel.cs">
+      <Link>ViewModels\StoreReceivedViewModel.cs</Link>
     </Compile>
-    <Compile Include="..\..\src\ViewModels\CStoreSCPViewModel.cs">
-      <Link>ViewModels\CStoreSCPViewModel.cs</Link>
+    <Compile Include="..\..\src\ViewModels\StoreSCPViewModel.cs">
+      <Link>ViewModels\StoreSCPViewModel.cs</Link>
     </Compile>
-    <Compile Include="..\..\src\ViewModels\CStoreViewModel.cs">
-      <Link>ViewModels\CStoreViewModel.cs</Link>
+    <Compile Include="..\..\src\ViewModels\StoreViewModel.cs">
+      <Link>ViewModels\StoreViewModel.cs</Link>
     </Compile>
     <Compile Include="..\..\src\ViewModels\DcmItemsViewModel.cs">
       <Link>ViewModels\DcmItemsViewModel.cs</Link>
@@ -403,21 +403,21 @@
     <Compile Include="..\..\src\ViewModels\WorklistViewModel.cs">
       <Link>ViewModels\WorklistViewModel.cs</Link>
     </Compile>
-    <Compile Include="..\..\src\Views\CStoreFileListView.xaml.cs">
-      <DependentUpon>CStoreFileListView.xaml</DependentUpon>
-      <Link>Views\CStoreFileListView.xaml.cs</Link>
+    <Compile Include="..\..\src\Views\StoreFileListView.xaml.cs">
+      <DependentUpon>StoreFileListView.xaml</DependentUpon>
+      <Link>Views\StoreFileListView.xaml.cs</Link>
     </Compile>
-    <Compile Include="..\..\src\Views\CStoreReceivedView.xaml.cs">
-      <DependentUpon>CStoreReceivedView.xaml</DependentUpon>
-      <Link>Views\CStoreReceivedView.xaml.cs</Link>
+    <Compile Include="..\..\src\Views\StoreReceivedView.xaml.cs">
+      <DependentUpon>StoreReceivedView.xaml</DependentUpon>
+      <Link>Views\StoreReceivedView.xaml.cs</Link>
     </Compile>
-    <Compile Include="..\..\src\Views\CStoreSCPView.xaml.cs">
-      <DependentUpon>CStoreSCPView.xaml</DependentUpon>
-      <Link>Views\CStoreSCPView.xaml.cs</Link>
+    <Compile Include="..\..\src\Views\StoreSCPView.xaml.cs">
+      <DependentUpon>StoreSCPView.xaml</DependentUpon>
+      <Link>Views\StoreSCPView.xaml.cs</Link>
     </Compile>
-    <Compile Include="..\..\src\Views\CStoreView.xaml.cs">
-      <DependentUpon>CStoreView.xaml</DependentUpon>
-      <Link>Views\CStoreView.xaml.cs</Link>
+    <Compile Include="..\..\src\Views\StoreView.xaml.cs">
+      <DependentUpon>StoreView.xaml</DependentUpon>
+      <Link>Views\StoreView.xaml.cs</Link>
     </Compile>
     <Compile Include="..\..\src\Views\DcmItemsView.xaml.cs">
       <DependentUpon>DcmItemsView.xaml</DependentUpon>
@@ -558,25 +558,25 @@
       <Generator>MSBuild:Compile</Generator>
       <Link>Themes\TooltipStyle.xaml</Link>
     </Page>
-    <Page Include="..\..\src\Views\CStoreFileListView.xaml">
+    <Page Include="..\..\src\Views\StoreFileListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-      <Link>Views\CStoreFileListView.xaml</Link>
+      <Link>Views\StoreFileListView.xaml</Link>
     </Page>
-    <Page Include="..\..\src\Views\CStoreReceivedView.xaml">
+    <Page Include="..\..\src\Views\StoreReceivedView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-      <Link>Views\CStoreReceivedView.xaml</Link>
+      <Link>Views\StoreReceivedView.xaml</Link>
     </Page>
-    <Page Include="..\..\src\Views\CStoreSCPView.xaml">
+    <Page Include="..\..\src\Views\StoreSCPView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-      <Link>Views\CStoreSCPView.xaml</Link>
+      <Link>Views\StoreSCPView.xaml</Link>
     </Page>
-    <Page Include="..\..\src\Views\CStoreView.xaml">
+    <Page Include="..\..\src\Views\StoreView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-      <Link>Views\CStoreView.xaml</Link>
+      <Link>Views\StoreView.xaml</Link>
     </Page>
     <Page Include="..\..\src\Views\DcmItemsView.xaml">
       <SubType>Designer</SubType>

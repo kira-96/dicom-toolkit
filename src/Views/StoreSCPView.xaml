@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="SimpleDICOMToolkit.Views.CStoreSCPView"
+﻿<UserControl x:Class="SimpleDICOMToolkit.Views.StoreSCPView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -17,10 +17,10 @@
         <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
             <v:ServerConfigView DataContext="{Binding ServerConfigViewModel}" />
             <ToggleButton Style="{StaticResource ServerToggleButtonStyle}"
-                          IsChecked="{Binding CStoreReceivedViewModel.IsServerStarted, Mode=TwoWay}"
+                          IsChecked="{Binding StoreReceivedViewModel.IsServerStarted, Mode=TwoWay}"
                           s:View.ActionTarget="{Binding ServerConfigViewModel}"
                           Command="{s:Action DoRequest, ActionNotFound=Disable}" />
         </StackPanel>
-        <v:CStoreReceivedView Grid.Column="1" DataContext="{Binding CStoreReceivedViewModel}" />
+        <v:StoreReceivedView Grid.Column="1" DataContext="{Binding StoreReceivedViewModel}" />
     </Grid>
 </UserControl>

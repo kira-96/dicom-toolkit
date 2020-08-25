@@ -5,19 +5,19 @@
     using System;
     using Helpers;
 
-    public class CStoreSCPViewModel : Screen, IDisposable
+    public class StoreSCPViewModel : Screen, IDisposable
     {
         [Inject]
         public ServerConfigViewModel ServerConfigViewModel { get; private set; }
 
         [Inject]
-        public CStoreReceivedViewModel CStoreReceivedViewModel { get; private set; }
+        public StoreReceivedViewModel StoreReceivedViewModel { get; private set; }
 
         private readonly IEventAggregator eventAggregator;
 
-        public CStoreSCPViewModel(IEventAggregator eventAggregator)
+        public StoreSCPViewModel(IEventAggregator eventAggregator)
         {
-            DisplayName = "C-Store SCP";
+            DisplayName = "C-STORE SCP";
             this.eventAggregator = eventAggregator;
         }
 
@@ -25,20 +25,20 @@
         {
             base.OnInitialActivate();
 
-            CStoreReceivedViewModel.Parent = this;
+            StoreReceivedViewModel.Parent = this;
             ServerConfigViewModel.Parent = this;
             ServerConfigViewModel.ServerIP = SystemHelper.LocalIPAddress;
             ServerConfigViewModel.ServerPort = "104";
-            ServerConfigViewModel.LocalAET = ServerConfigViewModel.ServerAET = "CSTORESCP";
+            ServerConfigViewModel.LocalAET = ServerConfigViewModel.ServerAET = "STORESCP";
             ServerConfigViewModel.IsServerIPEnabled = ServerConfigViewModel.IsServerAETEnabled = ServerConfigViewModel.IsModalityEnabled = false;
-            ServerConfigViewModel.RequestAction = () => ServerConfigViewModel.PublishServerRequest(nameof(ViewModels.CStoreReceivedViewModel));
-            eventAggregator.Subscribe(ServerConfigViewModel, nameof(ViewModels.CStoreReceivedViewModel));
+            ServerConfigViewModel.RequestAction = () => ServerConfigViewModel.PublishServerRequest(nameof(ViewModels.StoreReceivedViewModel));
+            eventAggregator.Subscribe(ServerConfigViewModel, nameof(ViewModels.StoreReceivedViewModel));
         }
 
         public void Dispose()
         {
             ServerConfigViewModel.Dispose();
-            CStoreReceivedViewModel.Dispose();
+            StoreReceivedViewModel.Dispose();
         }
     }
 }

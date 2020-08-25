@@ -4,7 +4,7 @@
     using System.Threading.Tasks;
     using Models;
 
-    public interface ICStoreSCU
+    public interface IStoreSCU
     {
         /// <summary>
         /// 发送图像文件到远程服务器

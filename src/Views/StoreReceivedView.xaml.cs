@@ -7,16 +7,16 @@
     /// <summary>
     /// CStoreReceivedView.xaml 的交互逻辑
     /// </summary>
-    public partial class CStoreReceivedView : UserControl
+    public partial class StoreReceivedView : UserControl
     {
-        public CStoreReceivedView()
+        public StoreReceivedView()
         {
             InitializeComponent();
         }
 
         private void ItemMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            (DataContext as CStoreReceivedViewModel).ShowReceivedFile((sender as ListViewItem).Content as string);
+            (DataContext as StoreReceivedViewModel).ShowReceivedFile((sender as ListViewItem).Content as string);
         }
     }
 }

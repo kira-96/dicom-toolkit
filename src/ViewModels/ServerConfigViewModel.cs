@@ -22,7 +22,7 @@
         private INotificationService notificationService;
 
         [Inject]
-        private ICEchoSCU _cechoSCU;
+        private IEchoSCU _echoSCU;
 
         private string _serverIP = "localhost";
         private string _serverPort = "6104";
@@ -180,7 +180,7 @@
 
             IsBusy = true;
 
-            bool result = await _cechoSCU.Echo(_serverIP, port, _serverAET, _localAET);
+            bool result = await _echoSCU.Echo(_serverIP, port, _serverAET, _localAET);
 
             IsBusy = false;
 

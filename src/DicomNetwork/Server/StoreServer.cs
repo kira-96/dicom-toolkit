@@ -4,15 +4,15 @@ using System.Collections.Generic;
 
 namespace SimpleDICOMToolkit.Server
 {
-    public class CStoreServer
+    public class StoreServer
     {
         private static readonly object locker = new object();
 
-        private static CStoreServer instance = null;
+        private static StoreServer instance = null;
 
         private IDicomServer defaultServer = null;
 
-        public static CStoreServer Default
+        public static StoreServer Default
         {
             get
             {
@@ -22,7 +22,7 @@ namespace SimpleDICOMToolkit.Server
                     {
                         if (instance == null)
                         {
-                            instance = new CStoreServer();
+                            instance = new StoreServer();
                         }
                     }
                 }
@@ -37,7 +37,7 @@ namespace SimpleDICOMToolkit.Server
 
         public string DcmDirPath { get; private set; } = "DICOM";
 
-        private CStoreServer()
+        private StoreServer()
         {}
 
         public bool IsListening()
@@ -66,7 +66,7 @@ namespace SimpleDICOMToolkit.Server
                 }
             }
 
-            defaultServer = DicomServer.Create<CStoreService>(port);
+            defaultServer = DicomServer.Create<StoreService>(port);
 
             return IsListening();
         }

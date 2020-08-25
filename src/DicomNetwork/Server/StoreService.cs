@@ -15,7 +15,7 @@ namespace SimpleDICOMToolkit.Server
     using System.Text;
     using System.Threading.Tasks;
 
-    internal class CStoreService : DicomService, IDicomServiceProvider, IDicomCEchoProvider, IDicomCStoreProvider
+    internal class StoreService : DicomService, IDicomServiceProvider, IDicomCEchoProvider, IDicomCStoreProvider
     {
         private static readonly DicomTransferSyntax[] AcceptedTransferSyntaxes = new DicomTransferSyntax[]
         {
@@ -45,7 +45,7 @@ namespace SimpleDICOMToolkit.Server
 
         private readonly List<string> receivedFiles;
 
-        public CStoreService(INetworkStream stream, Encoding fallbackEncoding, Logger log)
+        public StoreService(INetworkStream stream, Encoding fallbackEncoding, Logger log)
             : base(stream, fallbackEncoding, log)
         {
             receivedFiles = new List<string>();
@@ -56,7 +56,7 @@ namespace SimpleDICOMToolkit.Server
             Logger.Info("C-STORE Connection closed");
             if (receivedFiles.Any())
             {
-                CStoreServer.Default.OnFilesSaved?.Invoke(receivedFiles);
+                StoreServer.Default.OnFilesSaved?.Invoke(receivedFiles);
                 receivedFiles.Clear();
             }
         }
@@ -66,7 +66,7 @@ namespace SimpleDICOMToolkit.Server
             Logger.Error("Received abort from {0}, reason is {1}", source, reason);
             if (receivedFiles.Any())
             {
-                CStoreServer.Default.OnFilesSaved?.Invoke(receivedFiles);
+                StoreServer.Default.OnFilesSaved?.Invoke(receivedFiles);
                 receivedFiles.Clear();
             }
         }
@@ -78,7 +78,7 @@ namespace SimpleDICOMToolkit.Server
 
         public Task OnReceiveAssociationRequestAsync(DicomAssociation association)
         {
-            if (association.CalledAE != CStoreServer.Default.AETitle)
+            if (association.CalledAE != StoreServer.Default.AETitle)
             {
                 return SendAssociationRejectAsync(
                     DicomRejectResult.Permanent,
@@ -110,7 +110,7 @@ namespace SimpleDICOMToolkit.Server
             string instUid = request.SOPInstanceUID.UID;
 
             // 设置中应该支持设置存储目录
-            string path = Path.GetFullPath(CStoreServer.Default.DcmDirPath);
+            string path = Path.GetFullPath(StoreServer.Default.DcmDirPath);
 
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);

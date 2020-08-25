@@ -8,16 +8,16 @@
     /// <summary>
     /// CStoreFileListView.xaml 的交互逻辑
     /// </summary>
-    public partial class CStoreFileListView : UserControl
+    public partial class StoreFileListView : UserControl
     {
-        public CStoreFileListView()
+        public StoreFileListView()
         {
             InitializeComponent();
         }
 
         private void CStoreItemMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            (DataContext as CStoreFileListViewModel).PreviewCStoreItem((sender as ListViewItem).DataContext as CStoreItem);
+            (DataContext as StoreFileListViewModel).PreviewCStoreItem((sender as ListViewItem).DataContext as CStoreItem);
         }
     }
 }

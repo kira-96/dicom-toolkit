@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="SimpleDICOMToolkit.Views.CStoreReceivedView"
+﻿<UserControl x:Class="SimpleDICOMToolkit.Views.StoreReceivedView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +6,7 @@
              xmlns:s="https://github.com/canton7/Stylet"
              xmlns:vm="clr-namespace:SimpleDICOMToolkit.ViewModels"
              mc:Ignorable="d" 
-             d:DataContext="{d:DesignInstance Type=vm:CStoreReceivedViewModel, IsDesignTimeCreatable=True}"
+             d:DataContext="{d:DesignInstance Type=vm:StoreReceivedViewModel, IsDesignTimeCreatable=True}"
              d:DesignWidth="600"
              d:DesignHeight="480">
 

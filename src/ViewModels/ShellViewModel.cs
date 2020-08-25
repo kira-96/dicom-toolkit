@@ -33,8 +33,8 @@
             WorklistViewModel worklistViewModel,
             WorklistSCPViewModel worklistSCPViewModel,
             QueryRetrieveViewModel queryRetrieveViewModel,
-            CStoreViewModel cstoreViewModel,
-            CStoreSCPViewModel cstoreSCPViewModel,
+            StoreViewModel storeViewModel,
+            StoreSCPViewModel storeSCPViewModel,
             PrintViewModel printViewModel,
             PrintSCPViewModel printSCPViewModel)
         {
@@ -52,8 +52,8 @@
             Items.Add(worklistViewModel);
             Items.Add(worklistSCPViewModel);
             Items.Add(queryRetrieveViewModel);
-            Items.Add(cstoreViewModel);
-            Items.Add(cstoreSCPViewModel);
+            Items.Add(storeViewModel);
+            Items.Add(storeSCPViewModel);
             Items.Add(printViewModel);
             Items.Add(printSCPViewModel);
         }

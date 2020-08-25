@@ -2,7 +2,7 @@
 {
     using System.Threading.Tasks;
 
-    public interface ICEchoSCU
+    public interface IEchoSCU
     {
         /// <summary>
         /// C-ECHO request

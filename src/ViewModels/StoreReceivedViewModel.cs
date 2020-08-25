@@ -10,7 +10,7 @@
     using Services;
     using Helpers;
 
-    public class CStoreReceivedViewModel : Screen, IHandle<ServerMessageItem>, IDisposable
+    public class StoreReceivedViewModel : Screen, IHandle<ServerMessageItem>, IDisposable
     {
         [Inject]
         private IWindowManager _windowManager;
@@ -39,11 +39,11 @@
 
         public BindableCollection<string> StoredFiles { get; } = new BindableCollection<string>();
 
-        public CStoreReceivedViewModel(IEventAggregator eventAggregator)
+        public StoreReceivedViewModel(IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
-            _eventAggregator.Subscribe(this, nameof(CStoreReceivedViewModel));
-            CStoreServer.Default.OnFilesSaved += OnFilesSaved;
+            _eventAggregator.Subscribe(this, nameof(StoreReceivedViewModel));
+            StoreServer.Default.OnFilesSaved += OnFilesSaved;
         }
 
         private void OnFilesSaved(IList<string> files)
@@ -63,16 +63,16 @@
         {
             if (IsServerStarted)
             {
-                CStoreServer.Default.CreateServer(message.ServerPort, message.LocalAET);
-                _eventAggregator.Publish(new ServerStateItem(true), nameof(CStoreReceivedViewModel));
+                StoreServer.Default.CreateServer(message.ServerPort, message.LocalAET);
+                _eventAggregator.Publish(new ServerStateItem(true), nameof(StoreReceivedViewModel));
                 notificationService.ShowNotification(
                     string.Format(i18NService.GetXmlStringByKey("ServerIsRunning"), "C-STORE", SystemHelper.LocalIPAddress, message.ServerPort),
                     message.LocalAET);
             }
             else
             {
-                CStoreServer.Default.StopServer();
-                _eventAggregator.Publish(new ServerStateItem(false), nameof(CStoreReceivedViewModel));
+                StoreServer.Default.StopServer();
+                _eventAggregator.Publish(new ServerStateItem(false), nameof(StoreReceivedViewModel));
             }
         }
 
@@ -93,8 +93,8 @@
         {
             _eventAggregator.Unsubscribe(this);
 
-            CStoreServer.Default.OnFilesSaved -= OnFilesSaved;
-            CStoreServer.Default.StopServer();
+            StoreServer.Default.OnFilesSaved -= OnFilesSaved;
+            StoreServer.Default.StopServer();
         }
     }
 }

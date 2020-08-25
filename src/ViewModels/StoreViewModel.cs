@@ -4,19 +4,19 @@
     using StyletIoC;
     using System;
 
-    public class CStoreViewModel : Screen, IDisposable
+    public class StoreViewModel : Screen, IDisposable
     {
         [Inject]
         public ServerConfigViewModel ServerConfigViewModel { get; private set; }
 
         [Inject]
-        public CStoreFileListViewModel CStoreFileListViewModel { get; private set; }
+        public StoreFileListViewModel StoreFileListViewModel { get; private set; }
 
         private readonly IEventAggregator eventAggregator;
 
-        public CStoreViewModel(IEventAggregator eventAggregator)
+        public StoreViewModel(IEventAggregator eventAggregator)
         {
-            DisplayName = "C-Store";
+            DisplayName = "C-STORE";
             this.eventAggregator = eventAggregator;
         }
 
@@ -24,19 +24,19 @@
         {
             base.OnInitialActivate();
 
-            CStoreFileListViewModel.Parent = this;
+            StoreFileListViewModel.Parent = this;
             ServerConfigViewModel.Parent = this;
             ServerConfigViewModel.ServerPort = "104";
-            ServerConfigViewModel.ServerAET = "CSTORESCP";
+            ServerConfigViewModel.ServerAET = "STORESCP";
             ServerConfigViewModel.IsModalityEnabled = false;
-            ServerConfigViewModel.RequestAction = () => ServerConfigViewModel.PublishClientRequest(nameof(ViewModels.CStoreFileListViewModel));
-            eventAggregator.Subscribe(ServerConfigViewModel, nameof(ViewModels.CStoreFileListViewModel));
+            ServerConfigViewModel.RequestAction = () => ServerConfigViewModel.PublishClientRequest(nameof(ViewModels.StoreFileListViewModel));
+            eventAggregator.Subscribe(ServerConfigViewModel, nameof(ViewModels.StoreFileListViewModel));
         }
 
         public void Dispose()
         {
             ServerConfigViewModel.Dispose();
-            CStoreFileListViewModel.Dispose();
+            StoreFileListViewModel.Dispose();
         }
     }
 }

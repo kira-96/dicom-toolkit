@@ -10,7 +10,7 @@
     using Models;
     using Services;
 
-    public class CStoreFileListViewModel : Screen, IHandle<ClientMessageItem>, IDisposable
+    public class StoreFileListViewModel : Screen, IHandle<ClientMessageItem>, IDisposable
     {
         private readonly IEventAggregator _eventAggregator;
 
@@ -30,14 +30,14 @@
         private IDialogServiceEx _dialogService;
 
         [Inject]
-        private ICStoreSCU _cstoreSCU;
+        private IStoreSCU _storeSCU;
 
         public BindableCollection<CStoreItem> FileList { get; private set; } = new BindableCollection<CStoreItem>();
 
-        public CStoreFileListViewModel(IEventAggregator eventAggregator)
+        public StoreFileListViewModel(IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
-            _eventAggregator.Subscribe(this, nameof(CStoreFileListViewModel));
+            _eventAggregator.Subscribe(this, nameof(StoreFileListViewModel));
         }
 
         public async void Handle(ClientMessageItem message)
@@ -45,11 +45,11 @@
             if (FileList.Count == 0)
                 return;
 
-            _eventAggregator.Publish(new BusyStateItem(true), nameof(CStoreFileListViewModel));
+            _eventAggregator.Publish(new BusyStateItem(true), nameof(StoreFileListViewModel));
 
             try
             {
-                await _cstoreSCU.StoreImageAsync(message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET, FileList);
+                await _storeSCU.StoreImageAsync(message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET, FileList);
 
                 string content = string.Format(
                                     _i18NService.GetXmlStringByKey("ToastStoreResult"),
@@ -59,7 +59,7 @@
             }
             finally
             {
-                _eventAggregator.Publish(new BusyStateItem(false), nameof(CStoreFileListViewModel));
+                _eventAggregator.Publish(new BusyStateItem(false), nameof(StoreFileListViewModel));
             }
         }
 

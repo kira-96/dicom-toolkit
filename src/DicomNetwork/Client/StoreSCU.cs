@@ -8,11 +8,11 @@
     using Logging;
     using Models;
 
-    public class CStoreSCU : ICStoreSCU
+    public class StoreSCU : IStoreSCU
     {
         private readonly ILoggerService Logger;
 
-        public CStoreSCU([Inject(Key = "filelogger")] ILoggerService loggerService)
+        public StoreSCU([Inject(Key = "filelogger")] ILoggerService loggerService)
         {
             Logger = loggerService;
         }

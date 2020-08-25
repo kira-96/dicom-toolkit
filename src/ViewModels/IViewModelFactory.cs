@@ -10,9 +10,9 @@
 
         PrintViewModel GetPrintViewModel(string key = null);
 
-        CStoreViewModel GetCStoreViewModel(string key = null);
+        StoreViewModel GetStoreViewModel(string key = null);
 
-        CStoreSCPViewModel GetStoreSCPViewModel(string key = null);
+        StoreSCPViewModel GetStoreSCPViewModel(string key = null);
 
         PrintSCPViewModel GetPrintSCPViewModel(string key = null);
 
