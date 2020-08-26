@@ -170,7 +170,7 @@ namespace SimpleDICOMToolkit.Server
             {
                 if (value == null)
                 {
-                    value = default(T);
+                    value = default;
                 }
 
                 dataset.AddOrUpdate(tag, value);

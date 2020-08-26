@@ -51,12 +51,12 @@ namespace SimpleDICOMToolkit.Models
 
         public string ScheduledAET { get; set; }
 
-        private MppsStatus _mppsStatus = MppsStatus.Waiting;
+        public MppsStatus MppsStatus { get; set; }
 
-        public MppsStatus MppsStatus
+        public void UpdateStatus(MppsStatus status)
         {
-            get => _mppsStatus;
-            set => SetAndNotify(ref _mppsStatus, value);
+            MppsStatus = status;
+            NotifyOfPropertyChange(() => MppsStatus);
         }
     }
 }

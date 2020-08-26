@@ -44,7 +44,7 @@ namespace SimpleDICOMToolkit.Server
             // remember the sopInstanceUID and store the worklistitem to which the sopInstanceUID belongs. 
             // You should do this more permanent like in database or in file
             PendingProcedures.Add(sopInstanceUID, workItem);
-            workItem.MppsStatus = MppsStatus.InProgress;
+            workItem.UpdateStatus(MppsStatus.InProgress);
             return true;
         }
 
@@ -63,7 +63,7 @@ namespace SimpleDICOMToolkit.Server
 
             // since the procedure was stopped, we remove it from the list of pending procedures
             PendingProcedures.Remove(sopInstanceUID);
-            workItem.MppsStatus = MppsStatus.Discontinued;
+            workItem.UpdateStatus(MppsStatus.Discontinued);
             return true;
         }
 
@@ -86,7 +86,7 @@ namespace SimpleDICOMToolkit.Server
 
             // since the procedure was completed, we remove it from the list of pending procedures
             PendingProcedures.Remove(sopInstanceUID);
-            workItem.MppsStatus = MppsStatus.Completed;
+            workItem.UpdateStatus(MppsStatus.Completed);
             return true;
         }
     }
