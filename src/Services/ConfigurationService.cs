@@ -80,7 +80,7 @@ namespace SimpleDICOMToolkit.Services
                 return (T)(object)printer;
             }
 
-            return default(T);
+            return default;
         }
 
         private AppConfiguration LoadAppConfiguration(TomlTable configTable)
@@ -94,6 +94,11 @@ namespace SimpleDICOMToolkit.Services
                 if (settings.ContainsKey("ListenPort"))
                 {
                     appConfiguration.ListenPort = (int)settings.Get<TomlInt>("ListenPort").Value;
+                }
+
+                if (settings.ContainsKey("DbConnectionString"))
+                {
+                    appConfiguration.DbConnectionString = settings.Get<TomlString>("DbConnectionString").Value;
                 }
             }
 

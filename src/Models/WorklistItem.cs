@@ -1,4 +1,5 @@
-﻿using Stylet;
+﻿using LiteDB;
+using Stylet;
 using System;
 
 namespace SimpleDICOMToolkit.Models
@@ -14,9 +15,10 @@ namespace SimpleDICOMToolkit.Models
     /// <summary>
     /// This class contains the most important values that are transmitted per worklist
     /// </summary>
-    [Serializable]
     public class WorklistItem : PropertyChangedBase
     {
+        public ObjectId Id { get; }
+
         public string AccessionNumber { get; set; }
 
         public string PatientID { get; set; }
@@ -51,12 +53,83 @@ namespace SimpleDICOMToolkit.Models
 
         public string ScheduledAET { get; set; }
 
-        public MppsStatus MppsStatus { get; set; }
+        public MppsStatus MppsStatus { get; set; } = MppsStatus.Waiting;
+
+        public WorklistItem()
+        {
+            Id = ObjectId.NewObjectId();
+        }
+
+        [BsonCtor]
+        public WorklistItem(
+            ObjectId _id,
+            string accessionNumber,
+            string patientId,
+            string patientName,
+            string sex,
+            string age,
+            DateTime dateOfBirth,
+            string referringPhysician,
+            string performingPhysician,
+            string modality,
+            DateTime examDateAndTime,
+            string examRoom,
+            string examDescription,
+            string studyUID,
+            string procedureID,
+            string procedureStepID,
+            string hospitalName,
+            string scheduledAET)
+        {
+            Id = _id;
+            AccessionNumber = accessionNumber;
+            PatientID = patientId;
+            PatientName = patientName;
+            Sex = sex;
+            Age = age;
+            DateOfBirth = dateOfBirth;
+            ReferringPhysician = referringPhysician;
+            PerformingPhysician = performingPhysician;
+            Modality = modality;
+            ExamDateAndTime = examDateAndTime;
+            ExamRoom = examRoom;
+            ExamDescription = examDescription;
+            StudyUID = studyUID;
+            ProcedureID = procedureID;
+            ProcedureStepID = procedureStepID;
+            HospitalName = hospitalName;
+            ScheduledAET = scheduledAET;
+        }
 
         public void UpdateStatus(MppsStatus status)
         {
             MppsStatus = status;
             NotifyOfPropertyChange(() => MppsStatus);
+        }
+
+        public BsonDocument ToBsonDocument()
+        {
+            return new BsonDocument()
+            {
+                ["_id"] = Id,
+                ["AccessionNumber"] = AccessionNumber,
+                ["PatientID"] = PatientID,
+                ["PatientName"] = PatientName,
+                ["Sex"] = Sex,
+                ["Age"] = Age,
+                ["DateOfBirth"] = DateOfBirth,
+                ["ReferringPhysician"] = ReferringPhysician,
+                ["PerformingPhysician"] = PerformingPhysician,
+                ["Modality"] = Modality,
+                ["ExamDateAndTime"] = ExamDateAndTime,
+                ["ExamRoom"] = ExamRoom,
+                ["ExamDescription"] = ExamDescription,
+                ["StudyUID"] = StudyUID,
+                ["ProcedureID"] = ProcedureID,
+                ["ProcedureStepID"] = ProcedureStepID,
+                ["HospitalName"] = HospitalName,
+                ["ScheduledAET"] = ScheduledAET
+            };
         }
     }
 }

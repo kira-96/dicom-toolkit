@@ -36,12 +36,13 @@ namespace SimpleDICOMToolkit.Server
 
         public IEnumerable<DicomCFindResponse> OnCFindRequest(DicomCFindRequest request)
         {
-            if (WorklistServer.Default.ItemsSource == null)
+            if (WorklistServer.Default.WorklistItems == null)
             {
                 yield return new DicomCFindResponse(request, DicomStatus.Success);
             }
 
-            foreach (DicomDataset result in WorklistServer.Default.ItemsSource.FilterWorklistItems(request.Dataset))
+            foreach (DicomDataset result in CFindRequestHandler.FilterWorklistItems(
+                WorklistServer.Default.WorklistItems, request.Dataset))
             {
                 yield return new DicomCFindResponse(request, DicomStatus.Pending) { Dataset = result };
             }

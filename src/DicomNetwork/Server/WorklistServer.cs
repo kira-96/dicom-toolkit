@@ -1,4 +1,6 @@
 ﻿using Dicom.Network;
+using System.Collections.Generic;
+using SimpleDICOMToolkit.Models;
 
 namespace SimpleDICOMToolkit.Server
 {
@@ -13,7 +15,7 @@ namespace SimpleDICOMToolkit.Server
         public IMppsSource MppsSource { get; private set; } = null;
 
         // must set
-        public WorklistItemsSource ItemsSource { get; set; } = null;
+        public IEnumerable<WorklistItem> WorklistItems { get; set; } = null;
 
         public static WorklistServer Default
         {
@@ -55,7 +57,7 @@ namespace SimpleDICOMToolkit.Server
             AETitle = serverAET;
 
             defaultServer = DicomServer.Create<WorklistService>(port);
-            MppsSource = new MppsHandler(ItemsSource, defaultServer.Logger);
+            MppsSource = new MppsHandler(WorklistItems, defaultServer.Logger);
 
             return IsListening();
         }

@@ -16,13 +16,9 @@
 ## 功能
 
 - Simple Dicom Dump [**慎用修改和保存功能**]
-
 - Worklist SCU/SCP with MPPS [测试功能]
-
 - Query Retrieve SCU [测试功能]
-
 - C-STORE SCU/SCP
-
 - Print SCU/SCP
 
 ## dependency packages
@@ -30,6 +26,7 @@
 - [fo-dicom](https://github.com/fo-dicom/fo-dicom)
 - [NLog](https://nlog-project.org/)
 - [Stylet](https://github.com/canton7/Stylet)
+- [LiteDB](http://www.litedb.org/)
 - [FluentValidation](https://fluentvalidation.net/)
 - [Nett](https://github.com/paiden/Nett)
 - [MQTTnet](https://github.com/chkr1011/MQTTnet)

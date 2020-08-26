@@ -157,20 +157,14 @@
     <Compile Include="..\..\src\DicomNetwork\Client\WorklistSCU.cs">
       <Link>DicomNetwork\Client\WorklistSCU.cs</Link>
     </Compile>
-    <Compile Include="..\..\src\DicomNetwork\Server\Models\IMppsSource.cs">
-      <Link>DicomNetwork\Server\Models\IMppsSource.cs</Link>
+    <Compile Include="..\..\src\DicomNetwork\Server\IMppsSource.cs">
+      <Link>DicomNetwork\Server\IMppsSource.cs</Link>
     </Compile>
-    <Compile Include="..\..\src\DicomNetwork\Server\Models\IWorklistItemsSource.cs">
-      <Link>DicomNetwork\Server\Models\IWorklistItemsSource.cs</Link>
+    <Compile Include="..\..\src\DicomNetwork\Server\MppsHandler.cs">
+      <Link>DicomNetwork\Server\MppsHandler.cs</Link>
     </Compile>
-    <Compile Include="..\..\src\DicomNetwork\Server\Models\IWorklistRequestHandler.cs">
-      <Link>DicomNetwork\Server\Models\IWorklistRequestHandler.cs</Link>
-    </Compile>
-    <Compile Include="..\..\src\DicomNetwork\Server\Models\MppsHandler.cs">
-      <Link>DicomNetwork\Server\Models\MppsHandler.cs</Link>
-    </Compile>
-    <Compile Include="..\..\src\DicomNetwork\Server\Models\WorklistItemsSource.cs">
-      <Link>DicomNetwork\Server\Models\WorklistItemsSource.cs</Link>
+    <Compile Include="..\..\src\DicomNetwork\Server\CFindRequestHandler.cs">
+      <Link>DicomNetwork\Server\CFindRequestHandler.cs</Link>
     </Compile>
     <Compile Include="..\..\src\DicomNetwork\Server\StoreService.cs">
       <Link>DicomNetwork\Server\StoreService.cs</Link>
@@ -289,6 +283,9 @@
     <Compile Include="..\..\src\Services\Interfaces\IConfigurationService.cs">
       <Link>Services\Interfaces\IConfigurationService.cs</Link>
     </Compile>
+    <Compile Include="..\..\src\Services\Interfaces\IDataService.cs">
+      <Link>Services\Interfaces\IDataService.cs</Link>
+    </Compile>
     <Compile Include="..\..\src\Services\Interfaces\IDialogServiceEx.cs">
       <Link>Services\Interfaces\IDialogServiceEx.cs</Link>
     </Compile>
@@ -312,6 +309,9 @@
     </Compile>
     <Compile Include="..\..\src\Services\ConfigurationService.cs">
       <Link>Services\ConfigurationService.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Services\DataService.cs">
+      <Link>Services\DataService.cs</Link>
     </Compile>
     <Compile Include="..\..\src\Services\DialogServiceEx.cs">
       <Link>Services\DialogServiceEx.cs</Link>
@@ -760,6 +760,9 @@
     </PackageReference>
     <PackageReference Include="fo-dicom.Desktop">
       <Version>4.0.6</Version>
+    </PackageReference>
+    <PackageReference Include="LiteDB">
+      <Version>5.0.9</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.Platforms">
       <Version>3.1.2</Version>

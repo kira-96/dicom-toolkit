@@ -3,7 +3,6 @@
     using Stylet;
     using StyletIoC;
     using System;
-    using System.Collections.ObjectModel;
     using Models;
     using Server;
     using Services;
@@ -23,11 +22,12 @@
         [Inject]
         private INotificationService notificationService;
 
+        [Inject]
+        private IDataService dataService;
+
         private readonly IEventAggregator _eventAggregator;
 
-        private WorklistItemsSource _worklistItemsSource;
-
-        public ObservableCollection<WorklistItem> WorklistItems => _worklistItemsSource.WorklistItems;
+        public BindableCollection<WorklistItem> WorklistItems { get; }
 
         private bool _isServerStarted = false;
 
@@ -42,41 +42,13 @@
             _eventAggregator = eventAggregator;
             _eventAggregator.Subscribe(this, nameof(PatientsViewModel));
 
-            _worklistItemsSource = new WorklistItemsSource();
-            WorklistServer.Default.ItemsSource = _worklistItemsSource;
+            WorklistItems = new BindableCollection<WorklistItem>();
+            WorklistServer.Default.WorklistItems = WorklistItems;
+        }
 
-#if DEBUG
-            _worklistItemsSource.AddItem(
-                new WorklistItem()
-                {
-                    PatientName = "Test1",
-                    PatientID = "001",
-                    Age = "027Y",
-                    Sex = "M",
-                    DateOfBirth = DateTime.Today,
-                    StudyUID = "1.23.456.7890.1234567890.1",
-                    Modality = "MR",
-                    ScheduledAET = "LOCAL_AET",
-                    ExamDateAndTime = DateTime.Today,
-                    ProcedureID = "DDB620C9F6D7101",
-                    ProcedureStepID = "4C599B2EEBB0102"
-                });
-            _worklistItemsSource.AddItem(
-                new WorklistItem()
-                {
-                    PatientName = "Test2",
-                    PatientID = "002",
-                    Age = "028Y",
-                    Sex = "F",
-                    DateOfBirth = DateTime.Today,
-                    StudyUID = "1.23.456.7890.1234567890.2",
-                    Modality = "MR",
-                    ScheduledAET = "LOCAL_AET",
-                    ExamDateAndTime = DateTime.Today,
-                    ProcedureID = "779B2791AA56103",
-                    ProcedureStepID = "0F4BF697489C104"
-                });
-#endif
+        public void UpdateData()
+        {
+            WorklistItems.AddRange(dataService.GetWorklistItems());
         }
 
         public void Handle(ServerMessageItem message)
@@ -106,12 +78,14 @@
 
         public void Handle(WorklistItem message)
         {
-            _worklistItemsSource.AddItem(message);
+            WorklistItems.Add(message);
+            dataService.AddWorklistItem(message);
         }
 
         public void RemoveItem(WorklistItem item)
         {
-            _worklistItemsSource.RemoveItem(item);
+            WorklistItems.Remove(item);
+            dataService.RemoveWorklistItem(item);
         }
 
         public void ViewDetails(WorklistItem item)

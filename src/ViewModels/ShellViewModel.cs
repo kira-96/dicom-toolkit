@@ -16,6 +16,7 @@
         private readonly ILoggerService loggerService;
         private readonly II18nService i18NService;
         private readonly IConfigurationService configurationService;
+        private readonly IDataService dataService;
         private readonly INotificationService notificationService;
         private readonly IUpdateService updateService;
         private readonly ISimpleMqttService mqttService;
@@ -26,6 +27,7 @@
             [Inject("filelogger")]ILoggerService loggerService,
             II18nService i18NService,
             IConfigurationService configurationService,
+            IDataService dataService,
             INotificationService notificationService,
             IUpdateService updateService,
             ISimpleMqttService mqttService,
@@ -44,6 +46,7 @@
             this.loggerService = loggerService;
             this.i18NService = i18NService;
             this.configurationService = configurationService;
+            this.dataService = dataService;
             this.notificationService = notificationService;
             this.updateService = updateService;
             this.mqttService = mqttService;
@@ -70,6 +73,7 @@
             var appConfiguration = configurationService.GetConfiguration<AppConfiguration>();
 
             await mqttService.StartAsync(appConfiguration.ListenPort);
+            dataService.ConnectDatabase(appConfiguration.DbConnectionString);
 
             ActiveItem = Items.Count > 0 ? Items[0] : null;
 
@@ -87,6 +91,7 @@
             updateService.DownloadComplete -= UpdateService_DownloadComplete;
             updateService.DownloadError -= UpdateService_DownloadError;
 
+            dataService.DisconnectDatabase();
             container.Get<IMessengerService>().Dispose();
             mqttService.Dispose();
         }

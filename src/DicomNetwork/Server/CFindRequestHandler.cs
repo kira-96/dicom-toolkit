@@ -1,45 +1,16 @@
 ﻿using Dicom;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 using SimpleDICOMToolkit.Models;
 
 namespace SimpleDICOMToolkit.Server
 {
-    public class WorklistItemsSource : IWorklistItemsSource, IWorklistRequestHandler
+    public class CFindRequestHandler
     {
-        private readonly object locker = new object();
-
-        public ObservableCollection<WorklistItem> WorklistItems { get; } = new ObservableCollection<WorklistItem>();
-
-        public void AddItem(WorklistItem item)
+        public static IEnumerable<DicomDataset> FilterWorklistItems(IEnumerable<WorklistItem> worklistItems, DicomDataset request)
         {
-            lock (locker)
-            {
-                WorklistItems.Add(item);
-            }
-        }
-
-        public void RemoveAt(int index)
-        {
-            lock (locker)
-            {
-                WorklistItems.RemoveAt(index);
-            }
-        }
-
-        public void RemoveItem(WorklistItem item)
-        {
-            lock (locker)
-            {
-                WorklistItems.Remove(item);
-            }
-        }
-
-        public IEnumerable<DicomDataset> FilterWorklistItems(DicomDataset request)
-        {
-            var exams = WorklistItems.AsQueryable();
+            var exams = worklistItems.AsQueryable();
 
             if (request.TryGetSingleValue(DicomTag.PatientID, out string patientId) && !string.IsNullOrEmpty(patientId))
             {
@@ -144,7 +115,7 @@ namespace SimpleDICOMToolkit.Server
             }
         }
 
-        internal IQueryable<WorklistItem> FilterWorklistItemsByName(IQueryable<WorklistItem> exams, string patientName)
+        internal static IQueryable<WorklistItem> FilterWorklistItemsByName(IQueryable<WorklistItem> exams, string patientName)
         {
             if (string.IsNullOrEmpty(patientName) || patientName == "*")
             {
@@ -164,7 +135,7 @@ namespace SimpleDICOMToolkit.Server
             return exams;
         }
 
-        internal void AddIfExistsInRequest<T>(DicomDataset dataset, DicomDataset request, DicomTag tag, T value)
+        internal static void AddIfExistsInRequest<T>(DicomDataset dataset, DicomDataset request, DicomTag tag, T value)
         {
             if (request.Contains(tag))
             {

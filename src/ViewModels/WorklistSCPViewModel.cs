@@ -26,6 +26,7 @@
             base.OnInitialActivate();
 
             PatientsViewModel.Parent = this;
+            PatientsViewModel.UpdateData();
             ServerConfigViewModel.Parent = this;
             ServerConfigViewModel.RequestAction = () => ServerConfigViewModel.PublishServerRequest(nameof(ViewModels.PatientsViewModel));
             ServerConfigViewModel.ServerIP = SystemHelper.LocalIPAddress;

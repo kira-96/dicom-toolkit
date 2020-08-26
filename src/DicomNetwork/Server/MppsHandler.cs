@@ -17,20 +17,19 @@ namespace SimpleDICOMToolkit.Server
     {
         private readonly Dictionary<string, WorklistItem> PendingProcedures = new Dictionary<string, WorklistItem>();
 
-        private readonly IWorklistItemsSource _itemsSource;
+        private readonly IEnumerable<WorklistItem> _worklistItems;
 
         private readonly Logger _logger;
 
-        public MppsHandler(IWorklistItemsSource itemsSource, Logger logger)
+        public MppsHandler(IEnumerable<WorklistItem> worklistItems, Logger logger)
         {
-            _itemsSource = itemsSource;
+            _worklistItems = worklistItems;
             _logger = logger;
         }
 
         public bool SetInProgress(string sopInstanceUID, string procedureStepId)
         {
-            var workItem = _itemsSource.WorklistItems
-                .FirstOrDefault(w => w.ProcedureStepID == procedureStepId);
+            var workItem = _worklistItems.FirstOrDefault(w => w.ProcedureStepID == procedureStepId);
             if (workItem == null)
             {
                 // the procedureStepId provided cannot be found any more, so the data is invalid or the 
