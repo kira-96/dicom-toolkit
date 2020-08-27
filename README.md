@@ -2,11 +2,11 @@
 
 *A Simple DICOM Toolkit*
 
-![GitHub last commit](https://img.shields.io/github/last-commit/kira-96/dicom-toolkit)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/kira-96/dicom-toolkit/build?logo=github)
-![AppVeyor](https://img.shields.io/appveyor/build/kira-96/dicom-toolkit?label=AppVeyor&style=flat&logo=appveyor)
-![visual studio](https://img.shields.io/badge/Visual%20Studio-2019-%235c2d91?logo=Visual%20Studio)
-[![GitHub license](https://img.shields.io/github/license/kira-96/dicom-toolkit)](https://github.com/kira-96/dicom-toolkit/blob/master/LICENSE)
+![GitHub last commit](https://img.shields.io/github/last-commit/kira-96/dicom-toolkit?style=flat-square)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/kira-96/dicom-toolkit/build?logo=github&style=flat-square)
+![AppVeyor](https://img.shields.io/appveyor/build/kira-96/dicom-toolkit?label=AppVeyor&logo=appveyor&style=flat-square)
+![visual studio](https://img.shields.io/badge/Visual%20Studio-2019-%235c2d91?logo=Visual%20Studio&style=flat-square)
+[![GitHub license](https://img.shields.io/github/license/kira-96/dicom-toolkit?color=%23f05b72&style=flat-square)](https://github.com/kira-96/dicom-toolkit/blob/main/LICENSE)
 
 ## 截图
 
@@ -15,9 +15,11 @@
 
 ## 功能
 
-- Simple Dicom Dump [**慎用修改和保存功能**]
-- Worklist SCU/SCP with MPPS [测试功能]
-- Query Retrieve SCU [测试功能]
+*以下功能仅供测试/调试使用*
+
+- Simple DICOM Dump [**慎用修改和保存功能**]
+- Worklist SCU/SCP with MPPS
+- Query Retrieve SCU/C-MOVE SCU
 - C-STORE SCU/SCP
 - Print SCU/SCP
 
