@@ -60,7 +60,8 @@
                     </b:Interaction.Behaviors>
                 </Button>
                 <c:AduLoading SpeedRatio="1" Type="Apple" 
-                              Foreground="#2a5caa" Margin="0,-24,0,0"
+                              Foreground="{DynamicResource AccentBrush}" 
+                              Margin="0,-24,0,0"
                               DataContext="{Binding ServerConfigViewModel}"
                               Grid.Column="{Binding BusyIndicatorColumn}"
                               IsActived="{Binding IsBusy}" />
