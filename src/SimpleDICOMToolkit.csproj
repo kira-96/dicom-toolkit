@@ -8,8 +8,8 @@
     <RootNamespace>SimpleDICOMToolkit</RootNamespace>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Icons\icon.ico</ApplicationIcon>
-    <AssemblyVersion>1.4.4.270</AssemblyVersion>
-    <FileVersion>1.4.4.270</FileVersion>
+    <AssemblyVersion>1.4.4.276</AssemblyVersion>
+    <FileVersion>1.4.4.276</FileVersion>
     <Version>1.4.4</Version>
     <Copyright>Copyright © 2019 - 2020 kira。保留所有权利。</Copyright>
     <Platforms>x64</Platforms>
@@ -30,7 +30,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="9.1.3" />
+    <PackageReference Include="FluentValidation" Version="9.2.0" />
     <PackageReference Include="fo-dicom" Version="5.0.0-alpha2" />
     <PackageReference Include="fo-dicom.Drawing" Version="4.0.6" />
     <PackageReference Include="LiteDB" Version="5.0.9" />
@@ -62,6 +62,7 @@
     <Resource Include="Icons\info.png" />
     <Resource Include="Icons\item-white.png" />
     <Resource Include="Icons\item.png" />
+    <Resource Include="Icons\move.png" />
     <Resource Include="Icons\okay.png" />
     <Resource Include="Icons\open_folder.png" />
     <Resource Include="Icons\package.png" />

@@ -112,6 +112,58 @@
             _eventAggregator.Unsubscribe(this);
         }
 
+        public async void MoveStudy(IDicomObjectLevel obj)
+        {
+            MoveToViewModel moveTo = _viewModelFactory.GetMoveToViewModel();
+
+            if (_windowManager.ShowDialog(moveTo, this) != true)
+            {
+                return;
+            }
+
+            var (serverIp, serverPort, serverAet, localAet) = GetServerConfig();
+            _eventAggregator.Publish(new BusyStateItem(true), nameof(QueryResultViewModel));
+            IsBusy = true;
+
+            try
+            {
+                await queryRetrieveSCU.MoveImagesAsync(serverIp, serverPort, serverAet, localAet, moveTo.ServerAET, obj.UID, null);
+            }
+            finally
+            {
+                IsBusy = false;
+                _eventAggregator.Publish(new BusyStateItem(false), nameof(QueryResultViewModel));
+            }
+        }
+
+        public async void PreviewImage()
+        {
+            _eventAggregator.Publish(new BusyStateItem(true), nameof(QueryResultViewModel));
+            IsBusy = true;
+
+            var (serverIp, serverPort, serverAet, localAet) = GetServerConfig();
+            DicomDataset result = null;
+            try
+            {
+                result = await queryRetrieveSCU.GetImagesBySOPInstanceAsync(
+                    serverIp, serverPort, serverAet, localAet,
+                    selectedImage.Parent.Parent.UID, selectedImage.Parent.UID, selectedImage.UID);
+            }
+            finally
+            {
+                IsBusy = false;
+                _eventAggregator.Publish(new BusyStateItem(false), nameof(QueryResultViewModel));
+            }
+
+            // 有时候查询到的图像没有像素值，无法显示
+            if (result != null && result.Contains(DicomTag.PixelData))
+            {
+                var preview = _viewModelFactory.GetPreviewImageViewModel();
+                preview.Initialize(result);
+                _windowManager.ShowDialog(preview, this);
+            }
+        }
+
         private (string serverIp, int serverPort, string serverAet, string localAet) GetServerConfig()
         {
             var configVm = (Parent as QueryRetrieveViewModel).ServerConfigViewModel;
@@ -262,34 +314,6 @@
                         obj.Children.Add(new DicomObjectLevel(instanceNumber, instanceUid, Level.Image, obj));
                     }
                 }
-            }
-        }
-
-        public async void PreviewImage()
-        {
-            _eventAggregator.Publish(new BusyStateItem(true), nameof(QueryResultViewModel));
-            IsBusy = true;
-
-            var (serverIp, serverPort, serverAet, localAet) = GetServerConfig();
-            DicomDataset result = null;
-            try
-            {
-                result = await queryRetrieveSCU.GetImagesBySOPInstanceAsync(
-                    serverIp, serverPort, serverAet, localAet,
-                    selectedImage.Parent.Parent.UID, selectedImage.Parent.UID, selectedImage.UID);
-            }
-            finally
-            {
-                IsBusy = false;
-                _eventAggregator.Publish(new BusyStateItem(false), nameof(QueryResultViewModel));
-            }
-
-            // 有时候查询到的图像没有像素值，无法显示
-            if (result != null && result.Contains(DicomTag.PixelData))
-            {
-                var preview = _viewModelFactory.GetPreviewImageViewModel();
-                preview.Initialize(result);
-                _windowManager.ShowDialog(preview, this);
             }
         }
     }

@@ -23,5 +23,7 @@
         EditDicomItemViewModel GetEditDicomItemViewModel();
 
         RegistrationViewModel GetRegistrationViewModel();
+
+        MoveToViewModel GetMoveToViewModel();
     }
 }

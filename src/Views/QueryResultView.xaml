@@ -15,39 +15,27 @@
         <DataTemplate x:Key="ItemTemplate" DataType="{x:Type m:DicomObjectLevel}">
             <TextBlock Text="{Binding Text}" ToolTip="{Binding Text}" VerticalAlignment="Center" />
         </DataTemplate>
-        <Style TargetType="{x:Type ListViewItem}">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Padding" Value="0" />
-            <Setter Property="Margin" Value="0 0 0 1" />
-            <Setter Property="SnapsToDevicePixels" Value="True" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ListViewItem}">
-                        <Border x:Name="ContainerBorder"
-                                BorderThickness="0"
-                                SnapsToDevicePixels="True"
-                                HorizontalAlignment="Left"
-                                Padding="{TemplateBinding Padding}">
-                            <ContentPresenter x:Name="ContentPresenter" 
-                                              Content="{TemplateBinding Content}"
-                                              ContentTemplate="{StaticResource ItemTemplate}" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ContainerBorder" Property="Background" Value="LightSkyBlue" />
-                            </Trigger>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="Foreground" Value="White" />
-                                <Setter TargetName="ContainerBorder" Property="Background" Value="#2a5caa" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        <ContextMenu x:Key="StudyContextMenu">
+            <MenuItem s:View.ActionTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext}"
+                      Command="{s:Action MoveStudy, ActionNotFound=Disable}"
+                      CommandParameter="{Binding}">
+                <MenuItem.Header>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='Move']" />
+                </MenuItem.Header>
+                <MenuItem.ToolTip>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='Move']" />
+                </MenuItem.ToolTip>
+                <MenuItem.Icon>
+                    <Image Width="16" Height="16" Source="pack://application:,,,/Icons/move.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+        </ContextMenu>
         <Style TargetType="{x:Type ListView}">
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
+        </Style>
+        <Style TargetType="{x:Type ListViewItem}">
+            <Setter Property="ContentTemplate" Value="{StaticResource ItemTemplate}" />
         </Style>
     </UserControl.Resources>
     
@@ -87,7 +75,14 @@
             </TextBlock.Text>
         </TextBlock>
         <ListView x:Name="PatientList" Grid.Row="1" Grid.Column="0" IsEnabled="{Binding CanSelectItem}" ItemsSource="{Binding QueryResult}" SelectedItem="{Binding SelectedPatient}" />
-        <ListView x:Name="StudyList" Grid.Row="1" Grid.Column="1" IsEnabled="{Binding CanSelectItem}" ItemsSource="{Binding SelectedPatient.Children}" SelectedItem="{Binding SelectedStudy}" />
+        <ListView x:Name="StudyList" Grid.Row="1" Grid.Column="1" IsEnabled="{Binding CanSelectItem}" ItemsSource="{Binding SelectedPatient.Children}" SelectedItem="{Binding SelectedStudy}">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="ContentTemplate" Value="{StaticResource ItemTemplate}" />
+                    <Setter Property="ContextMenu" Value="{StaticResource StudyContextMenu}" />
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
         <ListView x:Name="SeriesList" Grid.Row="1" Grid.Column="2" IsEnabled="{Binding CanSelectItem}" ItemsSource="{Binding SelectedStudy.Children}" SelectedItem="{Binding SelectedSeries}" />
         <ListView x:Name="ImagesList" Grid.Row="1" Grid.Column="3" IsEnabled="{Binding CanSelectItem}" ItemsSource="{Binding SelectedSeries.Children}" SelectedItem="{Binding SelectedImage}">
             <ListView.Style>
