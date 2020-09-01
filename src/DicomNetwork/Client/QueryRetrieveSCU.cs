@@ -231,7 +231,7 @@
                 }
                 else if (res.Status.State == DicomState.Success)
                 {
-                    logger.Info("Sending successfully finished");
+                    logger.Info("Sending successfully finished.");
                     success = true;
                 }
                 else if (res.Status.State == DicomState.Failure)
@@ -239,7 +239,7 @@
                     logger.Info("Error sending datasets: " + res.Status.Description);
                     success = false;
                 }
-                logger.Debug("C-MOVE response status.");
+                logger.Debug("C-MOVE response status. " + res.Status.Description);
             };
 
             DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);

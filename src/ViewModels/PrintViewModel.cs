@@ -49,7 +49,7 @@
 
             ServerConfigViewModel.Parent = this;
             ServerConfigViewModel.ServerPort = "7104";
-            ServerConfigViewModel.ServerAET = "PRINTSCP"; ;
+            ServerConfigViewModel.ServerAET = "PRINT-SCP"; ;
             ServerConfigViewModel.IsModalityEnabled = false;
             ServerConfigViewModel.RequestAction = () => ServerConfigViewModel.PublishClientRequest(nameof(ViewModels.PrintPreviewViewModel));
             eventAggregator.Subscribe(ServerConfigViewModel, nameof(ViewModels.PrintPreviewViewModel));

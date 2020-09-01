@@ -27,7 +27,7 @@
             StoreFileListViewModel.Parent = this;
             ServerConfigViewModel.Parent = this;
             ServerConfigViewModel.ServerPort = "104";
-            ServerConfigViewModel.ServerAET = "STORESCP";
+            ServerConfigViewModel.ServerAET = "STORE-SCP";
             ServerConfigViewModel.IsModalityEnabled = false;
             ServerConfigViewModel.RequestAction = () => ServerConfigViewModel.PublishClientRequest(nameof(ViewModels.StoreFileListViewModel));
             eventAggregator.Subscribe(ServerConfigViewModel, nameof(ViewModels.StoreFileListViewModel));

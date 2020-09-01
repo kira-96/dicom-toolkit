@@ -26,6 +26,8 @@
 
             WorklistResultViewModel.Parent = this;
             ServerConfigViewModel.Parent = this;
+            ServerConfigViewModel.ServerPort = "6104";
+            ServerConfigViewModel.ServerAET = "RIS";
             ServerConfigViewModel.RequestAction = () => ServerConfigViewModel.PublishClientRequest(nameof(ViewModels.WorklistResultViewModel));
             eventAggregator.Subscribe(ServerConfigViewModel, nameof(ViewModels.WorklistResultViewModel));
         }

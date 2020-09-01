@@ -48,7 +48,7 @@
             ServerConfigViewModel.Parent = this;
             ServerConfigViewModel.ServerIP = SystemHelper.LocalIPAddress;
             ServerConfigViewModel.ServerPort = "7104";
-            ServerConfigViewModel.LocalAET = ServerConfigViewModel.ServerAET = "PRINTSCP";
+            ServerConfigViewModel.LocalAET = ServerConfigViewModel.ServerAET = "PRINT-SCP";
             ServerConfigViewModel.IsServerIPEnabled = ServerConfigViewModel.IsServerAETEnabled = ServerConfigViewModel.IsModalityEnabled = false;
             ServerConfigViewModel.RequestAction = () => ServerConfigViewModel.PublishServerRequest(nameof(ViewModels.PrintJobsViewModel));
             eventAggregator.Subscribe(ServerConfigViewModel, nameof(ViewModels.PrintJobsViewModel));

@@ -29,7 +29,7 @@
             ServerConfigViewModel.Parent = this;
             ServerConfigViewModel.ServerIP = SystemHelper.LocalIPAddress;
             ServerConfigViewModel.ServerPort = "104";
-            ServerConfigViewModel.LocalAET = ServerConfigViewModel.ServerAET = "STORESCP";
+            ServerConfigViewModel.LocalAET = ServerConfigViewModel.ServerAET = "STORE-SCP";
             ServerConfigViewModel.IsServerIPEnabled = ServerConfigViewModel.IsServerAETEnabled = ServerConfigViewModel.IsModalityEnabled = false;
             ServerConfigViewModel.RequestAction = () => ServerConfigViewModel.PublishServerRequest(nameof(ViewModels.StoreReceivedViewModel));
             eventAggregator.Subscribe(ServerConfigViewModel, nameof(ViewModels.StoreReceivedViewModel));

@@ -25,9 +25,9 @@
         private IEchoSCU _echoSCU;
 
         private string _serverIP = "localhost";
-        private string _serverPort = "6104";
-        private string _serverAET = "RIS";
-        private string _localAET = "LOCAL_AET";
+        private string _serverPort = "104";
+        private string _serverAET = "ANY-SCP";
+        private string _localAET = "ANY-SCU";
         private string _modality = "MR";
 
         private bool _isServerIPEnabled = true;
