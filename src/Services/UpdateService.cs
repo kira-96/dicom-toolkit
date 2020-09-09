@@ -1,4 +1,5 @@
 ﻿using StyletIoC;
+using Polly;
 using System;
 using System.IO;
 using System.Linq;
@@ -49,57 +50,75 @@ namespace SimpleDICOMToolkit.Services
 
         public async Task CheckForUpdate()
         {
-            HttpWebRequest req = WebRequest.Create(GITHUB_API + Request_url) as HttpWebRequest;
-
-            req.Method = "GET";
-            req.Accept = "application/vnd.github.v3+json";
-            req.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36";
+            var policy = Policy.Handle<Exception>()
+                .WaitAndRetryAsync(new[]
+                {
+                    TimeSpan.FromSeconds(2),
+                    TimeSpan.FromSeconds(4),
+                    TimeSpan.FromSeconds(8),
+                }, 
+                (ex, time) =>
+                {
+                    IsCheckingForUpdate = false;
+                });
 
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
+            string response = null;
+
             try
             {
-                IsCheckingForUpdate = true;
+                response = await policy.ExecuteAsync<string>(async () => {
+                    HttpWebRequest req = WebRequest.Create(GITHUB_API + Request_url) as HttpWebRequest;
 
-                var res = await req.GetResponseAsync();
+                    req.Method = "GET";
+                    req.Accept = "application/vnd.github.v3+json";
+                    req.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36";
 
-                string content;
+                    IsCheckingForUpdate = true;
 
-                using (StreamReader reader = new StreamReader(res.GetResponseStream()))
-                {
-                    content = await reader.ReadToEndAsync();
-                }
+                    var res = await req.GetResponseAsync();
 
-                // Newtonsoft.Json
-                //JObject jObject = JObject.Parse(content);
+                    string content;
 
-                //Version version = Version.Parse((string)jObject["tag_name"]);
+                    using (StreamReader reader = new StreamReader(res.GetResponseStream()))
+                    {
+                        content = await reader.ReadToEndAsync();
+                    }
 
-                //NewVersion = version;
-                //url = (string)jObject["assets"].First["browser_download_url"];
+                    IsCheckingForUpdate = false;
 
-                int index = content.IndexOf("\"tag_name\":");
-                int startIndex = content.IndexOf('"', index + 11 /* "\"tag_name\":".Length */) + 1;
-                int endIndex = content.IndexOf('"', startIndex);
-                NewVersion = Version.Parse(content.Substring(startIndex, endIndex - startIndex));
-
-                index = content.IndexOf("\"browser_download_url\":");
-                startIndex = content.IndexOf('"', index + 23 /* "\"browser_download_url\":".Length */) + 1;
-                endIndex = content.IndexOf('"', startIndex);
-                url = content.Substring(startIndex, endIndex - startIndex);
-
-                VersionAvaliable(NewVersion);
+                    return content;
+                });
             }
             catch (Exception ex)
             {
+                IsCheckingForUpdate = false;
+                NewVersion = new Version(0, 0, 0);
                 CheckForUpdateError(ex);
 
-                NewVersion = new Version(0, 0, 0);
+                return;
             }
-            finally
-            {
-                IsCheckingForUpdate = false;
-            }
+            
+            // Newtonsoft.Json
+            //JObject jObject = JObject.Parse(response);
+
+            //Version version = Version.Parse((string)jObject["tag_name"]);
+
+            //NewVersion = version;
+            //url = (string)jObject["assets"].First["browser_download_url"];
+
+            int index = response.IndexOf("\"tag_name\":");
+            int startIndex = response.IndexOf('"', index + 11 /* "\"tag_name\":".Length */) + 1;
+            int endIndex = response.IndexOf('"', startIndex);
+            NewVersion = Version.Parse(response.Substring(startIndex, endIndex - startIndex));
+
+            index = response.IndexOf("\"browser_download_url\":");
+            startIndex = response.IndexOf('"', index + 23 /* "\"browser_download_url\":".Length */) + 1;
+            endIndex = response.IndexOf('"', startIndex);
+            url = response.Substring(startIndex, endIndex - startIndex);
+
+            VersionAvaliable(NewVersion);
         }
 
         public void StartDownload()

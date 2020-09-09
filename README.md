@@ -30,6 +30,7 @@
 - [Stylet](https://github.com/canton7/Stylet)
 - [LiteDB](http://www.litedb.org/)
 - [FluentValidation](https://fluentvalidation.net/)
+- [Polly](http://www.thepollyproject.org/)
 - [Nett](https://github.com/paiden/Nett)
 - [MQTTnet](https://github.com/chkr1011/MQTTnet)
 - [ookii-dialogs-wpf](https://github.com/augustoproiete/ookii-dialogs-wpf)

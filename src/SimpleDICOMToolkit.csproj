@@ -8,8 +8,8 @@
     <RootNamespace>SimpleDICOMToolkit</RootNamespace>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Icons\icon.ico</ApplicationIcon>
-    <AssemblyVersion>1.4.5.277</AssemblyVersion>
-    <FileVersion>1.4.5.277</FileVersion>
+    <AssemblyVersion>1.4.5.280</AssemblyVersion>
+    <FileVersion>1.4.5.280</FileVersion>
     <Version>1.4.5</Version>
     <Copyright>Copyright © 2019 - 2020 kira。保留所有权利。</Copyright>
     <Platforms>x64</Platforms>
@@ -39,6 +39,7 @@
     <PackageReference Include="Nett" Version="0.15.0" />
     <PackageReference Include="NLog" Version="4.7.4" />
     <PackageReference Include="Ookii.Dialogs.Wpf.NETCore" Version="2.1.0" />
+    <PackageReference Include="Polly" Version="7.2.1" />
     <PackageReference Include="Stylet" Version="1.3.4" />
     <PackageReference Include="System.Management" Version="5.0.0-preview.8.20407.11" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />

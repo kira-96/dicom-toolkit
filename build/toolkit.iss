@@ -51,6 +51,7 @@ Source: "{#SourceDir}\{#ReleaseDir}\MQTTnet.dll"; DestDir: "{app}"; Flags: ignor
 Source: "{#SourceDir}\{#ReleaseDir}\Nett.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourceDir}\{#ReleaseDir}\NLog.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourceDir}\{#ReleaseDir}\Ookii.Dialogs.Wpf.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#SourceDir}\{#ReleaseDir}\Polly.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourceDir}\{#ReleaseDir}\Stylet.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourceDir}\{#ReleaseDir}\System.Net.Security.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourceDir}\{#ReleaseDir}\System.Net.WebSockets.Client.dll"; DestDir: "{app}"; Flags: ignoreversion
