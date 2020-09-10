@@ -1,16 +1,23 @@
 ﻿namespace SimpleDICOMToolkit.ViewModels
 {
+    using Polly;
     using Stylet;
     using StyletIoC;
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Client;
+    using Logging;
     using Models;
     using Services;
 
     public class WorklistResultViewModel : Screen, IHandle<ClientMessageItem>, IDisposable
     {
+        private const int TimeoutTime = 30;
         private readonly IEventAggregator _eventAggregator;
+
+        [Inject("filelogger")]
+        private ILoggerService _logger;
 
         [Inject]
         private II18nService _i18NService;
@@ -133,6 +140,29 @@
 
         public async void Handle(ClientMessageItem message)
         {
+            var timeoutPolicy = Policy.TimeoutAsync(TimeoutTime, Polly.Timeout.TimeoutStrategy.Pessimistic, 
+                (context, timespan, abandonedTask) => 
+                {
+                    // ContinueWith important!: the abandoned task may very well still be executing, when the caller times out on waiting for it!
+                    abandonedTask.ContinueWith(t =>
+                    {
+                        if (t.IsFaulted)
+                        {
+                            _logger.Error($"{context.PolicyKey} at {context.OperationKey}: execution timed out after {timespan.TotalSeconds} seconds, eventually terminated with: {t.Exception}.");
+                        }
+                        else if (t.IsCanceled)
+                        {
+                            // (If the executed delegates do not honour cancellation, this IsCanceled branch may never be hit.  It can be good practice however to include, in case a Policy configured with TimeoutStrategy.Pessimistic is used to execute a delegate honouring cancellation.)
+                        }
+                        else
+                        {
+                            // extra logic (if desired) for tasks which complete, despite the caller having 'walked away' earlier due to timeout.
+                        }
+                    });
+
+                    return Task.FromResult(true);
+                });
+
             _eventAggregator.Publish(new BusyStateItem(true), nameof(WorklistResultViewModel));
             IsBusy = true;
 
@@ -140,7 +170,10 @@
 
             try
             {
-                var result = await _worklistSCU.GetAllResultFromWorklistAsync(message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET, message.Modality);
+                var result = await timeoutPolicy.ExecuteAsync(async () =>
+                {
+                    return await _worklistSCU.GetAllResultFromWorklistAsync(message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET, message.Modality);
+                });
 
                 WorklistItems.AddRange(result);
 
