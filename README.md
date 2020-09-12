@@ -12,6 +12,7 @@
 
 ![dump](screenshot/Snipaste_2020-08-25_11-05-40.png)
 ![c-store](screenshot/Snipaste_2020-08-25_11-06-51.png)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fkira-96%2Fdicom-toolkit.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fkira-96%2Fdicom-toolkit?ref=badge_shield)
 
 ## 功能
 
@@ -46,3 +47,7 @@
 - [jDicom](http://members.chello.at/petra.kirchdorfer/jdicom/)
 - [ITK-SNAP](http://www.itksnap.org/pmwiki/pmwiki.php)
 - [Medical Connections](https://www.dicomserver.co.uk/)
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fkira-96%2Fdicom-toolkit.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fkira-96%2Fdicom-toolkit?ref=badge_large)
