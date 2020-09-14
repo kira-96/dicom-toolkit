@@ -19,12 +19,12 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                     <Border x:Name="ContentBorder"
-                                Background="DeepSkyBlue"
-                                BorderBrush="Transparent"
-                                BorderThickness="1"
-                                CornerRadius="2"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                Padding="{TemplateBinding Padding}">
+                            Background="#0078d7"
+                            BorderBrush="Transparent"
+                            BorderThickness="1"
+                            CornerRadius="2"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            Padding="{TemplateBinding Padding}">
                         <Grid>
                             <Path x:Name="StartIcon"
                                   Width="20" Height="20"
@@ -54,10 +54,20 @@
                             <Setter TargetName="StartIcon" Property="Visibility" Value="Hidden" />
                             <Setter TargetName="StopIcon" Property="Visibility" Value="Visible" />
                             <Setter TargetName="ContentBorder" Property="Background" Value="OrangeRed" />
+                            <Setter Property="ToolTip">
+                                <Setter.Value>
+                                    <Binding Source="{StaticResource Strings}" XPath="string[@key='StopService']" />
+                                </Setter.Value>
+                            </Setter>
                         </Trigger>
                         <Trigger Property="IsChecked" Value="False">
                             <Setter TargetName="StartIcon" Property="Visibility" Value="Visible" />
                             <Setter TargetName="StopIcon" Property="Visibility" Value="Hidden" />
+                            <Setter Property="ToolTip">
+                                <Setter.Value>
+                                    <Binding Source="{StaticResource Strings}" XPath="string[@key='StartService']" />
+                                </Setter.Value>
+                            </Setter>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

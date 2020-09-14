@@ -21,6 +21,8 @@
   <string key="Move">移动</string>
   <string key="Verify">校验</string>
   <string key="Details">查看详情</string>
+  <string key="StartService">启动服务</string>
+  <string key="StopService">停止服务</string>
   <string key="ServerIP">服务IP：</string>
   <string key="ServerPort">服务端口：</string>
   <string key="ServerAET">服务AET：</string>

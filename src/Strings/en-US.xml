@@ -21,6 +21,8 @@
   <string key="Move">Move</string>
   <string key="Verify">Verify</string>
   <string key="Details">Details</string>
+  <string key="StartService">Start Service</string>
+  <string key="StopService">Stop Service</string>
   <string key="ServerIP">Server IP: </string>
   <string key="ServerPort">Server Port: </string>
   <string key="ServerAET">Server AET: </string>
