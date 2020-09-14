@@ -317,35 +317,33 @@ namespace SimpleDICOMToolkit.Services
 
                     res = req.GetResponse() as HttpWebResponse;
 
-                    using (Stream stream = res.GetResponseStream())
+                    using Stream stream = res.GetResponseStream();
+                    byte[] buffer = new byte[Download_trunk_size];
+                    long currentPosition = startPosition;
+                    int bytesRead = 0;
+
+                    while (currentPosition <= remoteFileLength)
                     {
-                        byte[] buffer = new byte[Download_trunk_size];
-                        long currentPosition = startPosition;
-                        int bytesRead = 0;
-
-                        while (currentPosition <= remoteFileLength)
+                        if (currentPosition == remoteFileLength)
                         {
-                            if (currentPosition == remoteFileLength)
-                            {
-                                fileStream.Close();
-                                DownloadOk(localfile, downloadingfile);
-                                break;
-                            }
-
-                            if (cancellationTokenSource.IsCancellationRequested)
-                            {
-                                IsDownloading = false;
-                                break;
-                            }
-
-                            manualResetEventSlim.Wait();
-
-                            bytesRead = stream.Read(buffer, 0, Download_trunk_size);
-                            fileStream.Write(buffer, 0, bytesRead);
-
-                            currentPosition += bytesRead;
-                            DownloadPercentChanged((int)(currentPosition * 100 / remoteFileLength));
+                            fileStream.Close();
+                            DownloadOk(localfile, downloadingfile);
+                            break;
                         }
+
+                        if (cancellationTokenSource.IsCancellationRequested)
+                        {
+                            IsDownloading = false;
+                            break;
+                        }
+
+                        manualResetEventSlim.Wait();
+
+                        bytesRead = stream.Read(buffer, 0, Download_trunk_size);
+                        fileStream.Write(buffer, 0, bytesRead);
+
+                        currentPosition += bytesRead;
+                        DownloadPercentChanged((int)(currentPosition * 100 / remoteFileLength));
                     }
                 }
                 catch (Exception ex)

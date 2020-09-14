@@ -14,7 +14,7 @@
 
     public class QueryResultViewModel : Screen, IHandle<ClientMessageItem>, IDisposable
     {
-        private const int TimeoutTime = 30;
+        private const int TimeoutTime = 60;
         private readonly IEventAggregator _eventAggregator;
 
         [Inject]
