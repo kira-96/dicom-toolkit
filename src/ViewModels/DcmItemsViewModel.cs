@@ -3,6 +3,7 @@
     using Dicom;
     using Stylet;
     using StyletIoC;
+    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
@@ -108,7 +109,7 @@
             if (item.TagType != DcmTagType.Tag)
                 return;
 
-            if (IsPixelDataItem(item))
+            if (item.DcmTag == DicomTag.PixelData)
             {
                 ShowDcmImage(item);
             }
@@ -118,15 +119,8 @@
             }
         }
 
-        public bool IsPixelDataItem(DcmItem item)
-        {
-            return item.DcmTag.CompareTo(DicomTag.PixelData) == 0;
-        }
-
         public void ShowDcmImage(DcmItem item)
         {
-            _currentItem = item;
-
             var preview = _viewModelFactory.GetPreviewImageViewModel();
             preview.Initialize(GetItemDataset(item));
 
@@ -151,13 +145,28 @@
             if (_currentFile.Dataset.Contains(item.DcmTag))
                 return _currentFile.Dataset;
 
-            foreach (DcmItem seq in DicomItems.Where(i => i.TagType == DcmTagType.Sequence))
+            return GetItemDataset(item, _currentFile.Dataset.Where(x => x is DicomSequence));
+        }
+
+        private DicomDataset GetItemDataset(DcmItem item, IEnumerable<DicomItem> sequence)
+        {
+            foreach (var seq in sequence)
             {
-                for (int i = 0; i < seq.SequenceItems.Count; i++)
+                foreach (var dataset in (seq as DicomSequence).Items)
                 {
-                    if (seq.SequenceItems[i].SequenceItems.Contains(item))
+                    if (dataset.Contains(item.DcmTag))
                     {
-                        return _currentFile.Dataset.GetDicomItem<DicomSequence>(seq.DcmTag).Items[i];
+                        return dataset;
+                    }
+
+                    if (dataset.Any(x => x is DicomSequence))
+                    {
+                        var temp = GetItemDataset(item, dataset.Where(x => x is DicomSequence));
+
+                        if (temp != null)
+                        {
+                            return temp;
+                        }
                     }
                 }
             }
