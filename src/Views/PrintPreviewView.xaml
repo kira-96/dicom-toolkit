@@ -70,7 +70,7 @@
                                             <Binding Source="{StaticResource Strings}" XPath="string[@key='TooltipRemove']" />
                                         </MenuItem.ToolTip>
                                         <MenuItem.Icon>
-                                            <Image Width="16" Height="16" Source="pack://application:,,,/Icons/delete.png" />
+                                            <Image Width="16" Height="16" Source="pack://application:,,,/Assets/delete.png" />
                                         </MenuItem.Icon>
                                     </MenuItem>
                                 </ContextMenu>

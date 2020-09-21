@@ -14,7 +14,7 @@
                         <Image x:Name="Icon" 
                                Width="18" Height="18" 
                                Margin="0 -2 2 -2"
-                               Source="pack://application:,,,/Icons/info.png"
+                               Source="pack://application:,,,/Assets/info.png"
                                VerticalAlignment="Center"
                                DockPanel.Dock="Left" />
                         <ContentPresenter Content="{TemplateBinding Content}"
@@ -32,13 +32,13 @@
                             <DataTrigger.Value>
                                 <c:ToastType>Info</c:ToastType>
                             </DataTrigger.Value>
-                            <Setter TargetName="Icon" Property="Source" Value="pack://application:,,,/Icons/info.png" />
+                            <Setter TargetName="Icon" Property="Source" Value="pack://application:,,,/Assets/info.png" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource self}, Path=Level}">
                             <DataTrigger.Value>
                                 <c:ToastType>Error</c:ToastType>
                             </DataTrigger.Value>
-                            <Setter TargetName="Icon" Property="Source" Value="pack://application:,,,/Icons/error.png" />
+                            <Setter TargetName="Icon" Property="Source" Value="pack://application:,,,/Assets/error.png" />
                         </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

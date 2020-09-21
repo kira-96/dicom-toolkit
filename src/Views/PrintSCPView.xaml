@@ -31,7 +31,7 @@
                         <Binding Source="{StaticResource Strings}" XPath="string[@key='PrinterOptions']" />
                     </Button.ToolTip>
                     <Image Width="20" Height="20" Stretch="Fill" 
-                           Source="pack://application:,,,/Icons/settings.png" />
+                           Source="pack://application:,,,/Assets/settings.png" />
                 </Button>
             </Grid>
         </StackPanel>

@@ -4,11 +4,11 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>Icons\icon.ico</ApplicationIcon>
+    <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
     <Version>1.0.10</Version>
     <Copyright>Copyright © 2020 kira。保留所有权利。</Copyright>
-    <AssemblyVersion>1.0.10.16</AssemblyVersion>
-    <FileVersion>1.0.10.16</FileVersion>
+    <AssemblyVersion>1.0.10.17</AssemblyVersion>
+    <FileVersion>1.0.10.17</FileVersion>
     <Platforms>x64</Platforms>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <SignAssembly>true</SignAssembly>
@@ -32,11 +32,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Icons\icon.ico" />
+    <EmbeddedResource Include="Assets\icon.ico" />
   </ItemGroup>
   
   <ItemGroup>
-    <Resource Include="Icons\okay.png" />
+    <Resource Include="Assets\okay.png" />
   </ItemGroup>
 
 </Project>

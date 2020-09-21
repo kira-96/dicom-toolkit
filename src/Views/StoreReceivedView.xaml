@@ -22,7 +22,7 @@
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='TooltipPreview']" />
                 </MenuItem.ToolTip>
                 <MenuItem.Icon>
-                    <Image Width="16" Height="16" Source="pack://application:,,,/Icons/preview.png" />
+                    <Image Width="16" Height="16" Source="pack://application:,,,/Assets/preview.png" />
                 </MenuItem.Icon>
             </MenuItem>
             <MenuItem s:View.ActionTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ListView}}, Path=DataContext}"
@@ -35,7 +35,7 @@
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='TooltipExplore']" />
                 </MenuItem.ToolTip>
                 <MenuItem.Icon>
-                    <Image Width="16" Height="16" Source="pack://application:,,,/Icons/open_folder.png" />
+                    <Image Width="16" Height="16" Source="pack://application:,,,/Assets/open_folder.png" />
                 </MenuItem.Icon>
             </MenuItem>
         </ContextMenu>

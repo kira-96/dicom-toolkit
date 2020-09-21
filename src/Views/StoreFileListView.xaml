@@ -23,7 +23,7 @@
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='TooltipPreview']" />
                 </MenuItem.ToolTip>
                 <MenuItem.Icon>
-                    <Image Width="16" Height="16" Source="pack://application:,,,/Icons/preview.png" />
+                    <Image Width="16" Height="16" Source="pack://application:,,,/Assets/preview.png" />
                 </MenuItem.Icon>
             </MenuItem>
             <MenuItem s:View.ActionTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ListView}}, Path=DataContext}"
@@ -36,7 +36,7 @@
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='TooltipRemove']" />
                 </MenuItem.ToolTip>
                 <MenuItem.Icon>
-                    <Image Width="16" Height="16" Source="pack://application:,,,/Icons/delete.png" />
+                    <Image Width="16" Height="16" Source="pack://application:,,,/Assets/delete.png" />
                 </MenuItem.Icon>
             </MenuItem>
         </ContextMenu>
@@ -96,7 +96,7 @@
                                         <DataTrigger.Value>
                                             <m:CStoreItemStatus>Waiting</m:CStoreItemStatus>
                                         </DataTrigger.Value>
-                                        <Setter TargetName="StatusImage" Property="Source" Value="pack://application:,,,/Icons/waiting.png" />
+                                        <Setter TargetName="StatusImage" Property="Source" Value="pack://application:,,,/Assets/waiting.png" />
                                         <Setter TargetName="StatusImage" Property="ToolTip">
                                             <Setter.Value>
                                                 <Binding Source="{StaticResource Strings}" XPath="string[@key='Waiting']" />
@@ -107,7 +107,7 @@
                                         <DataTrigger.Value>
                                             <m:CStoreItemStatus>Success</m:CStoreItemStatus>
                                         </DataTrigger.Value>
-                                        <Setter TargetName="StatusImage" Property="Source" Value="pack://application:,,,/Icons/success.png" />
+                                        <Setter TargetName="StatusImage" Property="Source" Value="pack://application:,,,/Assets/success.png" />
                                         <Setter TargetName="StatusImage" Property="ToolTip">
                                             <Setter.Value>
                                                 <Binding Source="{StaticResource Strings}" XPath="string[@key='Success']" />
@@ -118,7 +118,7 @@
                                         <DataTrigger.Value>
                                             <m:CStoreItemStatus>Failed</m:CStoreItemStatus>
                                         </DataTrigger.Value>
-                                        <Setter TargetName="StatusImage" Property="Source" Value="pack://application:,,,/Icons/failed.png" />
+                                        <Setter TargetName="StatusImage" Property="Source" Value="pack://application:,,,/Assets/failed.png" />
                                         <Setter TargetName="StatusImage" Property="ToolTip">
                                             <Setter.Value>
                                                 <Binding Source="{StaticResource Strings}" XPath="string[@key='Failed']" />
@@ -141,7 +141,7 @@
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='TooltipAddFiles']" />
                 </Button.ToolTip>
                 <Image Width="24" Height="24" Stretch="Fill"
-                       Source="pack://application:,,,/Icons/addfiles.png" />
+                       Source="pack://application:,,,/Assets/addfiles.png" />
             </Button>
             <Button s:View.ActionTarget="{Binding}"
                     Style="{StaticResource TransparentButtonStyle}"
@@ -150,7 +150,7 @@
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='TooltipClearAll']" />
                 </Button.ToolTip>
                 <Image Width="24" Height="24" Stretch="Fill" 
-                       Source="pack://application:,,,/Icons/clear.png" />
+                       Source="pack://application:,,,/Assets/clear.png" />
             </Button>
         </StackPanel>
     </Grid>

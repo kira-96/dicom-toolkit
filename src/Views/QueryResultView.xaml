@@ -26,7 +26,7 @@
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='Move']" />
                 </MenuItem.ToolTip>
                 <MenuItem.Icon>
-                    <Image Width="16" Height="16" Source="pack://application:,,,/Icons/move.png" />
+                    <Image Width="16" Height="16" Source="pack://application:,,,/Assets/move.png" />
                 </MenuItem.Icon>
             </MenuItem>
         </ContextMenu>

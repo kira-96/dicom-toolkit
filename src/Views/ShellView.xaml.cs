@@ -264,7 +264,7 @@
                 Visible = false,
                 Text = Assembly.GetExecutingAssembly().GetName().Name,
                 Icon = new System.Drawing.Icon(
-                    Assembly.GetExecutingAssembly().GetManifestResourceStream("SimpleDICOMToolkit.Icons.icon.ico"),
+                    Assembly.GetExecutingAssembly().GetManifestResourceStream("SimpleDICOMToolkit.Assets.icon.ico"),
                     System.Windows.Forms.SystemInformation.SmallIconSize)
             };
 

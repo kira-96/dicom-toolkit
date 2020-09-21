@@ -40,7 +40,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>..\..\Config\Icons\icon.ico</ApplicationIcon>
+    <ApplicationIcon>..\..\Config\Assets\icon.ico</ApplicationIcon>
     <ApplicationManifest>..\..\Config\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
@@ -127,11 +127,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="..\..\Config\Icons\icon.ico">
-      <Link>Icons\icon.ico</Link>
+    <Resource Include="..\..\Config\Assets\icon.ico">
+      <Link>Assets\icon.ico</Link>
     </Resource>
-    <Resource Include="..\..\Config\Icons\okay.png">
-      <Link>Icons\okay.png</Link>
+    <Resource Include="..\..\Config\Assets\okay.png">
+      <Link>Assets\okay.png</Link>
     </Resource>
   </ItemGroup>
   <ItemGroup>

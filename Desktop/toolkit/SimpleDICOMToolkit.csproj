@@ -43,7 +43,7 @@
     <ApplicationManifest>..\..\src\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>..\..\src\Icons\icon.ico</ApplicationIcon>
+    <ApplicationIcon>..\..\src\Assets\icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>SimpleDICOMToolkit.App</StartupObject>
@@ -683,88 +683,88 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="..\..\src\Icons\addfiles.png">
-      <Link>Icons\addfiles.png</Link>
+    <Resource Include="..\..\src\Assets\addfiles.png">
+      <Link>Assets\addfiles.png</Link>
     </Resource>
-    <Resource Include="..\..\src\Icons\clear.png">
-      <Link>Icons\clear.png</Link>
+    <Resource Include="..\..\src\Assets\clear.png">
+      <Link>Assets\clear.png</Link>
     </Resource>
-    <Resource Include="..\..\src\Icons\delete.png">
-      <Link>Icons\delete.png</Link>
+    <Resource Include="..\..\src\Assets\delete.png">
+      <Link>Assets\delete.png</Link>
     </Resource>
-    <Resource Include="..\..\src\Icons\details.png">
-      <Link>Icons\details.png</Link>
+    <Resource Include="..\..\src\Assets\details.png">
+      <Link>Assets\details.png</Link>
     </Resource>
-    <Resource Include="..\..\src\Icons\earth.png">
-      <Link>Icons\earth.png</Link>
+    <Resource Include="..\..\src\Assets\earth.png">
+      <Link>Assets\earth.png</Link>
     </Resource>
-    <Resource Include="..\..\src\Icons\error.png">
-      <Link>Icons\error.png</Link>
+    <Resource Include="..\..\src\Assets\error.png">
+      <Link>Assets\error.png</Link>
     </Resource>
-    <Resource Include="..\..\src\Icons\exit.png">
-      <Link>Icons\exit.png</Link>
+    <Resource Include="..\..\src\Assets\exit.png">
+      <Link>Assets\exit.png</Link>
     </Resource>
-    <Resource Include="..\..\src\Icons\failed.png">
-      <Link>Icons\failed.png</Link>
+    <Resource Include="..\..\src\Assets\failed.png">
+      <Link>Assets\failed.png</Link>
     </Resource>
-    <Resource Include="..\..\src\Icons\failed1.png">
-      <Link>Icons\failed1.png</Link>
+    <Resource Include="..\..\src\Assets\failed1.png">
+      <Link>Assets\failed1.png</Link>
     </Resource>
-    <Resource Include="..\..\src\Icons\in-progress.png">
-      <Link>Icons\in-progress.png</Link>
+    <Resource Include="..\..\src\Assets\in-progress.png">
+      <Link>Assets\in-progress.png</Link>
     </Resource>
-    <Resource Include="..\..\src\Icons\info.png">
-      <Link>Icons\info.png</Link>
+    <Resource Include="..\..\src\Assets\info.png">
+      <Link>Assets\info.png</Link>
     </Resource>
-    <Resource Include="..\..\src\Icons\item-white.png">
-      <Link>Icons\item-white.png</Link>
+    <Resource Include="..\..\src\Assets\item-white.png">
+      <Link>Assets\item-white.png</Link>
     </Resource>
-    <Resource Include="..\..\src\Icons\item.png">
-      <Link>Icons\item.png</Link>
+    <Resource Include="..\..\src\Assets\item.png">
+      <Link>Assets\item.png</Link>
     </Resource>
-    <Resource Include="..\..\src\Icons\move.png">
-      <Link>Icons\move.png</Link>
+    <Resource Include="..\..\src\Assets\move.png">
+      <Link>Assets\move.png</Link>
     </Resource>
-    <Resource Include="..\..\src\Icons\okay.png">
-      <Link>Icons\okay.png</Link>
+    <Resource Include="..\..\src\Assets\okay.png">
+      <Link>Assets\okay.png</Link>
     </Resource>
-    <Resource Include="..\..\src\Icons\open_folder.png">
-      <Link>Icons\open_folder.png</Link>
+    <Resource Include="..\..\src\Assets\open_folder.png">
+      <Link>Assets\open_folder.png</Link>
     </Resource>
-    <Resource Include="..\..\src\Icons\package.png">
-      <Link>Icons\package.png</Link>
+    <Resource Include="..\..\src\Assets\package.png">
+      <Link>Assets\package.png</Link>
     </Resource>
-    <Resource Include="..\..\src\Icons\preview.png">
-      <Link>Icons\preview.png</Link>
+    <Resource Include="..\..\src\Assets\preview.png">
+      <Link>Assets\preview.png</Link>
     </Resource>
-    <Resource Include="..\..\src\Icons\register.png">
-      <Link>Icons\register.png</Link>
+    <Resource Include="..\..\src\Assets\register.png">
+      <Link>Assets\register.png</Link>
     </Resource>
-    <Resource Include="..\..\src\Icons\settings.png">
-      <Link>Icons\settings.png</Link>
+    <Resource Include="..\..\src\Assets\settings.png">
+      <Link>Assets\settings.png</Link>
     </Resource>
-    <Resource Include="..\..\src\Icons\start.png">
-      <Link>Icons\start.png</Link>
+    <Resource Include="..\..\src\Assets\start.png">
+      <Link>Assets\start.png</Link>
     </Resource>
-    <Resource Include="..\..\src\Icons\success.png">
-      <Link>Icons\success.png</Link>
+    <Resource Include="..\..\src\Assets\success.png">
+      <Link>Assets\success.png</Link>
     </Resource>
-    <Resource Include="..\..\src\Icons\tag-white.png">
-      <Link>Icons\tag-white.png</Link>
+    <Resource Include="..\..\src\Assets\tag-white.png">
+      <Link>Assets\tag-white.png</Link>
     </Resource>
-    <Resource Include="..\..\src\Icons\tag.png">
-      <Link>Icons\tag.png</Link>
+    <Resource Include="..\..\src\Assets\tag.png">
+      <Link>Assets\tag.png</Link>
     </Resource>
-    <Resource Include="..\..\src\Icons\waiting.png">
-      <Link>Icons\waiting.png</Link>
+    <Resource Include="..\..\src\Assets\waiting.png">
+      <Link>Assets\waiting.png</Link>
     </Resource>
-    <Resource Include="..\..\src\Icons\window.png">
-      <Link>Icons\window.png</Link>
+    <Resource Include="..\..\src\Assets\window.png">
+      <Link>Assets\window.png</Link>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="..\..\src\Icons\icon.ico">
-      <Link>Icons\icon.ico</Link>
+    <EmbeddedResource Include="..\..\src\Assets\icon.ico">
+      <Link>Assets\icon.ico</Link>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -16,6 +16,6 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Stretch="None"
-            Source="pack://application:,,,/Icons/open_folder.png" />
+            Source="pack://application:,,,/Assets/open_folder.png" />
     </Grid>
 </UserControl>

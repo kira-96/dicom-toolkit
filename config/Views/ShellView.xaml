@@ -85,7 +85,7 @@
                 s:View.ActionTarget="{Binding}"
                 Command="{s:Action OkCommand, ActionNotFound=Disable}">
             <Image Width="20" Height="20" Stretch="Fill"
-                   Source="pack://application:,,,/Icons/okay.png" />
+                   Source="pack://application:,,,/Assets/okay.png" />
         </Button>
     </Grid>
 </Window>

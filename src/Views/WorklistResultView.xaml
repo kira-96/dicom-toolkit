@@ -23,7 +23,7 @@
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='Start']" />
                 </MenuItem.ToolTip>
                 <MenuItem.Icon>
-                    <Image Width="16" Height="16" Source="pack://application:,,,/Icons/start.png" />
+                    <Image Width="16" Height="16" Source="pack://application:,,,/Assets/start.png" />
                 </MenuItem.Icon>
             </MenuItem>
             <MenuItem s:View.ActionTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext}"
@@ -36,7 +36,7 @@
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='Complete']" />
                 </MenuItem.ToolTip>
                 <MenuItem.Icon>
-                    <Image Width="16" Height="16" Source="pack://application:,,,/Icons/success.png" />
+                    <Image Width="16" Height="16" Source="pack://application:,,,/Assets/success.png" />
                 </MenuItem.Icon>
             </MenuItem>
             <MenuItem s:View.ActionTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext}"
@@ -49,7 +49,7 @@
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='Discontinued']" />
                 </MenuItem.ToolTip>
                 <MenuItem.Icon>
-                    <Image Width="16" Height="16" Source="pack://application:,,,/Icons/failed1.png" />
+                    <Image Width="16" Height="16" Source="pack://application:,,,/Assets/failed1.png" />
                 </MenuItem.Icon>
             </MenuItem>
         </ContextMenu>
