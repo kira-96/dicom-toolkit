@@ -2,7 +2,7 @@
 ; This script is used to build the setup program.
 
 #define MyAppName "Dicom toolkit"
-#define MyAppVersion "1.4.5"
+#define MyAppVersion "1.4.6"
 #define MyAppPublisher "kira"
 #define MyAppURL "https://github.com/kira-96/dicom-toolkit/"
 #define MyAppExeName "Simple DICOM Toolkit.exe"
@@ -23,7 +23,6 @@ VersionInfoVersion={#MyAppVersion}
 DefaultDirName={autopf}\Dicom-toolkit
 DisableProgramGroupPage=yes
 PrivilegesRequiredOverridesAllowed=dialog
-MinVersion=6.1.7600
 ArchitecturesAllowed=x64 ia64
 ArchitecturesInstallIn64BitMode=x64 ia64
 OutputDir=.\
