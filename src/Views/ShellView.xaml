@@ -163,6 +163,6 @@
 
     <Grid x:Name="ContentGrid" Background="{DynamicResource CommonBackground}">
         <TabControl Style="{StaticResource ConductorTabControl}" />
-        <c:Toaster x:Name="MainToaster" Panel.ZIndex="100" Margin="0,0,0,16" />
+        <c:Toaster x:Name="MainToaster" Panel.ZIndex="100" Margin="0,0,0,18" />
     </Grid>
 </Window>

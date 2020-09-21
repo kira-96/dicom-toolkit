@@ -92,17 +92,13 @@
         {
             get
             {
-                switch (TagType)
+                return TagType switch
                 {
-                    case DcmTagType.Tag:
-                        return string.Format("({0:X4},{1:X4}) {2} {3} = ", DcmTag.Group, DcmTag.Element, DcmVRCode, TagDescription);
-                    case DcmTagType.Sequence:
-                        return string.Format("({0:X4},{1:X4}) {2} {3}", DcmTag.Group, DcmTag.Element, DcmVRCode, TagDescription);
-                    case DcmTagType.SequenceItem:
-                        return TagDescription;
-                    default:
-                        return "";
-                }
+                    DcmTagType.Tag => string.Format("({0:X4},{1:X4}) {2} {3} = ", DcmTag.Group, DcmTag.Element, DcmVRCode, TagDescription),
+                    DcmTagType.Sequence => string.Format("({0:X4},{1:X4}) {2} {3}", DcmTag.Group, DcmTag.Element, DcmVRCode, TagDescription),
+                    DcmTagType.SequenceItem => string.Format("({0:X4},{1:X4}) {2}", DcmTag.Group, DcmTag.Element, TagDescription),
+                    _ => "",
+                };
             }
         }
 
@@ -124,7 +120,10 @@
                 foreach (DicomDataset dataset in seq.Items)
                 {
                     DcmItem seqItem = new DcmItem(dataset)
-                    { TagDescription = $"Item #{SequenceItems.Count}" };
+                    {
+                        DcmTag = DicomTag.Item,
+                        TagDescription = $"{DicomTag.Item.DictionaryEntry.Name} #{SequenceItems.Count}",
+                    };
 
                     SequenceItems.Add(seqItem);
                 }

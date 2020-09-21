@@ -17,6 +17,8 @@
                   DragOver="{s:Action OnDragFileOver}"
                   Drop="{s:Action OnDropFile}"
                   ItemsSource="{Binding DicomItems}"
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                  ScrollViewer.VerticalScrollBarVisibility="Hidden"
                   BorderThickness="0">
             <TreeView.InputBindings>
                 <KeyBinding Gesture="Ctrl+S" Command="{s:Action SaveNewDicom}" />
