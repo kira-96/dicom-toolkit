@@ -52,7 +52,7 @@
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderHospital']" />
                 </TextBlock.Text>
             </TextBlock>
-            <TextBox Text="{Binding HospitalName}" />
+            <TextBox Text="{Binding HospitalName, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
         <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
             <TextBlock>
@@ -60,7 +60,7 @@
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderExamRoom']" />
                 </TextBlock.Text>
             </TextBlock>
-            <TextBox Text="{Binding ExamRoom}" />
+            <TextBox Text="{Binding ExamRoom, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
         <StackPanel Grid.Row="0" Grid.Column="2" VerticalAlignment="Center">
             <TextBlock>
@@ -68,7 +68,7 @@
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderReferringPhysician']" />
                 </TextBlock.Text>
             </TextBlock>
-            <TextBox Text="{Binding ReferringPhysicianName}" />
+            <TextBox Text="{Binding ReferringPhysicianName, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">
             <TextBlock>
@@ -76,7 +76,7 @@
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderName']" />
                 </TextBlock.Text>
             </TextBlock>
-            <TextBox Text="{Binding PatientName}" />
+            <TextBox Text="{Binding PatientName, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
             <TextBlock>
@@ -84,7 +84,7 @@
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderPatientID']" />
                 </TextBlock.Text>
             </TextBlock>
-            <TextBox Text="{Binding PatientID}" />
+            <TextBox Text="{Binding PatientID, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="2" VerticalAlignment="Center">
             <TextBlock>
@@ -92,7 +92,7 @@
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderAccessionNumber']" />
                 </TextBlock.Text>
             </TextBlock>
-            <TextBox Text="{Binding AccessionNumber}" />
+            <TextBox Text="{Binding AccessionNumber, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">
             <TextBlock>
@@ -102,7 +102,7 @@
             </TextBlock>
             <ComboBox Margin="6 2" Height="24"
                       ItemsSource="{Binding AvailableSex}"
-                      SelectedItem="{Binding Sex}"
+                      SelectedItem="{Binding Sex, UpdateSourceTrigger=PropertyChanged}"
                       IsEnabled="{Binding CanEdit}" />
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="1" VerticalAlignment="Center">
@@ -111,7 +111,7 @@
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderAge']" />
                 </TextBlock.Text>
             </TextBlock>
-            <TextBox Text="{Binding Age}" />
+            <TextBox Text="{Binding Age, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="2" VerticalAlignment="Center">
             <TextBlock>
@@ -119,7 +119,7 @@
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderBirthDate']" />
                 </TextBlock.Text>
             </TextBlock>
-            <TextBox Text="{Binding BirthDate}" />
+            <TextBox Text="{Binding BirthDate, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
         <StackPanel Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">
             <TextBlock>
@@ -127,7 +127,7 @@
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderModality']" />
                 </TextBlock.Text>
             </TextBlock>
-            <TextBox Text="{Binding Modality}" />
+            <TextBox Text="{Binding Modality, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
         <StackPanel Grid.Row="3" Grid.Column="1" VerticalAlignment="Center">
             <TextBlock>
@@ -135,7 +135,7 @@
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderScheduledAET']" />
                 </TextBlock.Text>
             </TextBlock>
-            <TextBox Text="{Binding ScheduledAET}" />
+            <TextBox Text="{Binding ScheduledAET, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
         <StackPanel Grid.Row="3" Grid.Column="2" VerticalAlignment="Center">
             <TextBlock>
@@ -143,7 +143,7 @@
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderScheduledDate']" />
                 </TextBlock.Text>
             </TextBlock>
-            <TextBox Text="{Binding ScheduledDate}" />
+            <TextBox Text="{Binding ScheduledDate, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
         <StackPanel Grid.Row="4" Grid.Column="0" VerticalAlignment="Center">
             <TextBlock>
@@ -151,7 +151,7 @@
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderPerformingPhysician']" />
                 </TextBlock.Text>
             </TextBlock>
-            <TextBox Text="{Binding PerformingPhysicianName}" />
+            <TextBox Text="{Binding PerformingPhysicianName, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
         <StackPanel Grid.Row="4" Grid.Column="1" VerticalAlignment="Center">
             <TextBlock>
@@ -159,7 +159,7 @@
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderDescription']" />
                 </TextBlock.Text>
             </TextBlock>
-            <TextBox Text="{Binding Description}" />
+            <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
         <Button Grid.Row="5" Grid.Column="1"
                 HorizontalAlignment="Center"

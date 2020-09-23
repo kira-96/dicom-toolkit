@@ -5,6 +5,7 @@
     using System;
     using System.Linq;
     using Models;
+    using Validators;
 
     public class RegistrationViewModel : Screen
     {
@@ -48,7 +49,7 @@
             set => SetAndNotify(ref _referringPhysicianName, value);
         }
 
-        private string _patientName = "";
+        private string _patientName;
 
         public string PatientName
         {
@@ -138,14 +139,16 @@
             set => SetAndNotify(ref _description, value);
         }
 
-        public RegistrationViewModel(IEventAggregator eventAggregator)
+        public RegistrationViewModel(IEventAggregator eventAggregator, IModelValidator<RegistrationViewModel> validator) : base(validator)
         {
             _eventAggregator = eventAggregator;
 
-            BirthDate = DateTime.Today.ToString("yyyyMMdd");
+            PatientName = "";
+            BirthDate = DateTime.Today.AddYears(-24).ToString("yyyyMMdd");
             ScheduledDate = DateTime.Today.ToString("yyyyMMdd");
             ExamRoom = "MR";
             Modality = "MR";
+            ScheduledAET = "ANY-SCU";
             Age = "024Y";
             Random rand = new Random(DateTime.Now.Millisecond);
             PatientID = $"P{rand.Next(1, 1000)}";

@@ -340,6 +340,9 @@
     <Compile Include="..\..\src\Validators\MoveToViewModelValidator.cs">
       <Link>Validators\MoveToViewModelValidator.cs</Link>
     </Compile>
+    <Compile Include="..\..\src\Validators\RegistrationViewModelValidator.cs">
+      <Link>Validators\RegistrationViewModelValidator.cs</Link>
+    </Compile>
     <Compile Include="..\..\src\Validators\ServerConfigViewModelValidator.cs">
       <Link>Validators\ServerConfigViewModelValidator.cs</Link>
     </Compile>
