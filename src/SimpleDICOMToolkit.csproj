@@ -8,8 +8,8 @@
     <RootNamespace>SimpleDICOMToolkit</RootNamespace>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
-    <AssemblyVersion>1.4.5.292</AssemblyVersion>
-    <FileVersion>1.4.5.292</FileVersion>
+    <AssemblyVersion>1.4.5.295</AssemblyVersion>
+    <FileVersion>1.4.5.295</FileVersion>
     <Version>1.4.5</Version>
     <Copyright>Copyright © 2019 - 2020 kira。保留所有权利。</Copyright>
     <Platforms>x64</Platforms>

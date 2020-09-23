@@ -30,6 +30,29 @@
 
         public ImageOrientationViewModel ImageOrientationViewModel { get; }
 
+        private bool _isGrayscale = true;
+
+        public bool IsGrayscale
+        {
+            get => _isGrayscale;
+            private set => SetAndNotify(ref _isGrayscale, value);
+        }
+
+        private string _windowCenterText;
+        private string _windowWidthText;
+
+        public string WindowCenterText
+        {
+            get => _windowCenterText;
+            private set => SetAndNotify(ref _windowCenterText, value);
+        }
+
+        public string WindowWidthText
+        {
+            get => _windowWidthText;
+            private set => SetAndNotify(ref _windowWidthText, value);
+        }
+
         public PreviewImageViewModel(ImageOrientationViewModel imageOrientationViewModel)
         {
             ImageOrientationViewModel = imageOrientationViewModel;
@@ -62,11 +85,15 @@
 
             dicomImage = new DicomImage(Dataset);
 
+            IsGrayscale = dicomImage.IsGrayscale;
+
             RenderImage();
 
             Dataset.TryGetValues<double>(DicomTag.ImageOrientationPatient, out var orientation);
 
             ImageOrientationViewModel.UpdateOrientation(orientation);
+
+            UpdateWindowCenterWindowWidth();
         }
 
         public void OnMouseWheel(Image s, MouseWheelEventArgs e)
@@ -201,7 +228,7 @@
 
         private void TransformWidthAndCenter(double widthOffset, double centerOffset)
         {
-            if (dicomImage == null)
+            if (dicomImage == null || !IsGrayscale)
             {
                 return;
             }
@@ -220,6 +247,7 @@
             }
 
             RenderImage();
+            UpdateWindowCenterWindowWidth();
         }
 
         private void RenderImage(int frame = 0)
@@ -237,6 +265,17 @@
 #endif
             ImageSource = image;
             image.Freeze();
+        }
+
+        private void UpdateWindowCenterWindowWidth()
+        {
+            if (!IsGrayscale)
+            {
+                return;
+            }
+
+            WindowCenterText = string.Format("C:{0,7:F1}", dicomImage.WindowCenter);
+            WindowWidthText = string.Format("W:{0,7:F1}", dicomImage.WindowWidth);
         }
     }
 }
