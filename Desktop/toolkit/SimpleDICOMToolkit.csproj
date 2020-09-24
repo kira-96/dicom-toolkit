@@ -223,6 +223,9 @@
     <Compile Include="..\..\src\Helpers\ProcessHelper.cs">
       <Link>Helpers\ProcessHelper.cs</Link>
     </Compile>
+    <Compile Include="..\..\src\Helpers\ValidationHelper.cs">
+      <Link>Helpers\ValidationHelper.cs</Link>
+    </Compile>
     <Compile Include="..\..\src\Helpers\VisualHelper.cs">
       <Link>Helpers\VisualHelper.cs</Link>
     </Compile>

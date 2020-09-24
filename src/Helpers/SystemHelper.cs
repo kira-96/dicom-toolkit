@@ -153,19 +153,6 @@ namespace SimpleDICOMToolkit.Helpers
         }
 
         /// <summary>
-        /// 根据背景色计算前景色(白/黑)
-        /// https://github.com/loilo/windows-titlebar-color/blob/master/WindowsAccentColors.js#L53
-        /// </summary>
-        /// <param name="background">背景颜色</param>
-        /// <returns>前景颜色(白/黑)</returns>
-        [Obsolete("Use GetReverseForegroundColor instead.")]
-        public static Color GetForegroundColor(Color background)
-        {
-            return (background.R * 2 + background.G * 5 + background.B) <= 1024 /* 8 * 128 */
-                ? Colors.White : Colors.Black;
-        }
-
-        /// <summary>
         /// 计算能在任何背景色上清晰显示的前景色
         /// https://www.cnblogs.com/walterlv/p/10236517.html
         /// </summary>
