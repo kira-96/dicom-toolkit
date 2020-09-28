@@ -8,8 +8,8 @@
     <RootNamespace>SimpleDICOMToolkit</RootNamespace>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
-    <AssemblyVersion>1.4.6.296</AssemblyVersion>
-    <FileVersion>1.4.5.296</FileVersion>
+    <AssemblyVersion>1.4.6.298</AssemblyVersion>
+    <FileVersion>1.4.5.298</FileVersion>
     <Version>1.4.6</Version>
     <Copyright>Copyright © 2019 - 2020 kira。保留所有权利。</Copyright>
     <Platforms>x64</Platforms>
@@ -30,6 +30,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Edit.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentValidation" Version="9.2.2" />
     <PackageReference Include="fo-dicom" Version="5.0.0-alpha2" />
     <PackageReference Include="fo-dicom.Drawing" Version="4.0.6" />
@@ -37,7 +41,7 @@
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.19" />
     <PackageReference Include="MQTTnet" Version="3.0.12" />
     <PackageReference Include="Nett" Version="0.15.0" />
-    <PackageReference Include="NLog" Version="4.7.4" />
+    <PackageReference Include="NLog" Version="4.7.5" />
     <PackageReference Include="Ookii.Dialogs.Wpf.NETCore" Version="2.1.0" />
     <PackageReference Include="Polly" Version="7.2.1" />
     <PackageReference Include="Stylet" Version="1.3.4" />
@@ -55,6 +59,7 @@
     <Resource Include="Assets\delete.png" />
     <Resource Include="Assets\details.png" />
     <Resource Include="Assets\earth.png" />
+    <Resource Include="Assets\Edit.png" />
     <Resource Include="Assets\error.png" />
     <Resource Include="Assets\exit.png" />
     <Resource Include="Assets\failed.png" />

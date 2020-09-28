@@ -93,14 +93,14 @@
 
             while (enumerator.MoveNext())
             {
-                DicomItems.Add(new DcmItem(enumerator.Current));
+                DicomItems.Add(new DcmItem(enumerator.Current, _currentFile.FileMetaInfo));
             }
 
             enumerator = _currentFile.Dataset.GetEnumerator();
 
             while (enumerator.MoveNext())
             {
-                DicomItems.Add(new DcmItem(enumerator.Current));
+                DicomItems.Add(new DcmItem(enumerator.Current, _currentFile.Dataset));
             }
         }
 
@@ -122,7 +122,7 @@
         public void ShowDcmImage(DcmItem item)
         {
             var preview = _viewModelFactory.GetPreviewImageViewModel();
-            preview.Initialize(GetItemDataset(item));
+            preview.Initialize(item.Dataset);
 
             _windowManager.ShowDialog(preview, this);
         }
@@ -132,47 +132,100 @@
             _currentItem = item;
 
             var editor = _viewModelFactory.GetEditDicomItemViewModel();
-            editor.Initialize(GetItemDataset(item), item.DcmTag);
+            editor.Initialize(item.Dataset, item.DcmTag);
 
             _windowManager.ShowDialog(editor, this);
         }
 
-        private DicomDataset GetItemDataset(DcmItem item)
+        public void RemoveDicomItem(DcmItem item)
         {
-            if (_currentFile.FileMetaInfo.Contains(item.DcmTag))
-                return _currentFile.FileMetaInfo;
-
-            if (_currentFile.Dataset.Contains(item.DcmTag))
-                return _currentFile.Dataset;
-
-            return GetItemDataset(item, _currentFile.Dataset.Where(x => x is DicomSequence));
+            // Remove from view
+            var col = GetParentCollection(item);
+            if (col != null)
+            {
+                col.Remove(item);
+            }
+            // Remove from dataset
+            if (item.Dataset != null)
+            {
+                if (item.Sequence != null && item.TagType == DcmTagType.SequenceItem) // is Sequence Item
+                {
+                    item.Sequence.Items.Remove(item.Dataset);
+                }
+                else // is DicomTag or DicomSequence
+                {
+                    item.Dataset.Remove(item.DcmTag);
+                }
+            }
+            else
+            {
+                _logger.Warn("Cannot remove {0} from dataset, dataset is null.", item.DcmTag);
+            }
         }
 
-        private DicomDataset GetItemDataset(DcmItem item, IEnumerable<DicomItem> sequence)
+        private BindableCollection<DcmItem> GetParentCollection(DcmItem item)
+        {
+            if (DicomItems.Contains(item))
+            {
+                return DicomItems;
+            }
+
+            return GetParentCollection(item, DicomItems.Where(x => x.SequenceItems != null));
+        }
+
+        private BindableCollection<DcmItem> GetParentCollection(DcmItem item, IEnumerable<DcmItem> sequence)
         {
             foreach (var seq in sequence)
             {
-                foreach (var dataset in (seq as DicomSequence).Items)
+                if (seq.SequenceItems.Contains(item))
                 {
-                    if (dataset.Contains(item.DcmTag))
-                    {
-                        return dataset;
-                    }
+                    return seq.SequenceItems;
+                }
 
-                    if (dataset.Any(x => x is DicomSequence))
-                    {
-                        var temp = GetItemDataset(item, dataset.Where(x => x is DicomSequence));
+                var temp = GetParentCollection(item, seq.SequenceItems.Where(x => x.SequenceItems != null));
 
-                        if (temp != null)
-                        {
-                            return temp;
-                        }
-                    }
+                if (temp != null)
+                {
+                    return temp;
                 }
             }
 
             return null;
         }
+
+        //private DicomDataset GetItemDataset(DcmItem item)
+        //{
+        //    if (_currentFile.FileMetaInfo.Contains(item.DcmTag))
+        //        return _currentFile.FileMetaInfo;
+
+        //    if (_currentFile.Dataset.Contains(item.DcmTag))
+        //        return _currentFile.Dataset;
+
+        //    return GetItemDataset(item, _currentFile.Dataset.Where(x => x is DicomSequence));
+        //}
+
+        //private DicomDataset GetItemDataset(DcmItem item, IEnumerable<DicomItem> sequence)
+        //{
+        //    foreach (var seq in sequence)
+        //    {
+        //        foreach (var dataset in (seq as DicomSequence).Items)
+        //        {
+        //            if (dataset.Contains(item.DcmTag))
+        //            {
+        //                return dataset;
+        //            }
+
+        //            var temp = GetItemDataset(item, dataset.Where(x => x is DicomSequence));
+
+        //            if (temp != null)
+        //            {
+        //                return temp;
+        //            }
+        //        }
+        //    }
+
+        //    return null;
+        //}
 
         public void SaveNewDicom()
         {

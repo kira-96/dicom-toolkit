@@ -9,6 +9,7 @@
   <string key="Insert">插入</string>
   <string key="Delete">删除</string>
   <string key="Remove">移除</string>
+  <string key="Edit">编辑</string>
   <string key="Preview">预览</string>
   <string key="Explore">浏览</string>
   <string key="Waiting">等待中</string>
@@ -76,6 +77,7 @@
   <string key="TooltipPreview">预览图像</string>
   <string key="TooltipExplore">浏览文件</string>
   <string key="TooltipDetails">查看详情</string>
+  <string key="TooltipEdit">编辑</string>
   <string key="MenuAbout">关于(&amp;A)</string>
   <string key="MenuLanguageSetting">语言设置</string>
   <string key="MenuShowMainWindow">显示主窗口</string>

@@ -35,6 +35,16 @@
 
     public class DcmItem : PropertyChangedBase
     {
+        /// <summary>
+        /// Parent dataset
+        /// </summary>
+        public DicomDataset Dataset { get; }
+
+        /// <summary>
+        /// Parent sequence
+        /// </summary>
+        public DicomSequence Sequence { get; }
+
         public DicomTag DcmTag { get; private set; }
 
         private string _dcmVRCode;
@@ -106,8 +116,9 @@
 
         public BindableCollection<DcmItem> SequenceItems { get; private set; }
 
-        public DcmItem(DicomItem item)
+        public DcmItem(DicomItem item, DicomDataset dataset)
         {
+            Dataset = dataset;
             DcmTag = item.Tag;
             TagDescription = item.Tag.DictionaryEntry.Name;
             _dcmVRCode = item.ValueRepresentation.Code;
@@ -117,9 +128,9 @@
                 TagType = DcmTagType.Sequence;
                 SequenceItems = new BindableCollection<DcmItem>();
 
-                foreach (DicomDataset dataset in seq.Items)
+                foreach (DicomDataset datasetItem in seq.Items)
                 {
-                    DcmItem seqItem = new DcmItem(dataset)
+                    DcmItem seqItem = new DcmItem(datasetItem, seq)
                     {
                         DcmTag = DicomTag.Item,
                         TagDescription = $"{DicomTag.Item.DictionaryEntry.Name} #{SequenceItems.Count}",
@@ -179,17 +190,18 @@
             }
         }
 
-        private DcmItem(DicomDataset dataset)
+        private DcmItem(DicomDataset dataset, DicomSequence sequence)
         {
+            Dataset = dataset;
+            Sequence = sequence;
             TagType = DcmTagType.SequenceItem;
-
             SequenceItems = new BindableCollection<DcmItem>();
 
             var enumerator = dataset.GetEnumerator();
 
             while (enumerator.MoveNext())
             {
-                SequenceItems.Add(new DcmItem(enumerator.Current));
+                SequenceItems.Add(new DcmItem(enumerator.Current, dataset));
             }
         }
 

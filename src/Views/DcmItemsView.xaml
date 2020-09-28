@@ -11,6 +11,37 @@
              d:DesignWidth="600"
              d:DesignHeight="480">
 
+    <UserControl.Resources>
+        <ContextMenu x:Key="DcmItemContextMenu">
+            <MenuItem s:View.ActionTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeView}}, Path=DataContext}"
+                      Command="{s:Action DcmItemTapped}"
+                      CommandParameter="{Binding}">
+                <MenuItem.Header>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='Edit']" />
+                </MenuItem.Header>
+                <MenuItem.ToolTip>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='TooltipEdit']" />
+                </MenuItem.ToolTip>
+                <MenuItem.Icon>
+                    <Image Width="16" Height="16" Source="pack://application:,,,/Assets/Edit.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem s:View.ActionTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeView}}, Path=DataContext}"
+                      Command="{s:Action RemoveDicomItem}"
+                      CommandParameter="{Binding}">
+                <MenuItem.Header>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='Remove']" />
+                </MenuItem.Header>
+                <MenuItem.ToolTip>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='TooltipRemove']" />
+                </MenuItem.ToolTip>
+                <MenuItem.Icon>
+                    <Image Width="16" Height="16" Source="pack://application:,,,/Assets/delete.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+        </ContextMenu>
+    </UserControl.Resources>
+    
     <Grid>
         <TreeView AllowDrop="True" 
                   DragEnter="{s:Action OnDragFileOver}"
@@ -23,7 +54,7 @@
             </TreeView.InputBindings>
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type m:DcmItem}" ItemsSource="{Binding SequenceItems}">
-                    <StackPanel Orientation="Horizontal" ToolTip="{Binding Path=TagDescription}">
+                    <StackPanel Orientation="Horizontal" ToolTip="{Binding Path=TagDescription}" ContextMenu="{StaticResource DcmItemContextMenu}">
                         <Image x:Name="Icon" Width="18" Height="18" Margin="0,0,4,0" />
                         <TextBlock Text="{Binding Path=Header}" VerticalAlignment="Center" />
                         <TextBlock Text="{Binding Path=FormattedContent}" x:Name="ContentText" VerticalAlignment="Center" />
