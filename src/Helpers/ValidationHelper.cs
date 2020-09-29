@@ -142,5 +142,20 @@ namespace SimpleDICOMToolkit.Helpers
 
             return Regex.IsMatch(date, @"^\d{4}[-/.]?\d{2}[-/.]?\d{2}$");
         }
+
+        /// <summary>
+        /// Validate Dicom Tag
+        /// </summary>
+        /// <param name="tag">input</param>
+        /// <returns></returns>
+        public static bool BeAValidDicomTag(string tag)
+        {
+            if (string.IsNullOrEmpty(tag))
+            {
+                return false;
+            }
+
+            return Regex.IsMatch(tag, @"\([0-9a-fA-F]{4},[0-9a-fA-F]{4}\)");
+        }
     }
 }

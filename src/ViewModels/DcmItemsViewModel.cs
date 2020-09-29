@@ -12,7 +12,7 @@
     using Models;
     using Services;
 
-    public class DcmItemsViewModel : Screen, IHandle<UpdateDicomElementItem>
+    public class DcmItemsViewModel : Screen, IHandle<AddDicomElementItem>, IHandle<UpdateDicomElementItem>
     {
         [Inject]
         private IWindowManager _windowManager;
@@ -48,9 +48,57 @@
             base.OnClose();
         }
 
+        /// <summary>
+        /// Add new Dicom Item to Dataset
+        /// Can not add sequence item for now
+        /// </summary>
+        /// <param name="message"></param>
+        public void Handle(AddDicomElementItem message)
+        {
+            DicomTag tag = DicomTag.Parse(message.Tag);
+
+            if (message.Dataset.Contains(tag))
+            {
+                // do not add if exist
+                return;
+            }
+
+            try
+            {
+                AddOrUpdateDicomItem(message.Dataset, message.VR, tag, message.Values);
+            }
+            catch (System.Exception e)
+            {
+                _logger.Error(e);
+                return;
+            }
+
+            // update view
+            if (_currentItem.TagType == DcmTagType.SequenceItem) // is Sequence Item
+            {
+                _currentItem.SequenceItems.Add(new DcmItem(message.Dataset.GetDicomItem<DicomItem>(tag), message.Dataset));
+            }
+            else
+            {
+                var col = GetParentCollection(_currentItem);
+                col.Insert(col.IndexOf(_currentItem), new DcmItem(message.Dataset.GetDicomItem<DicomItem>(tag), message.Dataset));
+            }
+        }
+
         public void Handle(UpdateDicomElementItem message)
         {
-            AddOrUpdateDicomItem(message.Dataset, message.VR, message.Tag, message.Values);
+            try
+            {
+                AddOrUpdateDicomItem(message.Dataset, message.VR, message.Tag, message.Values);
+            }
+            catch (System.Exception e)
+            {
+                _logger.Error(e);
+                return;
+            }
+
+            // update view
+            _currentItem.UpdateItem(message.Dataset.GetDicomItem<DicomElement>(message.Tag));
         }
 
         public void OnDragFileOver(DragEventArgs e)
@@ -132,7 +180,17 @@
             _currentItem = item;
 
             var editor = _viewModelFactory.GetEditDicomItemViewModel();
-            editor.Initialize(item.Dataset, item.DcmTag);
+            editor.InitializeForEdit(item.Dataset, item.DcmTag);
+
+            _windowManager.ShowDialog(editor, this);
+        }
+
+        public void AddDicomItem(DcmItem item)
+        {
+            _currentItem = item;
+
+            var editor = _viewModelFactory.GetEditDicomItemViewModel();
+            editor.InitializeForAdd(item.Dataset);
 
             _windowManager.ShowDialog(editor, this);
         }
@@ -243,29 +301,23 @@
         {
             string charset = _currentFile.Dataset.GetSingleValueOrDefault(DicomTag.SpecificCharacterSet, "ISO_IR 192");
 
-            try
+            if (vr == DicomVR.OB || vr == DicomVR.UN)
             {
-                if (vr == DicomVR.OB || vr == DicomVR.UN)
+                byte[] temp = new byte[values.Length];
+                for (int i = 0; i < values.Length; i++)
                 {
-                    byte[] temp = new byte[values.Length];
-                    for (int i = 0; i < values.Length; i++)
-                    {
-                        temp[i] = byte.Parse(values[i]);
-                    }
-                    dataset.AddOrUpdate(vr, tag, DicomEncoding.GetEncoding(charset), temp);
+                    temp[i] = byte.Parse(values[i]);
                 }
-                else
-                {
-                    dataset.AddOrUpdate(vr, tag, DicomEncoding.GetEncoding(charset), values);
-                }
+                dataset.AddOrUpdate(vr, tag, DicomEncoding.GetEncoding(charset), temp);
             }
-            catch (System.Exception e)
+            else if (vr == DicomVR.SQ)
             {
-                _logger.Error(e);
-                return;
+                dataset.AddOrUpdate(new DicomSequence(tag));
             }
-
-            _currentItem.UpdateItem(dataset.GetDicomItem<DicomElement>(tag));
+            else
+            {
+                dataset.AddOrUpdate(vr, tag, DicomEncoding.GetEncoding(charset), values);
+            }
         }
     }
 }

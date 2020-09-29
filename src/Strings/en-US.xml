@@ -9,6 +9,7 @@
   <string key="Insert">Insert</string>
   <string key="Delete">Delete</string>
   <string key="Remove">Remove</string>
+  <string key="Add">Add</string>
   <string key="Edit">Edit</string>
   <string key="Preview">Preview</string>
   <string key="Explore">Explore</string>
@@ -77,6 +78,7 @@
   <string key="TooltipPreview">Preview image</string>
   <string key="TooltipExplore">Explore file</string>
   <string key="TooltipDetails">View Details</string>
+  <string key="TooltipAdd">Add new item</string>
   <string key="TooltipEdit">Edit</string>
   <string key="MenuAbout">&amp;About</string>
   <string key="MenuLanguageSetting">Language Setting</string>

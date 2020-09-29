@@ -253,6 +253,9 @@
     <Compile Include="..\..\src\Logging\NLogManager.cs">
       <Link>Logging\NLogManager.cs</Link>
     </Compile>
+    <Compile Include="..\..\src\Models\AddDicomElementItem.cs">
+      <Link>Models\AddDicomElementItem.cs</Link>
+    </Compile>
     <Compile Include="..\..\src\Models\BusyStateItem.cs">
       <Link>Models\BusyStateItem.cs</Link>
     </Compile>
@@ -336,6 +339,9 @@
     </Compile>
     <Compile Include="..\..\src\Services\UpdateService.cs">
       <Link>Services\UpdateService.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Validators\EditDicomItemViewModelValidator.cs">
+      <Link>Validators\EditDicomItemViewModelValidator.cs</Link>
     </Compile>
     <Compile Include="..\..\src\Validators\FluentModelValidator.cs">
       <Link>Validators\FluentModelValidator.cs</Link>
@@ -689,6 +695,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="..\..\src\Assets\add.png">
+      <Link>Assets\add.png</Link>
+    </Resource>
     <Resource Include="..\..\src\Assets\addfiles.png">
       <Link>Assets\addfiles.png</Link>
     </Resource>

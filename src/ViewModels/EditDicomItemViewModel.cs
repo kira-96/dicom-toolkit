@@ -5,10 +5,13 @@
     using System.Collections.Generic;
     using System.Linq;
     using Models;
+    using Services;
 
     public class EditDicomItemViewModel : Screen
     {
         private readonly IEventAggregator _eventAggregator;
+
+        private readonly II18nService _i18NService;
 
         private DicomDataset _currentDataset;
 
@@ -16,7 +19,27 @@
 
         private bool _isValuesChanged = false;
 
-        public string TagText { get; private set; }
+        private bool _isEditItem = true;
+
+        public bool IsEditItem
+        {
+            get => _isEditItem;
+            private set => SetAndNotify(ref _isEditItem, value);
+        }
+
+        private string _tagString;
+
+        public string TagString
+        {
+            get => _tagString;
+            set
+            {
+                if (SetAndNotify(ref _tagString, value))
+                {
+                    _isValuesChanged = true;
+                }
+            }
+        }
 
         public List<string> VRList { get; private set; }
 
@@ -65,21 +88,30 @@
 
         public BindableCollection<string> ElementValues { get; private set; }
 
-        public EditDicomItemViewModel(IEventAggregator eventAggregator)
+        public EditDicomItemViewModel(IEventAggregator eventAggregator, II18nService i18NService, IModelValidator<EditDicomItemViewModel> validator) : base(validator)
         {
             _eventAggregator = eventAggregator;
+            _i18NService = i18NService;
+
+            Initialize();
         }
 
-        public void Initialize(DicomDataset dataset, DicomTag dicomTag)
+        public void InitializeForAdd(DicomDataset dataset)
         {
-            Initialize();
+            DisplayName = _i18NService.GetXmlStringByKey("Add");
+            IsEditItem = false;
+            CurrentVR = "UN";  // unknown
+            _currentDataset = dataset;
+        }
 
+        public void InitializeForEdit(DicomDataset dataset, DicomTag dicomTag)
+        {
             _currentDataset = dataset;
             _currentTag = dicomTag;
             DicomElement element = dataset.GetDicomItem<DicomElement>(dicomTag);
 
             DisplayName = dicomTag.DictionaryEntry.Name;
-            TagText = string.Format("Tag: ({0:X4},{1:X4})", dicomTag.Group, dicomTag.Element);
+            TagString = dicomTag.ToString("G", null);
             CurrentVR = element.ValueRepresentation.Code;
 
             for (int i = 0; i < element.Count; i++)
@@ -148,9 +180,16 @@
 
         public void NotifyUpdateDicomItemValues()
         {
-            if (_isValuesChanged)
+            if (IsEditItem)
             {
-                _eventAggregator.Publish(new UpdateDicomElementItem(_currentDataset, DicomVR.Parse(CurrentVR), _currentTag, ElementValues.ToArray()));
+                if (_isValuesChanged)
+                {
+                    _eventAggregator.Publish(new UpdateDicomElementItem(_currentDataset, DicomVR.Parse(CurrentVR), _currentTag, ElementValues.ToArray()));
+                }
+            }
+            else
+            {
+                _eventAggregator.Publish(new AddDicomElementItem(_currentDataset, DicomVR.Parse(CurrentVR), _tagString, ElementValues.ToArray()));
             }
         }
 

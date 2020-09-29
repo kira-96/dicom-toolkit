@@ -128,9 +128,9 @@
                 TagType = DcmTagType.Sequence;
                 SequenceItems = new BindableCollection<DcmItem>();
 
-                foreach (DicomDataset datasetItem in seq.Items)
+                foreach (DicomDataset itemDataset in seq.Items)
                 {
-                    DcmItem seqItem = new DcmItem(datasetItem, seq)
+                    DcmItem seqItem = new DcmItem(itemDataset, seq)
                     {
                         DcmTag = DicomTag.Item,
                         TagDescription = $"{DicomTag.Item.DictionaryEntry.Name} #{SequenceItems.Count}",

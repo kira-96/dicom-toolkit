@@ -8,8 +8,8 @@
     <RootNamespace>SimpleDICOMToolkit</RootNamespace>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
-    <AssemblyVersion>1.4.6.298</AssemblyVersion>
-    <FileVersion>1.4.5.298</FileVersion>
+    <AssemblyVersion>1.4.6.302</AssemblyVersion>
+    <FileVersion>1.4.6.302</FileVersion>
     <Version>1.4.6</Version>
     <Copyright>Copyright © 2019 - 2020 kira。保留所有权利。</Copyright>
     <Platforms>x64</Platforms>
@@ -30,6 +30,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\add.png" />
     <None Remove="Assets\Edit.png" />
   </ItemGroup>
 
@@ -54,6 +55,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\add.png" />
     <Resource Include="Assets\addfiles.png" />
     <Resource Include="Assets\clear.png" />
     <Resource Include="Assets\delete.png" />
