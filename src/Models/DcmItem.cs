@@ -130,11 +130,7 @@
 
                 foreach (DicomDataset itemDataset in seq.Items)
                 {
-                    DcmItem seqItem = new DcmItem(itemDataset, seq)
-                    {
-                        DcmTag = DicomTag.Item,
-                        TagDescription = $"{DicomTag.Item.DictionaryEntry.Name} #{SequenceItems.Count}",
-                    };
+                    DcmItem seqItem = new DcmItem(itemDataset, seq, SequenceItems.Count);
 
                     SequenceItems.Add(seqItem);
                 }
@@ -190,11 +186,13 @@
             }
         }
 
-        private DcmItem(DicomDataset dataset, DicomSequence sequence)
+        public DcmItem(DicomDataset dataset, DicomSequence sequence, int index)
         {
             Dataset = dataset;
             Sequence = sequence;
             TagType = DcmTagType.SequenceItem;
+            DcmTag = DicomTag.Item;
+            TagDescription = $"{DicomTag.Item.DictionaryEntry.Name} #{index}";
             SequenceItems = new BindableCollection<DcmItem>();
 
             var enumerator = dataset.GetEnumerator();

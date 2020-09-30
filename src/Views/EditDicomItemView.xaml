@@ -36,7 +36,11 @@
             <TextBox Text="{Binding TagString, UpdateSourceTrigger=PropertyChanged}" 
                      IsReadOnly="{Binding IsEditItem}" 
                      VerticalAlignment="Center" VerticalContentAlignment="Center" 
-                     Width="90" Height="21" Margin="0,0,4,0" />
+                     Width="90" Height="21" Margin="0,0,4,0">
+                <TextBox.ToolTip>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='TooltipDicomTagDescription']" />
+                </TextBox.ToolTip>
+            </TextBox>
             <TextBlock Text="VR: " VerticalAlignment="Center" Margin="4,0,0,0" />
             <ComboBox ItemsSource="{Binding VRList}" SelectedItem="{Binding CurrentVR}" 
                       VerticalAlignment="Center" HorizontalContentAlignment="Center" Width="65" />

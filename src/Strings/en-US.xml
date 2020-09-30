@@ -80,6 +80,7 @@
   <string key="TooltipDetails">View Details</string>
   <string key="TooltipAdd">Add new item</string>
   <string key="TooltipEdit">Edit</string>
+  <string key="TooltipDicomTagDescription">In hexadecimal format: (xxxx,xxxx)</string>
   <string key="MenuAbout">&amp;About</string>
   <string key="MenuLanguageSetting">Language Setting</string>
   <string key="MenuShowMainWindow">Show main window</string>

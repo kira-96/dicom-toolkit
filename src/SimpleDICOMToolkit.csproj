@@ -8,8 +8,8 @@
     <RootNamespace>SimpleDICOMToolkit</RootNamespace>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
-    <AssemblyVersion>1.4.6.302</AssemblyVersion>
-    <FileVersion>1.4.6.302</FileVersion>
+    <AssemblyVersion>1.4.6.304</AssemblyVersion>
+    <FileVersion>1.4.6.304</FileVersion>
     <Version>1.4.6</Version>
     <Copyright>Copyright © 2019 - 2020 kira。保留所有权利。</Copyright>
     <Platforms>x64</Platforms>
@@ -28,11 +28,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutputPath>..\x64\Release</OutputPath>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="Assets\add.png" />
-    <None Remove="Assets\Edit.png" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="9.2.2" />

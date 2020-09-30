@@ -100,6 +100,7 @@
         {
             DisplayName = _i18NService.GetXmlStringByKey("Add");
             IsEditItem = false;
+            TagString = DicomTag.Unknown.ToString("G", null);  // unknown
             CurrentVR = "UN";  // unknown
             _currentDataset = dataset;
         }

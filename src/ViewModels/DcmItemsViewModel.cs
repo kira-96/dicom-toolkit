@@ -50,7 +50,6 @@
 
         /// <summary>
         /// Add new Dicom Item to Dataset
-        /// Can not add sequence item for now
         /// </summary>
         /// <param name="message"></param>
         public void Handle(AddDicomElementItem message)
@@ -65,7 +64,23 @@
 
             try
             {
-                AddOrUpdateDicomItem(message.Dataset, message.VR, tag, message.Values);
+                if (tag == DicomTag.Item && _currentItem.TagType == DcmTagType.Sequence)  // add new Sequence Item
+                {
+                    var sequence = message.Dataset.GetSequence(_currentItem.DcmTag);
+                    var temp = new DicomDataset();
+                    sequence.Items.Add(temp);
+                    _currentItem.SequenceItems.Add(new DcmItem(temp, sequence, _currentItem.SequenceItems.Count));  // update view
+
+                    return;
+                }
+                else if (message.VR == DicomVR.SQ)
+                {
+                    message.Dataset.AddOrUpdate(new DicomSequence(tag));
+                }
+                else
+                {
+                    AddOrUpdateDicomItem(message.Dataset, message.VR, tag, message.Values);
+                }
             }
             catch (System.Exception e)
             {
@@ -177,6 +192,12 @@
 
         public void EditDicomItem(DcmItem item)
         {
+            if (item.TagType != DcmTagType.Tag)
+                return;  // 只允许编辑Tag值
+
+            if (item.DcmTag == DicomTag.PixelData)
+                return;  // 不允许编辑图像像素
+
             _currentItem = item;
 
             var editor = _viewModelFactory.GetEditDicomItemViewModel();
@@ -309,10 +330,6 @@
                     temp[i] = byte.Parse(values[i]);
                 }
                 dataset.AddOrUpdate(vr, tag, DicomEncoding.GetEncoding(charset), temp);
-            }
-            else if (vr == DicomVR.SQ)
-            {
-                dataset.AddOrUpdate(new DicomSequence(tag));
             }
             else
             {
