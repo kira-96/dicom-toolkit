@@ -157,6 +157,9 @@
             <Button s:View.ActionTarget="{Binding}"
                     Style="{StaticResource TransparentButtonStyle}"
                     Command="{s:Action ShowRegistrationWindow, ActionNotFound=Disable}">
+                <Button.ToolTip>
+                    <Binding  Source="{StaticResource Strings}" XPath="string[@key='TooltipRegist']" />
+                </Button.ToolTip>
                 <Image Width="24" Height="24" Stretch="Fill"
                        Source="pack://application:,,,/Assets/register.png" />
             </Button>
