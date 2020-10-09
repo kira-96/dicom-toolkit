@@ -2,7 +2,6 @@
 {
     public class ServerMessageItem
     {
-
         public int ServerPort { get; private set; }
 
         public string LocalAET { get; private set; }
