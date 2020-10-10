@@ -9,10 +9,6 @@
     {
         private readonly NLogger logger = NLog.LogManager.GetLogger("LoggerService");
 
-        public LoggerService()
-        {
-        }
-
         public void Trace(string message, params object[] args)
         {
             logger.Trace(message, args);

@@ -155,7 +155,7 @@ namespace SimpleDICOMToolkit.Helpers
                 return false;
             }
 
-            return Regex.IsMatch(tag, @"\([0-9a-fA-F]{4},[0-9a-fA-F]{4}\)");
+            return Regex.IsMatch(tag, @"^\([0-9a-fA-F]{4},[0-9a-fA-F]{4}(:.*)?\)$");
         }
     }
 }
