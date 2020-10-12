@@ -80,7 +80,6 @@
                                     <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top" />
                                 </MultiDataTrigger.Conditions>
                                 <Setter TargetName="MouseIndicator" Property="Fill" Value="{DynamicResource IndicatorColor}" />
-                                <Setter TargetName="ContentBackground" Property="Opacity" Value="0.1" />
                             </MultiDataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
@@ -99,6 +98,24 @@
                                 </MultiDataTrigger.Conditions>
                                 <Setter TargetName="ContentPresenter" Property="Opacity" Value="0.56" />
                             </MultiDataTrigger>
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ContentBackground" 
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         From="0" To="0.12" Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ContentBackground" 
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         From="0.12" To="0" Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
