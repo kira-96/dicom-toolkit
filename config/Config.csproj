@@ -5,12 +5,15 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
-    <Version>1.0.10</Version>
-    <Copyright>Copyright © 2020 kira。保留所有权利。</Copyright>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
     <AssemblyVersion>1.0.10.17</AssemblyVersion>
     <FileVersion>1.0.10.17</FileVersion>
+    <Version>1.0.10</Version>
+    <Authors>kira</Authors>
+    <Company>kira</Company>
+    <Copyright>Copyright © 2020 kira。保留所有权利。</Copyright>
+    <PackageProjectUrl>https://github.com/kira-96/dicom-toolkit/</PackageProjectUrl>
     <Platforms>x64</Platforms>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>config.snk</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>

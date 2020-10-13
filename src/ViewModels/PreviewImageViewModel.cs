@@ -9,10 +9,13 @@
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
+    using Logging;
     using Helpers;
 
     public class PreviewImageViewModel : Screen
     {
+        private readonly ILoggerService logger;
+
         private DicomDataset Dataset;
         private DicomImage dicomImage;
 
@@ -53,8 +56,9 @@
             private set => SetAndNotify(ref _windowWidthText, value);
         }
 
-        public PreviewImageViewModel(ImageOrientationViewModel imageOrientationViewModel)
+        public PreviewImageViewModel(ImageOrientationViewModel imageOrientationViewModel, ILoggerService loggerService)
         {
+            logger = loggerService;
             ImageOrientationViewModel = imageOrientationViewModel;
             ImageOrientationViewModel.Parent = this;
         }
@@ -76,8 +80,10 @@
         {
             base.OnViewLoaded();
 
-            if (Dataset == null)
+            if (Dataset == null || !Dataset.Contains(DicomTag.PixelData))
             {
+                logger.Warn("null dataset or dataset not contains PixelData.");
+                RequestClose();
                 return;
             }
 

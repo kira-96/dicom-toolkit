@@ -28,7 +28,6 @@
             bool echoResult = false;
 
             DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
-            client.NegotiateAsyncOps();
 
             DicomCEchoRequest request = new DicomCEchoRequest()
             {

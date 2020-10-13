@@ -20,7 +20,6 @@
         public async Task StoreImageAsync(string serverIp, int serverPort, string serverAET, string localAET, IEnumerable<CStoreItem> items)
         {
             DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
-            client.NegotiateAsyncOps();
 
             foreach (CStoreItem item in items)
             {
