@@ -38,8 +38,8 @@
             if (!createNew)
             {
                 // 此时还没有配置IoC，不能使用 DialogService
-                MessageBox.Show("程序已在运行中。", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
-                InteropHelper.FindWindowAndActive(null, ShellViewModel.WindowName);  // 激活已经存在的实例窗口
+                MessageBox.Show("This program is already running in progress.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                InteropHelper.FindWindowAndActivate(null, ShellViewModel.MainWindowName);  // 激活已经存在的实例窗口
 
                 // 退出当前应用程序
                 // 尽量不要使用

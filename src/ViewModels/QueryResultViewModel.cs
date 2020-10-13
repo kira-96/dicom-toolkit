@@ -216,7 +216,7 @@
             {
                 result = await timeoutPolicy.ExecuteAsync(async () =>
                 {
-                    return await queryRetrieveSCU.QueryPatients(message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET);
+                    return await queryRetrieveSCU.QueryPatientsAsync(message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET);
                 });
             }
             finally

@@ -17,7 +17,7 @@
             logger = loggerService;
         }
 
-        public async Task<List<DicomDataset>> QueryPatients(string serverIp, int serverPort, string serverAET, string localAET, string patientId = null, string patientName = null)
+        public async Task<List<DicomDataset>> QueryPatientsAsync(string serverIp, int serverPort, string serverAET, string localAET, string patientId = null, string patientName = null)
         {
             List<DicomDataset> patients = new List<DicomDataset>();
 

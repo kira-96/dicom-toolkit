@@ -175,7 +175,7 @@ namespace SimpleDICOMToolkit.Helpers
 
         #endregion
 
-        public static void FindWindowAndActive(string classname, string windowname)
+        public static void FindWindowAndActivate(string classname, string windowname)
         {
             IntPtr hWnd = FindWindow(classname, windowname);
             ShowWindow(hWnd, SW_NORMAL);

@@ -9,7 +9,7 @@
 
     public class ShellViewModel : Conductor<IScreen>.Collection.OneActive
     {
-        public const string WindowName = "Simple DICOM Toolkit";
+        public const string MainWindowName = "Simple DICOM Toolkit";
 
         private readonly IContainer container;
         private readonly IWindowManager windowManager;
@@ -40,7 +40,7 @@
             PrintViewModel printViewModel,
             PrintSCPViewModel printSCPViewModel)
         {
-            DisplayName = WindowName;
+            DisplayName = MainWindowName;
             this.container = container;
             this.windowManager = windowManager;
             this.loggerService = loggerService;
