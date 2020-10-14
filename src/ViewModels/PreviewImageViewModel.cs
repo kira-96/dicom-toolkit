@@ -3,6 +3,7 @@
     using Dicom;
     using Dicom.Imaging;
     using Stylet;
+    using StyletIoC;
     using System.IO;
     using System.Windows;
     using System.Windows.Controls;
@@ -56,7 +57,7 @@
             private set => SetAndNotify(ref _windowWidthText, value);
         }
 
-        public PreviewImageViewModel(ImageOrientationViewModel imageOrientationViewModel, ILoggerService loggerService)
+        public PreviewImageViewModel(ImageOrientationViewModel imageOrientationViewModel, [Inject("filelogger")] ILoggerService loggerService)
         {
             logger = loggerService;
             ImageOrientationViewModel = imageOrientationViewModel;
