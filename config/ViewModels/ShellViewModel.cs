@@ -111,14 +111,6 @@
 
         private void SaveConfig()
         {
-            TomlTable appSettings = Toml.Create();
-            appSettings.Add("ListenPort", ServerPort);
-
-            if (ConfigTable.ContainsKey("Application"))
-                ConfigTable.Remove("Application");
-
-            ConfigTable.Add("Application", appSettings);
-
             foreach (var item in Items)
             {
                 (item as IConfigViewModel).SaveConfig(ConfigTable);

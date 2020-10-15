@@ -1,5 +1,6 @@
 ﻿using Dicom.Network;
 using System.Collections.Generic;
+using System.Text;
 using SimpleDICOMToolkit.Models;
 
 namespace SimpleDICOMToolkit.Server
@@ -49,14 +50,14 @@ namespace SimpleDICOMToolkit.Server
             return defaultServer.IsListening;
         }
 
-        public bool CreateServer(int port, string serverAET)
+        public bool CreateServer(int port, string serverAET, Encoding fallbackEncoding = null)
         {
             if (IsListening())
                 return true;
 
             AETitle = serverAET;
 
-            defaultServer = DicomServer.Create<WorklistService>(port);
+            defaultServer = DicomServer.Create<WorklistService>(port, null, null, fallbackEncoding);
             MppsSource = new MppsHandler(WorklistItems, defaultServer.Logger);
 
             return IsListening();

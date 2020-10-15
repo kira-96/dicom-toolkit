@@ -3,6 +3,7 @@
     using Stylet;
     using StyletIoC;
     using System;
+    using System.Text;
     using Models;
     using Server;
     using Services;
@@ -12,6 +13,9 @@
     {
         [Inject]
         private IWindowManager _windowManager;
+
+        [Inject]
+        private IConfigurationService configurationService;
 
         [Inject]
         private II18nService i18NService;
@@ -55,7 +59,10 @@
         {
             if (IsServerStarted)
             {
-                WorklistServer.Default.CreateServer(message.ServerPort, message.LocalAET);
+                Encoding fallbackEncoding = Dicom.DicomEncoding.Default;  // 不要移除这行代码，.NET Core 平台会在这里注册 CodePagesEncodingProvider
+                fallbackEncoding = Encoding.GetEncoding(configurationService.GetConfiguration<AppConfiguration>().DicomEncoding);
+
+                WorklistServer.Default.CreateServer(message.ServerPort, message.LocalAET, fallbackEncoding);
                 _eventAggregator.Publish(new ServerStateItem(true), nameof(PatientsViewModel));
                 notificationService.ShowNotification(
                     string.Format(i18NService.GetXmlStringByKey("ServerIsRunning"), "Worklist", SystemHelper.LocalIPAddress, message.ServerPort), 

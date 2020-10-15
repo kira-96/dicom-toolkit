@@ -2,6 +2,7 @@
 {
     using Dicom;
     using System.Collections.Generic;
+    using System.Text;
     using System.Threading.Tasks;
     using Models;
 
@@ -26,8 +27,9 @@
         /// <param name="serverAET">Remote AET</param>
         /// <param name="localAET">Local AET</param>
         /// <param name="modality">Modality</param>
+        /// <param name="fallbackEncoding">Encoding to use if encoding cannot be obtained from dataset</param>
         /// <returns>Simple result</returns>
-        Task<List<SimpleWorklistResult>> GetAllResultFromWorklistAsync(string serverIp, int serverPort, string serverAET, string localAET, string modality = null);
+        Task<List<SimpleWorklistResult>> GetAllResultFromWorklistAsync(string serverIp, int serverPort, string serverAET, string localAET, string modality = null, Encoding fallbackEncoding = null);
 
         Task<(DicomUID affectedInstanceUid, string studyInstanceUid, bool result)> SendMppsInProgressAsync(string serverIp, int serverPort, string serverAET, string localAET, DicomDataset worklistItem);
 

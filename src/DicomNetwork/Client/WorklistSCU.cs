@@ -7,6 +7,7 @@
     using System;
     using System.Linq;
     using System.Collections.Generic;
+    using System.Text;
     using System.Threading.Tasks;
     using Logging;
     using Models;
@@ -75,7 +76,7 @@
             return worklistItems;
         }
 
-        public async Task<List<SimpleWorklistResult>> GetAllResultFromWorklistAsync(string serverIp, int serverPort, string serverAET, string localAET, string modality = null)
+        public async Task<List<SimpleWorklistResult>> GetAllResultFromWorklistAsync(string serverIp, int serverPort, string serverAET, string localAET, string modality = null, Encoding fallbackEncoding = null)
         {
             worklistItems = await GetAllItemsFromWorklistAsync(serverIp, serverPort, serverAET, localAET, modality);
 
@@ -83,7 +84,7 @@
 
             foreach (DicomDataset item in worklistItems)
             {
-                worklistResults.Add(GetWorklistResultFromDataset(item));
+                worklistResults.Add(GetWorklistResultFromDataset(item, fallbackEncoding));
             }
 
             return worklistResults;
@@ -360,9 +361,16 @@
             return null;
         }
 
-        private SimpleWorklistResult GetWorklistResultFromDataset(DicomDataset dataset)
+        private SimpleWorklistResult GetWorklistResultFromDataset(DicomDataset dataset, Encoding fallbackEncoding = null)
         {
-            string name = dataset.GetSingleValueOrDefault(DicomTag.PatientName, string.Empty);
+            Encoding encoding = fallbackEncoding ?? Encoding.UTF8;
+
+            if (dataset.TryGetString(DicomTag.SpecificCharacterSet, out string charset))
+            {
+                encoding = DicomEncoding.GetEncoding(charset);
+            }
+
+            string name = dataset.Contains(DicomTag.PatientName) ? encoding.GetString(dataset.GetValues<byte>(DicomTag.PatientName)) : string.Empty;
             string sex = dataset.GetSingleValueOrDefault(DicomTag.PatientSex, string.Empty);
             string age = dataset.GetSingleValueOrDefault(DicomTag.PatientAge, string.Empty);
             string patId = dataset.GetSingleValueOrDefault(DicomTag.PatientID, string.Empty);

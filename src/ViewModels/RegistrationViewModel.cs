@@ -5,7 +5,6 @@
     using System;
     using System.Linq;
     using Models;
-    using Validators;
 
     public class RegistrationViewModel : Screen
     {

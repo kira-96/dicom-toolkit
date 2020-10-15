@@ -5,6 +5,7 @@
     using StyletIoC;
     using System;
     using System.Collections.Generic;
+    using System.Text;
     using System.Threading.Tasks;
     using Client;
     using Logging;
@@ -18,6 +19,9 @@
 
         [Inject("filelogger")]
         private ILoggerService _logger;
+
+        [Inject]
+        private IConfigurationService _configurationService;
 
         [Inject]
         private II18nService _i18NService;
@@ -172,7 +176,9 @@
             {
                 var result = await timeoutPolicy.ExecuteAsync(async () =>
                 {
-                    return await _worklistSCU.GetAllResultFromWorklistAsync(message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET, message.Modality);
+                    Encoding fallbackEncoding = Dicom.DicomEncoding.Default;  // 不要移除这行代码，.NET Core 平台会在这里注册 CodePagesEncodingProvider
+                    fallbackEncoding = Encoding.GetEncoding(_configurationService.GetConfiguration<AppConfiguration>().DicomEncoding);
+                    return await _worklistSCU.GetAllResultFromWorklistAsync(message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET, message.Modality, fallbackEncoding);
                 });
 
                 WorklistItems.AddRange(result);

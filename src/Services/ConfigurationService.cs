@@ -100,6 +100,11 @@ namespace SimpleDICOMToolkit.Services
                 {
                     appConfiguration.DbConnectionString = settings.Get<TomlString>("DbConnectionString").Value;
                 }
+
+                if (settings.ContainsKey("DicomEncoding"))
+                {
+                    appConfiguration.DicomEncoding = settings.Get<TomlString>("DicomEncoding").Value;
+                }
             }
 
             return appConfiguration;

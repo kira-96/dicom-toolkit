@@ -23,9 +23,13 @@ namespace SimpleDICOMToolkit.Server
             DicomTransferSyntax.ImplicitVRLittleEndian
         };
 
+        // Encoding to use if encoding cannot be obtained from dataset
+        private Encoding _fallbackEncoding;
+
         public WorklistService(INetworkStream stream, Encoding fallbackEncoding, Logger log)
             : base(stream, fallbackEncoding, log)
         {
+            _fallbackEncoding = fallbackEncoding;
         }
 
         public DicomCEchoResponse OnCEchoRequest(DicomCEchoRequest request)
@@ -42,7 +46,7 @@ namespace SimpleDICOMToolkit.Server
             }
 
             foreach (DicomDataset result in CFindRequestHandler.FilterWorklistItems(
-                WorklistServer.Default.WorklistItems, request.Dataset))
+                WorklistServer.Default.WorklistItems, request.Dataset, _fallbackEncoding))
             {
                 yield return new DicomCFindResponse(request, DicomStatus.Pending) { Dataset = result };
             }
