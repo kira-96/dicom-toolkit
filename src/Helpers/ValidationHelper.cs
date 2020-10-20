@@ -25,14 +25,14 @@ namespace SimpleDICOMToolkit.Helpers
 
             // 正则表达式30分钟入门教程
             // https://deerchao.cn/tutorials/regex/regex.htm
-            if (Regex.IsMatch(ip, @"((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)"))
+            if (Regex.IsMatch(ip, @"^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)$"))
             {
                 return true;
             }
 
             // 一条完美精确匹配各种url网址的正则表达式
             // https://blog.csdn.net/qq569699973/article/details/94636893
-            if (Regex.IsMatch(ip, @"([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://|[wW]{3}.|[wW][aA][pP].|[fF][tT][pP].|[fF][iI][lL][eE].)[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]"))
+            if (Regex.IsMatch(ip, @"^([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://|[wW]{3}.|[wW][aA][pP].|[fF][tT][pP].|[fF][iI][lL][eE].)[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]$"))
             {
                 return true;
             }
