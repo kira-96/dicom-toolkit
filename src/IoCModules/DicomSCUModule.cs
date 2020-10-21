@@ -7,7 +7,7 @@
     {
         protected override void Load()
         {
-            Bind<IEchoSCU>().To<EchoSCU>().InSingletonScope().AsWeakBinding();
+            Bind<IVerifySCU>().To<VerifySCU>().InSingletonScope().AsWeakBinding();
             Bind<IStoreSCU>().To<StoreSCU>().InSingletonScope().AsWeakBinding();
             Bind<IPrintSCU>().To<PrintSCU>().InSingletonScope().AsWeakBinding();
             Bind<IWorklistSCU>().To<WorklistSCU>().InSingletonScope().AsWeakBinding();

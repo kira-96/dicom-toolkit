@@ -31,7 +31,7 @@
                               Data="{StaticResource ConnectIcon}" />
                     </Button.Content>
                     <Button.ToolTip>
-                        <Binding Source="{StaticResource Strings}" XPath="string[@key='TestConnection']" />
+                        <Binding Source="{StaticResource Strings}" XPath="string[@key='Verify']" />
                     </Button.ToolTip>
                 </Button>
                 <Button Grid.Column="1" 

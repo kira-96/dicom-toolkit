@@ -6,11 +6,11 @@
     using System.Threading.Tasks;
     using Logging;
 
-    public class EchoSCU : IEchoSCU
+    public class VerifySCU : IVerifySCU
     {
         private ILoggerService loggerService;
 
-        public EchoSCU([Inject("filelogger")] ILoggerService loggerService)
+        public VerifySCU([Inject("filelogger")] ILoggerService loggerService)
         {
             this.loggerService = loggerService;
         }
@@ -23,7 +23,7 @@
         /// <param name="serverAET">Server AE Title</param>
         /// <param name="localAET">Client AE Title</param>
         /// <returns>true if success</returns>
-        public async Task<bool> Echo(string serverIp, int serverPort, string serverAET, string localAET)
+        public async Task<bool> VerifyAsync(string serverIp, int serverPort, string serverAET, string localAET)
         {
             bool echoResult = false;
 

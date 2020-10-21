@@ -40,12 +40,8 @@
     <NoWarn>IDE0044;0649</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationManifest>..\..\src\app.manifest</ApplicationManifest>
-  </PropertyGroup>
-  <PropertyGroup>
     <ApplicationIcon>..\..\src\Assets\icon.ico</ApplicationIcon>
-  </PropertyGroup>
-  <PropertyGroup>
+    <ApplicationManifest>..\..\src\app.manifest</ApplicationManifest>
     <StartupObject>SimpleDICOMToolkit.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
@@ -121,8 +117,8 @@
     <Compile Include="..\..\src\Converters\MathMultipleConverter.cs">
       <Link>Converters\MathMultipleConverter.cs</Link>
     </Compile>
-    <Compile Include="..\..\src\DicomNetwork\Client\Interfaces\IEchoSCU.cs">
-      <Link>DicomNetwork\Client\Interfaces\IEchoSCU.cs</Link>
+    <Compile Include="..\..\src\DicomNetwork\Client\Interfaces\IVerifySCU.cs">
+      <Link>DicomNetwork\Client\Interfaces\IVerifySCU.cs</Link>
     </Compile>
     <Compile Include="..\..\src\DicomNetwork\Client\Interfaces\IQueryRetrieveSCU.cs">
       <Link>DicomNetwork\Client\Interfaces\IQueryRetrieveSCU.cs</Link>
@@ -136,8 +132,8 @@
     <Compile Include="..\..\src\DicomNetwork\Client\Interfaces\IWorklistSCU.cs">
       <Link>DicomNetwork\Client\Interfaces\IWorklistSCU.cs</Link>
     </Compile>
-    <Compile Include="..\..\src\DicomNetwork\Client\EchoSCU.cs">
-      <Link>DicomNetwork\Client\EchoSCU.cs</Link>
+    <Compile Include="..\..\src\DicomNetwork\Client\VerifySCU.cs">
+      <Link>DicomNetwork\Client\VerifySCU.cs</Link>
     </Compile>
     <Compile Include="..\..\src\DicomNetwork\Client\StoreSCU.cs">
       <Link>DicomNetwork\Client\StoreSCU.cs</Link>

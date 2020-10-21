@@ -30,7 +30,6 @@
   <string key="ServerAET">Server AET: </string>
   <string key="LocalAET">Local AET: </string>
   <string key="Modality">Modality: </string>
-  <string key="TestConnection">Test Connection</string>
   <string key="Query">Query</string>
   <string key="SendPACS">Send to PACS</string>
   <string key="Print">Print</string>
@@ -100,9 +99,8 @@
   <string key="ExitContent">Are you sure you want to exit?</string>
   <string key="UpdateAvailableContent">A newer version is available. Would you like to download it now?</string>
   <string key="SoftwareVersion">Software Version</string>
-  <string key="TestResult">Test Result</string>
-  <string key="TestSuccess">Test success</string>
-  <string key="TestFailed">Test failed</string>
+  <string key="VerifySuccess">Verify success</string>
+  <string key="VerifyFailed">Verify failed</string>
   <string key="FileNotFound">File not found: {0}</string>
   <string key="ServerIsRunning">{0} server is running at: {1}:{2}</string>
 </language>

@@ -22,7 +22,7 @@
         private INotificationService notificationService;
 
         [Inject]
-        private IEchoSCU _echoSCU;
+        private IVerifySCU _verifySCU;
 
         private string _serverIP = "localhost";
         private string _serverPort = "104";
@@ -180,7 +180,7 @@
 
             IsBusy = true;
 
-            bool result = await _echoSCU.Echo(_serverIP, port, _serverAET, _localAET);
+            bool result = await _verifySCU.VerifyAsync(_serverIP, port, _serverAET, _localAET);
 
             IsBusy = false;
 
@@ -188,11 +188,11 @@
 
             if (result)
             {
-                await notificationService.ShowToastAsync(i18NService.GetXmlStringByKey("TestSuccess"), new TimeSpan(0, 0, 3), Controls.ToastType.Info);
+                await notificationService.ShowToastAsync(i18NService.GetXmlStringByKey("VerifySuccess"), new TimeSpan(0, 0, 3), Controls.ToastType.Info);
             }
             else
             {
-                await notificationService.ShowToastAsync(i18NService.GetXmlStringByKey("TestFailed"), new TimeSpan(0, 0, 3), Controls.ToastType.Error);
+                await notificationService.ShowToastAsync(i18NService.GetXmlStringByKey("VerifyFailed"), new TimeSpan(0, 0, 3), Controls.ToastType.Error);
             }
         }
 

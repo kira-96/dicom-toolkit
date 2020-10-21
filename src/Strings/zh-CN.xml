@@ -30,7 +30,6 @@
   <string key="ServerAET">服务AET：</string>
   <string key="LocalAET">本地AET：</string>
   <string key="Modality">Modality：</string>
-  <string key="TestConnection">测试连接</string>
   <string key="Query">查询</string>
   <string key="SendPACS">发送到PACS</string>
   <string key="Print">打印</string>
@@ -100,9 +99,8 @@
   <string key="ExitContent">确定要退出吗？</string>
   <string key="UpdateAvailableContent">有更新的版本可用，是否现在下载？</string>
   <string key="SoftwareVersion">软件版本</string>
-  <string key="TestResult">测试结果</string>
-  <string key="TestSuccess">测试成功</string>
-  <string key="TestFailed">测试失败</string>
+  <string key="VerifySuccess">校验成功</string>
+  <string key="VerifyFailed">校验失败</string>
   <string key="FileNotFound">找不到文件：{0}</string>
   <string key="ServerIsRunning">{0}服务正在运行：{1}:{2}</string>
 </language>

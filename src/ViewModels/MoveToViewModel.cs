@@ -12,7 +12,7 @@ namespace SimpleDICOMToolkit.ViewModels
         private readonly ILoggerService logger;
         private readonly II18nService i18NService;
         private readonly INotificationService notificationService;
-        private readonly IEchoSCU echoSCU;
+        private readonly IVerifySCU verifySCU;
 
         private string serverIP = "0.0.0.0";
         private string serverPort = "104";
@@ -76,14 +76,14 @@ namespace SimpleDICOMToolkit.ViewModels
             [Inject("filelogger")] ILoggerService logger,
             II18nService i18NService,
             INotificationService notificationService,
-            IEchoSCU echoSCU,
+            IVerifySCU verifySCU,
             IModelValidator<MoveToViewModel> validator) : base(validator)
         {
             DisplayName = "Move To";
             this.logger = logger;
             this.i18NService = i18NService;
             this.notificationService = notificationService;
-            this.echoSCU = echoSCU;
+            this.verifySCU = verifySCU;
         }
 
         public bool CanVerify =>
@@ -100,17 +100,17 @@ namespace SimpleDICOMToolkit.ViewModels
 
             IsBusy = true;
 
-            bool result = await echoSCU.Echo(ServerIP, port, serverAET, "Verify");
+            bool result = await verifySCU.VerifyAsync(ServerIP, port, serverAET, "Verify");
 
             IsBusy = false;
 
             if (result)
             {
-                await notificationService.ShowToastAsync(i18NService.GetXmlStringByKey("TestSuccess"), new TimeSpan(0, 0, 3), Controls.ToastType.Info);
+                await notificationService.ShowToastAsync(i18NService.GetXmlStringByKey("VerifySuccess"), new TimeSpan(0, 0, 3), Controls.ToastType.Info);
             }
             else
             {
-                await notificationService.ShowToastAsync(i18NService.GetXmlStringByKey("TestFailed"), new TimeSpan(0, 0, 3), Controls.ToastType.Error);
+                await notificationService.ShowToastAsync(i18NService.GetXmlStringByKey("VerifyFailed"), new TimeSpan(0, 0, 3), Controls.ToastType.Error);
             }
         }
 
