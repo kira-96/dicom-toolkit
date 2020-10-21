@@ -36,9 +36,9 @@ namespace SimpleDICOMToolkit.Helpers
         }
 
         /// <summary>
-        /// 利用visualtreehelper寻找对象的子级对象
+        /// 利用VisualTreeHelper寻找对象的子级对象
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">Child Type</typeparam>
         /// <param name="obj"></param>
         /// <returns></returns>
         public static List<T> FindVisualChild<T>(DependencyObject obj) where T : FrameworkElement
@@ -67,6 +67,10 @@ namespace SimpleDICOMToolkit.Helpers
             return TList;
         }
 
+        /// <summary>
+        /// 利用VisualTreeHelper寻找对象的父级对象
+        /// </summary>
+        /// <typeparam name="T">Parent Type</typeparam>
         /// <param name="obj"></param>
         /// <returns></returns>
         public static List<T> FindVisualParent<T>(DependencyObject obj) where T : FrameworkElement

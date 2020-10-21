@@ -42,7 +42,6 @@ namespace SimpleDICOMToolkit.Helpers
         /// <summary>
         /// Gets if the Operating System is Windows 10
         /// </summary>
-        /// <returns>True if Windows 10</returns>
         public static bool IsWindows10
         {
             get
@@ -71,6 +70,9 @@ namespace SimpleDICOMToolkit.Helpers
             }
         }
 
+        /// <summary>
+        /// Get if the Operating System is Windows 7 or lower
+        /// </summary>
         public static bool IsWindows7OrLower
         {
             get
@@ -84,6 +86,7 @@ namespace SimpleDICOMToolkit.Helpers
             }
         }
 
+        [Obsolete]
         public static Version RtlNtVersion
         {
             get
@@ -96,6 +99,11 @@ namespace SimpleDICOMToolkit.Helpers
             }
         }
 
+        /// <summary>
+        /// Get current system Accent Color
+        /// Windows 8 or later
+        /// </summary>
+        /// <returns>Accent Color</returns>
         public static Color GetAccentColor()
         {
             using (RegistryKey dwm = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\DWM", false))
@@ -115,6 +123,11 @@ namespace SimpleDICOMToolkit.Helpers
             return SystemParameters.WindowGlassColor;
         }
 
+        /// <summary>
+        /// Get current system Colorization Color
+        /// Windows 8 or later
+        /// </summary>
+        /// <returns>Colorization Color</returns>
         public static Color GetColorizationColor()
         {
             using (RegistryKey dwm = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\DWM", false))
@@ -134,6 +147,11 @@ namespace SimpleDICOMToolkit.Helpers
             return SystemParameters.WindowGlassColor;
         }
 
+        /// <summary>
+        /// Convert Colorization Color to Accent Color
+        /// Windows 8 or later
+        /// </summary>
+        /// <returns>Accent Color</returns>
         public static Color GetAccentColorFromColorizationColor()
         {
             using (RegistryKey dwm = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\DWM", false))
@@ -165,6 +183,10 @@ namespace SimpleDICOMToolkit.Helpers
             return grayLevel > 0.5 ? Colors.Black : Colors.White;
         }
 
+        /// <summary>
+        /// 当前系统应用是否为亮色主题（Windows 10）
+        /// </summary>
+        /// <returns></returns>
         public static bool AppsUseLightTheme()
         {
             using (RegistryKey personalize = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", false))
@@ -178,6 +200,10 @@ namespace SimpleDICOMToolkit.Helpers
             return true;
         }
 
+        /// <summary>
+        /// 当前系统是否为亮色主题（Windows 10）
+        /// </summary>
+        /// <returns></returns>
         public static bool SystemUsesLightTheme()
         {
             using (RegistryKey personalize = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", false))
@@ -191,6 +217,10 @@ namespace SimpleDICOMToolkit.Helpers
             return true;
         }
 
+        /// <summary>
+        /// 窗口色是否跟随系统主题颜色（Windows 10）
+        /// </summary>
+        /// <returns></returns>
         public static bool IsWindowPrevalenceAccentColor()
         {
             using (RegistryKey dwm = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\DWM", false))

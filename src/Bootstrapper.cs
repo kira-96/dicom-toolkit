@@ -12,6 +12,9 @@
     using Helpers;
     using ViewModels;
 
+    /// <summary>
+    /// Application Bootstrapper
+    /// </summary>
     public class Bootstrapper : Bootstrapper<ShellViewModel>
     {
         /// <summary>
