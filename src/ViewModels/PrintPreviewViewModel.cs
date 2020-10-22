@@ -129,13 +129,13 @@
                     continue;
                 }
 
-                await AddDcmImage(file.ToString());
+                await AddDcmImageAsync(file.ToString());
             }
         }
 
-        public async Task AddSampleImage()
+        public async Task AddSampleImageAsync()
         {
-            await AddDcmImage(Environment.CurrentDirectory + "\\Fate.dcm");
+            await AddDcmImageAsync(Environment.CurrentDirectory + "\\Fate.dcm");
         }
 
         private PrintOptions GetPrintOptions()
@@ -143,7 +143,7 @@
             return (Parent as PrintViewModel).PrintOptions;
         }
 
-        private async Task AddDcmImage(string file)
+        private async Task AddDcmImageAsync(string file)
         {
             if (!File.Exists(file))
                 return;

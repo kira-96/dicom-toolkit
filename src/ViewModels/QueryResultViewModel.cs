@@ -45,7 +45,7 @@
                 {
                     if (selectedPatient != null && !selectedPatient.HasChildren)
                     {
-                        QueryStudies(selectedPatient);
+                        _ = QueryStudiesAsync(selectedPatient);
                     }
                 }
             }
@@ -60,7 +60,7 @@
                 {
                     if (selectedStudy != null && !selectedStudy.HasChildren)
                     {
-                        QuerySeries(selectedStudy);
+                        _ = QuerySeriesAsync(selectedStudy);
                     }
                 }
             }
@@ -75,7 +75,7 @@
                 {
                     if (selectedSeries != null && !selectedSeries.HasChildren)
                     {
-                        QueryImages(selectedSeries);
+                        _ = QueryImagesAsync(selectedSeries);
                     }
                 }
             }
@@ -111,7 +111,7 @@
 
         public async void Handle(ClientMessageItem message)
         {
-            await QueryPatients(message);
+            await QueryPatientsAsync(message);
         }
 
         public void Dispose()
@@ -119,7 +119,7 @@
             _eventAggregator.Unsubscribe(this);
         }
 
-        public async void MoveStudy(IDicomObjectLevel obj)
+        public async void MoveStudyAsync(IDicomObjectLevel obj)
         {
             MoveToViewModel moveTo = _viewModelFactory.GetMoveToViewModel();
 
@@ -143,7 +143,7 @@
             }
         }
 
-        public async void PreviewImage()
+        public async Task PreviewImageAsync()
         {
             _eventAggregator.Publish(new BusyStateItem(true), nameof(QueryResultViewModel));
             IsBusy = true;
@@ -203,7 +203,7 @@
                 });
         }
 
-        private async Task QueryPatients(ClientMessageItem message)
+        private async Task QueryPatientsAsync(ClientMessageItem message)
         {
             var timeoutPolicy = GetTimeoutPolicy();
 
@@ -241,7 +241,7 @@
             }
         }
 
-        private async void QueryStudies(IDicomObjectLevel obj)
+        private async Task QueryStudiesAsync(IDicomObjectLevel obj)
         {
             var timeoutPolicy = GetTimeoutPolicy();
 
@@ -284,7 +284,7 @@
             }
         }
 
-        private async void QuerySeries(IDicomObjectLevel obj)
+        private async Task QuerySeriesAsync(IDicomObjectLevel obj)
         {
             var timeoutPolicy = GetTimeoutPolicy();
 
@@ -324,7 +324,7 @@
             }
         }
 
-        private async void QueryImages(IDicomObjectLevel obj)
+        private async Task QueryImagesAsync(IDicomObjectLevel obj)
         {
             var timeoutPolicy = GetTimeoutPolicy();
 

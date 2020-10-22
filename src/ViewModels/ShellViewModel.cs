@@ -102,7 +102,7 @@
             {
                 if (System.IO.File.Exists(args[1]))
                 {
-                    await (Items[0] as DcmItemsViewModel).OpenDcmFile(args[1]);
+                    await (Items[0] as DcmItemsViewModel).OpenDicomFileAsync(args[1]);
                 }
             }
         }

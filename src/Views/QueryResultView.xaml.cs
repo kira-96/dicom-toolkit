@@ -13,9 +13,9 @@
             InitializeComponent();
         }
 
-        private void ImagesListMouseDoubleClick(object s, MouseButtonEventArgs e)
+        private async void ImagesListMouseDoubleClick(object s, MouseButtonEventArgs e)
         {
-            (DataContext as QueryResultViewModel).PreviewImage();
+            await (DataContext as QueryResultViewModel).PreviewImageAsync();
         }
     }
 }

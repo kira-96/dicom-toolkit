@@ -54,7 +54,7 @@
             ServerConfigViewModel.RequestAction = () => ServerConfigViewModel.PublishClientRequest(nameof(ViewModels.PrintPreviewViewModel));
             eventAggregator.Subscribe(ServerConfigViewModel, nameof(ViewModels.PrintPreviewViewModel));
             PrintPreviewViewModel.Parent = this;
-            await PrintPreviewViewModel.AddSampleImage();
+            await PrintPreviewViewModel.AddSampleImageAsync();
             PrintOptions = configurationService.GetConfiguration<PrintOptions>("PrintOptions");
             await messenger.SubscribeAsync(this, "Config", ReloadPrintOptions);
         }

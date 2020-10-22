@@ -17,7 +17,7 @@
         </DataTemplate>
         <ContextMenu x:Key="StudyContextMenu">
             <MenuItem s:View.ActionTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext}"
-                      Command="{s:Action MoveStudy, ActionNotFound=Disable}"
+                      Command="{s:Action MoveStudyAsync, ActionNotFound=Disable}"
                       CommandParameter="{Binding}">
                 <MenuItem.Header>
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='Move']" />

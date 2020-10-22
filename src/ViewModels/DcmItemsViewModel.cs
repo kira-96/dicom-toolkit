@@ -136,10 +136,10 @@
             if (!File.Exists(path))
                 return;
 
-            await OpenDcmFile(path);
+            await OpenDicomFileAsync(path);
         }
 
-        public async Task OpenDcmFile(string file)
+        public async Task OpenDicomFileAsync(string file)
         {
             if (!DicomFile.HasValidHeader(file))
             {
@@ -152,19 +152,22 @@
             _currentFile = await DicomFile.OpenAsync(file);
             _currentFile.Dataset.NotValidated();
 
-            var enumerator = _currentFile.FileMetaInfo.GetEnumerator();
-
-            while (enumerator.MoveNext())
+            await Task.Run(() =>
             {
-                DicomItems.Add(new DcmItem(enumerator.Current, _currentFile.FileMetaInfo));
-            }
+                var enumerator = _currentFile.FileMetaInfo.GetEnumerator();
 
-            enumerator = _currentFile.Dataset.GetEnumerator();
+                while (enumerator.MoveNext())
+                {
+                    DicomItems.Add(new DcmItem(enumerator.Current, _currentFile.FileMetaInfo));
+                }
 
-            while (enumerator.MoveNext())
-            {
-                DicomItems.Add(new DcmItem(enumerator.Current, _currentFile.Dataset));
-            }
+                enumerator = _currentFile.Dataset.GetEnumerator();
+
+                while (enumerator.MoveNext())
+                {
+                    DicomItems.Add(new DcmItem(enumerator.Current, _currentFile.Dataset));
+                }
+            });
         }
 
         public void DcmItemTapped(DcmItem item)
