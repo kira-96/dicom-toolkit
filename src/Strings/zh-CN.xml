@@ -81,6 +81,7 @@
   <string key="TooltipEdit">编辑</string>
   <string key="TooltipDicomTagDescription">使用16进制表示，格式为：(xxxx,xxxx)</string>
   <string key="TooltipRegist">登记</string>
+  <string key="TooltipOpenPrinterFolder">打开虚拟打印文件夹</string>
   <string key="MenuAbout">关于(&amp;A)</string>
   <string key="MenuLanguageSetting">语言设置</string>
   <string key="MenuShowMainWindow">显示主窗口</string>

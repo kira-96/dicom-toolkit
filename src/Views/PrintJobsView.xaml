@@ -16,6 +16,10 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Stretch="None"
-            Source="pack://application:,,,/Assets/open_folder.png" />
+            Source="pack://application:,,,/Assets/open_folder.png">
+            <Image.ToolTip>
+                <Binding Source="{StaticResource Strings}" XPath="string[@key='TooltipOpenPrinterFolder']" />
+            </Image.ToolTip>
+        </Image>
     </Grid>
 </UserControl>
