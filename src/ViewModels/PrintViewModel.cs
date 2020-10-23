@@ -39,7 +39,6 @@
         public PrintViewModel(IEventAggregator eventAggregator)
         {
             DisplayName = "Print";
-            PrintOptions = new PrintOptions();
             this.eventAggregator = eventAggregator;
         }
 

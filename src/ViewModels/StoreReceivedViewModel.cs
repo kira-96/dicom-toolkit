@@ -43,7 +43,6 @@
         {
             _eventAggregator = eventAggregator;
             _eventAggregator.Subscribe(this, nameof(StoreReceivedViewModel));
-            StoreServer.Default.OnFilesSaved += OnFilesSaved;
         }
 
         private void OnFilesSaved(IList<string> files)
@@ -63,6 +62,7 @@
         {
             if (IsServerStarted)
             {
+                StoreServer.Default.OnFilesSaved += OnFilesSaved;
                 StoreServer.Default.CreateServer(message.ServerPort, message.LocalAET);
                 _eventAggregator.Publish(new ServerStateItem(true), nameof(StoreReceivedViewModel));
                 notificationService.ShowNotification(
@@ -71,6 +71,7 @@
             }
             else
             {
+                StoreServer.Default.OnFilesSaved -= OnFilesSaved;
                 StoreServer.Default.StopServer();
                 _eventAggregator.Publish(new ServerStateItem(false), nameof(StoreReceivedViewModel));
             }
@@ -93,8 +94,12 @@
         {
             _eventAggregator.Unsubscribe(this);
 
-            StoreServer.Default.OnFilesSaved -= OnFilesSaved;
-            StoreServer.Default.StopServer();
+            if (IsServerStarted)
+            {
+                StoreServer.Default.OnFilesSaved -= OnFilesSaved;
+                StoreServer.Default.StopServer();
+                IsServerStarted = false;
+            }
         }
     }
 }

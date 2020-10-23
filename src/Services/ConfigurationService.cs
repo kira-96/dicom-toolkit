@@ -20,8 +20,6 @@ namespace SimpleDICOMToolkit.Services
         public ConfigurationService([Inject("filelogger")] ILoggerService loggerService)
         {
             this.loggerService = loggerService;
-
-            Load();
         }
 
         public void Load(string section = null)

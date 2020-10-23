@@ -64,7 +64,6 @@
             this.logger = loggerService;
 
             InitializeTrayIcon();
-            LoadDefaultLanguage();
             appearanceService.ApplyAccentColor();
             ApplyTheme();
         }
@@ -310,6 +309,8 @@
             notificationService.RegistToast(MainToaster);
             appearanceService.StartMonitoringWindowPrevalenceAccentColor();
             appearanceService.WindowPrevalenceAccentColorChanged += WindowPrevalenceAccentColorChanged;
+
+            LoadDefaultLanguage();
         }
 
         private void Window_Closing(object s, System.ComponentModel.CancelEventArgs e)

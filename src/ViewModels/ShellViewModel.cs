@@ -70,6 +70,7 @@
             updateService.DownloadComplete += UpdateService_DownloadComplete;
             updateService.DownloadError += UpdateService_DownloadError;
 
+            configurationService.Load();  // load configuration
             var appConfiguration = configurationService.GetConfiguration<AppConfiguration>();
 
             await mqttService.StartAsync(appConfiguration.ListenPort);

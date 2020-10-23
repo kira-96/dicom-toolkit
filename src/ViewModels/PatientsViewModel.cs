@@ -31,7 +31,7 @@
 
         private readonly IEventAggregator _eventAggregator;
 
-        public BindableCollection<WorklistItem> WorklistItems { get; }
+        public BindableCollection<WorklistItem> WorklistItems { get; private set; }
 
         private bool _isServerStarted = false;
 
@@ -45,13 +45,12 @@
         {
             _eventAggregator = eventAggregator;
             _eventAggregator.Subscribe(this, nameof(PatientsViewModel));
-
-            WorklistItems = new BindableCollection<WorklistItem>();
-            WorklistServer.Default.WorklistItems = WorklistItems;
         }
 
         public void UpdateData()
         {
+            WorklistItems = new BindableCollection<WorklistItem>();
+            WorklistServer.Default.WorklistItems = WorklistItems;
             WorklistItems.AddRange(dataService.GetWorklistItems());
         }
 
