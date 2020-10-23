@@ -10,9 +10,9 @@
 
 ## 截图
 
-![dump](screenshot/Snipaste_2020-09-21_15-03-12.png)
+![dump](screenshot/dicom-dump.png)
 
-![c-store](screenshot/Snipaste_2020-09-21_15-05-02.png)
+![c-store](screenshot/store-scu.png)
 
 ## 功能
 
