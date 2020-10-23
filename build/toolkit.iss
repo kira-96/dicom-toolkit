@@ -2,7 +2,7 @@
 ; This script is used to build the setup program.
 
 #define MyAppName "Dicom toolkit"
-#define MyAppVersion "1.4.6"
+#define MyAppVersion "1.4.7"
 #define MyAppPublisher "kira"
 #define MyAppURL "https://github.com/kira-96/dicom-toolkit/"
 #define MyAppExeName "Simple DICOM Toolkit.exe"
@@ -63,6 +63,7 @@ Source: "{#SourceDir}\{#ReleaseDir}\System.ValueTuple.dll"; DestDir: "{app}"; Fl
 Source: "{#SourceDir}\{#ReleaseDir}\NLog.config"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourceDir}\{#ReleaseDir}\Fate.dcm"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourceDir}\LICENSE"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#SourceDir}\docs\*"; DestDir: "{app}\docs"; Flags: ignoreversion
 
 [Icons]
 Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
