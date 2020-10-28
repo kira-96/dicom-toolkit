@@ -99,9 +99,17 @@
 
         private async Task HandleCommandLineArgs(string[] args)
         {
-            if (args.Length == 2)
+            if (args.Length >= 2)
             {
-                if (System.IO.File.Exists(args[1]))
+                string filename = args[1];
+
+                if (filename == "-h" ||
+                    filename == "--help")
+                {
+                    Console.WriteLine("Drag a Dicom file and drop on toolkit to open it.");
+                }
+
+                if (System.IO.File.Exists(filename))
                 {
                     await (Items[0] as DcmItemsViewModel).OpenDicomFileAsync(args[1]);
                 }
@@ -110,6 +118,8 @@
 
         private async Task CheckForUpdate()
         {
+            await Task.Delay(5_000);  // delay 5s
+
             if (Helpers.SystemHelper.IsNetworkConnected)
             {
                 await updateService.CheckForUpdate();
