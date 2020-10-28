@@ -5,13 +5,15 @@
     using System;
     using System.Threading.Tasks;
     using Logging;
+    using Models;
     using Services;
 
-    public class ShellViewModel : Conductor<IScreen>.Collection.OneActive
+    public class ShellViewModel : Conductor<IScreen>.Collection.OneActive, IHandle<BusyStateItem>
     {
         public const string MainWindowName = "Simple DICOM Toolkit";
 
         private readonly IContainer container;
+        private readonly IEventAggregator eventAggregator;
         private readonly IWindowManager windowManager;
         private readonly ILoggerService loggerService;
         private readonly II18nService i18NService;
@@ -21,8 +23,16 @@
         private readonly IUpdateService updateService;
         private readonly ISimpleMqttService mqttService;
 
+        private bool indeterminate;
+        public bool Indeterminate
+        {
+            get => indeterminate;
+            internal set => SetAndNotify(ref indeterminate, value);
+        }
+
         public ShellViewModel(
             IContainer container,
+            IEventAggregator eventAggregator,
             IWindowManager windowManager,
             [Inject("filelogger")]ILoggerService loggerService,
             II18nService i18NService,
@@ -42,6 +52,7 @@
         {
             DisplayName = MainWindowName;
             this.container = container;
+            this.eventAggregator = eventAggregator;
             this.windowManager = windowManager;
             this.loggerService = loggerService;
             this.i18NService = i18NService;
@@ -65,22 +76,24 @@
         {
             base.OnViewLoaded();
 
+            ActiveItem = Items.Count > 0 ? Items[0] : null;
+
+            eventAggregator.Subscribe(this, nameof(WorklistResultViewModel), nameof(QueryResultViewModel));
+
             updateService.VersionAvaliable += UpdateService_VersionAvaliable;
             updateService.CheckForUpdateError += UpdateService_CheckForUpdateError;
             updateService.DownloadComplete += UpdateService_DownloadComplete;
             updateService.DownloadError += UpdateService_DownloadError;
 
+            await HandleCommandLineArgs(Environment.GetCommandLineArgs());
+
             configurationService.Load();  // load configuration
             var appConfiguration = configurationService.GetConfiguration<AppConfiguration>();
 
-            await mqttService.StartAsync(appConfiguration.ListenPort);
-            dataService.ConnectDatabase(appConfiguration.DbConnectionString);
+            await mqttService.StartAsync(appConfiguration.ListenPort);  // start mqtt service
+            dataService.ConnectDatabase(appConfiguration.DbConnectionString);  // connect to database
 
-            ActiveItem = Items.Count > 0 ? Items[0] : null;
-
-            await HandleCommandLineArgs(Environment.GetCommandLineArgs());
-
-            await CheckForUpdate();
+            await CheckForUpdate();  // check for update
         }
 
         protected override void OnClose()
@@ -92,9 +105,18 @@
             updateService.DownloadComplete -= UpdateService_DownloadComplete;
             updateService.DownloadError -= UpdateService_DownloadError;
 
+            eventAggregator.Unsubscribe(this);
             dataService.DisconnectDatabase();
             container.Get<IMessengerService>().Dispose();
             mqttService.Dispose();
+        }
+
+        public void Handle(BusyStateItem message)
+        {
+            var worklistResultViewModel = (Items[1] as WorklistViewModel).WorklistResultViewModel;
+            var queryResultViewModel = (Items[3] as QueryRetrieveViewModel).QueryResultViewModel;
+
+            Indeterminate = worklistResultViewModel.IsBusy || queryResultViewModel.IsBusy;
         }
 
         private async Task HandleCommandLineArgs(string[] args)

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:s="https://github.com/canton7/Stylet"
         xmlns:c="clr-namespace:SimpleDICOMToolkit.Controls"
+        xmlns:conv="clr-namespace:SimpleDICOMToolkit.Converters"
         mc:Ignorable="d"
         Title="{Binding DisplayName}"
         ResizeMode="CanResizeWithGrip"
@@ -29,6 +30,8 @@
         <SolidColorBrush x:Key="SelectedTabItemBackground" Color="White" />
         <SolidColorBrush x:Key="SelectedTabItemForeground" Color="Black" />
         <SolidColorBrush x:Key="IndicatorColor" Color="White" />
+
+        <conv:ProgressStateConverter x:Key="ProgressStateConv" />
 
         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource DefaultButtonStyle}">
             <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
@@ -178,6 +181,11 @@
         </ContextMenu>
     </Window.Resources>
 
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo ProgressState="{Binding Indeterminate, Converter={StaticResource ProgressStateConv}}"
+                         Description="{Binding DisplayName}" />
+    </Window.TaskbarItemInfo>
+    
     <Grid x:Name="ContentGrid" Background="{DynamicResource CommonBackground}">
         <TabControl Style="{StaticResource ConductorTabControl}" />
         <c:Toaster x:Name="MainToaster" Panel.ZIndex="100" Margin="0,0,0,18" />

@@ -129,8 +129,9 @@
             }
 
             var (serverIp, serverPort, serverAet, localAet) = GetServerConfig();
-            _eventAggregator.Publish(new BusyStateItem(true), nameof(QueryResultViewModel));
+
             IsBusy = true;
+            _eventAggregator.Publish(new BusyStateItem(IsBusy), nameof(QueryResultViewModel));
 
             try
             {
@@ -139,14 +140,14 @@
             finally
             {
                 IsBusy = false;
-                _eventAggregator.Publish(new BusyStateItem(false), nameof(QueryResultViewModel));
+                _eventAggregator.Publish(new BusyStateItem(IsBusy), nameof(QueryResultViewModel));
             }
         }
 
         public async Task PreviewImageAsync()
         {
-            _eventAggregator.Publish(new BusyStateItem(true), nameof(QueryResultViewModel));
             IsBusy = true;
+            _eventAggregator.Publish(new BusyStateItem(IsBusy), nameof(QueryResultViewModel));
 
             var (serverIp, serverPort, serverAet, localAet) = GetServerConfig();
             DicomDataset result = null;
@@ -159,7 +160,7 @@
             finally
             {
                 IsBusy = false;
-                _eventAggregator.Publish(new BusyStateItem(false), nameof(QueryResultViewModel));
+                _eventAggregator.Publish(new BusyStateItem(IsBusy), nameof(QueryResultViewModel));
             }
 
             // 有时候查询到的图像没有像素值，无法显示
@@ -207,8 +208,8 @@
         {
             var timeoutPolicy = GetTimeoutPolicy();
 
-            _eventAggregator.Publish(new BusyStateItem(true), nameof(QueryResultViewModel));
             IsBusy = true;
+            _eventAggregator.Publish(new BusyStateItem(IsBusy), nameof(QueryResultViewModel));
 
             List<DicomDataset> result = null;
 
@@ -222,7 +223,7 @@
             finally
             {
                 IsBusy = false;
-                _eventAggregator.Publish(new BusyStateItem(false), nameof(QueryResultViewModel));
+                _eventAggregator.Publish(new BusyStateItem(IsBusy), nameof(QueryResultViewModel));
             }
 
             if (result != null)
@@ -245,8 +246,8 @@
         {
             var timeoutPolicy = GetTimeoutPolicy();
 
-            _eventAggregator.Publish(new BusyStateItem(true), nameof(QueryResultViewModel));
             IsBusy = true;
+            _eventAggregator.Publish(new BusyStateItem(IsBusy), nameof(QueryResultViewModel));
 
             var (serverIp, serverPort, serverAet, localAet) = GetServerConfig();
 
@@ -262,7 +263,7 @@
             finally
             {
                 IsBusy = false;
-                _eventAggregator.Publish(new BusyStateItem(false), nameof(QueryResultViewModel));
+                _eventAggregator.Publish(new BusyStateItem(IsBusy), nameof(QueryResultViewModel));
             }
 
             if (result != null)
@@ -288,8 +289,8 @@
         {
             var timeoutPolicy = GetTimeoutPolicy();
 
-            _eventAggregator.Publish(new BusyStateItem(true), nameof(QueryResultViewModel));
             IsBusy = true;
+            _eventAggregator.Publish(new BusyStateItem(IsBusy), nameof(QueryResultViewModel));
 
             var (serverIp, serverPort, serverAet, localAet) = GetServerConfig();
 
@@ -302,7 +303,7 @@
             finally
             {
                 IsBusy = false;
-                _eventAggregator.Publish(new BusyStateItem(false), nameof(QueryResultViewModel));
+                _eventAggregator.Publish(new BusyStateItem(IsBusy), nameof(QueryResultViewModel));
             }
 
             if (result != null)
@@ -328,8 +329,8 @@
         {
             var timeoutPolicy = GetTimeoutPolicy();
 
-            _eventAggregator.Publish(new BusyStateItem(true), nameof(QueryResultViewModel));
             IsBusy = true;
+            _eventAggregator.Publish(new BusyStateItem(IsBusy), nameof(QueryResultViewModel));
 
             var (serverIp, serverPort, serverAet, localAet) = GetServerConfig();
 
@@ -345,7 +346,7 @@
             finally
             {
                 IsBusy = false;
-                _eventAggregator.Publish(new BusyStateItem(false), nameof(QueryResultViewModel));
+                _eventAggregator.Publish(new BusyStateItem(IsBusy), nameof(QueryResultViewModel));
             }
 
             if (result != null)

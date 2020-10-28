@@ -117,6 +117,9 @@
     <Compile Include="..\..\src\Converters\MathMultipleConverter.cs">
       <Link>Converters\MathMultipleConverter.cs</Link>
     </Compile>
+    <Compile Include="..\..\src\Converters\ProgressStateConverter.cs">
+      <Link>Converters\ProgressStateConverter.cs</Link>
+    </Compile>
     <Compile Include="..\..\src\DicomNetwork\Client\Interfaces\IVerifySCU.cs">
       <Link>DicomNetwork\Client\Interfaces\IVerifySCU.cs</Link>
     </Compile>
