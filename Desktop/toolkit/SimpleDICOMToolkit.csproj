@@ -806,7 +806,7 @@
       <Version>1.1.19</Version>
     </PackageReference>
     <PackageReference Include="MQTTnet">
-      <Version>3.0.12</Version>
+      <Version>3.0.13</Version>
     </PackageReference>
     <PackageReference Include="NETStandard.Library">
       <Version>2.0.3</Version>

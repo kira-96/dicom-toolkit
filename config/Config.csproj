@@ -28,7 +28,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MQTTnet" Version="3.0.12" />
+    <PackageReference Include="MQTTnet" Version="3.0.13" />
     <PackageReference Include="Nett" Version="0.15.0" />
     <PackageReference Include="NLog" Version="4.7.5" />
     <PackageReference Include="Stylet" Version="1.3.4" />

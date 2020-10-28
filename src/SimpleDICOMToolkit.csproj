@@ -8,8 +8,8 @@
     <RootNamespace>SimpleDICOMToolkit</RootNamespace>
     <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <AssemblyVersion>1.4.6.316</AssemblyVersion>
-    <FileVersion>1.4.6.316</FileVersion>
+    <AssemblyVersion>1.4.6.317</AssemblyVersion>
+    <FileVersion>1.4.6.317</FileVersion>
     <Version>1.4.6</Version>
     <Authors>kira</Authors>
     <Company>kira</Company>
@@ -38,7 +38,7 @@
     <PackageReference Include="fo-dicom.Drawing" Version="4.0.6" />
     <PackageReference Include="LiteDB" Version="5.0.9" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.19" />
-    <PackageReference Include="MQTTnet" Version="3.0.12" />
+    <PackageReference Include="MQTTnet" Version="3.0.13" />
     <PackageReference Include="Nett" Version="0.15.0" />
     <PackageReference Include="NLog" Version="4.7.5" />
     <PackageReference Include="Ookii.Dialogs.Wpf.NETCore" Version="2.1.0" />
