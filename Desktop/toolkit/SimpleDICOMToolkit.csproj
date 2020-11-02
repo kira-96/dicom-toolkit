@@ -174,12 +174,6 @@
     <Compile Include="..\..\src\DicomNetwork\Server\StoreServer.cs">
       <Link>DicomNetwork\Server\StoreServer.cs</Link>
     </Compile>
-    <Compile Include="..\..\src\DicomNetwork\Server\FilmBoxExtensions.cs">
-      <Link>DicomNetwork\Server\FilmBoxExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\..\src\DicomNetwork\Server\ImageBoxExtensions.cs">
-      <Link>DicomNetwork\Server\ImageBoxExtensions.cs</Link>
-    </Compile>
     <Compile Include="..\..\src\DicomNetwork\Server\Printer.cs">
       <Link>DicomNetwork\Server\Printer.cs</Link>
     </Compile>
@@ -284,6 +278,12 @@
     </Compile>
     <Compile Include="..\..\src\Models\WorklistItem.cs">
       <Link>Models\WorklistItem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Printing\FilmBoxExtensions.cs">
+      <Link>Printing\FilmBoxExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Printing\ImageBoxExtensions.cs">
+      <Link>Printing\ImageBoxExtensions.cs</Link>
     </Compile>
     <Compile Include="..\..\src\Services\Interfaces\IAppearanceService.cs">
       <Link>Services\Interfaces\IAppearanceService.cs</Link>
@@ -797,7 +797,7 @@
       <Version>9.2.2</Version>
     </PackageReference>
     <PackageReference Include="fo-dicom.Desktop">
-      <Version>4.0.6</Version>
+      <Version>4.0.7</Version>
     </PackageReference>
     <PackageReference Include="LiteDB">
       <Version>5.0.9</Version>

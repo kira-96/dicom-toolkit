@@ -11,7 +11,6 @@
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
     using Logging;
-    using Helpers;
 
     public class PreviewImageViewModel : Screen
     {
@@ -24,9 +23,9 @@
         private bool isMovingImage = false;
         private bool isUpdatingImage = false;
 
-        private BitmapSource _imageSource;
+        private WriteableBitmap _imageSource;
 
-        public BitmapSource ImageSource
+        public WriteableBitmap ImageSource
         {
             get => _imageSource;
             private set => SetAndNotify(ref _imageSource, value);
@@ -265,13 +264,8 @@
             }
 
             using IImage iimage = dicomImage.RenderImage(frame);
-#if NET_CORE
-            var image = iimage.AsSharedBitmap().AsBitmapImage();
-#else
-            var image = iimage.AsWriteableBitmap();
-#endif
-            ImageSource = image;
-            image.Freeze();
+            ImageSource = iimage.AsWriteableBitmap();
+            ImageSource.Freeze();
         }
 
         private void UpdateWindowCenterWindowWidth()

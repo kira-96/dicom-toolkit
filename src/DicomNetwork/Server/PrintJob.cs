@@ -335,12 +335,7 @@ namespace SimpleDICOMToolkit.Server
                     {
                         var image = new DicomImage(_currentFilmBox.BasicImageBoxes[j].ImageSequence);
                         using IImage iimage = image.RenderImage();
-#if NET_CORE
-                        iimage.AsSharedBitmap().Save(Path.Combine(FullPrintJobFolder, SOPInstanceUID.UID) + $".{i}.{j}.png",
-                            System.Drawing.Imaging.ImageFormat.Png);
-#else
                         iimage.AsWriteableBitmap().SavePng(Path.Combine(FullPrintJobFolder, SOPInstanceUID.UID) + $".{i}.{j}.png");
-#endif
                     }
                 }
             }
