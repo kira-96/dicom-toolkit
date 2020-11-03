@@ -1,10 +1,10 @@
 ﻿namespace SimpleDICOMToolkit.Models
 {
-    public class ServerStateItem
+    public class ServerStateEvent
     {
         public bool IsRuning { get; private set; }
 
-        public ServerStateItem(bool isRunning)
+        public ServerStateEvent(bool isRunning)
         {
             IsRuning = isRunning;
         }

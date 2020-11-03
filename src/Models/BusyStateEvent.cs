@@ -1,10 +1,10 @@
 ﻿namespace SimpleDICOMToolkit.Models
 {
-    public class BusyStateItem
+    public class BusyStateEvent
     {
         public bool IsBusy { get; private set; }
 
-        public BusyStateItem(bool isBusy)
+        public BusyStateEvent(bool isBusy)
         {
             IsBusy = isBusy;
         }

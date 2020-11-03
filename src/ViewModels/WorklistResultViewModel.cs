@@ -168,7 +168,7 @@
                 });
 
             IsBusy = true;
-            _eventAggregator.Publish(new BusyStateItem(IsBusy), nameof(WorklistResultViewModel));
+            _eventAggregator.Publish(new BusyStateEvent(IsBusy), nameof(WorklistResultViewModel));
 
             WorklistItems.Clear();
 
@@ -192,7 +192,7 @@
             finally
             {
                 IsBusy = false;
-                _eventAggregator.Publish(new BusyStateItem(IsBusy), nameof(WorklistResultViewModel));
+                _eventAggregator.Publish(new BusyStateEvent(IsBusy), nameof(WorklistResultViewModel));
             }
         }
 

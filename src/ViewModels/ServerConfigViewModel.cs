@@ -8,7 +8,7 @@
     using Models;
     using Services;
 
-    public class ServerConfigViewModel : Screen, IHandle<BusyStateItem>, IHandle<ServerStateItem>, IDisposable
+    public class ServerConfigViewModel : Screen, IHandle<BusyStateEvent>, IHandle<ServerStateEvent>, IDisposable
     {
         private readonly IEventAggregator _eventAggregator;
 
@@ -225,7 +225,7 @@
             return port;
         }
 
-        public void Handle(BusyStateItem message)
+        public void Handle(BusyStateEvent message)
         {
             BusyIndicatorColumn = 1;
 
@@ -242,7 +242,7 @@
             }
         }
 
-        public void Handle(ServerStateItem message)
+        public void Handle(ServerStateEvent message)
         {
             if (message.IsRuning)
             {

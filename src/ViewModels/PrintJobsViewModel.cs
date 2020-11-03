@@ -37,7 +37,7 @@
             if (IsServerStarted)
             {
                 PrintServer.Default.CreateServer(message.ServerPort, message.LocalAET);
-                _eventAggregator.Publish(new ServerStateItem(true), nameof(PrintJobsViewModel));
+                _eventAggregator.Publish(new ServerStateEvent(true), nameof(PrintJobsViewModel));
                 notificationService.ShowNotification(
                     string.Format(i18NService.GetXmlStringByKey("ServerIsRunning"), "Print", SystemHelper.LocalIPAddress, message.ServerPort),
                     message.LocalAET);
@@ -45,7 +45,7 @@
             else
             {
                 PrintServer.Default.StopServer();
-                _eventAggregator.Publish(new ServerStateItem(false), nameof(PrintJobsViewModel));
+                _eventAggregator.Publish(new ServerStateEvent(false), nameof(PrintJobsViewModel));
             }
         }
 

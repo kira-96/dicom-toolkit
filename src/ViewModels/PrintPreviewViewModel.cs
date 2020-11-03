@@ -70,7 +70,7 @@
             if (ImageSource == null)
                 return;
 
-            _eventAggregator.Publish(new BusyStateItem(true), nameof(PrintPreviewViewModel));
+            _eventAggregator.Publish(new BusyStateEvent(true), nameof(PrintPreviewViewModel));
 
             PrintOptions options = GetPrintOptions();
 
@@ -97,7 +97,7 @@
                     image.Dispose();
                 }
 
-                _eventAggregator.Publish(new BusyStateItem(false), nameof(PrintPreviewViewModel));
+                _eventAggregator.Publish(new BusyStateEvent(false), nameof(PrintPreviewViewModel));
             }
         }
 

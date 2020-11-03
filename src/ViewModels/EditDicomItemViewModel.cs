@@ -185,12 +185,12 @@
             {
                 if (_isValuesChanged)
                 {
-                    _eventAggregator.Publish(new UpdateDicomElementItem(_currentDataset, DicomVR.Parse(CurrentVR), _currentTag, ElementValues.ToArray()));
+                    _eventAggregator.Publish(new UpdateDicomElementEvent(_currentDataset, DicomVR.Parse(CurrentVR), _currentTag, ElementValues.ToArray()));
                 }
             }
             else
             {
-                _eventAggregator.Publish(new AddDicomElementItem(_currentDataset, DicomVR.Parse(CurrentVR), _tagString, ElementValues.ToArray()));
+                _eventAggregator.Publish(new AddDicomElementEvent(_currentDataset, DicomVR.Parse(CurrentVR), _tagString, ElementValues.ToArray()));
             }
         }
 

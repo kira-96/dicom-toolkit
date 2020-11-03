@@ -12,7 +12,7 @@
     using Models;
     using Services;
 
-    public class DcmItemsViewModel : Screen, IHandle<AddDicomElementItem>, IHandle<UpdateDicomElementItem>
+    public class DcmItemsViewModel : Screen, IHandle<AddDicomElementEvent>, IHandle<UpdateDicomElementEvent>
     {
         [Inject]
         private IWindowManager _windowManager;
@@ -52,7 +52,7 @@
         /// Add new Dicom Item to Dataset
         /// </summary>
         /// <param name="message"></param>
-        public void Handle(AddDicomElementItem message)
+        public void Handle(AddDicomElementEvent message)
         {
             DicomTag tag = DicomTag.Parse(message.Tag);
 
@@ -100,7 +100,7 @@
             }
         }
 
-        public void Handle(UpdateDicomElementItem message)
+        public void Handle(UpdateDicomElementEvent message)
         {
             try
             {

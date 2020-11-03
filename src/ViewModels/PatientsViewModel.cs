@@ -62,7 +62,7 @@
                 fallbackEncoding = Encoding.GetEncoding(configurationService.GetConfiguration<AppConfiguration>().DicomEncoding);
 
                 WorklistServer.Default.CreateServer(message.ServerPort, message.LocalAET, fallbackEncoding);
-                _eventAggregator.Publish(new ServerStateItem(true), nameof(PatientsViewModel));
+                _eventAggregator.Publish(new ServerStateEvent(true), nameof(PatientsViewModel));
                 notificationService.ShowNotification(
                     string.Format(i18NService.GetXmlStringByKey("ServerIsRunning"), "Worklist", SystemHelper.LocalIPAddress, message.ServerPort), 
                     message.LocalAET);
@@ -71,7 +71,7 @@
             else
             {
                 WorklistServer.Default.StopServer();
-                _eventAggregator.Publish(new ServerStateItem(false), nameof(PatientsViewModel));
+                _eventAggregator.Publish(new ServerStateEvent(false), nameof(PatientsViewModel));
             }
         }
 

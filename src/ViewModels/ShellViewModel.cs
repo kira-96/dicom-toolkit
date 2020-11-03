@@ -8,7 +8,7 @@
     using Models;
     using Services;
 
-    public class ShellViewModel : Conductor<IScreen>.Collection.OneActive, IHandle<BusyStateItem>
+    public class ShellViewModel : Conductor<IScreen>.Collection.OneActive, IHandle<BusyStateEvent>
     {
         public const string MainWindowName = "Simple DICOM Toolkit";
 
@@ -111,7 +111,7 @@
             mqttService.Dispose();
         }
 
-        public void Handle(BusyStateItem message)
+        public void Handle(BusyStateEvent message)
         {
             var worklistResultViewModel = (Items[1] as WorklistViewModel).WorklistResultViewModel;
             var queryResultViewModel = (Items[3] as QueryRetrieveViewModel).QueryResultViewModel;

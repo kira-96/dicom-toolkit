@@ -5,7 +5,7 @@
     /// <summary>
     /// 更新修改后的DicomElement
     /// </summary>
-    public class UpdateDicomElementItem
+    public class UpdateDicomElementEvent
     {
         public DicomDataset Dataset { get; private set; }
 
@@ -15,7 +15,7 @@
 
         public string[] Values { get; private set; }
 
-        public UpdateDicomElementItem(DicomDataset dataset, DicomVR dicomVR, DicomTag tag, string[] values)
+        public UpdateDicomElementEvent(DicomDataset dataset, DicomVR dicomVR, DicomTag tag, string[] values)
         {
             Dataset = dataset;
             VR = dicomVR;

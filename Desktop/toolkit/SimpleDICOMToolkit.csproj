@@ -246,11 +246,11 @@
     <Compile Include="..\..\src\Logging\NLogManager.cs">
       <Link>Logging\NLogManager.cs</Link>
     </Compile>
-    <Compile Include="..\..\src\Models\AddDicomElementItem.cs">
-      <Link>Models\AddDicomElementItem.cs</Link>
+    <Compile Include="..\..\src\Models\AddDicomElementEvent.cs">
+      <Link>Models\AddDicomElementEvent.cs</Link>
     </Compile>
-    <Compile Include="..\..\src\Models\BusyStateItem.cs">
-      <Link>Models\BusyStateItem.cs</Link>
+    <Compile Include="..\..\src\Models\BusyStateEvent.cs">
+      <Link>Models\BusyStateEvent.cs</Link>
     </Compile>
     <Compile Include="..\..\src\Models\CStoreItem.cs">
       <Link>Models\CStoreItem.cs</Link>
@@ -267,14 +267,14 @@
     <Compile Include="..\..\src\Models\ServerMessageItem.cs">
       <Link>Models\ServerMessageItem.cs</Link>
     </Compile>
-    <Compile Include="..\..\src\Models\ServerStateItem.cs">
-      <Link>Models\ServerStateItem.cs</Link>
+    <Compile Include="..\..\src\Models\ServerStateEvent.cs">
+      <Link>Models\ServerStateEvent.cs</Link>
     </Compile>
     <Compile Include="..\..\src\Models\SimpleWorklistResult.cs">
       <Link>Models\SimpleWorklistResult.cs</Link>
     </Compile>
-    <Compile Include="..\..\src\Models\UpdateDicomElementItem.cs">
-      <Link>Models\UpdateDicomElementItem.cs</Link>
+    <Compile Include="..\..\src\Models\UpdateDicomElementEvent.cs">
+      <Link>Models\UpdateDicomElementEvent.cs</Link>
     </Compile>
     <Compile Include="..\..\src\Models\WorklistItem.cs">
       <Link>Models\WorklistItem.cs</Link>

@@ -45,7 +45,7 @@
             if (FileList.Count == 0)
                 return;
 
-            _eventAggregator.Publish(new BusyStateItem(true), nameof(StoreFileListViewModel));
+            _eventAggregator.Publish(new BusyStateEvent(true), nameof(StoreFileListViewModel));
 
             try
             {
@@ -59,7 +59,7 @@
             }
             finally
             {
-                _eventAggregator.Publish(new BusyStateItem(false), nameof(StoreFileListViewModel));
+                _eventAggregator.Publish(new BusyStateEvent(false), nameof(StoreFileListViewModel));
             }
         }
 

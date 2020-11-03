@@ -64,7 +64,7 @@
             {
                 StoreServer.Default.OnFilesSaved += OnFilesSaved;
                 StoreServer.Default.CreateServer(message.ServerPort, message.LocalAET);
-                _eventAggregator.Publish(new ServerStateItem(true), nameof(StoreReceivedViewModel));
+                _eventAggregator.Publish(new ServerStateEvent(true), nameof(StoreReceivedViewModel));
                 notificationService.ShowNotification(
                     string.Format(i18NService.GetXmlStringByKey("ServerIsRunning"), "C-STORE", SystemHelper.LocalIPAddress, message.ServerPort),
                     message.LocalAET);
@@ -73,7 +73,7 @@
             {
                 StoreServer.Default.OnFilesSaved -= OnFilesSaved;
                 StoreServer.Default.StopServer();
-                _eventAggregator.Publish(new ServerStateItem(false), nameof(StoreReceivedViewModel));
+                _eventAggregator.Publish(new ServerStateEvent(false), nameof(StoreReceivedViewModel));
             }
         }
 
