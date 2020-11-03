@@ -7,8 +7,8 @@ namespace SimpleDICOMToolkit.Services
     {
         int Port { get; }
 
-        Task<bool> StartAsync(int port);
+        ValueTask<bool> StartAsync(int port);
 
-        Task StopAsync();
+        ValueTask StopAsync();
     }
 }

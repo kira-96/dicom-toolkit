@@ -119,7 +119,7 @@
             Indeterminate = worklistResultViewModel.IsBusy || queryResultViewModel.IsBusy;
         }
 
-        private async Task HandleCommandLineArgs(string[] args)
+        private async ValueTask HandleCommandLineArgs(string[] args)
         {
             if (args.Length >= 2)
             {

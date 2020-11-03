@@ -17,7 +17,7 @@
             logger = loggerService;
         }
 
-        public async Task<List<DicomDataset>> QueryPatientsAsync(string serverIp, int serverPort, string serverAET, string localAET, string patientId = null, string patientName = null)
+        public async ValueTask<List<DicomDataset>> QueryPatientsAsync(string serverIp, int serverPort, string serverAET, string localAET, string patientId = null, string patientName = null)
         {
             List<DicomDataset> patients = new List<DicomDataset>();
 
@@ -49,7 +49,7 @@
             return patients;
         }
 
-        public async Task<List<DicomDataset>> QueryStudiesByPatientAsync(string serverIp, int serverPort, string serverAET, string localAET, string patientId = null, string patientName = null, DicomDateRange studyDateTime = null)
+        public async ValueTask<List<DicomDataset>> QueryStudiesByPatientAsync(string serverIp, int serverPort, string serverAET, string localAET, string patientId = null, string patientName = null, DicomDateRange studyDateTime = null)
         {
             List<DicomDataset> studyUids = new List<DicomDataset>();
 
@@ -81,7 +81,7 @@
             return studyUids;
         }
 
-        public async Task<List<DicomDataset>> QuerySeriesByStudyAsync(string serverIp, int serverPort, string serverAET, string localAET, string studyInstanceUid, string modality = null)
+        public async ValueTask<List<DicomDataset>> QuerySeriesByStudyAsync(string serverIp, int serverPort, string serverAET, string localAET, string studyInstanceUid, string modality = null)
         {
             List<DicomDataset> seriesUids = new List<DicomDataset>();
 
@@ -113,7 +113,7 @@
             return seriesUids;
         }
 
-        public async Task<List<DicomDataset>> QueryImagesByStudyAndSeriesAsync(string serverIp, int serverPort, string serverAET, string localAET, string studyInstanceUid, string seriesInstanceUid, string modality = null)
+        public async ValueTask<List<DicomDataset>> QueryImagesByStudyAndSeriesAsync(string serverIp, int serverPort, string serverAET, string localAET, string studyInstanceUid, string seriesInstanceUid, string modality = null)
         {
             List<DicomDataset> sopUids = new List<DicomDataset>();
 
@@ -145,7 +145,7 @@
             return sopUids;
         }
 
-        public async Task<List<DicomDataset>> GetImagesBySeriesAsync(string serverIp, int serverPort, string serverAET, string localAET, string studyInstanceUid, string seriesInstanceUid)
+        public async ValueTask<List<DicomDataset>> GetImagesBySeriesAsync(string serverIp, int serverPort, string serverAET, string localAET, string studyInstanceUid, string seriesInstanceUid)
         {
             List<DicomDataset> imageDatasets = new List<DicomDataset>();
 
@@ -180,7 +180,7 @@
             return imageDatasets;
         }
 
-        public async Task<DicomDataset> GetImagesBySOPInstanceAsync(string serverIp, int serverPort, string serverAET, string localAET, string studyInstanceUid, string seriesInstanceUid, string sopInstanceUid)
+        public async ValueTask<DicomDataset> GetImagesBySOPInstanceAsync(string serverIp, int serverPort, string serverAET, string localAET, string studyInstanceUid, string seriesInstanceUid, string sopInstanceUid)
         {
             DicomDataset imageDatasets = null;
 
@@ -215,7 +215,7 @@
             return imageDatasets;
         }
 
-        public async Task<bool?> MoveImagesAsync(string serverIp, int serverPort, string serverAET, string localAET, string destAET, string studyInstanceUid, string seriesInstanceUid = null)
+        public async ValueTask<bool?> MoveImagesAsync(string serverIp, int serverPort, string serverAET, string localAET, string destAET, string studyInstanceUid, string seriesInstanceUid = null)
         {
             bool? success = null;
 

@@ -13,6 +13,6 @@
         /// <param name="serverAET">Server AET</param>
         /// <param name="localAET">Local AET</param>
         /// <returns>True if success</returns>
-        Task<bool> VerifyAsync(string serverIp, int serverPort, string serverAET, string localAET);
+        ValueTask<bool> VerifyAsync(string serverIp, int serverPort, string serverAET, string localAET);
     }
 }

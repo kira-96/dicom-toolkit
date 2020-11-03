@@ -129,7 +129,7 @@
             }
         }
 
-        public async Task AddSampleImageAsync()
+        public async ValueTask AddSampleImageAsync()
         {
             await AddDcmImageAsync(Environment.CurrentDirectory + "\\Fate.dcm");
         }
@@ -139,7 +139,7 @@
             return (Parent as PrintViewModel).PrintOptions;
         }
 
-        private async Task AddDcmImageAsync(string file)
+        private async ValueTask AddDcmImageAsync(string file)
         {
             if (!File.Exists(file))
                 return;

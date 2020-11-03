@@ -45,7 +45,7 @@
         StoreSCPViewModel GetStoreSCPViewModel(string key = null);
 
         /// <summary>
-        /// Get PrintSCPViewModel insatnce
+        /// Get PrintSCPViewModel instance
         /// </summary>
         /// <param name="key"></param>
         /// <returns>instance viewmodel</returns>

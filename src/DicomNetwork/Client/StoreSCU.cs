@@ -17,7 +17,7 @@
             Logger = loggerService;
         }
 
-        public async Task StoreImageAsync(string serverIp, int serverPort, string serverAET, string localAET, IEnumerable<CStoreItem> items)
+        public async ValueTask StoreImageAsync(string serverIp, int serverPort, string serverAET, string localAET, IEnumerable<CStoreItem> items)
         {
             DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
 

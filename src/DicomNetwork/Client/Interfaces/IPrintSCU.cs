@@ -15,7 +15,7 @@
         /// <param name="localAET">Client AE Title</param>
         /// <param name="options">Print Options</param>
         /// <param name="images">images for print</param>
-        /// <returns>Task</returns>
-        Task PrintImagesAsync(string serverIp, int serverPort, string serverAET, string localAET, PrintOptions options, IEnumerable<Bitmap> images);
+        /// <returns>ValueTask</returns>
+        ValueTask PrintImagesAsync(string serverIp, int serverPort, string serverAET, string localAET, PrintOptions options, IEnumerable<Bitmap> images);
     }
 }

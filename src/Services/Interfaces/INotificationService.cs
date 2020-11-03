@@ -44,6 +44,6 @@ namespace SimpleDICOMToolkit.Services
         /// <param name="duration">toast duration</param>
         /// <param name="level">toast level<see cref="ToastType"/></param>
         /// <returns></returns>
-        Task ShowToastAsync(string content, TimeSpan duration, ToastType level = ToastType.Info);
+        ValueTask ShowToastAsync(string content, TimeSpan duration, ToastType level = ToastType.Info);
     }
 }

@@ -6,7 +6,7 @@
 
     public class PrintSCU : IPrintSCU
     {
-        public async Task PrintImagesAsync(string serverIp, int serverPort, string serverAET, string localAET, PrintOptions options, IEnumerable<Bitmap> images)
+        public async ValueTask PrintImagesAsync(string serverIp, int serverPort, string serverAET, string localAET, PrintOptions options, IEnumerable<Bitmap> images)
         {
             PrintJob printJob = new PrintJob(options)
             {

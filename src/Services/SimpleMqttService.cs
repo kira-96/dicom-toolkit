@@ -41,7 +41,7 @@
             .UseClientDisconnectedHandler(e => { logger.Debug($"[{e.ClientId}] Disconnected."); });
         }
 
-        public async Task<bool> StartAsync(int port)
+        public async ValueTask<bool> StartAsync(int port)
         {
             if (server.IsStarted)
             {
@@ -86,7 +86,7 @@
             }
         }
 
-        public async Task StopAsync()
+        public async ValueTask StopAsync()
         {
             if (server.IsStarted)
             {

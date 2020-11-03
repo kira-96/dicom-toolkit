@@ -40,7 +40,7 @@ namespace SimpleDICOMToolkit.Services
             notifyIcon.ShowBalloonTip(0, title, content, icon);
         }
 
-        public async Task ShowToastAsync(string content, TimeSpan duration, ToastType level = ToastType.Info)
+        public async ValueTask ShowToastAsync(string content, TimeSpan duration, ToastType level = ToastType.Info)
         {
             if (!CanToast)
             {
@@ -93,7 +93,7 @@ namespace SimpleDICOMToolkit.Services
             });
         }
 
-        private async Task WaitForCompletionAsync(EventWaitHandle waitHandle)
+        private async ValueTask WaitForCompletionAsync(EventWaitHandle waitHandle)
         {
             var durationTask = Task.Run(() =>
             {

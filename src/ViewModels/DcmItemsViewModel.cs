@@ -139,7 +139,7 @@
             await OpenDicomFileAsync(path);
         }
 
-        public async Task OpenDicomFileAsync(string file)
+        public async ValueTask OpenDicomFileAsync(string file)
         {
             if (!DicomFile.HasValidHeader(file))
             {

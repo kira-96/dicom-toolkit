@@ -144,7 +144,7 @@
             }
         }
 
-        public async Task PreviewImageAsync()
+        public async ValueTask PreviewImageAsync()
         {
             IsBusy = true;
             _eventAggregator.Publish(new BusyStateItem(IsBusy), nameof(QueryResultViewModel));
@@ -204,7 +204,7 @@
                 });
         }
 
-        private async Task QueryPatientsAsync(ClientMessageItem message)
+        private async ValueTask QueryPatientsAsync(ClientMessageItem message)
         {
             var timeoutPolicy = GetTimeoutPolicy();
 
@@ -242,7 +242,7 @@
             }
         }
 
-        private async Task QueryStudiesAsync(IDicomObjectLevel obj)
+        private async ValueTask QueryStudiesAsync(IDicomObjectLevel obj)
         {
             var timeoutPolicy = GetTimeoutPolicy();
 
@@ -285,7 +285,7 @@
             }
         }
 
-        private async Task QuerySeriesAsync(IDicomObjectLevel obj)
+        private async ValueTask QuerySeriesAsync(IDicomObjectLevel obj)
         {
             var timeoutPolicy = GetTimeoutPolicy();
 
@@ -325,7 +325,7 @@
             }
         }
 
-        private async Task QueryImagesAsync(IDicomObjectLevel obj)
+        private async ValueTask QueryImagesAsync(IDicomObjectLevel obj)
         {
             var timeoutPolicy = GetTimeoutPolicy();
 

@@ -28,7 +28,7 @@
             client = new MqttFactory().CreateMqttClient();
         }
 
-        public async Task PublishAsync(string topic, string payload, CancellationToken token)
+        public async ValueTask PublishAsync(string topic, string payload, CancellationToken token)
         {
             if (!client.IsConnected)
             {
@@ -47,7 +47,7 @@
                 .Build(), token);
         }
 
-        public async Task SubscribeAsync(object recipient, string topic, Action<string> action)
+        public async ValueTask SubscribeAsync(object recipient, string topic, Action<string> action)
         {
             if (recipient == null ||
                 topic == null ||
@@ -89,7 +89,7 @@
             }
         }
 
-        public async Task UnsubscribeAsync(object recipient, string topic)
+        public async ValueTask UnsubscribeAsync(object recipient, string topic)
         {
             if (recipient == null ||
                 !recipientsStrictAction.ContainsKey(topic))
@@ -119,7 +119,7 @@
             }
         }
 
-        private async Task<bool> TryConnectAsync()
+        private async ValueTask<bool> TryConnectAsync()
         {
             AppConfiguration appConfiguration = configurationService.GetConfiguration<AppConfiguration>();
 

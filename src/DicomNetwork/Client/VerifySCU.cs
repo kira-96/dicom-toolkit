@@ -23,7 +23,7 @@
         /// <param name="serverAET">Server AE Title</param>
         /// <param name="localAET">Client AE Title</param>
         /// <returns>true if success</returns>
-        public async Task<bool> VerifyAsync(string serverIp, int serverPort, string serverAET, string localAET)
+        public async ValueTask<bool> VerifyAsync(string serverIp, int serverPort, string serverAET, string localAET)
         {
             bool echoResult = false;
 

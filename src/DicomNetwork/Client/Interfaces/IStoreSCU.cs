@@ -14,7 +14,7 @@
         /// <param name="serverAET">Server AE Title</param>
         /// <param name="localAET">Client AE Title</param>
         /// <param name="dcmFiles">files path</param>
-        /// <returns>Task</returns>
-        Task StoreImageAsync(string serverIp, int serverPort, string serverAET, string localAET, IEnumerable<CStoreItem> dcmFiles);
+        /// <returns>ValueTask</returns>
+        ValueTask StoreImageAsync(string serverIp, int serverPort, string serverAET, string localAET, IEnumerable<CStoreItem> dcmFiles);
     }
 }
