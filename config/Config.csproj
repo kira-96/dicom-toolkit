@@ -6,8 +6,8 @@
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <AssemblyVersion>1.0.10.18</AssemblyVersion>
-    <FileVersion>1.0.10.18</FileVersion>
+    <AssemblyVersion>1.0.10.19</AssemblyVersion>
+    <FileVersion>1.0.10.19</FileVersion>
     <Version>1.0.10</Version>
     <Authors>kira</Authors>
     <Company>kira</Company>

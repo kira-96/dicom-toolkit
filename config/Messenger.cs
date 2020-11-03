@@ -42,7 +42,7 @@
 
         public IMqttClient Client => client ?? (client = new MqttFactory().CreateMqttClient());
 
-        public async Task PublishAsync(string topic, string payload, CancellationToken token)
+        public async ValueTask PublishAsync(string topic, string payload, CancellationToken token)
         {
             if (!Client.IsConnected)
             {
@@ -61,7 +61,7 @@
                 .Build(), token);
         }
 
-        private async Task<bool> TryConnectAsync()
+        private async ValueTask<bool> TryConnectAsync()
         {
             IMqttClientOptions options = new MqttClientOptionsBuilder()
                 .WithCleanSession()
