@@ -6,9 +6,9 @@ using System.Windows;
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("Config")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Config")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("kira")]
 [assembly: AssemblyProduct("Config")]
 [assembly: AssemblyCopyright("Copyright © 2020 kira。保留所有权利。")]
 [assembly: AssemblyTrademark("")]
@@ -49,7 +49,7 @@ using System.Windows;
 //可以指定所有这些值，也可以使用“生成号”和“修订号”的默认值
 //通过使用 "*"，如下所示:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.10.19")]
-[assembly: AssemblyFileVersion("1.0.10.19")]
+[assembly: AssemblyVersion("1.0.10.20")]
+[assembly: AssemblyFileVersion("1.0.10.20")]
 
 [assembly: AssemblyInformationalVersion("1.0.10")]

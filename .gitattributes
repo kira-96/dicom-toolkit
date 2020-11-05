@@ -5,6 +5,13 @@
 
 # default for csharp files.
 *.cs       text diff=csharp
+*.xaml     text
+
+# Config files
+*.config   text
+
+# DICOM files
+*.dcm      binary
 
 # Documents
 *.bibtex   text diff=bibtex

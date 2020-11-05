@@ -796,7 +796,7 @@
     <PackageReference Include="FluentValidation">
       <Version>9.2.2</Version>
     </PackageReference>
-    <PackageReference Include="fo-dicom.Desktop">
+    <PackageReference Include="fo-dicom">
       <Version>4.0.7</Version>
     </PackageReference>
     <PackageReference Include="LiteDB">
