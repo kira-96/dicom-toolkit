@@ -225,6 +225,15 @@
     <Compile Include="..\..\src\Helpers\InteropHelper.cs">
       <Link>Helpers\InteropHelper.cs</Link>
     </Compile>
+    <Compile Include="..\..\src\Infrastructure\IDicomObjectLevel.cs">
+      <Link>Infrastructure\IDicomObjectLevel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Infrastructure\IStoreItem.cs">
+      <Link>Infrastructure\IStoreItem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Infrastructure\SimpleWorklistResult.cs">
+      <Link>Infrastructure\SimpleWorklistResult.cs</Link>
+    </Compile>
     <Compile Include="..\..\src\IoCModules\ServicesModule.cs">
       <Link>IoCModules\ServicesModule.cs</Link>
     </Compile>
@@ -252,8 +261,8 @@
     <Compile Include="..\..\src\Models\BusyStateEvent.cs">
       <Link>Models\BusyStateEvent.cs</Link>
     </Compile>
-    <Compile Include="..\..\src\Models\CStoreItem.cs">
-      <Link>Models\CStoreItem.cs</Link>
+    <Compile Include="..\..\src\Models\StoreItem.cs">
+      <Link>Models\StoreItem.cs</Link>
     </Compile>
     <Compile Include="..\..\src\Models\ClientMessageItem.cs">
       <Link>Models\ClientMessageItem.cs</Link>
@@ -269,9 +278,6 @@
     </Compile>
     <Compile Include="..\..\src\Models\ServerStateEvent.cs">
       <Link>Models\ServerStateEvent.cs</Link>
-    </Compile>
-    <Compile Include="..\..\src\Models\SimpleWorklistResult.cs">
-      <Link>Models\SimpleWorklistResult.cs</Link>
     </Compile>
     <Compile Include="..\..\src\Models\UpdateDicomElementEvent.cs">
       <Link>Models\UpdateDicomElementEvent.cs</Link>

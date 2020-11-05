@@ -7,6 +7,7 @@
     using System.IO;
     using System.Windows;
     using Client;
+    using Infrastructure;
     using Models;
     using Services;
 
@@ -32,7 +33,7 @@
         [Inject]
         private IStoreSCU _storeSCU;
 
-        public BindableCollection<CStoreItem> FileList { get; private set; } = new BindableCollection<CStoreItem>();
+        public BindableCollection<IStoreItem> FileList { get; private set; } = new BindableCollection<IStoreItem>();
 
         public StoreFileListViewModel(IEventAggregator eventAggregator)
         {
@@ -103,7 +104,7 @@
                         if (!DicomFile.HasValidHeader(info.FullName))
                             continue;
 
-                        FileList.Add(new CStoreItem(FileList.Count, info.FullName));
+                        FileList.Add(new StoreItem(FileList.Count, info.FullName));
                     }
 
                     continue;
@@ -111,12 +112,12 @@
 
                 if (File.Exists(path) && DicomFile.HasValidHeader(path))
                 {
-                    FileList.Add(new CStoreItem(FileList.Count, path));
+                    FileList.Add(new StoreItem(FileList.Count, path));
                 }
             }
         }
 
-        public void PreviewCStoreItem(CStoreItem item)
+        public void PreviewCStoreItem(IStoreItem item)
         {
             var preview = _viewModelFactory.GetPreviewImageViewModel();
             preview.Initialize(item.File);
@@ -124,7 +125,7 @@
             _windowManager.ShowDialog(preview, this);
         }
 
-        public void DeleteCStoreItem(CStoreItem item)
+        public void DeleteCStoreItem(IStoreItem item)
         {
             FileList.Remove(item);
             ReIndexItems();
@@ -139,7 +140,7 @@
         {
             foreach (string file in files)
             {
-                FileList.Add(new CStoreItem(FileList.Count, file));
+                FileList.Add(new StoreItem(FileList.Count, file));
             }
         }
 

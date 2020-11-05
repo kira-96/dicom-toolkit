@@ -5,6 +5,7 @@
     using Dicom.Network;
     using DicomClient = Dicom.Network.Client.DicomClient;
     using System.Collections.Generic;
+    using System.Threading;
     using System.Threading.Tasks;
     using Logging;
 
@@ -17,7 +18,7 @@
             logger = loggerService;
         }
 
-        public async ValueTask<List<DicomDataset>> QueryPatientsAsync(string serverIp, int serverPort, string serverAET, string localAET, string patientId = null, string patientName = null)
+        public async ValueTask<IEnumerable<DicomDataset>> QueryPatientsAsync(string serverIp, int serverPort, string serverAET, string localAET, string patientId = null, string patientName = null, CancellationToken cancellationToken = default)
         {
             List<DicomDataset> patients = new List<DicomDataset>();
 
@@ -44,12 +45,12 @@
 
             DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
             await client.AddRequestAsync(request);
-            await client.SendAsync();
+            await client.SendAsync(cancellationToken);
 
             return patients;
         }
 
-        public async ValueTask<List<DicomDataset>> QueryStudiesByPatientAsync(string serverIp, int serverPort, string serverAET, string localAET, string patientId = null, string patientName = null, DicomDateRange studyDateTime = null)
+        public async ValueTask<IEnumerable<DicomDataset>> QueryStudiesByPatientAsync(string serverIp, int serverPort, string serverAET, string localAET, string patientId = null, string patientName = null, DicomDateRange studyDateTime = null, CancellationToken cancellationToken = default)
         {
             List<DicomDataset> studyUids = new List<DicomDataset>();
 
@@ -76,20 +77,19 @@
 
             DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
             await client.AddRequestAsync(request);
-            await client.SendAsync();
+            await client.SendAsync(cancellationToken);
 
             return studyUids;
         }
 
-        public async ValueTask<List<DicomDataset>> QuerySeriesByStudyAsync(string serverIp, int serverPort, string serverAET, string localAET, string studyInstanceUid, string modality = null)
+        public async ValueTask<IEnumerable<DicomDataset>> QuerySeriesByStudyAsync(string serverIp, int serverPort, string serverAET, string localAET, string studyInstanceUid, string modality = null, CancellationToken cancellationToken = default)
         {
             List<DicomDataset> seriesUids = new List<DicomDataset>();
 
             DicomCFindRequest request = RequestFactory.CreateSeriesQuery(studyInstanceUid, modality);
             request.OnResponseReceived += (req, res) =>
             {
-                if (res.Status == DicomStatus.Success ||
-                    res.Status == DicomStatus.Pending)
+                if (res.Status == DicomStatus.Success || res.Status == DicomStatus.Pending)
                 {
                     if (res.HasDataset)
                     {
@@ -108,12 +108,12 @@
 
             DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
             await client.AddRequestAsync(request);
-            await client.SendAsync();
+            await client.SendAsync(cancellationToken);
 
             return seriesUids;
         }
 
-        public async ValueTask<List<DicomDataset>> QueryImagesByStudyAndSeriesAsync(string serverIp, int serverPort, string serverAET, string localAET, string studyInstanceUid, string seriesInstanceUid, string modality = null)
+        public async ValueTask<IEnumerable<DicomDataset>> QueryImagesByStudyAndSeriesAsync(string serverIp, int serverPort, string serverAET, string localAET, string studyInstanceUid, string seriesInstanceUid, string modality = null, CancellationToken cancellationToken = default)
         {
             List<DicomDataset> sopUids = new List<DicomDataset>();
 
@@ -140,12 +140,12 @@
 
             DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
             await client.AddRequestAsync(request);
-            await client.SendAsync();
+            await client.SendAsync(cancellationToken);
 
             return sopUids;
         }
 
-        public async ValueTask<List<DicomDataset>> GetImagesBySeriesAsync(string serverIp, int serverPort, string serverAET, string localAET, string studyInstanceUid, string seriesInstanceUid)
+        public async ValueTask<IEnumerable<DicomDataset>> GetImagesBySeriesAsync(string serverIp, int serverPort, string serverAET, string localAET, string studyInstanceUid, string seriesInstanceUid, CancellationToken cancellationToken = default)
         {
             List<DicomDataset> imageDatasets = new List<DicomDataset>();
 
@@ -175,16 +175,16 @@
                 DicomTransferSyntax.ImplicitVRBigEndian);
             client.AdditionalPresentationContexts.AddRange(pcs);
             await client.AddRequestAsync(request);
-            await client.SendAsync();
+            await client.SendAsync(cancellationToken);
 
             return imageDatasets;
         }
 
-        public async ValueTask<DicomDataset> GetImagesBySOPInstanceAsync(string serverIp, int serverPort, string serverAET, string localAET, string studyInstanceUid, string seriesInstanceUid, string sopInstanceUid)
+        public async ValueTask<DicomDataset> GetImagesBySOPInstanceAsync(string serverIp, int serverPort, string serverAET, string localAET, string studyInstanceUid, string seriesInstanceUid, string sopInstanceUid, CancellationToken cancellationToken = default)
         {
             DicomDataset imageDatasets = null;
 
-            DicomCGetRequest request = RequestFactory.CreateCGetBySeriesUID(studyInstanceUid, seriesInstanceUid);
+            DicomCGetRequest request = RequestFactory.CreateCGetBySOPInstanceUID(studyInstanceUid, seriesInstanceUid, sopInstanceUid);
             DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
             client.OnCStoreRequest += async (req) =>
             {
@@ -210,12 +210,12 @@
                 DicomTransferSyntax.ImplicitVRBigEndian);
             client.AdditionalPresentationContexts.AddRange(pcs);
             await client.AddRequestAsync(request);
-            await client.SendAsync();
+            await client.SendAsync(cancellationToken);
 
             return imageDatasets;
         }
 
-        public async ValueTask<bool?> MoveImagesAsync(string serverIp, int serverPort, string serverAET, string localAET, string destAET, string studyInstanceUid, string seriesInstanceUid = null)
+        public async ValueTask<bool?> MoveImagesAsync(string serverIp, int serverPort, string serverAET, string localAET, string destAET, string studyInstanceUid, string seriesInstanceUid = null, CancellationToken cancellationToken = default)
         {
             bool? success = null;
 
@@ -244,7 +244,7 @@
 
             DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
             await client.AddRequestAsync(request);
-            await client.SendAsync();
+            await client.SendAsync(cancellationToken);
 
             return success;
         }

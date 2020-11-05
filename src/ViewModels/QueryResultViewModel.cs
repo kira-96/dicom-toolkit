@@ -7,14 +7,16 @@
     using StyletIoC;
     using System;
     using System.Collections.Generic;
+    using System.Threading;
     using System.Threading.Tasks;
     using Client;
+    using Infrastructure;
     using Logging;
     using Models;
 
     public class QueryResultViewModel : Screen, IHandle<ClientMessageItem>, IDisposable
     {
-        private const int TimeoutTime = 120;
+        private const int TimeoutTime = 180;
         private readonly IEventAggregator _eventAggregator;
 
         [Inject]
@@ -146,19 +148,27 @@
 
         public async ValueTask PreviewImageAsync()
         {
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            var timeoutPolicy = GetTimeoutPolicy();
+
             IsBusy = true;
             _eventAggregator.Publish(new BusyStateEvent(IsBusy), nameof(QueryResultViewModel));
 
             var (serverIp, serverPort, serverAet, localAet) = GetServerConfig();
             DicomDataset result = null;
+
             try
             {
-                result = await queryRetrieveSCU.GetImagesBySOPInstanceAsync(
-                    serverIp, serverPort, serverAet, localAet,
-                    selectedImage.Parent.Parent.UID, selectedImage.Parent.UID, selectedImage.UID);
+                result = await timeoutPolicy.ExecuteAsync(async () =>
+                {
+                    return await queryRetrieveSCU.GetImagesBySOPInstanceAsync(
+                        serverIp, serverPort, serverAet, localAet,
+                        selectedImage.Parent.Parent.UID, selectedImage.Parent.UID, selectedImage.UID, cancellationTokenSource.Token);
+                });
             }
             finally
             {
+                cancellationTokenSource.Cancel();
                 IsBusy = false;
                 _eventAggregator.Publish(new BusyStateEvent(IsBusy), nameof(QueryResultViewModel));
             }
@@ -206,22 +216,24 @@
 
         private async ValueTask QueryPatientsAsync(ClientMessageItem message)
         {
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
             var timeoutPolicy = GetTimeoutPolicy();
 
             IsBusy = true;
             _eventAggregator.Publish(new BusyStateEvent(IsBusy), nameof(QueryResultViewModel));
 
-            List<DicomDataset> result = null;
+            IEnumerable<DicomDataset> result = null;
 
             try
             {
                 result = await timeoutPolicy.ExecuteAsync(async () =>
                 {
-                    return await queryRetrieveSCU.QueryPatientsAsync(message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET);
+                    return await queryRetrieveSCU.QueryPatientsAsync(message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET, null, null, cancellationTokenSource.Token);
                 });
             }
             finally
             {
+                cancellationTokenSource.Cancel();
                 IsBusy = false;
                 _eventAggregator.Publish(new BusyStateEvent(IsBusy), nameof(QueryResultViewModel));
             }
@@ -244,6 +256,7 @@
 
         private async ValueTask QueryStudiesAsync(IDicomObjectLevel obj)
         {
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
             var timeoutPolicy = GetTimeoutPolicy();
 
             IsBusy = true;
@@ -251,17 +264,18 @@
 
             var (serverIp, serverPort, serverAet, localAet) = GetServerConfig();
 
-            List<DicomDataset> result = null;
+            IEnumerable<DicomDataset> result = null;
 
             try
             {
                 result = await timeoutPolicy.ExecuteAsync(async () =>
                 {
-                    return await queryRetrieveSCU.QueryStudiesByPatientAsync(serverIp, serverPort, serverAet, localAet, obj.UID);
+                    return await queryRetrieveSCU.QueryStudiesByPatientAsync(serverIp, serverPort, serverAet, localAet, obj.UID, null, null, cancellationTokenSource.Token);
                 });
             }
             finally
             {
+                cancellationTokenSource.Cancel();
                 IsBusy = false;
                 _eventAggregator.Publish(new BusyStateEvent(IsBusy), nameof(QueryResultViewModel));
             }
@@ -287,6 +301,7 @@
 
         private async ValueTask QuerySeriesAsync(IDicomObjectLevel obj)
         {
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
             var timeoutPolicy = GetTimeoutPolicy();
 
             IsBusy = true;
@@ -294,14 +309,15 @@
 
             var (serverIp, serverPort, serverAet, localAet) = GetServerConfig();
 
-            List<DicomDataset> result = null;
+            IEnumerable<DicomDataset> result = null;
 
             try
             {
-                result = await timeoutPolicy.ExecuteAsync(async () => { return await queryRetrieveSCU.QuerySeriesByStudyAsync(serverIp, serverPort, serverAet, localAet, obj.UID); });
+                result = await timeoutPolicy.ExecuteAsync(async () => { return await queryRetrieveSCU.QuerySeriesByStudyAsync(serverIp, serverPort, serverAet, localAet, obj.UID, null, cancellationTokenSource.Token); });
             }
             finally
             {
+                cancellationTokenSource.Cancel();
                 IsBusy = false;
                 _eventAggregator.Publish(new BusyStateEvent(IsBusy), nameof(QueryResultViewModel));
             }
@@ -327,6 +343,7 @@
 
         private async ValueTask QueryImagesAsync(IDicomObjectLevel obj)
         {
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
             var timeoutPolicy = GetTimeoutPolicy();
 
             IsBusy = true;
@@ -334,17 +351,18 @@
 
             var (serverIp, serverPort, serverAet, localAet) = GetServerConfig();
 
-            List<DicomDataset> result = null;
+            IEnumerable<DicomDataset> result = null;
             try
             {
                 result = await timeoutPolicy.ExecuteAsync(async () =>
                 {
                     return await queryRetrieveSCU.QueryImagesByStudyAndSeriesAsync(
-                        serverIp, serverPort, serverAet, localAet, obj.Parent.UID, obj.UID);
+                        serverIp, serverPort, serverAet, localAet, obj.Parent.UID, obj.UID, null, cancellationTokenSource.Token);
                 });
             }
             finally
             {
+                cancellationTokenSource.Cancel();
                 IsBusy = false;
                 _eventAggregator.Publish(new BusyStateEvent(IsBusy), nameof(QueryResultViewModel));
             }

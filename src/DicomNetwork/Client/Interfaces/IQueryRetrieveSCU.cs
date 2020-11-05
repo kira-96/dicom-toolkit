@@ -2,6 +2,7 @@
 {
     using Dicom;
     using System.Collections.Generic;
+    using System.Threading;
     using System.Threading.Tasks;
 
     public interface IQueryRetrieveSCU
@@ -15,8 +16,9 @@
         /// <param name="localAET">local AET</param>
         /// <param name="patientId">patient ID</param>
         /// <param name="patientName">patient name</param>
+        /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns>datasets</returns>
-        ValueTask<List<DicomDataset>> QueryPatientsAsync(string serverIp, int serverPort, string serverAET, string localAET, string patientId = null, string patientName = null);
+        ValueTask<IEnumerable<DicomDataset>> QueryPatientsAsync(string serverIp, int serverPort, string serverAET, string localAET, string patientId = null, string patientName = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Query studies from remote server
@@ -28,8 +30,9 @@
         /// <param name="patientId">patient ID</param>
         /// <param name="patientName">patient name</param>
         /// <param name="studyDateTime">study date time range</param>
+        /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns>datasets</returns>
-        ValueTask<List<DicomDataset>> QueryStudiesByPatientAsync(string serverIp, int serverPort, string serverAET, string localAET, string patientId = null, string patientName = null, DicomDateRange studyDateTime = null);
+        ValueTask<IEnumerable<DicomDataset>> QueryStudiesByPatientAsync(string serverIp, int serverPort, string serverAET, string localAET, string patientId = null, string patientName = null, DicomDateRange studyDateTime = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// query series from remote server
@@ -40,8 +43,9 @@
         /// <param name="localAET">local AET</param>
         /// <param name="studyInstanceUid">study instance UID</param>
         /// <param name="modality">modality</param>
+        /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns>datasets</returns>
-        ValueTask<List<DicomDataset>> QuerySeriesByStudyAsync(string serverIp, int serverPort, string serverAET, string localAET, string studyInstanceUid, string modality = null);
+        ValueTask<IEnumerable<DicomDataset>> QuerySeriesByStudyAsync(string serverIp, int serverPort, string serverAET, string localAET, string studyInstanceUid, string modality = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// query images from remote server
@@ -52,9 +56,10 @@
         /// <param name="localAET">local AET</param>
         /// <param name="studyInstanceUid">study instance UID</param>
         /// <param name="seriesInstanceUid">series instance UID</param>
-        /// <param name="modality">mocalidt</param>
+        /// <param name="modality">modality</param>
+        /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns>datasets</returns>
-        ValueTask<List<DicomDataset>> QueryImagesByStudyAndSeriesAsync(string serverIp, int serverPort, string serverAET, string localAET, string studyInstanceUid, string seriesInstanceUid, string modality = null);
+        ValueTask<IEnumerable<DicomDataset>> QueryImagesByStudyAndSeriesAsync(string serverIp, int serverPort, string serverAET, string localAET, string studyInstanceUid, string seriesInstanceUid, string modality = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// get images from remote server
@@ -65,8 +70,9 @@
         /// <param name="localAET">local AET</param>
         /// <param name="studyInstanceUid">study instance UID</param>
         /// <param name="seriesInstanceUid">series instance UID</param>
+        /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns>images dataset</returns>
-        ValueTask<List<DicomDataset>> GetImagesBySeriesAsync(string serverIp, int serverPort, string serverAET, string localAET, string studyInstanceUid, string seriesInstanceUid);
+        ValueTask<IEnumerable<DicomDataset>> GetImagesBySeriesAsync(string serverIp, int serverPort, string serverAET, string localAET, string studyInstanceUid, string seriesInstanceUid, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// get image from remote server
@@ -78,8 +84,9 @@
         /// <param name="studyInstanceUid">study instance UID</param>
         /// <param name="seriesInstanceUid">series instance UID</param>
         /// <param name="sopInstanceUid">SOP instance UID</param>
+        /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns>image dataset</returns>
-        ValueTask<DicomDataset> GetImagesBySOPInstanceAsync(string serverIp, int serverPort, string serverAET, string localAET, string studyInstanceUid, string seriesInstanceUid, string sopInstanceUid);
+        ValueTask<DicomDataset> GetImagesBySOPInstanceAsync(string serverIp, int serverPort, string serverAET, string localAET, string studyInstanceUid, string seriesInstanceUid, string sopInstanceUid, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// send C-MOVE request
@@ -91,7 +98,8 @@
         /// <param name="destAET">destination AET, need registered in server</param>
         /// <param name="studyInstanceUid">study instance UID</param>
         /// <param name="seriesInstanceUid">series instance UID</param>
+        /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns>true if success, else false</returns>
-        ValueTask<bool?> MoveImagesAsync(string serverIp, int serverPort, string serverAET, string localAET, string destAET, string studyInstanceUid, string seriesInstanceUid);
+        ValueTask<bool?> MoveImagesAsync(string serverIp, int serverPort, string serverAET, string localAET, string destAET, string studyInstanceUid, string seriesInstanceUid, CancellationToken cancellationToken = default);
     }
 }

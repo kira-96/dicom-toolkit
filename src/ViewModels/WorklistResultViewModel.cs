@@ -6,8 +6,10 @@
     using System;
     using System.Collections.Generic;
     using System.Text;
+    using System.Threading;
     using System.Threading.Tasks;
     using Client;
+    using Infrastructure;
     using Logging;
     using Models;
     using Services;
@@ -172,16 +174,27 @@
 
             WorklistItems.Clear();
 
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+
             try
             {
-                var result = await timeoutPolicy.ExecuteAsync(async () =>
+                // Alt 1
+                //var result = await timeoutPolicy.ExecuteAsync(async () =>
+                //{
+                //    Encoding fallbackEncoding = Dicom.DicomEncoding.Default;  // 不要移除这行代码，.NET Core 平台会在这里注册 CodePagesEncodingProvider
+                //    fallbackEncoding = Encoding.GetEncoding(_configurationService.GetConfiguration<AppConfiguration>().DicomEncoding);
+                //    return await _worklistSCU.GetAllResultFromWorklistAsync(message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET, message.Modality, fallbackEncoding, cancellationTokenSource.Token);
+                //});
+
+                //WorklistItems.AddRange(result);
+
+                // Alt 2
+                await timeoutPolicy.ExecuteAsync(async () =>
                 {
                     Encoding fallbackEncoding = Dicom.DicomEncoding.Default;  // 不要移除这行代码，.NET Core 平台会在这里注册 CodePagesEncodingProvider
                     fallbackEncoding = Encoding.GetEncoding(_configurationService.GetConfiguration<AppConfiguration>().DicomEncoding);
-                    return await _worklistSCU.GetAllResultFromWorklistAsync(message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET, message.Modality, fallbackEncoding);
+                    await _worklistSCU.GetAllResultFromWorklistAsync(message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET, WorklistItems, message.Modality, fallbackEncoding, cancellationTokenSource.Token);
                 });
-
-                WorklistItems.AddRange(result);
 
                 string content = string.Format(
                     _i18NService.GetXmlStringByKey("ToastWorklistResult"),
@@ -191,6 +204,7 @@
             }
             finally
             {
+                cancellationTokenSource.Cancel();
                 IsBusy = false;
                 _eventAggregator.Publish(new BusyStateEvent(IsBusy), nameof(WorklistResultViewModel));
             }

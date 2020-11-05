@@ -1,4 +1,4 @@
-﻿namespace SimpleDICOMToolkit.Models
+﻿namespace SimpleDICOMToolkit.Infrastructure
 {
     /// <summary>
     /// 列表显示的 Worklist 查询结果

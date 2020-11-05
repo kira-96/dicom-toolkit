@@ -1,8 +1,9 @@
 ﻿namespace SimpleDICOMToolkit.Client
 {
     using System.Collections.Generic;
+    using System.Threading;
     using System.Threading.Tasks;
-    using Models;
+    using Infrastructure;
 
     public interface IStoreSCU
     {
@@ -14,7 +15,8 @@
         /// <param name="serverAET">Server AE Title</param>
         /// <param name="localAET">Client AE Title</param>
         /// <param name="dcmFiles">files path</param>
+        /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns>ValueTask</returns>
-        ValueTask StoreImageAsync(string serverIp, int serverPort, string serverAET, string localAET, IEnumerable<CStoreItem> dcmFiles);
+        ValueTask StoreImageAsync(string serverIp, int serverPort, string serverAET, string localAET, IEnumerable<IStoreItem> dcmFiles, CancellationToken cancellationToken = default);
     }
 }

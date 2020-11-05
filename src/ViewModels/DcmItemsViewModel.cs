@@ -150,6 +150,7 @@
             DicomItems.Clear();
 
             _currentFile = await DicomFile.OpenAsync(file);
+            _currentFile.FileMetaInfo.NotValidated();
             _currentFile.Dataset.NotValidated();
 
             await Task.Run(() =>

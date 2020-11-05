@@ -2,7 +2,7 @@
 {
     using System.Windows.Controls;
     using System.Windows.Input;
-    using Models;
+    using Infrastructure;
     using ViewModels;
 
     /// <summary>
@@ -17,7 +17,7 @@
 
         private void CStoreItemMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            (DataContext as StoreFileListViewModel).PreviewCStoreItem((sender as ListViewItem).DataContext as CStoreItem);
+            (DataContext as StoreFileListViewModel).PreviewCStoreItem((sender as ListViewItem).DataContext as IStoreItem);
         }
     }
 }

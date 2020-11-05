@@ -8,9 +8,10 @@
     using System.Linq;
     using System.Collections.Generic;
     using System.Text;
+    using System.Threading;
     using System.Threading.Tasks;
+    using Infrastructure;
     using Logging;
-    using Models;
 
     public class WorklistSCU : IWorklistSCU
     {
@@ -20,7 +21,7 @@
 
         private readonly ILoggerService Logger;
 
-        private List<DicomDataset> worklistItems;
+        private IEnumerable<DicomDataset> worklistItems;
 
         public WorklistSCU([Inject(Key = "filelogger")] ILoggerService loggerService)
         {
@@ -36,8 +37,9 @@
         /// <param name="serverAET">Remote AET</param>
         /// <param name="localAET">Local AET</param>
         /// <param name="modality">Modality</param>
+        /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns>Dataset</returns>
-        public async ValueTask<List<DicomDataset>> GetAllItemsFromWorklistAsync(string serverIp, int serverPort, string serverAET, string localAET, string modality = null)
+        public async ValueTask<IEnumerable<DicomDataset>> GetAllItemsFromWorklistAsync(string serverIp, int serverPort, string serverAET, string localAET, string modality = null, CancellationToken cancellationToken = default)
         {
             List<DicomDataset> worklistItems = new List<DicomDataset>();
 
@@ -71,14 +73,14 @@
             DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
 
             await client.AddRequestAsync(worklistRequest);
-            await client.SendAsync();
+            await client.SendAsync(cancellationToken);
 
             return worklistItems;
         }
 
-        public async ValueTask<List<SimpleWorklistResult>> GetAllResultFromWorklistAsync(string serverIp, int serverPort, string serverAET, string localAET, string modality = null, Encoding fallbackEncoding = null)
+        public async ValueTask<IEnumerable<SimpleWorklistResult>> GetAllResultFromWorklistAsync(string serverIp, int serverPort, string serverAET, string localAET, string modality = null, Encoding fallbackEncoding = null, CancellationToken cancellationToken = default)
         {
-            worklistItems = await GetAllItemsFromWorklistAsync(serverIp, serverPort, serverAET, localAET, modality);
+            worklistItems = await GetAllItemsFromWorklistAsync(serverIp, serverPort, serverAET, localAET, modality, cancellationToken);
 
             List<SimpleWorklistResult> worklistResults = new List<SimpleWorklistResult>();
 
@@ -88,6 +90,46 @@
             }
 
             return worklistResults;
+        }
+
+        public async ValueTask GetAllResultFromWorklistAsync(string serverIp, int serverPort, string serverAET, string localAET, ICollection<SimpleWorklistResult> worklistResults, string modality = null, Encoding fallbackEncoding = null, CancellationToken cancellationToken = default)
+        {
+            if (worklistResults == null)
+            {
+                return;
+            }
+
+            DicomCFindRequest worklistRequest = RequestFactory.CreateWorklistQuery(null, null, localAET, null, modality
+                //, new DicomDateRange(DateTime.Today, DateTime.Today.AddHours(23).AddMinutes(59).AddSeconds(59))  // 时间限制：当天 00:00:00 ~ 23:59:59
+                );
+
+            worklistRequest.OnResponseReceived += (request, response) =>
+            {
+                if (!response.HasDataset)
+                {
+                    if (response.Status == DicomStatus.Success)
+                        Logger.Debug("Worklist response END.");
+                    else
+                        Logger.Debug("Worklist response has [NO DATASET].");
+
+                    return;
+                }
+
+                if (response.Status != DicomStatus.Success &&
+                    response.Status != DicomStatus.Pending &&
+                    response.Status != DicomStatus.QueryRetrieveOptionalKeysNotSupported)
+                {
+                    Logger.Error("Worklist response error - [{0}]", response.Status);
+                    return;
+                }
+
+                worklistResults.Add(GetWorklistResultFromDataset(response.Dataset, fallbackEncoding));
+            };
+
+            DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
+
+            await client.AddRequestAsync(worklistRequest);
+            await client.SendAsync(cancellationToken);
         }
 
         public async ValueTask<(DicomUID affectedInstanceUid, string studyInstanceUid, bool result)> SendMppsInProgressAsync(string serverIp, int serverPort, string serverAET, string localAET, DicomDataset worklistItem)

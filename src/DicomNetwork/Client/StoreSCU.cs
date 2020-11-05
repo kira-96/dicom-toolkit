@@ -4,9 +4,10 @@
     using Dicom.Network;
     using DicomClient = Dicom.Network.Client.DicomClient;
     using System.Collections.Generic;
+    using System.Threading;
     using System.Threading.Tasks;
+    using Infrastructure;
     using Logging;
-    using Models;
 
     public class StoreSCU : IStoreSCU
     {
@@ -17,11 +18,11 @@
             Logger = loggerService;
         }
 
-        public async ValueTask StoreImageAsync(string serverIp, int serverPort, string serverAET, string localAET, IEnumerable<CStoreItem> items)
+        public async ValueTask StoreImageAsync(string serverIp, int serverPort, string serverAET, string localAET, IEnumerable<IStoreItem> items, CancellationToken cancellationToken = default)
         {
-            DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
+            List<DicomCStoreRequest> requests = new List<DicomCStoreRequest>();
 
-            foreach (CStoreItem item in items)
+            foreach (IStoreItem item in items)
             {
                 DicomCStoreRequest request = new DicomCStoreRequest(item.File)
                 {
@@ -30,19 +31,22 @@
                         if (res.Status != DicomStatus.Success)
                         {
                             Logger.Error("C-STORE send failed. Instance UID - [{0}]", req.SOPInstanceUID);
-                            item.Status = CStoreItemStatus.Failed;
+                            item.Status = StoreItemStatus.Failed;
                         }
                         else
                         {
-                            item.Status = CStoreItemStatus.Success;
+                            item.Status = StoreItemStatus.Success;
                         }
                     }
                 };
 
-                await client.AddRequestAsync(request);
+                requests.Add(request);
             }
 
-            await client.SendAsync();
+            DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
+
+            await client.AddRequestsAsync(requests);
+            await client.SendAsync(cancellationToken);
         }
     }
 }

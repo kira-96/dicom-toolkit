@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:s="https://github.com/canton7/Stylet"
+             xmlns:inf="clr-namespace:SimpleDICOMToolkit.Infrastructure"
              xmlns:m="clr-namespace:SimpleDICOMToolkit.Models"
              xmlns:vm="clr-namespace:SimpleDICOMToolkit.ViewModels"
              mc:Ignorable="d"
@@ -89,12 +90,12 @@
                             <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderStatus']" />
                         </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
-                            <DataTemplate DataType="{x:Type m:CStoreItem}">
+                            <DataTemplate DataType="{x:Type m:StoreItem}">
                                 <Image x:Name="StatusImage" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                 <DataTemplate.Triggers>
                                     <DataTrigger Binding="{Binding Status}">
                                         <DataTrigger.Value>
-                                            <m:CStoreItemStatus>Waiting</m:CStoreItemStatus>
+                                            <inf:StoreItemStatus>Waiting</inf:StoreItemStatus>
                                         </DataTrigger.Value>
                                         <Setter TargetName="StatusImage" Property="Source" Value="pack://application:,,,/Assets/waiting.png" />
                                         <Setter TargetName="StatusImage" Property="ToolTip">
@@ -105,7 +106,7 @@
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Status}">
                                         <DataTrigger.Value>
-                                            <m:CStoreItemStatus>Success</m:CStoreItemStatus>
+                                            <inf:StoreItemStatus>Success</inf:StoreItemStatus>
                                         </DataTrigger.Value>
                                         <Setter TargetName="StatusImage" Property="Source" Value="pack://application:,,,/Assets/success.png" />
                                         <Setter TargetName="StatusImage" Property="ToolTip">
@@ -116,7 +117,7 @@
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Status}">
                                         <DataTrigger.Value>
-                                            <m:CStoreItemStatus>Failed</m:CStoreItemStatus>
+                                            <inf:StoreItemStatus>Failed</inf:StoreItemStatus>
                                         </DataTrigger.Value>
                                         <Setter TargetName="StatusImage" Property="Source" Value="pack://application:,,,/Assets/failed.png" />
                                         <Setter TargetName="StatusImage" Property="ToolTip">

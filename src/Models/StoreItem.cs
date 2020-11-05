@@ -2,21 +2,12 @@
 {
     using Stylet;
     using System.IO;
-
-    /// <summary>
-    /// 文件发送状态
-    /// </summary>
-    public enum CStoreItemStatus
-    {
-        Waiting,  // 等待
-        Success,  // 成功
-        Failed    // 失败
-    }
+    using Infrastructure;
 
     /// <summary>
     /// 列表显示的待发送文件
     /// </summary>
-    public class CStoreItem : PropertyChangedBase
+    public class StoreItem : PropertyChangedBase, IStoreItem
     {
         private int _id;
         public int Id 
@@ -29,15 +20,15 @@
 
         public string FileName { get; private set; }
 
-        private CStoreItemStatus _status = CStoreItemStatus.Waiting;
+        private StoreItemStatus _status = StoreItemStatus.Waiting;
 
-        public CStoreItemStatus Status
+        public StoreItemStatus Status
         {
             get => _status;
             set => SetAndNotify(ref _status, value);
         }
 
-        public CStoreItem(int id, string file)
+        public StoreItem(int id, string file)
         {
             _id = id;
             File = file;
