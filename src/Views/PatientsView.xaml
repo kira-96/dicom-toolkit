@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:s="https://github.com/canton7/Stylet"
+             xmlns:inf="clr-namespace:SimpleDICOMToolkit.Infrastructure"
              xmlns:m="clr-namespace:SimpleDICOMToolkit.Models"
              xmlns:vm="clr-namespace:SimpleDICOMToolkit.ViewModels"
              mc:Ignorable="d" 
@@ -103,7 +104,7 @@
                                 <DataTemplate.Triggers>
                                     <DataTrigger Binding="{Binding MppsStatus}">
                                         <DataTrigger.Value>
-                                            <m:MppsStatus>Waiting</m:MppsStatus>
+                                            <inf:MppsStatus>Waiting</inf:MppsStatus>
                                         </DataTrigger.Value>
                                         <Setter TargetName="StatusImage" Property="Source" Value="pack://application:,,,/Assets/waiting.png" />
                                         <Setter TargetName="StatusImage" Property="ToolTip">
@@ -114,7 +115,7 @@
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding MppsStatus}">
                                         <DataTrigger.Value>
-                                            <m:MppsStatus>InProgress</m:MppsStatus>
+                                            <inf:MppsStatus>InProgress</inf:MppsStatus>
                                         </DataTrigger.Value>
                                         <Setter TargetName="StatusImage" Property="Source" Value="pack://application:,,,/Assets/in-progress.png" />
                                         <Setter TargetName="StatusImage" Property="ToolTip">
@@ -125,7 +126,7 @@
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding MppsStatus}">
                                         <DataTrigger.Value>
-                                            <m:MppsStatus>Completed</m:MppsStatus>
+                                            <inf:MppsStatus>Completed</inf:MppsStatus>
                                         </DataTrigger.Value>
                                         <Setter TargetName="StatusImage" Property="Source" Value="pack://application:,,,/Assets/success.png" />
                                         <Setter TargetName="StatusImage" Property="ToolTip">
@@ -136,7 +137,7 @@
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding MppsStatus}">
                                         <DataTrigger.Value>
-                                            <m:MppsStatus>Discontinued</m:MppsStatus>
+                                            <inf:MppsStatus>Discontinued</inf:MppsStatus>
                                         </DataTrigger.Value>
                                         <Setter TargetName="StatusImage" Property="Source" Value="pack://application:,,,/Assets/failed1.png" />
                                         <Setter TargetName="StatusImage" Property="ToolTip">

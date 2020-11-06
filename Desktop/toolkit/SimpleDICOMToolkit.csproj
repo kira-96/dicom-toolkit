@@ -231,6 +231,9 @@
     <Compile Include="..\..\src\Infrastructure\IStoreItem.cs">
       <Link>Infrastructure\IStoreItem.cs</Link>
     </Compile>
+    <Compile Include="..\..\src\Infrastructure\IWorklistItem.cs">
+      <Link>Infrastructure\IWorklistItem.cs</Link>
+    </Compile>
     <Compile Include="..\..\src\Infrastructure\SimpleWorklistResult.cs">
       <Link>Infrastructure\SimpleWorklistResult.cs</Link>
     </Compile>

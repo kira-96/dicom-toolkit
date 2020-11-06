@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using SimpleDICOMToolkit.Models;
+using SimpleDICOMToolkit.Infrastructure;
 
 namespace SimpleDICOMToolkit.Server
 {
@@ -16,7 +16,7 @@ namespace SimpleDICOMToolkit.Server
         /// <param name="request">request dataset</param>
         /// <param name="fallbackEncoding">Encoding to use if encoding cannot be obtained from dataset</param>
         /// <returns>response datasets</returns>
-        public static IEnumerable<DicomDataset> FilterWorklistItems(IEnumerable<WorklistItem> worklistItems, DicomDataset request, Encoding fallbackEncoding = null)
+        public static IEnumerable<DicomDataset> FilterWorklistItems(IEnumerable<IWorklistItem> worklistItems, DicomDataset request, Encoding fallbackEncoding = null)
         {
             Encoding encoding = fallbackEncoding ?? Encoding.UTF8;
 
@@ -141,7 +141,7 @@ namespace SimpleDICOMToolkit.Server
             }
         }
 
-        internal static IQueryable<WorklistItem> FilterWorklistItemsByName(IQueryable<WorklistItem> exams, string patientName)
+        internal static IQueryable<IWorklistItem> FilterWorklistItemsByName(IQueryable<IWorklistItem> exams, string patientName)
         {
             if (string.IsNullOrEmpty(patientName) || patientName == "*")
             {

@@ -4,12 +4,13 @@
     using StyletIoC;
     using System;
     using System.Text;
+    using Helpers;
+    using Infrastructure;
     using Models;
     using Server;
     using Services;
-    using Helpers;
 
-    public class PatientsViewModel : Screen, IHandle<ServerMessageItem>, IHandle<WorklistItem>, IDisposable
+    public class PatientsViewModel : Screen, IHandle<ServerMessageItem>, IHandle<IWorklistItem>, IDisposable
     {
         [Inject]
         private IWindowManager _windowManager;
@@ -31,7 +32,7 @@
 
         private readonly IEventAggregator _eventAggregator;
 
-        public BindableCollection<WorklistItem> WorklistItems { get; private set; }
+        public BindableCollection<IWorklistItem> WorklistItems { get; private set; }
 
         private bool _isServerStarted = false;
 
@@ -49,7 +50,7 @@
 
         public void UpdateData()
         {
-            WorklistItems = new BindableCollection<WorklistItem>();
+            WorklistItems = new BindableCollection<IWorklistItem>();
             WorklistServer.Default.WorklistItems = WorklistItems;
             WorklistItems.AddRange(dataService.GetWorklistItems());
         }
@@ -82,19 +83,19 @@
             _windowManager.ShowDialog(register, this);
         }
 
-        public void Handle(WorklistItem message)
+        public void Handle(IWorklistItem message)
         {
             WorklistItems.Add(message);
             dataService.AddWorklistItem(message);
         }
 
-        public void RemoveItem(WorklistItem item)
+        public void RemoveItem(IWorklistItem item)
         {
             WorklistItems.Remove(item);
             dataService.RemoveWorklistItem(item);
         }
 
-        public void ViewDetails(WorklistItem item)
+        public void ViewDetails(IWorklistItem item)
         {
             var register = viewModelFactory.GetRegistrationViewModel();
 

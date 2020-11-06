@@ -1,7 +1,7 @@
 ﻿using Dicom.Network;
 using System.Collections.Generic;
 using System.Text;
-using SimpleDICOMToolkit.Models;
+using SimpleDICOMToolkit.Infrastructure;
 
 namespace SimpleDICOMToolkit.Server
 {
@@ -16,7 +16,7 @@ namespace SimpleDICOMToolkit.Server
         public IMppsSource MppsSource { get; private set; } = null;
 
         // must set
-        public IEnumerable<WorklistItem> WorklistItems { get; set; } = null;
+        public IEnumerable<IWorklistItem> WorklistItems { get; set; } = null;
 
         public static WorklistServer Default
         {

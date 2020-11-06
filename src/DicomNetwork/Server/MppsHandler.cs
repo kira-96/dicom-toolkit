@@ -6,7 +6,7 @@
 using Dicom.Log;
 using System.Collections.Generic;
 using System.Linq;
-using SimpleDICOMToolkit.Models;
+using SimpleDICOMToolkit.Infrastructure;
 
 namespace SimpleDICOMToolkit.Server
 {
@@ -15,13 +15,13 @@ namespace SimpleDICOMToolkit.Server
     /// </summary>
     public class MppsHandler : IMppsSource
     {
-        private readonly Dictionary<string, WorklistItem> PendingProcedures = new Dictionary<string, WorklistItem>();
+        private readonly Dictionary<string, IWorklistItem> PendingProcedures = new Dictionary<string, IWorklistItem>();
 
-        private readonly IEnumerable<WorklistItem> _worklistItems;
+        private readonly IEnumerable<IWorklistItem> _worklistItems;
 
         private readonly Logger _logger;
 
-        public MppsHandler(IEnumerable<WorklistItem> worklistItems, Logger logger)
+        public MppsHandler(IEnumerable<IWorklistItem> worklistItems, Logger logger)
         {
             _worklistItems = worklistItems;
             _logger = logger;

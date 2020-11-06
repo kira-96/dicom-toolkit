@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using SimpleDICOMToolkit.Models;
+using SimpleDICOMToolkit.Infrastructure;
 
 namespace SimpleDICOMToolkit.Services
 {
@@ -25,24 +25,24 @@ namespace SimpleDICOMToolkit.Services
         /// Query all worklist items from database
         /// </summary>
         /// <returns></returns>
-        IEnumerable<WorklistItem> GetWorklistItems();
+        IEnumerable<IWorklistItem> GetWorklistItems();
 
         /// <summary>
         /// Add new worklist item to database
         /// </summary>
         /// <param name="worklistItem"></param>
-        void AddWorklistItem(WorklistItem worklistItem);
+        void AddWorklistItem(IWorklistItem worklistItem);
 
         /// <summary>
         /// Remove worklist item from database
         /// </summary>
         /// <param name="worklistItem"></param>
-        void RemoveWorklistItem(WorklistItem worklistItem);
+        void RemoveWorklistItem(IWorklistItem worklistItem);
 
         /// <summary>
         /// Update worklist item
         /// </summary>
         /// <param name="worklistItem"></param>
-        void UpdateWorklistItemStatus(WorklistItem worklistItem);
+        void UpdateWorklistItemStatus(IWorklistItem worklistItem);
     }
 }

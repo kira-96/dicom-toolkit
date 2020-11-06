@@ -12,12 +12,12 @@
 
     public interface IStoreItem
     {
-        public int Id { get; set; }
+        int Id { get; set; }
 
-        public string File { get; }
+        string File { get; }
 
-        public string FileName { get; }
+        string FileName { get; }
 
-        public StoreItemStatus Status { get; set; }
+        StoreItemStatus Status { get; set; }
     }
 }

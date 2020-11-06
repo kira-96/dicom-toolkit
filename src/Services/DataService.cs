@@ -1,5 +1,6 @@
 ﻿using LiteDB;
 using System.Collections.Generic;
+using SimpleDICOMToolkit.Infrastructure;
 using SimpleDICOMToolkit.Models;
 
 namespace SimpleDICOMToolkit.Services
@@ -31,7 +32,7 @@ namespace SimpleDICOMToolkit.Services
             }
         }
 
-        public IEnumerable<WorklistItem> GetWorklistItems()
+        public IEnumerable<IWorklistItem> GetWorklistItems()
         {
             if (!IsConnected)
                 return null;
@@ -39,34 +40,34 @@ namespace SimpleDICOMToolkit.Services
             return db.GetCollection<WorklistItem>("worklistitems").Query().ToEnumerable();
         }
 
-        public void AddWorklistItem(WorklistItem worklistItem)
+        public void AddWorklistItem(IWorklistItem worklistItem)
         {
             if (!IsConnected)
                 return;
 
             var col = db.GetCollection("worklistitems");
 
-            col.Insert(worklistItem.ToBsonDocument());
+            col.Insert(((WorklistItem)worklistItem).ToBsonDocument());
         }
 
-        public void RemoveWorklistItem(WorklistItem worklistItem)
+        public void RemoveWorklistItem(IWorklistItem worklistItem)
         {
             if (!IsConnected)
                 return;
 
             var col = db.GetCollection("worklistitems");
 
-            col.Delete(worklistItem.Id);
+            col.Delete(((WorklistItem)worklistItem).Id);
         }
 
-        public void UpdateWorklistItemStatus(WorklistItem worklistItem)
+        public void UpdateWorklistItemStatus(IWorklistItem worklistItem)
         {
             if (!IsConnected)
                 return;
 
             var col = db.GetCollection("worklistitems");
 
-            col.Update(worklistItem.ToBsonDocument());
+            col.Update(((WorklistItem)worklistItem).ToBsonDocument());
         }
     }
 }

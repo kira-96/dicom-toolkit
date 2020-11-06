@@ -1,21 +1,15 @@
 ﻿using LiteDB;
 using Stylet;
 using System;
+using SimpleDICOMToolkit.Infrastructure;
 
 namespace SimpleDICOMToolkit.Models
 {
-    public enum MppsStatus
-    {
-        Waiting,
-        InProgress,
-        Completed,
-        Discontinued
-    }
 
     /// <summary>
     /// This class contains the most important values that are transmitted per worklist
     /// </summary>
-    public class WorklistItem : PropertyChangedBase
+    public class WorklistItem : PropertyChangedBase, IWorklistItem
     {
         public ObjectId Id { get; }
 
