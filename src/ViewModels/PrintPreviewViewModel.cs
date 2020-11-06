@@ -17,7 +17,7 @@
     using Models;
     using Services;
 
-    public class PrintPreviewViewModel : Screen, IHandle<ClientMessageItem>, IDisposable
+    public class PrintPreviewViewModel : Screen, IHandle<DicomRequestEvent>, IDisposable
     {
         private readonly IEventAggregator _eventAggregator;
 
@@ -65,7 +65,7 @@
             _eventAggregator.Subscribe(this, nameof(PrintPreviewViewModel));
         }
 
-        public async void Handle(ClientMessageItem message)
+        public async void Handle(DicomRequestEvent message)
         {
             if (ImageSource == null)
                 return;

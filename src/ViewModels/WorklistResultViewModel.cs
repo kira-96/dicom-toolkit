@@ -14,7 +14,7 @@
     using Models;
     using Services;
 
-    public class WorklistResultViewModel : Screen, IHandle<ClientMessageItem>, IDisposable
+    public class WorklistResultViewModel : Screen, IHandle<DicomRequestEvent>, IDisposable
     {
         private const int TimeoutTime = 30;
         private readonly IEventAggregator _eventAggregator;
@@ -144,7 +144,7 @@
             {}
         }
 
-        public async void Handle(ClientMessageItem message)
+        public async void Handle(DicomRequestEvent message)
         {
             var timeoutPolicy = Policy.TimeoutAsync(TimeoutTime, Polly.Timeout.TimeoutStrategy.Pessimistic, 
                 (context, timespan, abandonedTask) => 

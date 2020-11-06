@@ -1,6 +1,6 @@
 ﻿namespace SimpleDICOMToolkit.Models
 {
-    public class ClientMessageItem
+    public class DicomRequestEvent
     {
         public string ServerIP { get; private set; }
 
@@ -12,7 +12,7 @@
 
         public string Modality { get; private set; }
 
-        public ClientMessageItem(
+        public DicomRequestEvent(
             string ip,
             int port,
             string serverAET,

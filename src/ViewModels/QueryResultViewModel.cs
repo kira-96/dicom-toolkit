@@ -14,7 +14,7 @@
     using Logging;
     using Models;
 
-    public class QueryResultViewModel : Screen, IHandle<ClientMessageItem>, IDisposable
+    public class QueryResultViewModel : Screen, IHandle<DicomRequestEvent>, IDisposable
     {
         private const int TimeoutTime = 180;
         private readonly IEventAggregator _eventAggregator;
@@ -111,7 +111,7 @@
             _eventAggregator.Subscribe(this, nameof(QueryResultViewModel));
         }
 
-        public async void Handle(ClientMessageItem message)
+        public async void Handle(DicomRequestEvent message)
         {
             await QueryPatientsAsync(message);
         }
@@ -214,7 +214,7 @@
                 });
         }
 
-        private async ValueTask QueryPatientsAsync(ClientMessageItem message)
+        private async ValueTask QueryPatientsAsync(DicomRequestEvent message)
         {
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
             var timeoutPolicy = GetTimeoutPolicy();

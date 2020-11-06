@@ -264,23 +264,23 @@
     <Compile Include="..\..\src\Models\BusyStateEvent.cs">
       <Link>Models\BusyStateEvent.cs</Link>
     </Compile>
-    <Compile Include="..\..\src\Models\StoreItem.cs">
-      <Link>Models\StoreItem.cs</Link>
-    </Compile>
-    <Compile Include="..\..\src\Models\ClientMessageItem.cs">
-      <Link>Models\ClientMessageItem.cs</Link>
-    </Compile>
     <Compile Include="..\..\src\Models\DcmItem.cs">
       <Link>Models\DcmItem.cs</Link>
     </Compile>
     <Compile Include="..\..\src\Models\DicomObjectLevel.cs">
       <Link>Models\DicomObjectLevel.cs</Link>
     </Compile>
-    <Compile Include="..\..\src\Models\ServerMessageItem.cs">
-      <Link>Models\ServerMessageItem.cs</Link>
+    <Compile Include="..\..\src\Models\DicomRequestEvent.cs">
+      <Link>Models\DicomRequestEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Models\DicomServiceEvent.cs">
+      <Link>Models\DicomServiceEvent.cs</Link>
     </Compile>
     <Compile Include="..\..\src\Models\ServerStateEvent.cs">
       <Link>Models\ServerStateEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Models\StoreItem.cs">
+      <Link>Models\StoreItem.cs</Link>
     </Compile>
     <Compile Include="..\..\src\Models\UpdateDicomElementEvent.cs">
       <Link>Models\UpdateDicomElementEvent.cs</Link>

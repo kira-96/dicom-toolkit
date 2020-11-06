@@ -10,7 +10,7 @@
     using Services;
     using Helpers;
 
-    public class StoreReceivedViewModel : Screen, IHandle<ServerMessageItem>, IDisposable
+    public class StoreReceivedViewModel : Screen, IHandle<DicomServiceEvent>, IDisposable
     {
         [Inject]
         private IWindowManager _windowManager;
@@ -58,7 +58,7 @@
             }
         }
 
-        public void Handle(ServerMessageItem message)
+        public void Handle(DicomServiceEvent message)
         {
             if (IsServerStarted)
             {

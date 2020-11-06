@@ -8,7 +8,7 @@
     using Services;
     using Helpers;
 
-    public class PrintJobsViewModel : Screen, IHandle<ServerMessageItem>, IDisposable
+    public class PrintJobsViewModel : Screen, IHandle<DicomServiceEvent>, IDisposable
     {
         [Inject]
         private II18nService i18NService;
@@ -32,7 +32,7 @@
             _eventAggregator.Subscribe(this, nameof(PrintJobsViewModel));
         }
 
-        public void Handle(ServerMessageItem message)
+        public void Handle(DicomServiceEvent message)
         {
             if (IsServerStarted)
             {

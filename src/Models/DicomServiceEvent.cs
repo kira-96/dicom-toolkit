@@ -1,12 +1,12 @@
 ﻿namespace SimpleDICOMToolkit.Models
 {
-    public class ServerMessageItem
+    public class DicomServiceEvent
     {
         public int ServerPort { get; private set; }
 
         public string LocalAET { get; private set; }
 
-        public ServerMessageItem(int port, string aet)
+        public DicomServiceEvent(int port, string aet)
         {
             ServerPort = port;
             LocalAET = aet;

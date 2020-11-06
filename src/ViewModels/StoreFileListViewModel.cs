@@ -11,7 +11,7 @@
     using Models;
     using Services;
 
-    public class StoreFileListViewModel : Screen, IHandle<ClientMessageItem>, IDisposable
+    public class StoreFileListViewModel : Screen, IHandle<DicomRequestEvent>, IDisposable
     {
         private readonly IEventAggregator _eventAggregator;
 
@@ -41,7 +41,7 @@
             _eventAggregator.Subscribe(this, nameof(StoreFileListViewModel));
         }
 
-        public async void Handle(ClientMessageItem message)
+        public async void Handle(DicomRequestEvent message)
         {
             if (FileList.Count == 0)
                 return;

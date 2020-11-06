@@ -10,7 +10,7 @@
     using Server;
     using Services;
 
-    public class PatientsViewModel : Screen, IHandle<ServerMessageItem>, IHandle<IWorklistItem>, IDisposable
+    public class PatientsViewModel : Screen, IHandle<DicomServiceEvent>, IHandle<IWorklistItem>, IDisposable
     {
         [Inject]
         private IWindowManager _windowManager;
@@ -55,7 +55,7 @@
             WorklistItems.AddRange(dataService.GetWorklistItems());
         }
 
-        public void Handle(ServerMessageItem message)
+        public void Handle(DicomServiceEvent message)
         {
             if (IsServerStarted)
             {
