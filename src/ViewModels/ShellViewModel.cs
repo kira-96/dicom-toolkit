@@ -4,6 +4,7 @@
     using StyletIoC;
     using System;
     using System.Threading.Tasks;
+    using System.Windows.Shell;
     using Logging;
     using Models;
     using Services;
@@ -23,12 +24,7 @@
         private readonly IUpdateService updateService;
         private readonly ISimpleMqttService mqttService;
 
-        private bool indeterminate;
-        public bool Indeterminate
-        {
-            get => indeterminate;
-            internal set => SetAndNotify(ref indeterminate, value);
-        }
+        public ITaskbarService TaskbarService { get; }
 
         public ShellViewModel(
             IContainer container,
@@ -39,6 +35,7 @@
             IConfigurationService configurationService,
             IDataService dataService,
             INotificationService notificationService,
+            ITaskbarService taskbarService,
             IUpdateService updateService,
             ISimpleMqttService mqttService,
             DcmItemsViewModel dcmItemsViewModel,
@@ -59,6 +56,7 @@
             this.configurationService = configurationService;
             this.dataService = dataService;
             this.notificationService = notificationService;
+            this.TaskbarService = taskbarService;
             this.updateService = updateService;
             this.mqttService = mqttService;
 
@@ -116,7 +114,8 @@
             var worklistResultViewModel = (Items[1] as WorklistViewModel).WorklistResultViewModel;
             var queryResultViewModel = (Items[3] as QueryRetrieveViewModel).QueryResultViewModel;
 
-            Indeterminate = worklistResultViewModel.IsBusy || queryResultViewModel.IsBusy;
+            TaskbarService.ProgressState = worklistResultViewModel.IsBusy || queryResultViewModel.IsBusy ?
+                TaskbarItemProgressState.Indeterminate : TaskbarItemProgressState.None;
         }
 
         private async ValueTask HandleCommandLineArgs(string[] args)

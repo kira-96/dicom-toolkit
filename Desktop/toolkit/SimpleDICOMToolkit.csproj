@@ -117,9 +117,6 @@
     <Compile Include="..\..\src\Converters\MathMultipleConverter.cs">
       <Link>Converters\MathMultipleConverter.cs</Link>
     </Compile>
-    <Compile Include="..\..\src\Converters\ProgressStateConverter.cs">
-      <Link>Converters\ProgressStateConverter.cs</Link>
-    </Compile>
     <Compile Include="..\..\src\DicomNetwork\Client\Interfaces\IVerifySCU.cs">
       <Link>DicomNetwork\Client\Interfaces\IVerifySCU.cs</Link>
     </Compile>
@@ -318,6 +315,9 @@
     <Compile Include="..\..\src\Services\Interfaces\ISimpleMqttService.cs">
       <Link>Services\Interfaces\ISimpleMqttService.cs</Link>
     </Compile>
+    <Compile Include="..\..\src\Services\Interfaces\ITaskbarService.cs">
+      <Link>Services\Interfaces\ITaskbarService.cs</Link>
+    </Compile>
     <Compile Include="..\..\src\Services\Interfaces\IUpdateService.cs">
       <Link>Services\Interfaces\IUpdateService.cs</Link>
     </Compile>
@@ -344,6 +344,9 @@
     </Compile>
     <Compile Include="..\..\src\Services\SimpleMqttService.cs">
       <Link>Services\SimpleMqttService.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\Services\TaskbarService.cs">
+      <Link>Services\TaskbarService.cs</Link>
     </Compile>
     <Compile Include="..\..\src\Services\UpdateService.cs">
       <Link>Services\UpdateService.cs</Link>

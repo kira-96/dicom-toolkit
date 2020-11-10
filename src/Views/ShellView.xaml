@@ -31,8 +31,6 @@
         <SolidColorBrush x:Key="SelectedTabItemForeground" Color="Black" />
         <SolidColorBrush x:Key="IndicatorColor" Color="White" />
 
-        <conv:ProgressStateConverter x:Key="ProgressStateConv" />
-
         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource DefaultButtonStyle}">
             <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
             <Setter Property="Foreground" Value="{DynamicResource ButtonForeground}" />
@@ -182,7 +180,8 @@
     </Window.Resources>
 
     <Window.TaskbarItemInfo>
-        <TaskbarItemInfo ProgressState="{Binding Indeterminate, Converter={StaticResource ProgressStateConv}}"
+        <TaskbarItemInfo ProgressState="{Binding TaskbarService.ProgressState}"
+                         ProgressValue="{Binding TaskbarService.ProgressValue}"
                          Description="{Binding DisplayName}" />
     </Window.TaskbarItemInfo>
     
