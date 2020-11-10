@@ -48,13 +48,18 @@
 
             _eventAggregator.Publish(new BusyStateEvent(true), nameof(StoreFileListViewModel));
 
+            foreach (var file in FileList)
+            {
+                file.Status = StoreItemStatus.Waiting;
+            }
+
             try
             {
-                await _storeSCU.StoreImageAsync(message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET, FileList);
+                int errors = await _storeSCU.StoreImageAsync(message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET, FileList);
 
                 string content = string.Format(
-                                    _i18NService.GetXmlStringByKey("ToastStoreResult"),
-                                    _i18NService.GetXmlStringByKey("Success"));
+                                    _i18NService.GetXmlStringByKey("ToastStoreComplete"),
+                                    FileList.Count - errors, errors);
                 // 这里不使用 await，否则当前线程会阻塞直到toast显示完成
                 _ = _notificationService.ShowToastAsync(content, new TimeSpan(0, 0, 3));
             }

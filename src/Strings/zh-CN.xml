@@ -64,7 +64,7 @@
   <string key="ToastDownloadComplete">下载更新完成</string>
   <string key="ToastWorklistResult">刷新Worklist{0}</string>
   <string key="ToastQueryResult">查询远程数据{0}</string>
-  <string key="ToastStoreResult">发送文件{0}</string>
+  <string key="ToastStoreComplete">发送文件完成。成功{0}个，失败{1}个。</string>
   <string key="ToastPrintResult">打印{0}</string>
   <string key="TooltipUpdate">更新当前值</string>
   <string key="TooltipInsertNew">插入一个新值</string>

@@ -16,7 +16,7 @@
         /// <param name="localAET">Client AE Title</param>
         /// <param name="dcmFiles">files path</param>
         /// <param name="cancellationToken">Cancellation Token</param>
-        /// <returns>ValueTask</returns>
-        ValueTask StoreImageAsync(string serverIp, int serverPort, string serverAET, string localAET, IEnumerable<IStoreItem> dcmFiles, CancellationToken cancellationToken = default);
+        /// <returns>Errors number</returns>
+        ValueTask<int> StoreImageAsync(string serverIp, int serverPort, string serverAET, string localAET, IEnumerable<IStoreItem> dcmFiles, CancellationToken cancellationToken = default);
     }
 }

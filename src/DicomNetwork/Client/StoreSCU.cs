@@ -18,8 +18,9 @@
             Logger = loggerService;
         }
 
-        public async ValueTask StoreImageAsync(string serverIp, int serverPort, string serverAET, string localAET, IEnumerable<IStoreItem> items, CancellationToken cancellationToken = default)
+        public async ValueTask<int> StoreImageAsync(string serverIp, int serverPort, string serverAET, string localAET, IEnumerable<IStoreItem> items, CancellationToken cancellationToken = default)
         {
+            int errors = 0;
             List<DicomCStoreRequest> requests = new List<DicomCStoreRequest>();
 
             foreach (IStoreItem item in items)
@@ -32,6 +33,7 @@
                         {
                             Logger.Error("C-STORE send failed. Instance UID - [{0}]", req.SOPInstanceUID);
                             item.Status = StoreItemStatus.Failed;
+                            errors += 1;
                         }
                         else
                         {
@@ -47,6 +49,8 @@
 
             await client.AddRequestsAsync(requests);
             await client.SendAsync(cancellationToken);
+
+            return errors;
         }
     }
 }

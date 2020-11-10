@@ -64,7 +64,7 @@
   <string key="ToastDownloadComplete">Download complete</string>
   <string key="ToastWorklistResult">Refresh worklist {0}</string>
   <string key="ToastQueryResult">Query remote data {0}</string>
-  <string key="ToastStoreResult">Send files {0}</string>
+  <string key="ToastStoreComplete">Send files complete. {0} success, {1} failure.</string>
   <string key="ToastPrintResult">Print {0}</string>
   <string key="TooltipUpdate">Update current value</string>
   <string key="TooltipInsertNew">Insert new value</string>
