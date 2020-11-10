@@ -96,8 +96,10 @@
         {
             if (worklistResults == null)
             {
-                return;
+                throw new ArgumentException("Worklist results should not null.", "worklistResults");
             }
+
+            worklistItems = new List<DicomDataset>();
 
             DicomCFindRequest worklistRequest = RequestFactory.CreateWorklistQuery(null, null, localAET, null, modality
                 //, new DicomDateRange(DateTime.Today, DateTime.Today.AddHours(23).AddMinutes(59).AddSeconds(59))  // 时间限制：当天 00:00:00 ~ 23:59:59
@@ -123,6 +125,7 @@
                     return;
                 }
 
+                (worklistItems as List<DicomDataset>).Add(response.Dataset);
                 worklistResults.Add(GetWorklistResultFromDataset(response.Dataset, fallbackEncoding));
             };
 
