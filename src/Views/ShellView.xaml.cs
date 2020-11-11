@@ -164,7 +164,7 @@
 
                 if (result == checkUpdateButton)
                 {
-                    updateService.CheckForUpdate();
+                    _ = updateService.CheckForUpdateAsync();
                 }
             }
             else

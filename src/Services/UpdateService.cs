@@ -48,7 +48,7 @@ namespace SimpleDICOMToolkit.Services
             this.loggerService = loggerService;
         }
 
-        public async ValueTask CheckForUpdate()
+        public async ValueTask CheckForUpdateAsync()
         {
             var policy = Policy.Handle<Exception>()
                 .WaitAndRetryAsync(new[]

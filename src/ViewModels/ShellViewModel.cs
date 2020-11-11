@@ -143,7 +143,7 @@
 
             if (Helpers.SystemHelper.IsNetworkConnected)
             {
-                await updateService.CheckForUpdate();
+                await updateService.CheckForUpdateAsync();
             }
             else
             {

@@ -43,7 +43,7 @@ namespace SimpleDICOMToolkit.Services
         /// Start check for update
         /// </summary>
         /// <returns></returns>
-        ValueTask CheckForUpdate();
+        ValueTask CheckForUpdateAsync();
 
         /// <summary>
         /// Start download new version
