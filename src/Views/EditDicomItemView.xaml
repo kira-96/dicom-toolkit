@@ -4,13 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:s="https://github.com/canton7/Stylet"
-        xmlns:v="clr-namespace:SimpleDICOMToolkit.Views"
         mc:Ignorable="d"
-        Title="{Binding DisplayName}" 
         ResizeMode="NoResize"
         ShowInTaskbar="False"
         Width="360"
         Height="360"
+        Title="{Binding DisplayName}" 
         KeyDown="{s:Action OnKeyDown}"
         Activated="Window_Activated"
         Deactivated="Window_Deactivated">
@@ -25,7 +24,7 @@
         </Style>
     </Window.Resources>
     
-    <Grid>
+    <Grid FocusManager.FocusedElement="{Binding ElementName=EditBox}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -52,7 +51,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <TextBox Grid.Row="0" Text="{Binding CurrentEditValue}" />
+                <TextBox Grid.Row="0" x:Name="EditBox" Text="{Binding CurrentEditValue}" />
                 <StackPanel Grid.Row="1" Orientation="Horizontal">
                     <Button x:Name="UpdateButton" Command="{s:Action UpdateCurrentValue}">
                         <Button.Content>

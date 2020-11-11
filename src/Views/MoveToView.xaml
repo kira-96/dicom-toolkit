@@ -6,7 +6,6 @@
         xmlns:s="https://github.com/canton7/Stylet"
         xmlns:c="clr-namespace:SimpleDICOMToolkit.Controls"
         xmlns:conv="clr-namespace:SimpleDICOMToolkit.Converters"
-        xmlns:v="clr-namespace:SimpleDICOMToolkit.Views"
         mc:Ignorable="d"
         ResizeMode="CanMinimize"
         Title="{Binding DisplayName}" 
@@ -36,7 +35,7 @@
         </Style>
     </Window.Resources>
     
-    <Grid>
+    <Grid FocusManager.FocusedElement="{Binding ElementName=IpBox}">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <Grid>
                 <Grid.RowDefinitions>
@@ -64,7 +63,7 @@
                         <Binding Source="{StaticResource Strings}" XPath="string[@key='ServerAET']" />
                     </TextBlock.Text>
                 </TextBlock>
-                <TextBox Grid.Row="0" Grid.Column="1" 
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="IpBox"
                          IsEnabled="{Binding IsBusy, Converter={StaticResource BoolInvertConverter}}"
                          Text="{Binding ServerIP, UpdateSourceTrigger=PropertyChanged}" />
                 <TextBox Grid.Row="1" Grid.Column="1" 

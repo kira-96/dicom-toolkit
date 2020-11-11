@@ -30,8 +30,8 @@
         </Style>
         
     </Window.Resources>
-    
-    <Grid Margin="2">
+
+    <Grid Margin="2" FocusManager.FocusedElement="{Binding ElementName=PatientName}">
         <Grid.RowDefinitions>
             <RowDefinition Height="56" />
             <RowDefinition Height="56" />
@@ -76,7 +76,7 @@
                     <Binding Source="{StaticResource Strings}" XPath="string[@key='HeaderName']" />
                 </TextBlock.Text>
             </TextBlock>
-            <TextBox Text="{Binding PatientName, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox x:Name="PatientName" Text="{Binding PatientName, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
             <TextBlock>
