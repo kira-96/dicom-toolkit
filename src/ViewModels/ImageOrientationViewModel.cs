@@ -1,4 +1,8 @@
-﻿using Dicom.Imaging.Mathematics;
+﻿#if FellowOakDicom5
+using FellowOakDicom.Imaging.Mathematics;
+#else
+using Dicom.Imaging.Mathematics;
+#endif
 using Stylet;
 using System;
 using System.Windows;

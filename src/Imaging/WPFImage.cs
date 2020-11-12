@@ -1,16 +1,16 @@
 ﻿// Copyright (c) 2012-2020 fo-dicom contributors.
 // Licensed under the Microsoft Public License (MS-PL).
 
-namespace Dicom.Imaging
-{
-    using System.Collections.Generic;
-    using System.Runtime.InteropServices;
-    using System.Windows;
-    using System.Windows.Media;
-    using System.Windows.Media.Imaging;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using FellowOakDicom.Imaging.Render;
+using FellowOakDicom.IO;
 
-    using Dicom.Imaging.Render;
-    using Dicom.IO;
+namespace FellowOakDicom.Imaging
+{
 
     /// <summary>
     /// Convenience class for non-generic access to <see cref="WPFImage"/> image objects.

@@ -1,5 +1,10 @@
 ﻿namespace SimpleDICOMToolkit.ViewModels
 {
+#if FellowOakDicom5
+    using FellowOakDicom;
+#else
+    using Dicom;
+#endif
     using Stylet;
     using StyletIoC;
     using System;
@@ -59,7 +64,7 @@
         {
             if (IsServerStarted)
             {
-                Encoding fallbackEncoding = Dicom.DicomEncoding.Default;  // 不要移除这行代码，.NET Core 平台会在这里注册 CodePagesEncodingProvider
+                Encoding fallbackEncoding = DicomEncoding.Default;  // 不要移除这行代码，.NET Core 平台会在这里注册 CodePagesEncodingProvider
                 fallbackEncoding = Encoding.GetEncoding(configurationService.GetConfiguration<AppConfiguration>().DicomEncoding);
 
                 WorklistServer.Default.CreateServer(message.ServerPort, message.LocalAET, fallbackEncoding);

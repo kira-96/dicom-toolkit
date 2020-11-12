@@ -1,6 +1,10 @@
 ﻿namespace SimpleDICOMToolkit.ViewModels
 {
+#if FellowOakDicom5
+    using FellowOakDicom;
+#else
     using Dicom;
+#endif
     using Polly;
     using Polly.Timeout;
     using Stylet;

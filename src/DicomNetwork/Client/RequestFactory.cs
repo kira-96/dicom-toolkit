@@ -1,5 +1,10 @@
-﻿using Dicom;
+﻿#if FellowOakDicom5
+using FellowOakDicom;
+using FellowOakDicom.Network;
+#else
+using Dicom;
 using Dicom.Network;
+#endif
 
 namespace SimpleDICOMToolkit.Client
 {

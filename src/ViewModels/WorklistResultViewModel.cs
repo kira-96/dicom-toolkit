@@ -1,5 +1,10 @@
 ﻿namespace SimpleDICOMToolkit.ViewModels
 {
+#if FellowOakDicom5
+    using FellowOakDicom;
+#else
+    using Dicom;
+#endif
     using Polly;
     using Stylet;
     using StyletIoC;
@@ -34,7 +39,7 @@
         [Inject]
         private IWorklistSCU _worklistSCU;
 
-        private Dictionary<string, Dicom.DicomUID> _affectedUidDict;
+        private Dictionary<string, DicomUID> _affectedUidDict;
 
         private bool _isBusy = false;
 
@@ -50,7 +55,7 @@
         {
             _eventAggregator = eventAggregator;
             _eventAggregator.Subscribe(this, nameof(WorklistResultViewModel));
-            _affectedUidDict = new Dictionary<string, Dicom.DicomUID>();
+            _affectedUidDict = new Dictionary<string, DicomUID>();
             WorklistItems = new BindableCollection<SimpleWorklistResult>();
         }
 
@@ -191,7 +196,7 @@
                 // Alt 2
                 await timeoutPolicy.ExecuteAsync(async () =>
                 {
-                    Encoding fallbackEncoding = Dicom.DicomEncoding.Default;  // 不要移除这行代码，.NET Core 平台会在这里注册 CodePagesEncodingProvider
+                    Encoding fallbackEncoding = DicomEncoding.Default;  // 不要移除这行代码，.NET Core 平台会在这里注册 CodePagesEncodingProvider
                     fallbackEncoding = Encoding.GetEncoding(_configurationService.GetConfiguration<AppConfiguration>().DicomEncoding);
                     await _worklistSCU.GetAllResultFromWorklistAsync(message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET, WorklistItems, message.Modality, fallbackEncoding, cancellationTokenSource.Token);
                 });

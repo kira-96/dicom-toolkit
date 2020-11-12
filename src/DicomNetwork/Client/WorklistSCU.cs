@@ -1,9 +1,15 @@
 ﻿namespace SimpleDICOMToolkit.Client
 {
-    using StyletIoC;
+#if FellowOakDicom5
+    using FellowOakDicom;
+    using FellowOakDicom.Network;
+    using FellowOakDicom.Network.Client;
+#else
     using Dicom;
     using Dicom.Network;
     using DicomClient = Dicom.Network.Client.DicomClient;
+#endif
+    using StyletIoC;
     using System;
     using System.Linq;
     using System.Collections.Generic;
@@ -70,7 +76,11 @@
                 worklistItems.Add(response.Dataset);
             };
 
+#if FellowOakDicom5
+            IDicomClient client = DicomClientFactory.Create(serverIp, serverPort, false, localAET, serverAET);
+#else
             DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
+#endif
 
             await client.AddRequestAsync(worklistRequest);
             await client.SendAsync(cancellationToken);
@@ -129,7 +139,11 @@
                 worklistResults.Add(GetWorklistResultFromDataset(response.Dataset, fallbackEncoding));
             };
 
+#if FellowOakDicom5
+            IDicomClient client = DicomClientFactory.Create(serverIp, serverPort, false, localAET, serverAET);
+#else
             DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
+#endif
 
             await client.AddRequestAsync(worklistRequest);
             await client.SendAsync(cancellationToken);
@@ -220,7 +234,11 @@
                 }
             };
 
+#if FellowOakDicom5
+            IDicomClient client = DicomClientFactory.Create(serverIp, serverPort, false, localAET, serverAET);
+#else
             DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
+#endif
             await client.AddRequestAsync(dicomStartRequest);
             await client.SendAsync();
 
@@ -314,7 +332,11 @@
                 }
             };
 
+#if FellowOakDicom5
+            IDicomClient client = DicomClientFactory.Create(serverIp, serverPort, false, localAET, serverAET);
+#else
             DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
+#endif
 
             await client.AddRequestAsync(dicomFinished);
             await client.SendAsync();
@@ -380,7 +402,11 @@
                 }
             };
 
+#if FellowOakDicom5
+            IDicomClient client = DicomClientFactory.Create(serverIp, serverPort, false, localAET, serverAET);
+#else
             DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
+#endif
 
             await client.AddRequestAsync(dicomAbort);
             await client.SendAsync();

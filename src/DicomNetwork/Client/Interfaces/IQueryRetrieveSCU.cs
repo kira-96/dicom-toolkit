@@ -1,6 +1,10 @@
 ﻿namespace SimpleDICOMToolkit.Client
 {
+#if FellowOakDicom5
+    using FellowOakDicom;
+#else
     using Dicom;
+#endif
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;

@@ -3,10 +3,18 @@
 // Copyright (c) 2012-2020 fo-dicom contributors.
 // Licensed under the Microsoft Public License (MS-PL).
 
+#if FellowOakDicom5
+using FellowOakDicom;
+using FellowOakDicom.Log;
+using FellowOakDicom.Imaging.Codec;
+using FellowOakDicom.Network;
+using FellowOakDicom.Printing;
+#else
 using Dicom;
 using Dicom.Log;
 using Dicom.Network;
 using Dicom.Printing;
+#endif
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,8 +52,13 @@ namespace SimpleDICOMToolkit.Server
 
         #region Constructors and Initialization
 
+#if FellowOakDicom5
+        public PrintService(INetworkStream stream, Encoding fallbackEncoding, ILogger logger, ILogManager logManager, INetworkManager networkManager, ITranscoderManager transcoderManager)
+            : base(stream, fallbackEncoding, logger, logManager, networkManager, transcoderManager)
+#else
         public PrintService(INetworkStream stream, Encoding fallbackEncoding, Logger log)
             : base(stream, fallbackEncoding, log)
+#endif
         {
             var pi = stream.GetType().GetProperty("Socket", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             if (pi != null)
@@ -134,19 +147,46 @@ namespace SimpleDICOMToolkit.Server
 
         #endregion
 
-
         #region IDicomCEchoProvider Members
 
+#if FellowOakDicom5
+        public Task<DicomCEchoResponse> OnCEchoRequestAsync(DicomCEchoRequest request)
+        {
+            Logger.Info("Received verification request from AE {0} with IP: {1}", CallingAE, RemoteIP);
+            return Task.FromResult(new DicomCEchoResponse(request, DicomStatus.Success));
+        }
+#else
         public DicomCEchoResponse OnCEchoRequest(DicomCEchoRequest request)
         {
             Logger.Info("Received verification request from AE {0} with IP: {1}", CallingAE, RemoteIP);
             return new DicomCEchoResponse(request, DicomStatus.Success);
         }
+#endif
 
         #endregion
 
         #region N-CREATE requests handlers
 
+#if FellowOakDicom5
+        public Task<DicomNCreateResponse> OnNCreateRequestAsync(DicomNCreateRequest request)
+        {
+            lock (_synchRoot)
+            {
+                if (request.SOPClassUID == DicomUID.BasicFilmSessionSOPClass)
+                {
+                    return Task.FromResult(CreateFilmSession(request));
+                }
+                else if (request.SOPClassUID == DicomUID.BasicFilmBoxSOPClass)
+                {
+                    return Task.FromResult(CreateFilmBox(request));
+                }
+                else
+                {
+                    return Task.FromResult(new DicomNCreateResponse(request, DicomStatus.SOPClassNotSupported));
+                }
+            }
+        }
+#else
         public DicomNCreateResponse OnNCreateRequest(DicomNCreateRequest request)
         {
             lock (_synchRoot)
@@ -165,6 +205,7 @@ namespace SimpleDICOMToolkit.Server
                 }
             }
         }
+#endif
 
         private DicomNCreateResponse CreateFilmSession(DicomNCreateRequest request)
         {
@@ -225,6 +266,26 @@ namespace SimpleDICOMToolkit.Server
 
         #region N-DELETE request handler
 
+#if FellowOakDicom5
+        public Task<DicomNDeleteResponse> OnNDeleteRequestAsync(DicomNDeleteRequest request)
+        {
+            lock (_synchRoot)
+            {
+                if (request.SOPClassUID == DicomUID.BasicFilmSessionSOPClass)
+                {
+                    return Task.FromResult(DeleteFilmSession(request));
+                }
+                else if (request.SOPClassUID == DicomUID.BasicFilmBoxSOPClass)
+                {
+                    return Task.FromResult(DeleteFilmBox(request));
+                }
+                else
+                {
+                    return Task.FromResult(new DicomNDeleteResponse(request, DicomStatus.NoSuchSOPClass));
+                }
+            }
+        }
+#else
         public DicomNDeleteResponse OnNDeleteRequest(DicomNDeleteRequest request)
         {
             lock (_synchRoot)
@@ -243,6 +304,7 @@ namespace SimpleDICOMToolkit.Server
                 }
             }
         }
+#endif
 
         private DicomNDeleteResponse DeleteFilmBox(DicomNDeleteRequest request)
         {
@@ -285,6 +347,31 @@ namespace SimpleDICOMToolkit.Server
 
         #region N-SET request handler
 
+#if FellowOakDicom5
+        public Task<DicomNSetResponse> OnNSetRequestAsync(DicomNSetRequest request)
+        {
+            lock (_synchRoot)
+            {
+                if (request.SOPClassUID == DicomUID.BasicFilmSessionSOPClass)
+                {
+                    return Task.FromResult(SetFilmSession(request));
+                }
+                else if (request.SOPClassUID == DicomUID.BasicFilmBoxSOPClass)
+                {
+                    return Task.FromResult(SetFilmBox(request));
+                }
+                else if (request.SOPClassUID == DicomUID.BasicColorImageBoxSOPClass
+                         || request.SOPClassUID == DicomUID.BasicGrayscaleImageBoxSOPClass)
+                {
+                    return Task.FromResult(SetImageBox(request));
+                }
+                else
+                {
+                    return Task.FromResult(new DicomNSetResponse(request, DicomStatus.SOPClassNotSupported));
+                }
+            }
+        }
+#else
         public DicomNSetResponse OnNSetRequest(DicomNSetRequest request)
         {
             lock (_synchRoot)
@@ -308,6 +395,7 @@ namespace SimpleDICOMToolkit.Server
                 }
             }
         }
+#endif
 
         private DicomNSetResponse SetImageBox(DicomNSetRequest request)
         {
@@ -382,6 +470,34 @@ namespace SimpleDICOMToolkit.Server
 
         #region N-GET request handler
 
+#if FellowOakDicom5
+        public Task<DicomNGetResponse> OnNGetRequestAsync(DicomNGetRequest request)
+        {
+            lock (_synchRoot)
+            {
+                Logger.Info(request.ToString(true));
+
+                if (request.SOPClassUID == DicomUID.PrinterSOPClass
+                    && request.SOPInstanceUID == DicomUID.PrinterSOPInstance)
+                {
+                    return Task.FromResult(GetPrinter(request));
+                }
+                else if (request.SOPClassUID == DicomUID.PrintJobSOPClass)
+                {
+                    return Task.FromResult(GetPrintJob(request));
+                }
+                else if (request.SOPClassUID == DicomUID.PrinterConfigurationRetrievalSOPClass
+                         && request.SOPInstanceUID == DicomUID.PrinterConfigurationRetrievalSOPInstance)
+                {
+                    return Task.FromResult(GetPrinterConfiguration(request));
+                }
+                else
+                {
+                    return Task.FromResult(new DicomNGetResponse(request, DicomStatus.NoSuchSOPClass));
+                }
+            }
+        }
+#else
         public DicomNGetResponse OnNGetRequest(DicomNGetRequest request)
         {
             lock (_synchRoot)
@@ -408,6 +524,7 @@ namespace SimpleDICOMToolkit.Server
                 }
             }
         }
+#endif
 
         private DicomNGetResponse GetPrinter(DicomNGetRequest request)
         {
@@ -503,12 +620,20 @@ namespace SimpleDICOMToolkit.Server
 
         #region N-ACTION request handler
 
+#if FellowOakDicom5
+        public Task<DicomNActionResponse> OnNActionRequestAsync(DicomNActionRequest request)
+#else
         public DicomNActionResponse OnNActionRequest(DicomNActionRequest request)
+#endif
         {
             if (_filmSession == null)
             {
                 Logger.Error("A basic film session does not exist for this association {0}", CallingAE);
+#if FellowOakDicom5
+                return Task.FromResult(new DicomNActionResponse(request, DicomStatus.InvalidObjectInstance));
+#else
                 return new DicomNActionResponse(request, DicomStatus.InvalidObjectInstance);
+#endif
             }
 
             lock (_synchRoot)
@@ -537,7 +662,11 @@ namespace SimpleDICOMToolkit.Server
                                 "Received N-ACTION request for invalid film box {0} from {1}",
                                 request.SOPInstanceUID.UID,
                                 CallingAE);
+#if FellowOakDicom5
+                            return Task.FromResult(new DicomNActionResponse(request, DicomStatus.NoSuchObjectInstance));
+#else
                             return new DicomNActionResponse(request, DicomStatus.NoSuchObjectInstance);
+#endif
                         }
                     }
                     else
@@ -548,7 +677,11 @@ namespace SimpleDICOMToolkit.Server
                                 "Received N-ACTION request for invalid action type {0} from {1}",
                                 request.ActionTypeID,
                                 CallingAE);
+#if FellowOakDicom5
+                            return Task.FromResult(new DicomNActionResponse(request, DicomStatus.NoSuchActionType));
+#else
                             return new DicomNActionResponse(request, DicomStatus.NoSuchActionType);
+#endif
                         }
                         else
                         {
@@ -556,7 +689,11 @@ namespace SimpleDICOMToolkit.Server
                                 "Received N-ACTION request for invalid SOP class {0} from {1}",
                                 request.SOPClassUID,
                                 CallingAE);
+#if FellowOakDicom5
+                            return Task.FromResult(new DicomNActionResponse(request, DicomStatus.NoSuchSOPClass));
+#else
                             return new DicomNActionResponse(request, DicomStatus.NoSuchSOPClass);
+#endif
                         }
                     }
 
@@ -582,7 +719,11 @@ namespace SimpleDICOMToolkit.Server
                         response.Command.AddOrUpdate(DicomTag.AffectedSOPInstanceUID, request.SOPInstanceUID);
                         response.Dataset = result;
 
+#if FellowOakDicom5
+                        return Task.FromResult(response);
+#else
                         return response;
+#endif
                     }
                     else
                     {
@@ -597,7 +738,11 @@ namespace SimpleDICOMToolkit.Server
                         request.SOPClassUID.UID,
                         request.SOPInstanceUID.UID);
                     Logger.Error(ex.Message);
+#if FellowOakDicom5
+                    return Task.FromResult(new DicomNActionResponse(request, DicomStatus.ProcessingFailure));
+#else
                     return new DicomNActionResponse(request, DicomStatus.ProcessingFailure);
+#endif
                 }
             }
         }
@@ -625,6 +770,22 @@ namespace SimpleDICOMToolkit.Server
 
         #endregion
 
+        #region IDicomNServiceProvider Members
+
+#if FellowOakDicom5
+        public Task<DicomNEventReportResponse> OnNEventReportRequestAsync(DicomNEventReportRequest request)
+        {
+            throw new NotImplementedException();
+        }
+#else
+        public DicomNEventReportResponse OnNEventReportRequest(DicomNEventReportRequest request)
+        {
+            throw new NotImplementedException();
+        }
+#endif
+
+        #endregion
+
         public void Clean()
         {
             //delete the current active print job and film sessions
@@ -634,14 +795,5 @@ namespace SimpleDICOMToolkit.Server
                 _printJobList.Clear();
             }
         }
-
-        #region IDicomNServiceProvider Members
-
-        public DicomNEventReportResponse OnNEventReportRequest(DicomNEventReportRequest request)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
     }
 }

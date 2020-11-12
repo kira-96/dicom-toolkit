@@ -1,6 +1,10 @@
 ﻿namespace SimpleDICOMToolkit.Models
 {
+#if FellowOakDicom5
+    using FellowOakDicom;
+#else
     using Dicom;
+#endif
     using Stylet;
     using System;
 

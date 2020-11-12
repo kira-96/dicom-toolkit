@@ -1,4 +1,8 @@
-﻿using Dicom.Network;
+﻿#if FellowOakDicom5
+using FellowOakDicom.Network;
+#else
+using Dicom.Network;
+#endif
 using System;
 using System.Collections.Generic;
 
@@ -66,7 +70,11 @@ namespace SimpleDICOMToolkit.Server
                 }
             }
 
+#if FellowOakDicom5
+            defaultServer = DicomServerFactory.Create<StoreService>(port);
+#else
             defaultServer = DicomServer.Create<StoreService>(port);
+#endif
 
             return IsListening();
         }

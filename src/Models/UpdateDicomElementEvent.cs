@@ -1,7 +1,11 @@
-﻿namespace SimpleDICOMToolkit.Models
-{
-    using Dicom;
+﻿#if FellowOakDicom5
+using FellowOakDicom;
+#else
+using Dicom;
+#endif
 
+namespace SimpleDICOMToolkit.Models
+{
     /// <summary>
     /// 更新修改后的DicomElement
     /// </summary>

@@ -6,12 +6,23 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Threading.Tasks;
+#if FellowOakDicom5
+using FellowOakDicom;
+using FellowOakDicom.Imaging;
+using FellowOakDicom.IO;
+using FellowOakDicom.IO.Buffer;
+using FellowOakDicom.Network;
+using FellowOakDicom.Network.Client;
+using FellowOakDicom.Printing;
+#else
 using Dicom;
 using Dicom.Imaging;
 using Dicom.IO;
+using Dicom.IO.Buffer;
 using Dicom.Network;
 using Dicom.Printing;
 using DicomClient = Dicom.Network.Client.DicomClient;
+#endif
 
 namespace SimpleDICOMToolkit.Client
 {
@@ -138,7 +149,7 @@ namespace SimpleDICOMToolkit.Client
             var pixelData = DicomPixelData.Create(dataset, true);
 
             var pixels = GetGreyBytes(bitmap);
-            var buffer = new Dicom.IO.Buffer.MemoryByteBuffer(pixels.Data);
+            var buffer = new MemoryByteBuffer(pixels.Data);
 
             pixelData.AddFrame(buffer);
 
@@ -179,7 +190,7 @@ namespace SimpleDICOMToolkit.Client
             var pixelData = DicomPixelData.Create(dataset, true);
 
             var pixels = GetColorbytes(bitmap);
-            var buffer = new Dicom.IO.Buffer.MemoryByteBuffer(pixels.Data);
+            var buffer = new MemoryByteBuffer(pixels.Data);
 
             pixelData.AddFrame(buffer);
 
@@ -196,7 +207,11 @@ namespace SimpleDICOMToolkit.Client
 
         public async Task Print()
         {
+#if FellowOakDicom5
+            var dicomClient = DicomClientFactory.Create(RemoteAddress, RemotePort, false, CallingAE, CalledAE);
+#else
             var dicomClient = new DicomClient(RemoteAddress, RemotePort, false, CallingAE, CalledAE);
+#endif
 
             await dicomClient.AddRequestAsync(
                 new DicomNCreateRequest(FilmSession.SOPClassUID, FilmSession.SOPInstanceUID)

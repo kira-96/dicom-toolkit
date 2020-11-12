@@ -3,7 +3,11 @@
 
 using System;
 
+#if FellowOakDicom5
+namespace FellowOakDicom.Log
+#else
 namespace Dicom.Log
+#endif
 {
     /// <summary>
     /// LogManager for the NLog logging framework.
@@ -21,7 +25,7 @@ namespace Dicom.Log
         /// <summary>
         /// Initializes an instance of <see cref="NLogManager"/>.
         /// </summary>
-        private NLogManager()
+        public NLogManager()
         {
         }
 
@@ -62,9 +66,9 @@ namespace Dicom.Log
                 var ordinalFormattedMessage = NameFormatToPositionalFormat(msg);
                 var nlogLevel = GetNLogLevel(level);
 
-                if (args.Length >= 1 && args[0] is Exception)
+                if (args.Length >= 1 && args[0] is Exception exception)
                 {
-                    this.logger.Log(nlogLevel, (Exception)args[0], ordinalFormattedMessage, args);
+                    this.logger.Log(nlogLevel, exception, ordinalFormattedMessage, args);
                 }
                 else
                 {

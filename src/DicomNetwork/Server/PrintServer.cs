@@ -1,4 +1,8 @@
-﻿using Dicom.Network;
+﻿#if FellowOakDicom5
+using FellowOakDicom.Network;
+#else
+using Dicom.Network;
+#endif
 using System.Drawing.Printing;
 
 namespace SimpleDICOMToolkit.Server
@@ -56,7 +60,11 @@ namespace SimpleDICOMToolkit.Server
 
             AETitle = serverAET;
 
+#if FellowOakDicom5
+            defaultServer = DicomServerFactory.Create<PrintService>(port);
+#else
             defaultServer = DicomServer.Create<PrintService>(port);
+#endif
 
             Printer = new Printer(serverAET);
 

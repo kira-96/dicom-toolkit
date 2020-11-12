@@ -3,7 +3,6 @@
 // Copyright (c) 2012-2020 fo-dicom contributors.
 // Licensed under the Microsoft Public License (MS-PL).
 
-using Dicom.Log;
 using System.Collections.Generic;
 using System.Linq;
 using SimpleDICOMToolkit.Infrastructure;
@@ -19,9 +18,15 @@ namespace SimpleDICOMToolkit.Server
 
         private readonly IEnumerable<IWorklistItem> _worklistItems;
 
-        private readonly Logger _logger;
+#if FellowOakDicom5
+        private readonly FellowOakDicom.Log.ILogger _logger;
 
-        public MppsHandler(IEnumerable<IWorklistItem> worklistItems, Logger logger)
+        public MppsHandler(IEnumerable<IWorklistItem> worklistItems, FellowOakDicom.Log.ILogger logger)
+#else
+        private readonly Dicom.Log.Logger _logger;
+
+        public MppsHandler(IEnumerable<IWorklistItem> worklistItems, Dicom.Log.Logger logger)
+#endif
         {
             _worklistItems = worklistItems;
             _logger = logger;

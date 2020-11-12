@@ -5,9 +5,16 @@
 
 namespace SimpleDICOMToolkit.Server
 {
+#if FellowOakDicom5
+    using FellowOakDicom;
+    using FellowOakDicom.Imaging.Codec;
+    using FellowOakDicom.Log;
+    using FellowOakDicom.Network;
+#else
     using Dicom;
     using Dicom.Log;
     using Dicom.Network;
+#endif
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -45,8 +52,13 @@ namespace SimpleDICOMToolkit.Server
 
         private readonly List<string> receivedFiles;
 
+#if FellowOakDicom5
+        public StoreService(INetworkStream stream, Encoding fallbackEncoding, ILogger logger, ILogManager logManager, INetworkManager networkManager, ITranscoderManager transcoderManager)
+            : base(stream, fallbackEncoding, logger, logManager, networkManager, transcoderManager)
+#else
         public StoreService(INetworkStream stream, Encoding fallbackEncoding, Logger log)
             : base(stream, fallbackEncoding, log)
+#endif
         {
             receivedFiles = new List<string>();
         }
@@ -99,12 +111,23 @@ namespace SimpleDICOMToolkit.Server
             return SendAssociationAcceptAsync(association);
         }
 
+#if FellowOakDicom5
+        public Task<DicomCEchoResponse> OnCEchoRequestAsync(DicomCEchoRequest request)
+        {
+            return Task.FromResult(new DicomCEchoResponse(request, DicomStatus.Success));
+        }
+#else
         public DicomCEchoResponse OnCEchoRequest(DicomCEchoRequest request)
         {
             return new DicomCEchoResponse(request, DicomStatus.Success);
         }
+#endif
 
+#if FellowOakDicom5
+        public Task<DicomCStoreResponse> OnCStoreRequestAsync(DicomCStoreRequest request)
+#else
         public DicomCStoreResponse OnCStoreRequest(DicomCStoreRequest request)
+#endif
         {
             string studyUid = request.Dataset.GetSingleValue<string>(DicomTag.StudyInstanceUID);
             string instUid = request.SOPInstanceUID.UID;
@@ -126,12 +149,23 @@ namespace SimpleDICOMToolkit.Server
 
             receivedFiles.Add(path);
 
+#if FellowOakDicom5
+            return Task.FromResult(new DicomCStoreResponse(request, DicomStatus.Success));
+#else
             return new DicomCStoreResponse(request, DicomStatus.Success);
+#endif
         }
 
+#if FellowOakDicom5
+        public Task OnCStoreRequestExceptionAsync(string tempFileName, Exception e)
+        {
+            return Task.CompletedTask;
+        }
+#else
         public void OnCStoreRequestException(string tempFileName, Exception e)
         {
             // let library handle logging and error response
         }
+#endif
     }
 }

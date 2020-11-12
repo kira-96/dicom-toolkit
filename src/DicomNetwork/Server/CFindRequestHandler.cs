@@ -1,4 +1,8 @@
-﻿using Dicom;
+﻿#if FellowOakDicom5
+using FellowOakDicom;
+#else
+using Dicom;
+#endif
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -175,7 +179,11 @@ namespace SimpleDICOMToolkit.Server
                     value = default;
                 }
 
+#if FellowOakDicom5
+                dataset.AddOrUpdate(tag, value);
+#else
                 dataset.AddOrUpdate(tag, encoding, value);
+#endif
             }
         }
     }
