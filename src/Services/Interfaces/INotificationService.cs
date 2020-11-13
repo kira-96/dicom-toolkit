@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using Hardcodet.Wpf.TaskbarNotification;
 using SimpleDICOMToolkit.Controls;
 
 namespace SimpleDICOMToolkit.Services
@@ -20,14 +20,14 @@ namespace SimpleDICOMToolkit.Services
         /// <summary>
         /// Regist for notification
         /// </summary>
-        /// <param name="notifyIcon"></param>
-        void RegistNotify(NotifyIcon notifyIcon);
+        /// <param name="trayIcon"></param>
+        void RegistNotify(TaskbarIcon trayIcon);
 
         /// <summary>
         /// Regist for toast
         /// </summary>
         /// <param name="toaster"></param>
-        void RegistToast(object toaster);
+        void RegistToast(Toaster toaster);
 
         /// <summary>
         /// Show notification
@@ -35,7 +35,7 @@ namespace SimpleDICOMToolkit.Services
         /// <param name="content">content</param>
         /// <param name="title">title</param>
         /// <param name="icon">icon</param>
-        void ShowNotification(string content, string title, ToolTipIcon icon = ToolTipIcon.Info);
+        void ShowNotification(string content, string title, BalloonIcon icon = BalloonIcon.Info);
 
         /// <summary>
         /// Show toast

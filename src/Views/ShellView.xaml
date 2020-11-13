@@ -4,8 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:s="https://github.com/canton7/Stylet"
+        xmlns:taskbar="http://www.hardcodet.net/taskbar"
         xmlns:c="clr-namespace:SimpleDICOMToolkit.Controls"
-        xmlns:conv="clr-namespace:SimpleDICOMToolkit.Converters"
         mc:Ignorable="d"
         Title="{Binding DisplayName}"
         ResizeMode="CanResizeWithGrip"
@@ -164,6 +164,17 @@
                 <MenuItem Header="English" ToolTip="English" Tag="en-US" IsCheckable="True" Click="LanguageClick" />
                 <MenuItem Header="简体中文" ToolTip="简体中文" Tag="zh-CN" IsCheckable="True" Click="LanguageClick" IsChecked="True" />
             </MenuItem>
+            <MenuItem Click="MenuItemCheckUpdateClick">
+                <MenuItem.Header>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='CheckUpdate']" />
+                </MenuItem.Header>
+                <MenuItem.ToolTip>
+                    <Binding Source="{StaticResource Strings}" XPath="string[@key='CheckUpdate']" />
+                </MenuItem.ToolTip>
+                <MenuItem.Icon>
+                    <Image Width="16" Height="16" Source="pack://application:,,,/Assets/update.png" />
+                </MenuItem.Icon>
+            </MenuItem>
             <Separator />
             <MenuItem Click="MenuItemExitClick">
                 <MenuItem.Header>
@@ -184,9 +195,15 @@
                          ProgressValue="{Binding TaskbarService.ProgressValue}"
                          Description="{Binding DisplayName}" />
     </Window.TaskbarItemInfo>
-    
+
     <Grid x:Name="ContentGrid" Background="{DynamicResource CommonBackground}">
         <TabControl Style="{StaticResource ConductorTabControl}" />
         <c:Toaster x:Name="MainToaster" Panel.ZIndex="100" Margin="0,0,0,18" />
+        <taskbar:TaskbarIcon x:Name="TrayIcon"
+                             IconSource="/Assets/icon.ico"
+                             ToolTipText="{Binding DisplayName}"
+                             ContextMenu="{StaticResource TrayIconContextMenu}"
+                             MenuActivation="RightClick"
+                             TrayMouseDoubleClick="MenuItemShowClick" />
     </Grid>
 </Window>

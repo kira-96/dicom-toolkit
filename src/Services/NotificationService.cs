@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using Hardcodet.Wpf.TaskbarNotification;
 using SimpleDICOMToolkit.Controls;
 
 namespace SimpleDICOMToolkit.Services
@@ -12,32 +12,29 @@ namespace SimpleDICOMToolkit.Services
 
         public bool CanToast { get; private set; }
 
-        private NotifyIcon notifyIcon;
+        private TaskbarIcon trayIcon;
 
         private Toaster toaster;
 
-        public void RegistNotify(NotifyIcon notifyIcon)
+        public void RegistNotify(TaskbarIcon trayIcon)
         {
-            this.notifyIcon = notifyIcon;
+            this.trayIcon = trayIcon;
             CanNotify = true;
         }
 
-        public void RegistToast(object toaster)
+        public void RegistToast(Toaster toaster)
         {
-            if (toaster is Toaster t)
-            {
-                this.toaster = t;
-                CanToast = true;
-            }
+            this.toaster = toaster;
+            CanToast = true;
         }
 
-        public void ShowNotification(string content, string title, ToolTipIcon icon = ToolTipIcon.Info)
+        public void ShowNotification(string content, string title, BalloonIcon icon = BalloonIcon.Info)
         {
             if (!CanNotify) return;
 
             // BalloonTip 在 Win7上显示为气泡通知
             // 在 Win10上显示为 Toast 通知
-            notifyIcon.ShowBalloonTip(0, title, content, icon);
+            trayIcon.ShowBalloonTip(title, content, icon);
         }
 
         public async ValueTask ShowToastAsync(string content, TimeSpan duration, ToastType level = ToastType.Info)

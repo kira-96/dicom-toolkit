@@ -57,6 +57,7 @@
   <string key="HeaderFile">File</string>
   <string key="HeaderStatus">Status</string>
   <string key="ToastNetworkOffline">No network connection</string>
+  <string key="ToastCheckingUpdate">Checking for updates</string>
   <string key="ToastCheckUpdateResult">Check for updates {0}</string>
   <string key="ToastAlreadyLatestVersion">Already the latest version</string>
   <string key="ToastStartDownload">Start downloading...</string>
@@ -88,8 +89,7 @@
   <string key="MenuExit">Exit</string>
   <string key="RegistContent">Regist</string>
   <string key="RegisterCaption">Registration</string>
-  <string key="AboutCaption">About</string>
-  <string key="AboutInstruction">About this program</string>
+  <string key="AboutCaption">About this program</string>
   <string key="AboutContent">This software is a set of simple DICOM tools, and its function is only suitable for testing / debugging in the development process.</string>
   <string key="AboutVersionFormatter">OS verison: {0}  Software version: {1}</string>
   <string key="AboutFooter">You can view the source code of this program &lt;a href="https://github.com/kira-96/dicom-toolkit"&gt;here&lt;/a&gt;.</string>

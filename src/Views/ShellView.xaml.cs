@@ -1,16 +1,13 @@
 ﻿namespace SimpleDICOMToolkit.Views
 {
     using StyletIoC;
-    using Ookii.Dialogs.Wpf;
     using System;
     using System.Collections.Generic;
     using System.Reflection;
     using System.Windows;
-    using System.Windows.Forms;
+    using System.Windows.Controls;
     using System.Windows.Interop;
     using System.Windows.Media;
-    using ContextMenu = System.Windows.Controls.ContextMenu;
-    using MenuItem = System.Windows.Controls.MenuItem;
     using Logging;
     using Services;
     using static Helpers.InteropHelper;
@@ -35,7 +32,6 @@
 
         private readonly IAppearanceService appearanceService;
         private readonly IUpdateService updateService;
-        private NotifyIcon notifyIcon;
 
         private ContextMenu trayIconContextMenu;
 
@@ -63,7 +59,7 @@
             this.updateService = updateService;
             this.logger = loggerService;
 
-            InitializeTrayIcon();
+            trayIconContextMenu = (ContextMenu)Resources["TrayIconContextMenu"];
             appearanceService.ApplyAccentColor();
             ApplyTheme();
         }
@@ -134,63 +130,14 @@
         /// </summary>
         private void ShowAbout()
         {
-            Version version = Assembly.GetExecutingAssembly().GetName().Version;
+            string versionInfo = string.Format(i18NService.GetXmlStringByKey("AboutVersionFormatter"),
+                Environment.OSVersion.Version, Assembly.GetExecutingAssembly().GetName().Version);
 
-            Version osVersion = Environment.OSVersion.Version;
-
-            string caption = i18NService.GetXmlStringByKey("AboutCaption");
-            string versionInfo = string.Format(i18NService.GetXmlStringByKey("AboutVersionFormatter"), osVersion, version);
-
-            if (TaskDialog.OSSupportsTaskDialogs)
-            {
-                using TaskDialog dialog = new TaskDialog
-                {
-                    AllowDialogCancellation = true,
-                    ExpandedByDefault = true,
-                    EnableHyperlinks = true,
-                    WindowTitle = caption,
-                    MainInstruction = i18NService.GetXmlStringByKey("AboutInstruction"),
-                    Content = i18NService.GetXmlStringByKey("AboutContent"),
-                    ExpandedInformation = versionInfo,
-                    Footer = i18NService.GetXmlStringByKey("AboutFooter"),
-                    FooterIcon = TaskDialogIcon.Information
-                };
-
-                var checkUpdateButton = new TaskDialogButton(i18NService.GetXmlStringByKey("CheckUpdate"));
-                dialog.Buttons.Add(checkUpdateButton);
-                dialog.Buttons.Add(new TaskDialogButton(ButtonType.Ok) { Default = true });
-                dialog.HyperlinkClicked += (s, e) => Helpers.ProcessHelper.OpenHyperlink(e.Href);
-                var result = dialog.ShowDialog(this);
-
-                if (result == checkUpdateButton)
-                {
-                    _ = updateService.CheckForUpdateAsync();
-                }
-            }
-            else
-            {
-                dialogService.ShowMessageBox(
-                    versionInfo, caption, 
-                    MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, this);
-            }
-
+            MessageBox.Show(i18NService.GetXmlStringByKey("AboutContent") + "\n\n" + versionInfo, i18NService.GetXmlStringByKey("AboutCaption"));
         }
 
-        private ResourceDictionary CommonResources
-        {
-            get
-            {
-                return System.Windows.Application.Current.Resources.MergedDictionaries[2].MergedDictionaries[0];
-            }
-        }
-
-        private ResourceDictionary ApplicationResources
-        {
-            get
-            {
-                return System.Windows.Application.Current.Resources;
-            }
-        }
+        private ResourceDictionary ApplicationResources => Application.Current.Resources;
+        private ResourceDictionary CommonResources => Application.Current.Resources.MergedDictionaries[2].MergedDictionaries[0];
 
         /// <summary>
         /// 设置当前窗口控件的颜色
@@ -244,7 +191,7 @@
 
         private void OnAccentColorChanged(object sender, EventArgs e)
         {
-            System.Windows.Application.Current.Dispatcher.Invoke(() =>
+            Application.Current.Dispatcher.Invoke(() =>
             {
                 appearanceService.ApplyAccentColor();
                 ApplyTheme();
@@ -253,24 +200,7 @@
 
         private void WindowPrevalenceAccentColorChanged(object s, EventArgs e)
         {
-            System.Windows.Application.Current.Dispatcher.Invoke(() => ApplyTheme());
-        }
-
-        private void InitializeTrayIcon()
-        {
-            notifyIcon = new NotifyIcon()
-            {
-                Visible = false,
-                Text = Assembly.GetExecutingAssembly().GetName().Name,
-                Icon = new System.Drawing.Icon(
-                    Assembly.GetExecutingAssembly().GetManifestResourceStream("SimpleDICOMToolkit.Assets.icon.ico"),
-                    System.Windows.Forms.SystemInformation.SmallIconSize)
-            };
-
-            notifyIcon.MouseClick += TrayIconMouseClick;
-            notifyIcon.MouseDoubleClick += TrayIconMouseDoubleClick;
-
-            trayIconContextMenu = (ContextMenu)Resources["TrayIconContextMenu"];
+            Application.Current.Dispatcher.Invoke(() => ApplyTheme());
         }
 
         private void LoadDefaultLanguage()
@@ -304,8 +234,7 @@
 
         private void Window_Loaded(object s, RoutedEventArgs e)
         {
-            notifyIcon.Visible = true;
-            notificationService.RegistNotify(notifyIcon);
+            notificationService.RegistNotify(TrayIcon);
             notificationService.RegistToast(MainToaster);
             appearanceService.StartMonitoringWindowPrevalenceAccentColor();
             appearanceService.WindowPrevalenceAccentColorChanged += WindowPrevalenceAccentColorChanged;
@@ -337,10 +266,6 @@
             appearanceService.AccentColorChanged -= OnAccentColorChanged;
             appearanceService.WindowPrevalenceAccentColorChanged -= WindowPrevalenceAccentColorChanged;
             appearanceService.StopMonitoringWindowPrevalenceAccentColor();
-
-            notifyIcon.MouseClick -= TrayIconMouseClick;
-            notifyIcon.MouseDoubleClick -= TrayIconMouseDoubleClick;
-            notifyIcon.Dispose();
         }
 
         private void Window_Activated(object s, EventArgs e)
@@ -352,26 +277,6 @@
         {
             trayIconContextMenu.IsOpen = false;
             ApplyTheme();
-        }
-
-        private void TrayIconMouseClick(object s, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                // Open the Notify icon context menu
-                trayIconContextMenu.IsOpen = true;
-
-                // Required to close the Tray icon when Deactivated is called
-                // See: http://copycodetheory.blogspot.be/2012/07/notify-icon-in-wpf-applications.html
-                Activate();
-            }
-        }
-
-        private void TrayIconMouseDoubleClick(object s, MouseEventArgs e)
-        {
-            WindowState = WindowState.Normal;
-            ShowInTaskbar = true;
-            Activate();
         }
 
         private void MenuItemShowClick(object s, RoutedEventArgs e)
@@ -398,6 +303,12 @@
                 (item as MenuItem).IsChecked = false;
             }
             menuItem.IsChecked = true;
+        }
+
+        private async void MenuItemCheckUpdateClick(object s, RoutedEventArgs e)
+        {
+            await updateService.CheckForUpdateAsync();
+            await notificationService.ShowToastAsync(i18NService.GetXmlStringByKey("ToastCheckingUpdate"), new TimeSpan(0, 0, 3));
         }
     }
 }

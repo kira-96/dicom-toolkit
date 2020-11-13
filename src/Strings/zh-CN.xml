@@ -57,6 +57,7 @@
   <string key="HeaderFile">文件</string>
   <string key="HeaderStatus">状态</string>
   <string key="ToastNetworkOffline">网络连接断开</string>
+  <string key="ToastCheckingUpdate">正在检查更新</string>
   <string key="ToastCheckUpdateResult">检查更新{0}</string>
   <string key="ToastAlreadyLatestVersion">已经是最新版本</string>
   <string key="ToastStartDownload">开始下载...</string>
@@ -88,8 +89,7 @@
   <string key="MenuExit">退出</string>
   <string key="RegistContent">登记</string>
   <string key="RegisterCaption">登记</string>
-  <string key="AboutCaption">关于应用</string>
-  <string key="AboutInstruction">关于此软件</string>
+  <string key="AboutCaption">关于此软件</string>
   <string key="AboutContent">此软件是一套简单的 DICOM 工具，功能仅适用于开发过程中的测试/调试。</string>
   <string key="AboutVersionFormatter">系统版本：{0}  软件版本：{1}</string>
   <string key="AboutFooter">您可以在&lt;a href="https://github.com/kira-96/dicom-toolkit"&gt;这里&lt;/a&gt;查看软件的源代码。</string>

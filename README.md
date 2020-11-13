@@ -34,7 +34,7 @@
 - [Polly](http://www.thepollyproject.org/)
 - [Nett](https://github.com/paiden/Nett)
 - [MQTTnet](https://github.com/chkr1011/MQTTnet)
-- [ookii-dialogs-wpf](https://github.com/augustoproiete/ookii-dialogs-wpf)
+- [wpf-notifyicon](https://github.com/hardcodet/wpf-notifyicon)
 
 **部分图标来源于[阿里巴巴矢量图标库](https://www.iconfont.cn/)**
 
