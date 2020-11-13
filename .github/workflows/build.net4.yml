@@ -1,4 +1,4 @@
-name: build
+name: Build .NET Framework projects
 
 on:
   push:
@@ -27,11 +27,11 @@ jobs:
     # Nuget Restore
     - name: Restore nuget packages
       run: nuget restore Toolkit.sln
-    
+
     # Build Config
     - name: Build Config
       run: msbuild Toolkit.sln -target:"Config" -p:Configuration=Release -p:Platform="x64" -maxCpuCount
-    
+
     # Build Toolkit
     - name: Build Toolkit
       run: msbuild Toolkit.sln -target:"SimpleDICOMToolkit" -p:Configuration=Release -p:Platform="x64" -maxCpuCount
