@@ -739,6 +739,9 @@
     <Resource Include="..\..\src\Assets\failed1.png">
       <Link>Assets\failed1.png</Link>
     </Resource>
+    <Resource Include="..\..\src\Assets\icon.ico">
+      <Link>Assets\icon.ico</Link>
+    </Resource>
     <Resource Include="..\..\src\Assets\in-progress.png">
       <Link>Assets\in-progress.png</Link>
     </Resource>
@@ -784,17 +787,15 @@
     <Resource Include="..\..\src\Assets\tag.png">
       <Link>Assets\tag.png</Link>
     </Resource>
+    <Resource Include="..\..\src\Assets\update.png">
+      <Link>Assets\update.png</Link>
+    </Resource>
     <Resource Include="..\..\src\Assets\waiting.png">
       <Link>Assets\waiting.png</Link>
     </Resource>
     <Resource Include="..\..\src\Assets\window.png">
       <Link>Assets\window.png</Link>
     </Resource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="..\..\src\Assets\icon.ico">
-      <Link>Assets\icon.ico</Link>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="..\..\src\Strings\en-US.xml">
@@ -810,6 +811,9 @@
     </PackageReference>
     <PackageReference Include="fo-dicom">
       <Version>4.0.7</Version>
+    </PackageReference>
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf">
+      <Version>1.0.8</Version>
     </PackageReference>
     <PackageReference Include="LiteDB">
       <Version>5.0.9</Version>
@@ -831,9 +835,6 @@
     </PackageReference>
     <PackageReference Include="NLog">
       <Version>4.7.5</Version>
-    </PackageReference>
-    <PackageReference Include="Ookii.Dialogs.Wpf">
-      <Version>1.2.0</Version>
     </PackageReference>
     <PackageReference Include="Polly">
       <Version>7.2.1</Version>

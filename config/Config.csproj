@@ -1,14 +1,14 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <AssemblyVersion>1.0.10.20</AssemblyVersion>
-    <FileVersion>1.0.10.20</FileVersion>
-    <Version>1.0.10</Version>
+    <AssemblyVersion>1.1.0.21</AssemblyVersion>
+    <FileVersion>1.1.0.21</FileVersion>
+    <Version>1.1.0</Version>
     <Authors>kira</Authors>
     <Company>kira</Company>
     <Copyright>Copyright © 2020 kira。保留所有权利。</Copyright>
@@ -33,12 +33,9 @@
     <PackageReference Include="NLog" Version="4.7.5" />
     <PackageReference Include="Stylet" Version="1.3.4" />
   </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Assets\icon.ico" />
-  </ItemGroup>
   
   <ItemGroup>
+    <Resource Include="Assets\icon.ico" />
     <Resource Include="Assets\okay.png" />
   </ItemGroup>
 
