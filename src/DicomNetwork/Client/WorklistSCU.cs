@@ -106,7 +106,7 @@
         {
             if (worklistResults == null)
             {
-                throw new ArgumentException("Worklist results should not null.", "worklistResults");
+                throw new ArgumentException("Worklist results should not null.", nameof(worklistResults));
             }
 
             worklistItems = new List<DicomDataset>();

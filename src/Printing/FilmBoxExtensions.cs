@@ -5,13 +5,14 @@ using System;
 using System.Drawing;
 #if FellowOakDicom5
 using FellowOakDicom.Imaging.Mathematics;
+
 namespace FellowOakDicom.Printing
 #else
 using Dicom.Imaging.Mathematics;
+
 namespace Dicom.Printing
 #endif
 {
-
     /// <summary>
     /// Extension methods on instance of the <see cref="FilmBox"/> class.
     /// </summary>

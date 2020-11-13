@@ -182,7 +182,7 @@
 
             loggerService.Info(content);
 
-            await Execute.OnUIThreadAsync(() => notificationService.ShowToastAsync(content, new TimeSpan(0, 0, 3)));
+            await Execute.OnUIThreadAsync(async () => await notificationService.ShowToastAsync(content, new TimeSpan(0, 0, 3)));
         }
 
         private async void UpdateService_DownloadError(Exception ex)
@@ -193,7 +193,7 @@
 
             loggerService.Error(ex, content);
 
-            await Execute.OnUIThreadAsync(() => notificationService.ShowToastAsync(content, new TimeSpan(0, 0, 3), Controls.ToastType.Error));
+            await Execute.OnUIThreadAsync(async () => await notificationService.ShowToastAsync(content, new TimeSpan(0, 0, 3), Controls.ToastType.Error));
         }
 
         private async void UpdateService_CheckForUpdateError(Exception ex)
@@ -204,7 +204,7 @@
 
             loggerService.Error(ex, content);
 
-            await Execute.OnUIThreadAsync(() => notificationService.ShowToastAsync(content, new TimeSpan(0, 0, 3), Controls.ToastType.Error));
+            await Execute.OnUIThreadAsync(async () => await notificationService.ShowToastAsync(content, new TimeSpan(0, 0, 3), Controls.ToastType.Error));
         }
     }
 }

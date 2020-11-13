@@ -32,12 +32,6 @@
         {
             bool echoResult = false;
 
-#if FellowOakDicom5
-            IDicomClient client = DicomClientFactory.Create(serverIp, serverPort, false, localAET, serverAET);
-#else
-            DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
-#endif
-
             DicomCEchoRequest request = new DicomCEchoRequest()
             {
                 OnResponseReceived = (req, res) =>
@@ -46,6 +40,12 @@
                         echoResult = true;
                 }
             };
+
+#if FellowOakDicom5
+            IDicomClient client = DicomClientFactory.Create(serverIp, serverPort, false, localAET, serverAET);
+#else
+            DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
+#endif
 
             await client.AddRequestAsync(request);
 
