@@ -182,7 +182,7 @@
                 Point position = e.GetPosition(s);
 
                 double widthOffset = position.X - previousPoint.X;
-                double centerOffset = position.Y - previousPoint.Y;
+                double centerOffset = previousPoint.Y - position.Y;
 
                 previousPoint.X = position.X;
                 previousPoint.Y = position.Y;
