@@ -2,7 +2,6 @@
 using System;
 using System.Linq;
 using System.Windows;
-using System.Windows.Documents;
 using System.Windows.Interop;
 using System.Windows.Media;
 

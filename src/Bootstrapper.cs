@@ -23,13 +23,11 @@
         /// </summary>
         private const string MUTEX_NAME = "%SimpleDICOMtoolkit%{03804718-95A8-4276-BCE9-76C7B6FE706E}";
 
-#pragma warning disable IDE0052
         /// <summary>
         /// 进程互斥
         /// 必须定义在类内部，一旦被释放就无效了
         /// </summary>
         private static Mutex mutex;
-#pragma warning restore IDE0052
 
         protected override void OnStart()
         {

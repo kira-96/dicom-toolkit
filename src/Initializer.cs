@@ -27,11 +27,11 @@ namespace SimpleDICOMToolkit
 #else
             Dicom.Imaging.ImageManager.SetImplementation(Dicom.Imaging.WPFImageManager.Instance);
             Dicom.Log.LogManager.SetImplementation(Dicom.Log.NLogManager.Instance);
-#endif
 
             // Set your own Class UID here
             // Dicom.DicomImplementation.ClassUID = new Dicom.DicomUID("My Class UID", "Implementation Class UID", Dicom.DicomUidType.Unknown);
             // Dicom.DicomImplementation.Version = "My Version Name";
+#endif
         }
     }
 }
