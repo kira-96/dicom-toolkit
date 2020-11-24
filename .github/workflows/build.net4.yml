@@ -26,12 +26,12 @@ jobs:
 
     # Nuget Restore
     - name: Restore nuget packages
-      run: nuget restore Toolkit.sln
+      run: nuget restore Toolkit.Desktop.sln
 
     # Build Config
     - name: Build Config
-      run: msbuild Toolkit.sln -target:"Config" -p:Configuration=Release -p:Platform="x64" -maxCpuCount
+      run: msbuild Toolkit.Desktop.sln -target:"Config" -p:Configuration=Release -p:Platform="x64" -maxCpuCount
 
     # Build Toolkit
     - name: Build Toolkit
-      run: msbuild Toolkit.sln -target:"SimpleDICOMToolkit" -p:Configuration=Release -p:Platform="x64" -maxCpuCount
+      run: msbuild Toolkit.Desktop.sln -target:"SimpleDICOMToolkit" -p:Configuration=Release -p:Platform="x64" -maxCpuCount
