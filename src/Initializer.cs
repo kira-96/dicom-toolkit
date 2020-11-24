@@ -4,6 +4,10 @@ using FellowOakDicom.Imaging;
 using FellowOakDicom.Imaging.NativeCodec;
 using FellowOakDicom.Log;
 using Microsoft.Extensions.DependencyInjection;
+#else
+using Dicom;
+using Dicom.Imaging;
+using Dicom.Log;
 #endif
 
 namespace SimpleDICOMToolkit
@@ -25,13 +29,13 @@ namespace SimpleDICOMToolkit
 
             DicomSetupBuilder.UseServiceProvider(services.BuildServiceProvider());
 #else
-            Dicom.Imaging.ImageManager.SetImplementation(Dicom.Imaging.WPFImageManager.Instance);
-            Dicom.Log.LogManager.SetImplementation(Dicom.Log.NLogManager.Instance);
+            ImageManager.SetImplementation(WPFImageManager.Instance);
+            LogManager.SetImplementation(NLogManager.Instance);
+#endif
 
             // Set your own Class UID here
-            // Dicom.DicomImplementation.ClassUID = new Dicom.DicomUID("My Class UID", "Implementation Class UID", Dicom.DicomUidType.Unknown);
-            // Dicom.DicomImplementation.Version = "My Version Name";
-#endif
+            // DicomImplementation.ClassUID = new DicomUID("My Class UID", "Implementation Class UID", DicomUidType.Unknown);
+            // DicomImplementation.Version = "My Version Name";
         }
     }
 }
