@@ -307,8 +307,8 @@
 
         private async void MenuItemCheckUpdateClick(object s, RoutedEventArgs e)
         {
+            await notificationService.ShowToastAsync(i18NService.GetXmlStringByKey("ToastCheckingUpdate"), new TimeSpan(0, 0, 2));
             await updateService.CheckForUpdateAsync();
-            await notificationService.ShowToastAsync(i18NService.GetXmlStringByKey("ToastCheckingUpdate"), new TimeSpan(0, 0, 3));
         }
     }
 }
