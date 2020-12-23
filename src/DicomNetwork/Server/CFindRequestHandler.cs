@@ -24,7 +24,7 @@ namespace SimpleDICOMToolkit.Server
         {
             Encoding encoding = fallbackEncoding ?? Encoding.UTF8;
 
-            if (request.TryGetString(DicomTag.SpecificCharacterSet, out string charset))
+            if (request.TryGetValue(DicomTag.SpecificCharacterSet, 0, out string charset))
             {
                 encoding = DicomEncoding.GetEncoding(charset);
             }

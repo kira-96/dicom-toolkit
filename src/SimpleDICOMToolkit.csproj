@@ -8,8 +8,8 @@
     <RootNamespace>SimpleDICOMToolkit</RootNamespace>
     <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <AssemblyVersion>1.5.0.342</AssemblyVersion>
-    <FileVersion>1.5.0.342</FileVersion>
+    <AssemblyVersion>1.5.0.343</AssemblyVersion>
+    <FileVersion>1.5.0.343</FileVersion>
     <Version>1.5.0</Version>
     <Authors>kira</Authors>
     <Company>kira</Company>

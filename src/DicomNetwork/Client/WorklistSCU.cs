@@ -432,11 +432,11 @@
             return null;
         }
 
-        private SimpleWorklistResult GetWorklistResultFromDataset(DicomDataset dataset, Encoding fallbackEncoding = null)
+        private static SimpleWorklistResult GetWorklistResultFromDataset(DicomDataset dataset, Encoding fallbackEncoding = null)
         {
             Encoding encoding = fallbackEncoding ?? Encoding.UTF8;
 
-            if (dataset.TryGetString(DicomTag.SpecificCharacterSet, out string charset))
+            if (dataset.TryGetValue(DicomTag.SpecificCharacterSet, 0, out string charset))
             {
                 encoding = DicomEncoding.GetEncoding(charset);
             }

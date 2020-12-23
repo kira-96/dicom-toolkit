@@ -10,6 +10,7 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Text;
     using System.Threading.Tasks;
     using System.Windows;
     using Logging;
@@ -29,6 +30,9 @@
 
         [Inject]
         private IDialogServiceEx _dialogService;
+
+        [Inject]
+        private IConfigurationService _configurationService;
 
         private readonly IEventAggregator _eventAggregator;
 
@@ -328,7 +332,8 @@
 
         private void AddOrUpdateDicomItem(DicomDataset dataset, DicomVR vr, DicomTag tag, string[] values)
         {
-            string charset = _currentFile.Dataset.GetSingleValueOrDefault(DicomTag.SpecificCharacterSet, "ISO_IR 192");
+            Encoding encoding = _currentFile.Dataset.TryGetValue(DicomTag.SpecificCharacterSet, 0, out string charset)
+                ? DicomEncoding.GetEncoding(charset) : Encoding.GetEncoding(_configurationService.GetConfiguration<AppConfiguration>().DicomEncoding);
 
             if (vr == DicomVR.OB || vr == DicomVR.UN)
             {
@@ -340,7 +345,7 @@
 #if FellowOakDicom5
                 dataset.AddOrUpdate(vr, tag, temp);
 #else
-                dataset.AddOrUpdate(vr, tag, DicomEncoding.GetEncoding(charset), temp);
+                dataset.AddOrUpdate(vr, tag, encoding, temp);
 #endif
             }
             else
@@ -348,7 +353,7 @@
 #if FellowOakDicom5
                 dataset.AddOrUpdate(vr, tag, values);
 #else
-                dataset.AddOrUpdate(vr, tag, DicomEncoding.GetEncoding(charset), values);
+                dataset.AddOrUpdate(vr, tag, encoding, values);
 #endif
             }
         }
