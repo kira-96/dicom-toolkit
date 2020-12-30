@@ -22,7 +22,7 @@ namespace SimpleDICOMToolkit.Server
     using System.Text;
     using System.Threading.Tasks;
 
-    internal class StoreService : DicomService, IDicomServiceProvider, IDicomCEchoProvider, IDicomCStoreProvider
+    internal class StoreService : DicomService, IDicomServiceProvider, IDicomCEchoProvider, IDicomCStoreProvider, IDicomNServiceProvider
     {
         private static readonly DicomTransferSyntax[] AcceptedTransferSyntaxes = new DicomTransferSyntax[]
         {
@@ -167,5 +167,86 @@ namespace SimpleDICOMToolkit.Server
             // let library handle logging and error response
         }
 #endif
+
+        #region N-Service
+
+#if FellowOakDicom5
+
+        public Task<DicomNActionResponse> OnNActionRequestAsync(DicomNActionRequest request)
+        {
+            Logger.Info("Received N-Action request, Action type ID {0}.", request.ActionTypeID);
+            return Task.FromResult(new DicomNActionResponse(request, DicomStatus.Success));
+        }
+
+        public Task<DicomNCreateResponse> OnNCreateRequestAsync(DicomNCreateRequest request)
+        {
+            Logger.Info("Received N-Create request, message ID {0}.", request.MessageID);
+            return Task.FromResult(new DicomNCreateResponse(request, DicomStatus.Success));
+        }
+
+        public Task<DicomNDeleteResponse> OnNDeleteRequestAsync(DicomNDeleteRequest request)
+        {
+            Logger.Info("Received N-Delete request, message ID {0}.", request.MessageID);
+            return Task.FromResult(new DicomNDeleteResponse(request, DicomStatus.Success));
+        }
+
+        public Task<DicomNEventReportResponse> OnNEventReportRequestAsync(DicomNEventReportRequest request)
+        {
+            Logger.Info("Received N-EventReport request, event type ID {0}.", request.EventTypeID);
+            return Task.FromResult(new DicomNEventReportResponse(request, DicomStatus.Success));
+        }
+
+        public Task<DicomNGetResponse> OnNGetRequestAsync(DicomNGetRequest request)
+        {
+            Logger.Info("Received N-Get request, message ID {0}.", request.MessageID);
+            return Task.FromResult(new DicomNGetResponse(request, DicomStatus.Success));
+        }
+
+        public Task<DicomNSetResponse> OnNSetRequestAsync(DicomNSetRequest request)
+        {
+            Logger.Info("Received N-Set request, message ID {0}.", request.MessageID);
+            return Task.FromResult(new DicomNSetResponse(request, DicomStatus.Success));
+        }
+
+#else
+        public DicomNActionResponse OnNActionRequest(DicomNActionRequest request)
+        {
+            Logger.Info("Received N-Action request, Action type ID {0}.", request.ActionTypeID);
+            return new DicomNActionResponse(request, DicomStatus.Success);
+        }
+
+        public DicomNCreateResponse OnNCreateRequest(DicomNCreateRequest request)
+        {
+            Logger.Info("Received N-Create request, message ID {0}.", request.MessageID);
+            return new DicomNCreateResponse(request, DicomStatus.Success);
+        }
+
+        public DicomNDeleteResponse OnNDeleteRequest(DicomNDeleteRequest request)
+        {
+            Logger.Info("Received N-Delete request, message ID {0}.", request.MessageID);
+            return new DicomNDeleteResponse(request, DicomStatus.Success);
+        }
+
+        public DicomNEventReportResponse OnNEventReportRequest(DicomNEventReportRequest request)
+        {
+            Logger.Info("Received N-EventReport request, event type ID {0}.", request.EventTypeID);
+            return new DicomNEventReportResponse(request, DicomStatus.Success);
+        }
+
+        public DicomNGetResponse OnNGetRequest(DicomNGetRequest request)
+        {
+            Logger.Info("Received N-Get request, message ID {0}.", request.MessageID);
+            return new DicomNGetResponse(request, DicomStatus.Success);
+        }
+
+        public DicomNSetResponse OnNSetRequest(DicomNSetRequest request)
+        {
+            Logger.Info("Received N-Set request, message ID {0}.", request.MessageID);
+            return new DicomNSetResponse(request, DicomStatus.Success);
+        }
+
+#endif
+
+        #endregion
     }
 }
