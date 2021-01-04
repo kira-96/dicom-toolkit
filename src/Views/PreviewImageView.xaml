@@ -9,7 +9,7 @@
         Title="{Binding DisplayName}" 
         ShowInTaskbar="False"
         Width="640"
-        Height="640" >
+        Height="640">
 
     <Window.Resources>
         <s:BoolToVisibilityConverter x:Key="BoolToVisibilityConv" TrueVisibility="Visible" FalseVisibility="Hidden" />
@@ -21,6 +21,10 @@
             <Setter Property="VerticalAlignment" Value="Bottom" />
         </Style>
     </Window.Resources>
+
+    <Window.InputBindings>
+        <KeyBinding Gesture="Alt+Enter" Command="v:WindowCommands.FullscreenCommand" />
+    </Window.InputBindings>
     
     <Grid Background="Black">
         <Image RenderOptions.BitmapScalingMode="NearestNeighbor" 
