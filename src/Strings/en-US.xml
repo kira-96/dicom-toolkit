@@ -83,10 +83,12 @@
   <string key="TooltipDicomTagDescription">In hexadecimal format: (xxxx,xxxx)</string>
   <string key="TooltipRegist">Regist</string>
   <string key="TooltipOpenPrinterFolder">Open printer folder</string>
+  <string key="TooltipUpdateAvailable">Update Available</string>
   <string key="MenuAbout">&amp;About</string>
   <string key="MenuLanguageSetting">Language Setting</string>
   <string key="MenuShowMainWindow">Show main window</string>
   <string key="MenuExit">Exit</string>
+  <string key="UpdateAvailable">Update Available</string>
   <string key="RegistContent">Regist</string>
   <string key="RegisterCaption">Registration</string>
   <string key="AboutCaption">About this program</string>

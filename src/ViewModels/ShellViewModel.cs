@@ -26,6 +26,17 @@
 
         public ITaskbarService TaskbarService { get; }
 
+        private bool isUpdateAvailable = false;
+
+        /// <summary>
+        /// 是否有更新可用
+        /// </summary>
+        public bool IsUpdateAvailable
+        {
+            get => isUpdateAvailable;
+            internal set => SetAndNotify(ref isUpdateAvailable, value);
+        }
+
         public ShellViewModel(
             IContainer container,
             IEventAggregator eventAggregator,
@@ -118,6 +129,25 @@
                 TaskbarItemProgressState.Indeterminate : TaskbarItemProgressState.None;
         }
 
+        public async void ConfirmUpdate()
+        {
+            await ConfirmUpdateAsync();
+        }
+
+        private async ValueTask ConfirmUpdateAsync()
+        {
+            var result = windowManager.ShowMessageBox(
+                    i18NService.GetXmlStringByKey("UpdateAvailableContent"),
+                    i18NService.GetXmlStringByKey("InfoCaption"),
+                    System.Windows.MessageBoxButton.YesNo);
+
+            if (result == System.Windows.MessageBoxResult.Yes)
+            {
+                updateService.StartDownload();
+                await notificationService.ShowToastAsync(i18NService.GetXmlStringByKey("ToastStartDownload"), new TimeSpan(0, 0, 3));
+            }
+        }
+
         private async ValueTask HandleCommandLineArgs(string[] args)
         {
             if (args.Length >= 2)
@@ -157,16 +187,9 @@
 
             if (newVersion > currentVersion)
             {
-                var result = windowManager.ShowMessageBox(
-                i18NService.GetXmlStringByKey("UpdateAvailableContent"),
-                i18NService.GetXmlStringByKey("InfoCaption"),
-                System.Windows.MessageBoxButton.YesNo);
+                IsUpdateAvailable = true;  // 有可用更新
 
-                if (result == System.Windows.MessageBoxResult.Yes)
-                {
-                    updateService.StartDownload();
-                    await notificationService.ShowToastAsync(i18NService.GetXmlStringByKey("ToastStartDownload"), new TimeSpan(0, 0, 3));
-                }
+                await ConfirmUpdateAsync();
             }
             else
             {
