@@ -756,12 +756,13 @@ namespace SimpleDICOMToolkit.Server
                     printJob.SOPClassUID,
                     printJob.SOPInstanceUID,
                     e.EventTypeId);
+
                 var ds = new DicomDataset
-            {
-               { DicomTag.ExecutionStatusInfo, e.ExecutionStatusInfo },
-               { DicomTag.FilmSessionLabel, e.FilmSessionLabel },
-               { DicomTag.PrinterName, e.PrinterName }
-            };
+                {
+                    { DicomTag.ExecutionStatusInfo, e.ExecutionStatusInfo },
+                    { DicomTag.FilmSessionLabel, e.FilmSessionLabel },
+                    { DicomTag.PrinterName, e.PrinterName }
+                };
 
                 reportRequest.Dataset = ds;
                 SendRequestAsync(reportRequest).Wait();
