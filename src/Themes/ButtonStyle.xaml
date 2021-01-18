@@ -23,29 +23,65 @@
                             BorderBrush="Transparent"
                             BorderThickness="1"
                             CornerRadius="2"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                            Padding="{TemplateBinding Padding}">
-                        <Grid>
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <Grid Width="{Binding ElementName=ContentBorder, Path=Width}"
+                              Height="{Binding ElementName=ContentBorder, Path=Height}">
+                            <Rectangle x:Name="ContentBackground" Fill="White" Opacity="0" />
                             <Path x:Name="StartIcon"
                                   Width="20" Height="20"
                                   Stretch="Uniform"
                                   UseLayoutRounding="True"
                                   Data="{StaticResource OnIcon}"
-                                  Fill="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToggleButton}}, Path=Foreground}" />
+                                  Fill="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToggleButton}}, Path=Foreground}"
+                                  Margin="{TemplateBinding Padding}" />
                             <Path x:Name="StopIcon"
                                   Width="20" Height="20"
                                   Stretch="Uniform"
                                   UseLayoutRounding="True"
                                   Data="{StaticResource OffIcon}" 
-                                  Fill="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToggleButton}}, Path=Foreground}" />
+                                  Fill="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToggleButton}}, Path=Foreground}"
+                                  Margin="{TemplateBinding Padding}" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="ContentBackground"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="0.12" Duration="0:0:0.3" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="ContentBackground"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="0" Duration="0:0:0.3" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="PreviewMouseDown">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="ContentBackground"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="0.25" Duration="0:0:0.3" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="PreviewMouseUp">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="ContentBackground"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="0" Duration="0:0:0.3" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="ContentBorder" Property="BorderBrush" Value="LightGray" />
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="ContentBorder" Property="Background" Value="LightSkyBlue" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="ContentBorder" Property="Background" Value="LightGray" />
@@ -89,22 +125,60 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="ContentBorder"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="Transparent"
-                                CornerRadius="2"
-                                BorderThickness="1"
-                                SnapsToDevicePixels="True"
-                                Padding="{TemplateBinding Padding}">
-                        <ContentPresenter Content="{TemplateBinding Content}" 
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="Transparent"
+                            BorderThickness="1"
+                            CornerRadius="2"
+                            SnapsToDevicePixels="True">
+                        <Grid Width="{Binding ElementName=ContentBorder, Path=Width}"
+                              Height="{Binding ElementName=ContentBorder, Path=Height}">
+                            <Rectangle x:Name="ContentBackground" Fill="White" Opacity="0" />
+                            <ContentPresenter Content="{TemplateBinding Content}"
+                                              Margin="{TemplateBinding Padding}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        </Grid>
                     </Border>
+
                     <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="ContentBackground"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="0.12" Duration="0:0:0.3" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="ContentBackground"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="0" Duration="0:0:0.3" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="PreviewMouseDown">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="ContentBackground"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="0.25" Duration="0:0:0.3" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="PreviewMouseUp">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="ContentBackground"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="0" Duration="0:0:0.3" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="ContentBorder" Property="BorderBrush" Value="LightGray" />
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="ContentBorder" Property="Opacity" Value="0.6" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="ContentBorder" Property="Background" Value="LightGray" />
@@ -141,7 +215,7 @@
                             <Setter TargetName="ContentBorder" Property="BorderBrush" Value="LightGray" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="ContentBorder" Property="Background" Value="LightSkyBlue" />
+                            <Setter TargetName="ContentBorder" Property="Background" Value="LightGray" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="ContentBorder" Property="Background" Value="LightGray" />

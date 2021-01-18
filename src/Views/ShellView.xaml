@@ -59,7 +59,7 @@
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="ContentBackground" 
                                                          Storyboard.TargetProperty="Opacity"
-                                                         From="0" To="0.12" Duration="0:0:0.3" />
+                                                         To="0.12" Duration="0:0:0.3" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger>
@@ -68,7 +68,25 @@
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="ContentBackground" 
                                                          Storyboard.TargetProperty="Opacity"
-                                                         From="0.12" To="0" Duration="0:0:0.3" />
+                                                         To="0" Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="PreviewMouseDown">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ContentBackground" 
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0.25" Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="PreviewMouseUp">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ContentBackground" 
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0.12" Duration="0:0:0.3" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger>
@@ -243,7 +261,7 @@
             <s:BoolToVisibilityConverter x:Key="BoolToVisibilityConv" TrueVisibility="Visible" FalseVisibility="Hidden" />
         </Grid.Resources>
         <TabControl Style="{StaticResource ConductorTabControl}" />
-        <Button Style="{StaticResource UpdateButtonStyle}" Panel.ZIndex="1"
+        <Button Style="{StaticResource UpdateButtonStyle}"
                 Visibility="{Binding IsUpdateAvailable, Converter={StaticResource BoolToVisibilityConv}}"
                 Command="{s:Action ConfirmUpdate, ActionNotFound=Disable}">
             <Button.Content>

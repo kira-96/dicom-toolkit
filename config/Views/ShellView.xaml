@@ -28,18 +28,54 @@
                         <Border x:Name="ContentBorder"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="Transparent"
-                                CornerRadius="2"
                                 BorderThickness="1"
-                                SnapsToDevicePixels="True"
-                                Padding="{TemplateBinding Padding}">
-                            <ContentPresenter Content="{TemplateBinding Content}" />
+                                CornerRadius="2"
+                                SnapsToDevicePixels="True">
+                            <Grid Width="{Binding ElementName=ContentBorder, Path=Width}"
+                                  Height="{Binding ElementName=ContentBorder, Path=Height}">
+                                <Rectangle x:Name="ContentBackground" Fill="White" Opacity="0" />
+                                <ContentPresenter Content="{TemplateBinding Content}" Margin="{TemplateBinding Padding}" />
+                            </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ContentBackground"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0.12" Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ContentBackground"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0" Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="PreviewMouseDown">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ContentBackground"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0.25" Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="PreviewMouseUp">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ContentBackground"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0" Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="ContentBorder" Property="BorderBrush" Value="LightGray" />
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="ContentBorder" Property="Background" Value="LightSkyBlue" />
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="ContentBorder" Property="Background" Value="LightGray" />
