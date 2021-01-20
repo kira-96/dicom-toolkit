@@ -5,8 +5,25 @@
         <ResourceDictionary Source="pack://application:,,,/Themes/Icons.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <Color x:Key="DefaultButtonColor">#0078d7</Color>
+    <Color x:Key="DefaultButtonBorderColor">Transparent</Color>
+    <Color x:Key="TransparentButtonColor">Transparent</Color>
+    <Color x:Key="TransparentButtonPressedColor">LightGray</Color>
+    <Color x:Key="PointerOverButtonBorderColor">LightGray</Color>
+    <Color x:Key="CheckedButtonColor">OrangeRed</Color>
+    <Color x:Key="UncheckedButtonColor">#0078d7</Color>
+    <Color x:Key="DisabledButtonColor">LightGray</Color>
+
+    <SolidColorBrush x:Key="DefaultButtonBrush" Color="{StaticResource DefaultButtonColor}" />
+    <SolidColorBrush x:Key="DefaultButtonBorderBrush" Color="{StaticResource DefaultButtonBorderColor}" />
+    <SolidColorBrush x:Key="PointerOverButtonBorderBrush" Color="{StaticResource PointerOverButtonBorderColor}" />
+    <SolidColorBrush x:Key="TransparentButtonBrush" Color="{StaticResource TransparentButtonColor}" />
+    <SolidColorBrush x:Key="TransparentButtonPressedBrush" Color="{StaticResource TransparentButtonPressedColor}" />
+    <SolidColorBrush x:Key="CheckedButtonBrush" Color="{StaticResource CheckedButtonColor}" />
+    <SolidColorBrush x:Key="UncheckedButtonBrush" Color="{StaticResource UncheckedButtonColor}" />
+    <SolidColorBrush x:Key="DisabledButtonBrush" Color="{StaticResource DisabledButtonColor}" />
+
     <Style x:Key="ServerToggleButtonStyle" TargetType="{x:Type ToggleButton}">
-        <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="White" />
         <Setter Property="Padding" Value="25 2" />
         <Setter Property="Margin" Value="2" />
@@ -19,9 +36,9 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                     <Border x:Name="ContentBorder"
-                            Background="#0078d7"
-                            BorderBrush="Transparent"
-                            BorderThickness="1"
+                            Background="{StaticResource UncheckedButtonBrush}"
+                            BorderBrush="{StaticResource DefaultButtonBorderBrush}"
+                            BorderThickness="2"
                             CornerRadius="2"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                         <Grid Width="{Binding ElementName=ContentBorder, Path=Width}"
@@ -47,6 +64,10 @@
                         <EventTrigger RoutedEvent="MouseEnter">
                             <BeginStoryboard>
                                 <Storyboard>
+                                    <ColorAnimation Storyboard.TargetName="ContentBorder"
+                                                    Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                                    To="{StaticResource PointerOverButtonBorderColor}"
+                                                    Duration="0:0:0.3" />
                                     <DoubleAnimation Storyboard.TargetName="ContentBackground"
                                                      Storyboard.TargetProperty="Opacity"
                                                      To="0.12" Duration="0:0:0.3" />
@@ -56,6 +77,10 @@
                         <EventTrigger RoutedEvent="MouseLeave">
                             <BeginStoryboard>
                                 <Storyboard>
+                                    <ColorAnimation Storyboard.TargetName="ContentBorder"
+                                                    Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                                    To="{StaticResource DefaultButtonBorderColor}"
+                                                    Duration="0:0:0.3" />
                                     <DoubleAnimation Storyboard.TargetName="ContentBackground"
                                                      Storyboard.TargetProperty="Opacity"
                                                      To="0" Duration="0:0:0.3" />
@@ -80,16 +105,32 @@
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="ContentBorder" Property="BorderBrush" Value="LightGray" />
-                        </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="ContentBorder" Property="Background" Value="LightGray" />
+                            <Setter TargetName="ContentBorder" Property="Background" Value="{StaticResource DisabledButtonBrush}" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="ContentBorder"
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                        To="{StaticResource CheckedButtonColor}"
+                                                        Duration="0:0:0.5" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="ContentBorder"
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                        To="{StaticResource UncheckedButtonColor}"
+                                                        Duration="0:0:0.5" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
                             <Setter TargetName="StartIcon" Property="Visibility" Value="Hidden" />
                             <Setter TargetName="StopIcon" Property="Visibility" Value="Visible" />
-                            <Setter TargetName="ContentBorder" Property="Background" Value="OrangeRed" />
                             <Setter Property="ToolTip">
                                 <Setter.Value>
                                     <Binding Source="{StaticResource Strings}" XPath="string[@key='StopService']" />
@@ -112,9 +153,9 @@
     </Style>
 
     <Style x:Key="DefaultButtonStyle" TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="DeepSkyBlue" />
+        <Setter Property="Background" Value="{StaticResource DefaultButtonBrush}" />
         <Setter Property="Foreground" Value="White" />
-        <Setter Property="Padding" Value="25 1" />
+        <Setter Property="Padding" Value="25 2" />
         <Setter Property="Margin" Value="2" />
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -126,8 +167,8 @@
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="ContentBorder"
                             Background="{TemplateBinding Background}"
-                            BorderBrush="Transparent"
-                            BorderThickness="1"
+                            BorderBrush="{StaticResource DefaultButtonBorderBrush}"
+                            BorderThickness="2"
                             CornerRadius="2"
                             SnapsToDevicePixels="True">
                         <Grid Width="{Binding ElementName=ContentBorder, Path=Width}"
@@ -144,6 +185,10 @@
                         <EventTrigger RoutedEvent="MouseEnter">
                             <BeginStoryboard>
                                 <Storyboard>
+                                    <ColorAnimation Storyboard.TargetName="ContentBorder"
+                                                    Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                                    To="{StaticResource PointerOverButtonBorderColor}"
+                                                    Duration="0:0:0.3" />
                                     <DoubleAnimation Storyboard.TargetName="ContentBackground"
                                                      Storyboard.TargetProperty="Opacity"
                                                      To="0.12" Duration="0:0:0.3" />
@@ -153,6 +198,10 @@
                         <EventTrigger RoutedEvent="MouseLeave">
                             <BeginStoryboard>
                                 <Storyboard>
+                                    <ColorAnimation Storyboard.TargetName="ContentBorder"
+                                                    Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                                    To="{StaticResource DefaultButtonBorderColor}"
+                                                    Duration="0:0:0.3" />
                                     <DoubleAnimation Storyboard.TargetName="ContentBackground"
                                                      Storyboard.TargetProperty="Opacity"
                                                      To="0" Duration="0:0:0.3" />
@@ -177,11 +226,8 @@
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="ContentBorder" Property="BorderBrush" Value="LightGray" />
-                        </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="ContentBorder" Property="Background" Value="LightGray" />
+                            <Setter TargetName="ContentBorder" Property="Background" Value="{StaticResource DisabledButtonBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -190,7 +236,7 @@
     </Style>
 
     <Style x:Key="TransparentButtonStyle" TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Background" Value="{StaticResource TransparentButtonBrush}" />
         <Setter Property="Padding" Value="2" />
         <Setter Property="Margin" Value="2" />
         <Setter Property="HorizontalAlignment" Value="Center" />
@@ -203,7 +249,7 @@
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="ContentBorder"
                             Background="{TemplateBinding Background}"
-                            BorderBrush="Transparent"
+                            BorderBrush="{StaticResource DefaultButtonBorderBrush}"
                             CornerRadius="2"
                             BorderThickness="1"
                             SnapsToDevicePixels="True"
@@ -211,14 +257,46 @@
                         <ContentPresenter Content="{TemplateBinding Content}" />
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="ContentBorder" Property="BorderBrush" Value="LightGray" />
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="ContentBorder" Property="Background" Value="LightGray" />
-                        </Trigger>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetName="ContentBorder"
+                                                    Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                                    To="{StaticResource PointerOverButtonBorderColor}"
+                                                    Duration="0:0:0.3" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetName="ContentBorder"
+                                                    Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                                    To="{StaticResource DefaultButtonBorderColor}"
+                                                    Duration="0:0:0.3" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="PreviewMouseDown">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetName="ContentBorder"
+                                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                    To="{StaticResource TransparentButtonPressedColor}" Duration="0:0:0.3" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="PreviewMouseUp">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetName="ContentBorder"
+                                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                    To="{StaticResource TransparentButtonColor}" Duration="0:0:0.3" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="ContentBorder" Property="Background" Value="LightGray" />
+                            <Setter TargetName="ContentBorder" Property="Background" Value="{StaticResource DisabledButtonBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -231,7 +309,7 @@
     </Style>
     
     <Style x:Key="BlueButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource DefaultButtonStyle}">
-        <Setter Property="Background" Value="DodgerBlue" />
+        <Setter Property="Background" Value="{StaticResource DefaultButtonBrush}" />
         <Setter Property="Padding" Value="12 2" />
         <Setter Property="MinWidth" Value="64" />
         <Setter Property="MinHeight" Value="24" />
