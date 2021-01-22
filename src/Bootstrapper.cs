@@ -6,6 +6,7 @@
     using System.Windows;
     using System.Windows.Threading;
     using System.Threading;
+    using System.Threading.Tasks;
     using IoCModules;
     using Logging;
     using Services;
@@ -56,6 +57,7 @@
             mutex.ReleaseMutex();
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
 
             Initializer.Initialize();
         }
@@ -86,6 +88,13 @@
         private void CurrentDomain_UnhandledException(object s, UnhandledExceptionEventArgs e)
         {
             ExecuteOnUnhandledException(e.ExceptionObject as Exception);
+        }
+
+        private void TaskScheduler_UnobservedTaskException(object s, UnobservedTaskExceptionEventArgs e)
+        {
+            e.SetObserved();  // 已观察到异常
+
+            ExecuteOnUnhandledException(e.Exception);
         }
 
         private void ExecuteOnUnhandledException(Exception ex)
