@@ -2,7 +2,7 @@
 ; This script is used to build the setup program.
 
 #define MyAppName "Dicom toolkit"
-#define MyAppVersion "1.4.7"
+#define MyAppVersion "1.5.0"
 #define MyAppPublisher "kira"
 #define MyAppURL "https://github.com/kira-96/dicom-toolkit/"
 #define MyAppExeName "Simple DICOM Toolkit.exe"
@@ -44,6 +44,7 @@ Source: "{#SourceDir}\{#ReleaseDir}\Config.exe"; DestDir: "{app}"; Flags: ignore
 Source: "{#SourceDir}\{#ReleaseDir}\Dicom.Core.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourceDir}\{#ReleaseDir}\Dicom.Native64.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourceDir}\{#ReleaseDir}\FluentValidation.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#SourceDir}\{#ReleaseDir}\H.NotifyIcon.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourceDir}\{#ReleaseDir}\Hardcodet.Wpf.TaskbarNotification.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourceDir}\{#ReleaseDir}\LiteDB.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourceDir}\{#ReleaseDir}\Microsoft.Xaml.Behaviors.dll"; DestDir: "{app}"; Flags: ignoreversion

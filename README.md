@@ -34,7 +34,7 @@
 - [Polly](http://www.thepollyproject.org/)
 - [Nett](https://github.com/paiden/Nett)
 - [MQTTnet](https://github.com/chkr1011/MQTTnet)
-- [wpf-notifyicon](https://github.com/hardcodet/wpf-notifyicon)
+- [Hardcodet.NotifyIcon.Wpf.NetCore](https://github.com/HavenDV/H.NotifyIcon.WPF)
 
 **部分图标来源于[阿里巴巴矢量图标库](https://www.iconfont.cn/)**
 

@@ -812,8 +812,8 @@
     <PackageReference Include="fo-dicom">
       <Version>4.0.7</Version>
     </PackageReference>
-    <PackageReference Include="Hardcodet.NotifyIcon.Wpf">
-      <Version>1.0.8</Version>
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf.NetCore">
+      <Version>1.0.18</Version>
     </PackageReference>
     <PackageReference Include="LiteDB">
       <Version>5.0.10</Version>
