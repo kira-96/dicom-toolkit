@@ -5,6 +5,7 @@
     using System;
     using System.IO;
     using Client;
+    using Infrastructure;
     using Logging;
     using Services;
     using Helpers;
@@ -54,7 +55,14 @@
             eventAggregator.Subscribe(ServerConfigViewModel, nameof(ViewModels.PrintPreviewViewModel));
             PrintPreviewViewModel.Parent = this;
             await PrintPreviewViewModel.AddSampleImageAsync();
-            PrintOptions = configurationService.GetConfiguration<PrintOptions>("PrintOptions");
+            var printConfig = configurationService.GetConfiguration<PrintConfiguration>();
+            PrintOptions = new PrintOptions()
+            {
+                Orientation = printConfig.Orientation,
+                FilmSize = printConfig.Size,
+                MagnificationType = printConfig.Magnification,
+                MediumType = printConfig.Medium
+            };
             await messenger.SubscribeAsync(this, "Config", ReloadPrintOptions);
         }
 
@@ -75,10 +83,14 @@
             }
         }
 
-        private void ReloadPrintOptions(string file)
+        private void ReloadPrintOptions(string token)
         {
-            configurationService.Load("PrintOptions");
-            PrintOptions = configurationService.GetConfiguration<PrintOptions>("PrintOptions");
+            configurationService.Load(token);
+            var printConfig = configurationService.GetConfiguration<PrintConfiguration>();
+            PrintOptions.Orientation = printConfig.Orientation;
+            PrintOptions.FilmSize = printConfig.Size;
+            PrintOptions.MagnificationType = printConfig.Magnification;
+            PrintOptions.MediumType = printConfig.Medium;
         }
 
         public async void Dispose()

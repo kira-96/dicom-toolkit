@@ -1,8 +1,8 @@
 ﻿using StyletIoC;
-using Nett;
+using YamlDotNet.Serialization;
 using System;
 using System.IO;
-using SimpleDICOMToolkit.Client;
+using SimpleDICOMToolkit.Infrastructure;
 using SimpleDICOMToolkit.Logging;
 
 namespace SimpleDICOMToolkit.Services
@@ -11,137 +11,77 @@ namespace SimpleDICOMToolkit.Services
     {
         private readonly ILoggerService loggerService;
 
-        private const string CONFIG_FILE = "config.toml";
+        private const string CONFIG_FILE = "config.yml";
 
         private AppConfiguration appConfiguration;
-        private PrintOptions printOptions;
-        private string printer;
+
+        public string Token { get; private set; } = "";
 
         public ConfigurationService([Inject("filelogger")] ILoggerService loggerService)
         {
             this.loggerService = loggerService;
         }
 
-        public void Load(string section = null)
+        public void Load(string token)
         {
-            TomlTable configTable = null;
+            if (Token == token)
+            {
+                // 不需要重新加载
+                return;
+            }
 
             if (File.Exists(CONFIG_FILE))
             {
                 try
                 {
-                    configTable = Toml.ReadFile(CONFIG_FILE);
+                    string input = File.ReadAllText(CONFIG_FILE);
+                    DeserializerBuilder builder = new DeserializerBuilder();
+                    appConfiguration = builder.Build().Deserialize<AppConfiguration>(input);
                 }
                 catch (Exception ex)
                 {
                     loggerService.Error(ex, "Read configuration file error.");
-                    configTable = null;
                 }
             }
             else
             {
-                loggerService.Warn("{0} not exist. use default settings.");
+                loggerService.Warn("{0} not exist. use default settings.", CONFIG_FILE);
             }
 
-            if (section == null || section == "Application")
+            if (appConfiguration == null)
             {
-                appConfiguration = LoadAppConfiguration(configTable);
+                appConfiguration = new AppConfiguration()
+                {
+                    Print = new PrintConfiguration(),
+                    Printer = new PrinterConfiguration(),
+                    Misc = new MiscConfiguration()
+                };
             }
 
-            if (section == null || section == "PrintOptions")
-            {
-                printOptions = LoadPrintConfiguration(configTable);
-            }
-            
-            if (section == null || section == "PrinterSettings")
-            {
-                printer = LoadPrinterConfiguration(configTable);
-            }
+            Token = token;
         }
 
         public T GetConfiguration<T>(string section = null)
         {
-            if (typeof(T) == typeof(AppConfiguration) ||
-                section == "Application")
+            if (typeof(T) == typeof(MiscConfiguration) ||
+                section == "Misc")
             {
-                return (T)(object)appConfiguration;
+                return (T)(object)appConfiguration.Misc;
             }
 
-            if (typeof(T) == typeof(PrintOptions) ||
-                section == "PrintOptions")
+            if (typeof(T) == typeof(PrintConfiguration) ||
+                section == "Print")
             {
-                return (T)(object)printOptions;
+                return (T)(object)appConfiguration.Print;
             }
             
-            if (section == "PrinterSettings")
+            if (typeof(T) == typeof(PrinterConfiguration) ||
+                section == "Printer")
             {
-                return (T)(object)printer;
+                return (T)(object)appConfiguration.Printer;
             }
 
             return default;
-        }
-
-        private AppConfiguration LoadAppConfiguration(TomlTable configTable)
-        {
-            AppConfiguration appConfiguration = new AppConfiguration();
-
-            if (configTable != null && configTable.ContainsKey("Application"))
-            {
-                TomlTable settings = configTable.Get<TomlTable>("Application");
-
-                if (settings.ContainsKey("ListenPort"))
-                {
-                    appConfiguration.ListenPort = (int)settings.Get<TomlInt>("ListenPort").Value;
-                }
-
-                if (settings.ContainsKey("DbConnectionString"))
-                {
-                    appConfiguration.DbConnectionString = settings.Get<TomlString>("DbConnectionString").Value;
-                }
-
-                if (settings.ContainsKey("DicomEncoding"))
-                {
-                    appConfiguration.DicomEncoding = settings.Get<TomlString>("DicomEncoding").Value;
-                }
-            }
-
-            return appConfiguration;
-        }
-
-        private PrintOptions LoadPrintConfiguration(TomlTable configTable)
-        {
-            PrintOptions options = new PrintOptions();
-
-            if (configTable != null && configTable.ContainsKey("PrintOptions"))
-            {
-                TomlTable settings = configTable.Get<TomlTable>("PrintOptions");
-
-                if (settings.ContainsKey("Orientation"))
-                    options.Orientation = (FilmOrientation)settings.Get<TomlInt>("Orientation").Value;
-                if (settings.ContainsKey("Size"))
-                    options.FilmSize = (FilmSize)settings.Get<TomlInt>("Size").Value;
-                if (settings.ContainsKey("Magnification"))
-                    options.MagnificationType = (MagnificationType)settings.Get<TomlInt>("Magnification").Value;
-                if (settings.ContainsKey("Medium"))
-                    options.MediumType = (MediumType)settings.Get<TomlInt>("Medium").Value;
-            }
-
-            return options;
-        }
-
-        private string LoadPrinterConfiguration(TomlTable configTable)
-        {
-            if (configTable != null && configTable.ContainsKey("PrinterSettings"))
-            {
-                TomlTable settings = configTable.Get<TomlTable>("PrinterSettings");
-
-                if (settings.ContainsKey("Printer"))
-                {
-                    return settings.Get<TomlString>("Printer").Value;
-                }
-            }
-
-            return "Microsoft XPS Document Writer";
         }
     }
 }

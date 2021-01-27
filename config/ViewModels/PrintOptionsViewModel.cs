@@ -1,10 +1,9 @@
-﻿using Nett;
-using Stylet;
+﻿using Stylet;
 using System.Collections.Generic;
 
 namespace Config.ViewModels
 {
-    public class PrintOptionsViewModel : Screen, IConfigViewModel
+    public class PrintOptionsViewModel : Screen
     {
         public List<string> Orientations { get; } = new List<string>()
         {
@@ -77,36 +76,6 @@ namespace Config.ViewModels
         public PrintOptionsViewModel()
         {
             DisplayName = "Print Options";
-        }
-
-        public void LoadConfigs(TomlTable table)
-        {
-            if (table.ContainsKey("PrintOptions"))
-            {
-                TomlTable options = table.Get<TomlTable>("PrintOptions");
-                if (options.ContainsKey("Orientation"))
-                    Orientation = (int)options.Get<TomlInt>("Orientation").Value;
-                if (options.ContainsKey("Size"))
-                    Size = (int)options.Get<TomlInt>("Size").Value;
-                if (options.ContainsKey("Magnification"))
-                    Magnification = (int)options.Get<TomlInt>("Magnification").Value;
-                if (options.ContainsKey("Medium"))
-                    Medium = (int)options.Get<TomlInt>("Medium").Value;
-            }
-        }
-
-        public void SaveConfig(TomlTable table)
-        {
-            TomlTable options = Toml.Create();
-            options.Add("Orientation", Orientation);
-            options.Add("Size", Size);
-            options.Add("Magnification", Magnification);
-            options.Add("Medium", Medium);
-
-            if (table.ContainsKey("PrintOptions"))
-                table.Remove("PrintOptions");
-
-            table.Add("PrintOptions", options);
         }
 
         public void Dispose()

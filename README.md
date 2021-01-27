@@ -32,7 +32,7 @@
 - [LiteDB](http://www.litedb.org/)
 - [FluentValidation](https://fluentvalidation.net/)
 - [Polly](http://www.thepollyproject.org/)
-- [Nett](https://github.com/paiden/Nett)
+- [YamlDotNet](https://github.com/aaubry/YamlDotNet)
 - [MQTTnet](https://github.com/chkr1011/MQTTnet)
 - [Hardcodet.NotifyIcon.Wpf.NetCore](https://github.com/HavenDV/H.NotifyIcon.WPF)
 

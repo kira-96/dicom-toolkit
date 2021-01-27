@@ -6,9 +6,9 @@
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <AssemblyVersion>1.1.0.23</AssemblyVersion>
-    <FileVersion>1.1.0.23</FileVersion>
-    <Version>1.1.0</Version>
+    <AssemblyVersion>1.1.1.25</AssemblyVersion>
+    <FileVersion>1.1.1.25</FileVersion>
+    <Version>1.1.1</Version>
     <Authors>kira</Authors>
     <Company>kira</Company>
     <Copyright>Copyright © 2020 - 2021 kira。保留所有权利。</Copyright>
@@ -29,9 +29,9 @@
 
   <ItemGroup>
     <PackageReference Include="MQTTnet" Version="3.0.13" />
-    <PackageReference Include="Nett" Version="0.15.0" />
     <PackageReference Include="NLog" Version="4.7.7" />
     <PackageReference Include="Stylet" Version="1.3.5" />
+    <PackageReference Include="YamlDotNet" Version="9.1.4" />
   </ItemGroup>
   
   <ItemGroup>

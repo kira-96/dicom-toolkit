@@ -49,7 +49,6 @@ Source: "{#SourceDir}\{#ReleaseDir}\Hardcodet.Wpf.TaskbarNotification.dll"; Dest
 Source: "{#SourceDir}\{#ReleaseDir}\LiteDB.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourceDir}\{#ReleaseDir}\Microsoft.Xaml.Behaviors.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourceDir}\{#ReleaseDir}\MQTTnet.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#SourceDir}\{#ReleaseDir}\Nett.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourceDir}\{#ReleaseDir}\NLog.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourceDir}\{#ReleaseDir}\Polly.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourceDir}\{#ReleaseDir}\Stylet.dll"; DestDir: "{app}"; Flags: ignoreversion
@@ -63,6 +62,7 @@ Source: "{#SourceDir}\{#ReleaseDir}\System.Security.Cryptography.Primitives.dll"
 Source: "{#SourceDir}\{#ReleaseDir}\System.Security.Cryptography.X509Certificates.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourceDir}\{#ReleaseDir}\System.Threading.Tasks.Extensions.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourceDir}\{#ReleaseDir}\System.ValueTuple.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#SourceDir}\{#ReleaseDir}\YamlDotNet.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourceDir}\{#ReleaseDir}\NLog.config"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourceDir}\{#ReleaseDir}\Fate.dcm"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourceDir}\LICENSE"; DestDir: "{app}"; Flags: ignoreversion

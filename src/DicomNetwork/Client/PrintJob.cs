@@ -23,6 +23,7 @@ using Dicom.Network;
 using Dicom.Printing;
 using DicomClient = Dicom.Network.Client.DicomClient;
 #endif
+using SimpleDICOMToolkit.Infrastructure;
 
 namespace SimpleDICOMToolkit.Client
 {
@@ -58,7 +59,7 @@ namespace SimpleDICOMToolkit.Client
                 MediumType = options.MediumType.ToStringEx(),
                 NumberOfCopies = options.PrintNumberOfCopies,
                 IsColor = options.ColorType == PrintColorType.Color,
-                FilmDestination = options.FilmDestination,
+                FilmDestination = options.FilmDestination.ToStringEx(),
                 PrintPriority = options.Priority.ToStringEx()
             };
         }

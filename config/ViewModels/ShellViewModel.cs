@@ -1,48 +1,61 @@
 ﻿namespace Config.ViewModels
 {
-    using Nett;
     using Stylet;
+    using YamlDotNet.Serialization;
     using System;
+    using System.IO;
+    using Infrastructure;
 
     public class ShellViewModel : Conductor<IScreen>.Collection.OneActive
     {
-        private const string CONFIG_FILE = "config.toml";
-        private TomlTable _configTable;
+        private const string CONFIG_FILE = "config.yml";
+        private AppConfiguration _config;
 
-        public TomlTable ConfigTable
+        private readonly PrintOptionsViewModel printOptionsViewModel;
+        private readonly PrinterSettingsViewModel printerSettingsViewModel;
+
+        public AppConfiguration Configuration
         {
             get
             {
-                if (_configTable == null)
+                if (_config == null)
                 {
-                    if (System.IO.File.Exists(CONFIG_FILE))
+                    if (File.Exists(CONFIG_FILE))
                     {
                         try
                         {
-                            _configTable = Toml.ReadFile(CONFIG_FILE);
+                            string input = File.ReadAllText(CONFIG_FILE);
+                            DeserializerBuilder builder = new DeserializerBuilder();
+                            _config = builder.Build().Deserialize<AppConfiguration>(input);
                         }
                         catch (Exception)
                         {
-                            _configTable = Toml.Create();
                         }
                     }
-                    else
+
+                    if (_config == null)
                     {
-                        _configTable = Toml.Create();
+                        _config = new AppConfiguration()
+                        {
+                            Print = new PrintConfiguration(),
+                            Printer = new PrinterConfiguration(),
+                            Misc = new MiscConfiguration()
+                        };
                     }
                 }
 
-                return _configTable;
+                return _config;
             }
         }
-
-        public int ServerPort { get; private set; } = 9629;
 
         public ShellViewModel(
             PrintOptionsViewModel printOptionsViewModel,
             PrinterSettingsViewModel printerSettingsViewModel)
         {
             DisplayName = "Config";
+
+            this.printOptionsViewModel = printOptionsViewModel;
+            this.printerSettingsViewModel = printerSettingsViewModel;
 
             Items.Add(printOptionsViewModel);
             Items.Add(printerSettingsViewModel);
@@ -53,7 +66,8 @@
             // Save and notify
             SaveConfig();
             // Notify
-            await Messenger.Default.PublishAsync("Config", CONFIG_FILE, System.Threading.CancellationToken.None);
+            Messenger.Default.ServerPort = Configuration.Misc.ListenPort;
+            await Messenger.Default.PublishAsync("Config", Guid.NewGuid().ToString(), System.Threading.CancellationToken.None);
 
             RequestClose();
         }
@@ -92,31 +106,25 @@
 
         private void LoadConfig()
         {
-            if (ConfigTable.ContainsKey("Application"))
-            {
-                TomlTable appSettings = ConfigTable.Get<TomlTable>("Application");
-
-                if (appSettings.ContainsKey("ListenPort"))
-                {
-                    ServerPort = (int)appSettings.Get<TomlInt>("ListenPort").Value;
-                    Messenger.Default.ServerPort = ServerPort;
-                }
-            }
-
-            foreach (var item in Items)
-            {
-                (item as IConfigViewModel).LoadConfigs(ConfigTable);
-            }
+            printOptionsViewModel.Orientation = Configuration.Print.Orientation;
+            printOptionsViewModel.Size = Configuration.Print.Size;
+            printOptionsViewModel.Magnification = Configuration.Print.Magnification;
+            printOptionsViewModel.Medium = Configuration.Print.Medium;
+            printerSettingsViewModel.Printer = Configuration.Printer.Printer;
         }
 
         private void SaveConfig()
         {
-            foreach (var item in Items)
-            {
-                (item as IConfigViewModel).SaveConfig(ConfigTable);
-            }
+            Configuration.Print.Orientation = printOptionsViewModel.Orientation;
+            Configuration.Print.Size = printOptionsViewModel.Size;
+            Configuration.Print.Magnification = printOptionsViewModel.Magnification;
+            Configuration.Print.Medium = printOptionsViewModel.Medium;
+            Configuration.Printer.Printer = printerSettingsViewModel.Printer;
 
-            Toml.WriteFile(ConfigTable, CONFIG_FILE);
+            SerializerBuilder builder = new SerializerBuilder();
+            string content = builder.Build().Serialize(Configuration);
+
+            File.WriteAllText(CONFIG_FILE, content);
         }
     }
 }

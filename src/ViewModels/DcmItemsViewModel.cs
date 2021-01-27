@@ -13,6 +13,7 @@
     using System.Text;
     using System.Threading.Tasks;
     using System.Windows;
+    using Infrastructure;
     using Logging;
     using Models;
     using Services;
@@ -333,7 +334,7 @@
         private void AddOrUpdateDicomItem(DicomDataset dataset, DicomVR vr, DicomTag tag, string[] values)
         {
             Encoding encoding = _currentFile.Dataset.TryGetValue(DicomTag.SpecificCharacterSet, 0, out string charset)
-                ? DicomEncoding.GetEncoding(charset) : Encoding.GetEncoding(_configurationService.GetConfiguration<AppConfiguration>().DicomEncoding);
+                ? DicomEncoding.GetEncoding(charset) : Encoding.GetEncoding(_configurationService.GetConfiguration<MiscConfiguration>().DicomEncoding);
 
             if (vr == DicomVR.OB || vr == DicomVR.UN)
             {

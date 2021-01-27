@@ -2,11 +2,12 @@
 {
     public interface IConfigurationService
     {
+        string Token { get; }
+
         /// <summary>
         /// 重新加载设置
         /// </summary>
-        /// <param name="section"></param>
-        void Load(string section = null);
+        void Load(string token);
 
         /// <summary>
         /// 获取当前设置

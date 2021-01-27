@@ -5,6 +5,7 @@
     using System;
     using System.Threading.Tasks;
     using System.Windows.Shell;
+    using Infrastructure;
     using Logging;
     using Models;
     using Services;
@@ -96,11 +97,11 @@
 
             await HandleCommandLineArgs(Environment.GetCommandLineArgs());
 
-            configurationService.Load();  // load configuration
-            var appConfiguration = configurationService.GetConfiguration<AppConfiguration>();
+            configurationService.Load("INIT");  // load configuration
+            var misc = configurationService.GetConfiguration<MiscConfiguration>();
 
-            await mqttService.StartAsync(appConfiguration.ListenPort);  // start mqtt service
-            dataService.ConnectDatabase(appConfiguration.DbConnectionString);  // connect to database
+            await mqttService.StartAsync(misc.ListenPort);  // start mqtt service
+            dataService.ConnectDatabase(misc.DbConnectionString);  // connect to database
 
             await CheckForUpdate();  // check for update
         }

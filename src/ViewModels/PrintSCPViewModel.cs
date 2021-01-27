@@ -4,6 +4,7 @@
     using StyletIoC;
     using System;
     using System.IO;
+    using Infrastructure;
     using Logging;
     using Server;
     using Services;
@@ -73,10 +74,10 @@
             }
         }
 
-        private void ReloadPrinterSettings(string file)
+        private void ReloadPrinterSettings(string token)
         {
-            configurationService.Load("PrinterSettings");
-            PrintServer.Default.PrinterName = configurationService.GetConfiguration<string>("PrinterSettings");
+            configurationService.Load(token);
+            PrintServer.Default.PrinterName = configurationService.GetConfiguration<PrinterConfiguration>().Printer;
         }
 
         public async void Dispose()

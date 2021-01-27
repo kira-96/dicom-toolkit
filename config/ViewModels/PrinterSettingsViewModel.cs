@@ -1,10 +1,9 @@
-﻿using Nett;
-using Stylet;
+﻿using Stylet;
 using System.Drawing.Printing;
 
 namespace Config.ViewModels
 {
-    public class PrinterSettingsViewModel : Screen, IConfigViewModel
+    public class PrinterSettingsViewModel : Screen
     {
         public BindableCollection<string> Printers { get; private set; }
 
@@ -53,29 +52,6 @@ namespace Config.ViewModels
             {
                 Printer = temp;
             }
-        }
-
-        public void LoadConfigs(TomlTable table)
-        {
-            if (table.ContainsKey("PrinterSettings"))
-            {
-                TomlTable settings = table.Get<TomlTable>("PrinterSettings");
-                if (settings.ContainsKey("Printer"))
-                {
-                    Printer = settings.Get<TomlString>("Printer").Value;
-                }
-            }
-        }
-
-        public void SaveConfig(TomlTable table)
-        {
-            TomlTable settings = Toml.Create();
-            settings.Add("Printer", Printer);
-
-            if (table.ContainsKey("PrinterSettings"))
-                table.Remove("PrinterSettings");
-
-            table.Add("PrinterSettings", settings);
         }
 
         public void Dispose()

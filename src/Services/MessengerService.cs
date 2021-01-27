@@ -10,6 +10,7 @@
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
+    using Infrastructure;
     using Logging;
 
     public class MessengerService : IMessengerService
@@ -121,13 +122,13 @@
 
         private async ValueTask<bool> TryConnectAsync()
         {
-            AppConfiguration appConfiguration = configurationService.GetConfiguration<AppConfiguration>();
+            MiscConfiguration misc = configurationService.GetConfiguration<MiscConfiguration>();
 
             IMqttClientOptions options = new MqttClientOptionsBuilder()
                 .WithCleanSession()
                 .WithClientId("主客户端 ID: 001")
                 .WithCredentials("AD*米妮*斯托蕾塔", "^P@$$W0&D$")
-                .WithTcpServer("localhost", appConfiguration.ListenPort)
+                .WithTcpServer("localhost", misc.ListenPort)
                 .Build();
 
             client.UseConnectedHandler(e => { logger.Debug("Successfully connected to: {0}", e.AuthenticateResult.ResultCode); })
