@@ -125,7 +125,14 @@ namespace SimpleDICOMToolkit.ViewModels
                 }
             }
 
-            return (result.Substring(0, 1), result.Substring(1));
+            if (result.Length == 0)
+            {
+                return ("", "");
+            }
+            else
+            {
+                return (result.Substring(0, 1), result.Substring(1));
+            }
         }
     }
 }
