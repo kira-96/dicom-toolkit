@@ -334,7 +334,7 @@
         private void AddOrUpdateDicomItem(DicomDataset dataset, DicomVR vr, DicomTag tag, string[] values)
         {
             Encoding encoding = _currentFile.Dataset.TryGetValue(DicomTag.SpecificCharacterSet, 0, out string charset)
-                ? DicomEncoding.GetEncoding(charset) : Encoding.GetEncoding(_configurationService.GetConfiguration<MiscConfiguration>().DicomEncoding);
+                ? DicomEncoding.GetEncoding(charset) : Encoding.GetEncoding(_configurationService.Get<MiscConfiguration>().DicomEncoding);
 
             if (vr == DicomVR.OB || vr == DicomVR.UN)
             {

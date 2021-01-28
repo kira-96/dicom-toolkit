@@ -122,7 +122,7 @@
 
         private async ValueTask<bool> TryConnectAsync()
         {
-            MiscConfiguration misc = configurationService.GetConfiguration<MiscConfiguration>();
+            MiscConfiguration misc = configurationService.Get<MiscConfiguration>();
 
             IMqttClientOptions options = new MqttClientOptionsBuilder()
                 .WithCleanSession()

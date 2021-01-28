@@ -55,7 +55,7 @@
             eventAggregator.Subscribe(ServerConfigViewModel, nameof(ViewModels.PrintPreviewViewModel));
             PrintPreviewViewModel.Parent = this;
             await PrintPreviewViewModel.AddSampleImageAsync();
-            var printConfig = configurationService.GetConfiguration<PrintConfiguration>();
+            var printConfig = configurationService.Get<PrintConfiguration>();
             PrintOptions = new PrintOptions()
             {
                 Orientation = printConfig.Orientation,
@@ -86,7 +86,7 @@
         private void ReloadPrintOptions(string token)
         {
             configurationService.Load(token);
-            var printConfig = configurationService.GetConfiguration<PrintConfiguration>();
+            var printConfig = configurationService.Get<PrintConfiguration>();
             PrintOptions.Orientation = printConfig.Orientation;
             PrintOptions.FilmSize = printConfig.Size;
             PrintOptions.MagnificationType = printConfig.Magnification;

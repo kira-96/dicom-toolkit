@@ -98,7 +98,7 @@
             await HandleCommandLineArgs(Environment.GetCommandLineArgs());
 
             configurationService.Load("INIT");  // load configuration
-            var misc = configurationService.GetConfiguration<MiscConfiguration>();
+            var misc = configurationService.Get<MiscConfiguration>();
 
             await mqttService.StartAsync(misc.ListenPort);  // start mqtt service
             dataService.ConnectDatabase(misc.DbConnectionString);  // connect to database

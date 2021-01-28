@@ -1,6 +1,4 @@
-﻿using YamlDotNet.Serialization;
-
-namespace SimpleDICOMToolkit.Infrastructure
+﻿namespace SimpleDICOMToolkit.Infrastructure
 {
     public class MiscConfiguration
     {
@@ -12,8 +10,7 @@ namespace SimpleDICOMToolkit.Infrastructure
         /// <summary>
         /// LiteDB connection string
         /// </summary>
-        [YamlIgnore]
-        public string DbConnectionString { get; set; } = @"Filename=data.db;Password=ms123";
+        public string DbConnectionString { get; } = @"Filename=data.db;Password=ms123";
 
         /// <summary>
         /// Default Dicom encoding

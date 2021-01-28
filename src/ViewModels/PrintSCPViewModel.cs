@@ -53,7 +53,7 @@
             ServerConfigViewModel.IsServerIPEnabled = ServerConfigViewModel.IsServerAETEnabled = ServerConfigViewModel.IsModalityEnabled = false;
             ServerConfigViewModel.RequestAction = () => ServerConfigViewModel.PublishServerRequest(nameof(ViewModels.PrintJobsViewModel));
             eventAggregator.Subscribe(ServerConfigViewModel, nameof(ViewModels.PrintJobsViewModel));
-            PrintServer.Default.PrinterName = configurationService.GetConfiguration<string>("PrinterSettings");
+            PrintServer.Default.PrinterName = configurationService.Get<PrinterConfiguration>().Printer;
             await messenger.SubscribeAsync(this, "Config", ReloadPrinterSettings);
         }
 
@@ -77,7 +77,7 @@
         private void ReloadPrinterSettings(string token)
         {
             configurationService.Load(token);
-            PrintServer.Default.PrinterName = configurationService.GetConfiguration<PrinterConfiguration>().Printer;
+            PrintServer.Default.PrinterName = configurationService.Get<PrinterConfiguration>().Printer;
         }
 
         public async void Dispose()

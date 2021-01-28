@@ -61,7 +61,7 @@ namespace SimpleDICOMToolkit.Services
             Token = token;
         }
 
-        public T GetConfiguration<T>(string section = null)
+        public T Get<T>(string section = null)
         {
             if (typeof(T) == typeof(MiscConfiguration) ||
                 section == "Misc")
