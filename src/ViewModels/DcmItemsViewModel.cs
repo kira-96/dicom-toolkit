@@ -37,6 +37,8 @@
 
         private readonly IEventAggregator _eventAggregator;
 
+        private Encoding fallbackEncoding => Encoding.GetEncoding(_configurationService.Get<MiscConfiguration>().DicomEncoding);
+
         private DicomFile _currentFile;
 
         public BindableCollection<DcmItem> DicomItems { get; private set; } = new BindableCollection<DcmItem>();
@@ -158,7 +160,7 @@
 
             DicomItems.Clear();
 
-            _currentFile = await DicomFile.OpenAsync(file);
+            _currentFile = await DicomFile.OpenAsync(file, fallbackEncoding);
             _currentFile.FileMetaInfo.NotValidated();
             _currentFile.Dataset.NotValidated();
 
@@ -334,7 +336,7 @@
         private void AddOrUpdateDicomItem(DicomDataset dataset, DicomVR vr, DicomTag tag, string[] values)
         {
             Encoding encoding = _currentFile.Dataset.TryGetValue(DicomTag.SpecificCharacterSet, 0, out string charset)
-                ? DicomEncoding.GetEncoding(charset) : Encoding.GetEncoding(_configurationService.Get<MiscConfiguration>().DicomEncoding);
+                ? DicomEncoding.GetEncoding(charset) : fallbackEncoding;
 
             if (vr == DicomVR.OB || vr == DicomVR.UN)
             {
