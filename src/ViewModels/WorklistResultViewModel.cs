@@ -186,8 +186,7 @@
                 // Alt 1
                 //var result = await timeoutPolicy.ExecuteAsync(async () =>
                 //{
-                //    Encoding fallbackEncoding = Dicom.DicomEncoding.Default;  // 不要移除这行代码，.NET Core 平台会在这里注册 CodePagesEncodingProvider
-                //    fallbackEncoding = Encoding.GetEncoding(_configurationService.GetConfiguration<AppConfiguration>().DicomEncoding);
+                //    Encoding fallbackEncoding = Encoding.GetEncoding(_configurationService.GetConfiguration<AppConfiguration>().DicomEncoding);
                 //    return await _worklistSCU.GetAllResultFromWorklistAsync(message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET, message.Modality, fallbackEncoding, cancellationTokenSource.Token);
                 //});
 
@@ -196,8 +195,7 @@
                 // Alt 2
                 await timeoutPolicy.ExecuteAsync(async () =>
                 {
-                    Encoding fallbackEncoding = DicomEncoding.Default;  // 不要移除这行代码，.NET Core 平台会在这里注册 CodePagesEncodingProvider
-                    fallbackEncoding = Encoding.GetEncoding(_configurationService.Get<MiscConfiguration>().DicomEncoding);
+                    Encoding fallbackEncoding = Encoding.GetEncoding(_configurationService.Get<MiscConfiguration>().DicomEncoding);
                     await _worklistSCU.GetAllResultFromWorklistAsync(message.ServerIP, message.ServerPort, message.ServerAET, message.LocalAET, WorklistItems, message.Modality, fallbackEncoding, cancellationTokenSource.Token);
                 });
 

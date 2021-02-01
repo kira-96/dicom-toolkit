@@ -64,8 +64,7 @@
         {
             if (IsServerStarted)
             {
-                Encoding fallbackEncoding = DicomEncoding.Default;  // 不要移除这行代码，.NET Core 平台会在这里注册 CodePagesEncodingProvider
-                fallbackEncoding = Encoding.GetEncoding(configurationService.Get<MiscConfiguration>().DicomEncoding);
+                Encoding fallbackEncoding = Encoding.GetEncoding(configurationService.Get<MiscConfiguration>().DicomEncoding);
 
                 WorklistServer.Default.CreateServer(message.ServerPort, message.LocalAET, fallbackEncoding);
                 _eventAggregator.Publish(new ServerStateEvent(true), nameof(PatientsViewModel));

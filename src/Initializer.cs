@@ -4,6 +4,7 @@ using FellowOakDicom.Imaging;
 using FellowOakDicom.Imaging.NativeCodec;
 using FellowOakDicom.Log;
 using Microsoft.Extensions.DependencyInjection;
+using System.Text;
 #else
 using Dicom;
 using Dicom.Imaging;
@@ -28,6 +29,9 @@ namespace SimpleDICOMToolkit
                 .AddLogManager<NLogManager>();
 
             DicomSetupBuilder.UseServiceProvider(services.BuildServiceProvider());
+
+            // Register encoding provider
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 #else
             ImageManager.SetImplementation(WPFImageManager.Instance);
             LogManager.SetImplementation(NLogManager.Instance);
