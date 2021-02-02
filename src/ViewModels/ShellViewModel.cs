@@ -95,13 +95,13 @@
             updateService.DownloadComplete += UpdateService_DownloadComplete;
             updateService.DownloadError += UpdateService_DownloadError;
 
-            await HandleCommandLineArgs(Environment.GetCommandLineArgs());
-
             configurationService.Load("INIT");  // load configuration
             var misc = configurationService.Get<MiscConfiguration>();
 
             await mqttService.StartAsync(misc.ListenPort);  // start mqtt service
             dataService.ConnectDatabase(misc.DbConnectionString);  // connect to database
+
+            await HandleCommandLineArgs(Environment.GetCommandLineArgs());
 
             await CheckForUpdate();  // check for update
         }
