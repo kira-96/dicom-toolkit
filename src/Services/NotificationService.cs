@@ -16,13 +16,13 @@ namespace SimpleDICOMToolkit.Services
 
         private Toaster toaster;
 
-        public void RegistNotify(TaskbarIcon trayIcon)
+        public void RegisterNotify(TaskbarIcon trayIcon)
         {
             this.trayIcon = trayIcon;
             CanNotify = true;
         }
 
-        public void RegistToast(Toaster toaster)
+        public void RegisterToast(Toaster toaster)
         {
             this.toaster = toaster;
             CanToast = true;

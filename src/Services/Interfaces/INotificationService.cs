@@ -21,13 +21,13 @@ namespace SimpleDICOMToolkit.Services
         /// Regist for notification
         /// </summary>
         /// <param name="trayIcon"></param>
-        void RegistNotify(TaskbarIcon trayIcon);
+        void RegisterNotify(TaskbarIcon trayIcon);
 
         /// <summary>
         /// Regist for toast
         /// </summary>
         /// <param name="toaster"></param>
-        void RegistToast(Toaster toaster);
+        void RegisterToast(Toaster toaster);
 
         /// <summary>
         /// Show notification

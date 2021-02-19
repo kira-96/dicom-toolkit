@@ -234,8 +234,8 @@
 
         private void Window_Loaded(object s, RoutedEventArgs e)
         {
-            notificationService.RegistNotify(TrayIcon);
-            notificationService.RegistToast(MainToaster);
+            notificationService.RegisterNotify(TrayIcon);
+            notificationService.RegisterToast(MainToaster);
             appearanceService.StartMonitoringWindowPrevalenceAccentColor();
             appearanceService.WindowPrevalenceAccentColorChanged += WindowPrevalenceAccentColorChanged;
 
