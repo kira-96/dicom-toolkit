@@ -8,8 +8,8 @@
     <RootNamespace>SimpleDICOMToolkit</RootNamespace>
     <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <AssemblyVersion>1.5.0.358</AssemblyVersion>
-    <FileVersion>1.5.0.358</FileVersion>
+    <AssemblyVersion>1.5.0.359</AssemblyVersion>
+    <FileVersion>1.5.0.359</FileVersion>
     <Version>1.5.0</Version>
     <Authors>kira</Authors>
     <Company>kira</Company>
@@ -33,7 +33,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="9.5.0" />
+    <PackageReference Include="FluentValidation" Version="9.5.1" />
     <PackageReference Include="fo-dicom" Version="5.0.0-alpha3" />
     <PackageReference Include="fo-dicom.Codecs" Version="5.0.0-beta6" />
     <PackageReference Include="Hardcodet.NotifyIcon.Wpf.NetCore" Version="1.0.18" />
