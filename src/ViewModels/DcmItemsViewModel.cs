@@ -75,12 +75,12 @@
 
             try
             {
-                if (tag == DicomTag.Item && _currentItem.TagType == DcmTagType.Sequence)  // add new Sequence Item
+                if (tag == DicomTag.Item && _currentItem.Type == DicomItemType.Sequence)  // add new Sequence Item
                 {
-                    var sequence = message.Dataset.GetSequence(_currentItem.DcmTag);
+                    var sequence = message.Dataset.GetSequence(_currentItem.Tag);
                     var temp = new DicomDataset();
                     sequence.Items.Add(temp);
-                    _currentItem.SequenceItems.Add(new DcmItem(temp, sequence, _currentItem.SequenceItems.Count));  // update view
+                    _currentItem.Items.Add(new DcmItem(temp, sequence, _currentItem.Items.Count));  // update view
 
                     return;
                 }
@@ -100,9 +100,9 @@
             }
 
             // update view
-            if (_currentItem.TagType == DcmTagType.SequenceItem) // is Sequence Item
+            if (_currentItem.Type == DicomItemType.SequenceItem) // is Sequence Item
             {
-                _currentItem.SequenceItems.Add(new DcmItem(message.Dataset.GetDicomItem<DicomItem>(tag), message.Dataset));
+                _currentItem.Items.Add(new DcmItem(message.Dataset.GetDicomItem<DicomItem>(tag), message.Dataset));
             }
             else
             {
@@ -184,10 +184,10 @@
 
         public void DcmItemTapped(DcmItem item)
         {
-            if (item.TagType != DcmTagType.Tag)
+            if (item.Type != DicomItemType.Item)
                 return;
 
-            if (item.DcmTag == DicomTag.PixelData)
+            if (item.Tag == DicomTag.PixelData)
             {
                 ShowDcmImage(item);
             }
@@ -207,16 +207,16 @@
 
         public void EditDicomItem(DcmItem item)
         {
-            if (item.TagType != DcmTagType.Tag)
-                return;  // 只允许编辑Tag值
+            if (item.Type != DicomItemType.Item)
+                return;  // 只允许编辑DicomElement值
 
-            if (item.DcmTag == DicomTag.PixelData)
+            if (item.Tag == DicomTag.PixelData)
                 return;  // 不允许编辑图像像素
 
             _currentItem = item;
 
             var editor = _viewModelFactory.GetEditDicomItemViewModel();
-            editor.InitializeForEdit(item.Dataset, item.DcmTag);
+            editor.InitializeForEdit(item.Dataset, item.Tag);
 
             _windowManager.ShowDialog(editor, this);
         }
@@ -242,18 +242,18 @@
             // Remove from dataset
             if (item.Dataset != null)
             {
-                if (item.Sequence != null && item.TagType == DcmTagType.SequenceItem) // is Sequence Item
+                if (item.Sequence != null && item.Type == DicomItemType.SequenceItem) // is Sequence Item
                 {
                     item.Sequence.Items.Remove(item.Dataset);
                 }
                 else // is DicomTag or DicomSequence
                 {
-                    item.Dataset.Remove(item.DcmTag);
+                    item.Dataset.Remove(item.Tag);
                 }
             }
             else
             {
-                _logger.Warn("Cannot remove {0} from dataset, dataset is null.", item.DcmTag);
+                _logger.Warn("Cannot remove {0} from dataset, dataset is null.", item.Tag);
             }
         }
 
@@ -264,19 +264,19 @@
                 return DicomItems;
             }
 
-            return GetParentCollection(item, DicomItems.Where(x => x.SequenceItems != null));
+            return GetParentCollection(item, DicomItems.Where(x => x.Items != null));
         }
 
         private BindableCollection<DcmItem> GetParentCollection(DcmItem item, IEnumerable<DcmItem> sequence)
         {
             foreach (var seq in sequence)
             {
-                if (seq.SequenceItems.Contains(item))
+                if (seq.Items.Contains(item))
                 {
-                    return seq.SequenceItems;
+                    return seq.Items;
                 }
 
-                var temp = GetParentCollection(item, seq.SequenceItems.Where(x => x.SequenceItems != null));
+                var temp = GetParentCollection(item, seq.Items.Where(x => x.Items != null));
 
                 if (temp != null)
                 {

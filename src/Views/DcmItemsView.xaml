@@ -53,11 +53,11 @@
                 </MenuItem.Icon>
             </MenuItem>
         </ContextMenu>
-        <HierarchicalDataTemplate x:Key="DcmItemTemplate" DataType="{x:Type m:DcmItem}" ItemsSource="{Binding SequenceItems}">
-            <StackPanel Orientation="Horizontal" ToolTip="{Binding Path=TagDescription}" ContextMenu="{StaticResource DcmItemContextMenu}">
+        <HierarchicalDataTemplate x:Key="DcmItemTemplate" DataType="{x:Type m:DcmItem}" ItemsSource="{Binding Items}">
+            <StackPanel Orientation="Horizontal" ToolTip="{Binding Path=Description}" ContextMenu="{StaticResource DcmItemContextMenu}">
                 <Image x:Name="Icon" Width="18" Height="18" Margin="0,0,4,0" />
                 <TextBlock Text="{Binding Path=Header}" VerticalAlignment="Center" />
-                <TextBlock Text="{Binding Path=FormattedContent}" x:Name="ContentText" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding Path=Content}" x:Name="ContentText" VerticalAlignment="Center" />
                 <TextBlock Text="{Binding Path=AdditionalInfo}" VerticalAlignment="Center" />
                 <StackPanel.InputBindings>
                     <MouseBinding MouseAction="LeftDoubleClick" Command="{s:Action DcmItemTapped}" CommandParameter="{Binding}" />
@@ -66,9 +66,9 @@
             <DataTemplate.Triggers>
                 <MultiDataTrigger>
                     <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding TagType}">
+                        <Condition Binding="{Binding Type}">
                             <Condition.Value>
-                                <m:DcmTagType>Tag</m:DcmTagType>
+                                <m:DicomItemType>Item</m:DicomItemType>
                             </Condition.Value>
                         </Condition>
                         <Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}, Path=IsSelected}" Value="True" />
@@ -77,26 +77,26 @@
                 </MultiDataTrigger>
                 <MultiDataTrigger>
                     <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding TagType}">
+                        <Condition Binding="{Binding Type}">
                             <Condition.Value>
-                                <m:DcmTagType>Tag</m:DcmTagType>
+                                <m:DicomItemType>Item</m:DicomItemType>
                             </Condition.Value>
                         </Condition>
                         <Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}, Path=IsSelected}" Value="False" />
                     </MultiDataTrigger.Conditions>
                     <Setter TargetName="Icon" Property="Source" Value="pack://application:,,,/Assets/tag.png" />
                 </MultiDataTrigger>
-                <DataTrigger Binding="{Binding TagType}">
+                <DataTrigger Binding="{Binding Type}">
                     <DataTrigger.Value>
-                        <m:DcmTagType>Sequence</m:DcmTagType>
+                        <m:DicomItemType>Sequence</m:DicomItemType>
                     </DataTrigger.Value>
                     <Setter TargetName="Icon" Property="Source" Value="pack://application:,,,/Assets/package.png" />
                 </DataTrigger>
                 <MultiDataTrigger>
                     <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding TagType}">
+                        <Condition Binding="{Binding Type}">
                             <Condition.Value>
-                                <m:DcmTagType>SequenceItem</m:DcmTagType>
+                                <m:DicomItemType>SequenceItem</m:DicomItemType>
                             </Condition.Value>
                         </Condition>
                         <Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}, Path=IsSelected}" Value="True" />
@@ -105,9 +105,9 @@
                 </MultiDataTrigger>
                 <MultiDataTrigger>
                     <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding TagType}">
+                        <Condition Binding="{Binding Type}">
                             <Condition.Value>
-                                <m:DcmTagType>SequenceItem</m:DcmTagType>
+                                <m:DicomItemType>SequenceItem</m:DicomItemType>
                             </Condition.Value>
                         </Condition>
                         <Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}, Path=IsSelected}" Value="False" />

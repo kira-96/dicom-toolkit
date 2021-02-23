@@ -7,10 +7,11 @@
 #endif
     using Stylet;
     using System;
+    using System.Linq;
 
-    public enum DcmTagType
+    public enum DicomItemType
     {
-        Tag,
+        Item,
         Sequence,
         SequenceItem,
     }
@@ -49,34 +50,62 @@
         /// </summary>
         public DicomSequence Sequence { get; }
 
-        public DicomTag DcmTag { get; private set; }
+        public DicomTag Tag { get; private set; }
 
-        private string _dcmVRCode;
+        private DicomVR _vr;
 
-        public string DcmVRCode
+        public DicomVR VR
         {
-            get => _dcmVRCode;
+            get => _vr;
             private set
             {
-                if (SetAndNotify(ref _dcmVRCode, value))
+                if (SetAndNotify(ref _vr, value))
                 {
                     NotifyOfPropertyChange(() => Header);
                 }
             }
         }
 
-        public string TagDescription { get; private set; }
+        private int _vm;
 
-        private string _tagValue;
-
-        public string TagValue
+        public int VM
         {
-            get => _tagValue;
+            get => _vm;
             private set
             {
-                if (SetAndNotify(ref _tagValue, value))
+                if (SetAndNotify(ref _vm, value))
                 {
-                    NotifyOfPropertyChange(() => FormattedContent);
+                    NotifyOfPropertyChange(() => Header);
+                }
+            }
+        }
+
+        private long _length;
+
+        public long Length
+        {
+            get => _length;
+            private set
+            {
+                if (SetAndNotify(ref _length, value))
+                {
+                    NotifyOfPropertyChange(() => Header);
+                }
+            }
+        }
+
+        public string Description { get; private set; }
+
+        private string _values;
+
+        public string Values
+        {
+            get => _values;
+            private set
+            {
+                if (SetAndNotify(ref _values, value))
+                {
+                    NotifyOfPropertyChange(() => Content);
                 }
             }
         }
@@ -92,7 +121,7 @@
             }
         }
 
-        public DcmTagType TagType { get; private set; } = DcmTagType.Tag;
+        public DicomItemType Type { get; private set; } = DicomItemType.Item;
 
         private bool _isValid = true;
 
@@ -106,44 +135,48 @@
         {
             get
             {
-                return TagType switch
+                return Type switch
                 {
-                    DcmTagType.Tag => string.Format("({0:X4},{1:X4}) {2} {3} = ", DcmTag.Group, DcmTag.Element, DcmVRCode, TagDescription),
-                    DcmTagType.Sequence => string.Format("({0:X4},{1:X4}) {2} {3}", DcmTag.Group, DcmTag.Element, DcmVRCode, TagDescription),
-                    DcmTagType.SequenceItem => string.Format("({0:X4},{1:X4}) {2}", DcmTag.Group, DcmTag.Element, TagDescription),
-                    _ => "",
+                    DicomItemType.Item => string.Format("({0:X4},{1:X4}) {2} {3} = ", Tag.Group, Tag.Element, VR, Description),
+                    DicomItemType.Sequence => string.Format("({0:X4},{1:X4}) {2} {3}", Tag.Group, Tag.Element, VR, Description),
+                    DicomItemType.SequenceItem => string.Format("({0:X4},{1:X4}) {2}", Tag.Group, Tag.Element, Description),
+                    _ => string.Empty,
                 };
             }
         }
 
-        public string FormattedContent => TagType == DcmTagType.Tag ? string.Format("<{0}>", TagValue) : string.Empty;
+        public string Content => Type == DicomItemType.Item ? string.Format("<{0}>", Values) : string.Empty;
 
-        public BindableCollection<DcmItem> SequenceItems { get; private set; }
+        public BindableCollection<DcmItem> Items { get; private set; }
 
         public DcmItem(DicomItem item, DicomDataset dataset)
         {
             Dataset = dataset;
-            DcmTag = item.Tag;
-            TagDescription = item.Tag.DictionaryEntry.Name;
-            _dcmVRCode = item.ValueRepresentation.Code;
+            Tag = item.Tag;
+            Description = item.Tag.DictionaryEntry.Name;
+            _vr = item.ValueRepresentation;
 
             if (item is DicomSequence seq)
             {
-                TagType = DcmTagType.Sequence;
-                SequenceItems = new BindableCollection<DcmItem>();
+                Type = DicomItemType.Sequence;
+                Items = new BindableCollection<DcmItem>();
 
                 foreach (DicomDataset itemDataset in seq.Items)
                 {
-                    DcmItem seqItem = new DcmItem(itemDataset, seq, SequenceItems.Count);
+                    DcmItem seqItem = new DcmItem(itemDataset, seq, Items.Count);
 
-                    SequenceItems.Add(seqItem);
+                    Items.Add(seqItem);
                 }
             }
             else if (item is DicomElement element)
             {
+                _vm = element.Count;
+                _length = element.Length;
+
                 if (element.Tag == DicomTag.PixelData)
                 {
-                    _tagValue = "[Binary Pixel Data]";
+                    _vm = 1;
+                    _values = "[Binary Pixel Data]";
                     return;
                 }
 
@@ -152,7 +185,7 @@
                     // skip display large binary data
                     if (element.Count > 100)
                     {
-                        TagValue = "[Binary Data]";
+                        _values = "[Binary Data]";
                         return;
                     }
                 }
@@ -167,7 +200,7 @@
                     _isValid = false;
                 }
 
-                _tagValue = string.Join("\\", element.Get<string[]>());
+                _values = string.Join("\\", element.Get<string[]>());
 
                 if (element.ValueRepresentation == DicomVR.UI && element.Count > 0)
                 {
@@ -178,15 +211,17 @@
             {
                 if (fragment.Tag == DicomTag.PixelData)
                 {
-                    TagValue = "[Binary Pixel Data]";
+                    _vm = fragment.Fragments.Count;
+                    _length = fragment.Fragments.Sum(x => x.Size);
+                    _values = "[Binary Pixel Data]";
                     return;
                 }
 
-                TagValue = "[Binary Data]";
+                _values = "[Binary Data]";
             }
             else
             {
-                // do nothing
+                // skip
             }
         }
 
@@ -194,22 +229,24 @@
         {
             Dataset = dataset;
             Sequence = sequence;
-            TagType = DcmTagType.SequenceItem;
-            DcmTag = DicomTag.Item;
-            TagDescription = $"{DicomTag.Item.DictionaryEntry.Name} #{index}";
-            SequenceItems = new BindableCollection<DcmItem>();
+            Type = DicomItemType.SequenceItem;
+            Tag = DicomTag.Item;
+            Description = $"{DicomTag.Item.DictionaryEntry.Name} #{index}";
+            Items = new BindableCollection<DcmItem>();
 
             var enumerator = dataset.GetEnumerator();
 
             while (enumerator.MoveNext())
             {
-                SequenceItems.Add(new DcmItem(enumerator.Current, dataset));
+                Items.Add(new DcmItem(enumerator.Current, dataset));
             }
         }
 
         public void UpdateItem(DicomElement element)
         {
-            DcmVRCode = element.ValueRepresentation.Code;
+            VR = element.ValueRepresentation;
+            VM = element.Count;
+            Length = element.Length;
             IsValid = true;
 
             // 校验是否合法
@@ -227,12 +264,12 @@
                 // skip display large binary data
                 if (element.Count > 100)
                 {
-                    TagValue = "[Binary Data]";
+                    Values = "[Binary Data]";
                     return;
                 }
             }
 
-            TagValue = string.Join("\\", element.Get<string[]>());
+            Values = string.Join("\\", element.Get<string[]>());
 
             if (element.ValueRepresentation == DicomVR.UI && element.Count > 0)
             {
