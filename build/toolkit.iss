@@ -52,14 +52,7 @@ Source: "{#SourceDir}\{#ReleaseDir}\MQTTnet.dll"; DestDir: "{app}"; Flags: ignor
 Source: "{#SourceDir}\{#ReleaseDir}\NLog.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourceDir}\{#ReleaseDir}\Polly.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourceDir}\{#ReleaseDir}\Stylet.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#SourceDir}\{#ReleaseDir}\System.Net.Security.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#SourceDir}\{#ReleaseDir}\System.Net.WebSockets.Client.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#SourceDir}\{#ReleaseDir}\System.Net.WebSockets.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourceDir}\{#ReleaseDir}\System.Runtime.CompilerServices.Unsafe.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#SourceDir}\{#ReleaseDir}\System.Security.Cryptography.Algorithms.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#SourceDir}\{#ReleaseDir}\System.Security.Cryptography.Encoding.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#SourceDir}\{#ReleaseDir}\System.Security.Cryptography.Primitives.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#SourceDir}\{#ReleaseDir}\System.Security.Cryptography.X509Certificates.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourceDir}\{#ReleaseDir}\System.Threading.Tasks.Extensions.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourceDir}\{#ReleaseDir}\System.ValueTuple.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourceDir}\{#ReleaseDir}\YamlDotNet.dll"; DestDir: "{app}"; Flags: ignoreversion
