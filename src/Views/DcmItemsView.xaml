@@ -54,14 +54,16 @@
             </MenuItem>
         </ContextMenu>
         <HierarchicalDataTemplate x:Key="DcmItemTemplate" DataType="{x:Type m:DcmItem}" ItemsSource="{Binding Items}">
-            <StackPanel Orientation="Horizontal" ToolTip="{Binding Path=Description}" ContextMenu="{StaticResource DcmItemContextMenu}">
+            <StackPanel Orientation="Horizontal">
                 <Image x:Name="Icon" Width="18" Height="18" Margin="0,0,4,0" />
-                <TextBlock Text="{Binding Path=Header}" VerticalAlignment="Center" />
-                <TextBlock Text="{Binding Path=Content}" x:Name="ContentText" VerticalAlignment="Center" />
-                <TextBlock Text="{Binding Path=AdditionalInfo}" VerticalAlignment="Center" />
-                <StackPanel.InputBindings>
-                    <MouseBinding MouseAction="LeftDoubleClick" Command="{s:Action DcmItemTapped}" CommandParameter="{Binding}" />
-                </StackPanel.InputBindings>
+                <TextBlock ToolTip="{Binding Path=Description}" ContextMenu="{StaticResource DcmItemContextMenu}" VerticalAlignment="Center">
+                    <Run Text="{Binding Path=Header, Mode=OneWay}" />
+                    <Run Text="{Binding Path=Content, Mode=OneWay}" x:Name="ContentText" />
+                    <Run Text="{Binding Path=AdditionalInfo, Mode=OneWay}" />
+                    <TextBlock.InputBindings>
+                        <MouseBinding MouseAction="LeftDoubleClick" Command="{s:Action DcmItemTapped}" CommandParameter="{Binding}" />
+                    </TextBlock.InputBindings>
+                </TextBlock>
             </StackPanel>
             <DataTemplate.Triggers>
                 <MultiDataTrigger>
