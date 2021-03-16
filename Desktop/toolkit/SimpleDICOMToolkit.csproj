@@ -819,7 +819,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FluentValidation">
-      <Version>9.5.1</Version>
+      <Version>9.5.3</Version>
     </PackageReference>
     <PackageReference Include="fo-dicom">
       <Version>4.0.7</Version>
