@@ -15,7 +15,7 @@
         Deactivated="Window_Deactivated">
 
     <Window.Resources>
-        <conv:BoolInvertConverter x:Key="BoolInvertConverter" />
+        <conv:BoolNegationConverter x:Key="BoolNegationConverter" />
         
         <SolidColorBrush x:Key="ButtonBackground" Color="White" />
         <SolidColorBrush x:Key="ButtonForeground" Color="Black" />
@@ -64,13 +64,13 @@
                     </TextBlock.Text>
                 </TextBlock>
                 <TextBox Grid.Row="0" Grid.Column="1" x:Name="IpBox"
-                         IsEnabled="{Binding IsBusy, Converter={StaticResource BoolInvertConverter}}"
+                         IsEnabled="{Binding IsBusy, Converter={StaticResource BoolNegationConverter}}"
                          Text="{Binding ServerIP, UpdateSourceTrigger=PropertyChanged}" />
                 <TextBox Grid.Row="1" Grid.Column="1" 
-                         IsEnabled="{Binding IsBusy, Converter={StaticResource BoolInvertConverter}}"
+                         IsEnabled="{Binding IsBusy, Converter={StaticResource BoolNegationConverter}}"
                          Text="{Binding ServerPort, UpdateSourceTrigger=PropertyChanged}" />
                 <TextBox Grid.Row="2" Grid.Column="1" 
-                         IsEnabled="{Binding IsBusy, Converter={StaticResource BoolInvertConverter}}"
+                         IsEnabled="{Binding IsBusy, Converter={StaticResource BoolNegationConverter}}"
                          Text="{Binding ServerAET, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
             <Grid>

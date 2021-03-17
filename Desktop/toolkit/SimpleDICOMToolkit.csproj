@@ -103,8 +103,8 @@
     <Compile Include="..\..\src\Controls\VisualStates.cs">
       <Link>Controls\VisualStates.cs</Link>
     </Compile>
-    <Compile Include="..\..\src\Converters\BoolInvertConverter.cs">
-      <Link>Converters\BoolInvertConverter.cs</Link>
+    <Compile Include="..\..\src\Converters\BoolNegationConverter.cs">
+      <Link>Converters\BoolNegationConverter.cs</Link>
     </Compile>
     <Compile Include="..\..\src\Converters\MathMultipleConverter.cs">
       <Link>Converters\MathMultipleConverter.cs</Link>
