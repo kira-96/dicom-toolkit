@@ -26,5 +26,10 @@ namespace SimpleDICOMToolkit.Models
             Parent = parent;
             Children = new BindableCollection<IDicomObjectLevel>();
         }
+
+        public override string ToString()
+        {
+            return string.Format("[{0}] {1} {2}", Level, Text, UID);
+        }
     }
 }

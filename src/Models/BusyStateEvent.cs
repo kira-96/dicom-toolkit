@@ -8,5 +8,10 @@
         {
             IsBusy = isBusy;
         }
+
+        public override string ToString()
+        {
+            return string.Format("Is busy: {0}", IsBusy);
+        }
     }
 }

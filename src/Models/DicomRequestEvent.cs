@@ -25,5 +25,10 @@
             LocalAET = localAET;
             Modality = modality;
         }
+
+        public override string ToString()
+        {
+            return string.Format("SCP: {0}:{1} {2}, SCU AET: {3}", ServerIP, ServerPort, ServerAET, LocalAET);
+        }
     }
 }

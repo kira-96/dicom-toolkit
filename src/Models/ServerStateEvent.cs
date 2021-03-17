@@ -8,5 +8,10 @@
         {
             IsRuning = isRunning;
         }
+
+        public override string ToString()
+        {
+            return string.Format("Server is running: {0}", IsRuning);
+        }
     }
 }

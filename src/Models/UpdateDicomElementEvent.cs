@@ -26,5 +26,10 @@ namespace SimpleDICOMToolkit.Models
             Tag = tag;
             Values = values;
         }
+
+        public override string ToString()
+        {
+            return string.Format("{0} {1} {2}", Tag, VR, Tag.DictionaryEntry.Name);
+        }
     }
 }
