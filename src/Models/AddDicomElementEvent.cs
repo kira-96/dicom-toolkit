@@ -11,13 +11,13 @@ namespace SimpleDICOMToolkit.Models
     /// </summary>
     public class AddDicomElementEvent
     {
-        public DicomDataset Dataset { get; private set; }
+        public DicomDataset Dataset { get; }
 
-        public DicomVR VR { get; private set; }
+        public DicomVR VR { get; }
 
-        public string Tag { get; private set; }
+        public string Tag { get; }
 
-        public string[] Values { get; private set; }
+        public string[] Values { get; }
 
         public AddDicomElementEvent(DicomDataset dataset, DicomVR dicomVR, string tag, string[] values)
         {

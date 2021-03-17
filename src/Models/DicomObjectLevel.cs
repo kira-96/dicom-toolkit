@@ -6,7 +6,7 @@ namespace SimpleDICOMToolkit.Models
 {
     public class DicomObjectLevel : IDicomObjectLevel
     {
-        public string Text { get; private set; }
+        public string Text { get; }
 
         public string UID { get; }
 

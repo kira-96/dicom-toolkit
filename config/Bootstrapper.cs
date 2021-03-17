@@ -20,6 +20,8 @@
             }
 
             base.OnStart();
+
+            mutex.ReleaseMutex();
         }
 
         protected override void ConfigureIoC(IStyletIoCBuilder builder)

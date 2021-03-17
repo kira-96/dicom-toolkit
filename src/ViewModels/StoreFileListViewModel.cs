@@ -101,7 +101,7 @@
 
                 if (Directory.Exists(path))  // 文件夹
                 {
-                    DirectoryInfo dir = new DirectoryInfo(path);
+                    DirectoryInfo dir = new(path);
 
                     FileInfo[] fileinfos = dir.GetFiles();
 

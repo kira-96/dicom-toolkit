@@ -35,7 +35,7 @@
         [Inject]
         private IQueryRetrieveSCU queryRetrieveSCU;
 
-        public BindableCollection<IDicomObjectLevel> QueryResult { get; } = new BindableCollection<IDicomObjectLevel>();
+        public BindableCollection<IDicomObjectLevel> QueryResult { get; } = new();
 
         private IDicomObjectLevel selectedPatient;
         private IDicomObjectLevel selectedStudy;
@@ -120,11 +120,6 @@
             await QueryPatientsAsync(message);
         }
 
-        public void Dispose()
-        {
-            _eventAggregator.Unsubscribe(this);
-        }
-
         public async void MoveStudyAsync(IDicomObjectLevel obj)
         {
             MoveToViewModel moveTo = _viewModelFactory.GetMoveToViewModel();
@@ -152,7 +147,7 @@
 
         public async ValueTask PreviewImageAsync()
         {
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            CancellationTokenSource cancellationTokenSource = new();
             var timeoutPolicy = GetTimeoutPolicy();
 
             IsBusy = true;
@@ -220,7 +215,7 @@
 
         private async ValueTask QueryPatientsAsync(DicomRequestEvent message)
         {
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            CancellationTokenSource cancellationTokenSource = new();
             var timeoutPolicy = GetTimeoutPolicy();
 
             IsBusy = true;
@@ -251,7 +246,7 @@
                     if (!string.IsNullOrEmpty(name) || !string.IsNullOrEmpty(pid))
                     {
                         if (string.IsNullOrEmpty(name)) name = pid;
-                        DicomObjectLevel objectLevel = new DicomObjectLevel(name, pid, Level.Patient, null);
+                        DicomObjectLevel objectLevel = new(name, pid, Level.Patient, null);
                         QueryResult.Add(objectLevel);
                     }
                 }
@@ -260,7 +255,7 @@
 
         private async ValueTask QueryStudiesAsync(IDicomObjectLevel obj)
         {
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            CancellationTokenSource cancellationTokenSource = new();
             var timeoutPolicy = GetTimeoutPolicy();
 
             IsBusy = true;
@@ -305,7 +300,7 @@
 
         private async ValueTask QuerySeriesAsync(IDicomObjectLevel obj)
         {
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            CancellationTokenSource cancellationTokenSource = new();
             var timeoutPolicy = GetTimeoutPolicy();
 
             IsBusy = true;
@@ -347,7 +342,7 @@
 
         private async ValueTask QueryImagesAsync(IDicomObjectLevel obj)
         {
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            CancellationTokenSource cancellationTokenSource = new();
             var timeoutPolicy = GetTimeoutPolicy();
 
             IsBusy = true;
@@ -388,6 +383,11 @@
                     }
                 }
             }
+        }
+
+        public void Dispose()
+        {
+            _eventAggregator.Unsubscribe(this);
         }
     }
 }

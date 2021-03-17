@@ -12,7 +12,7 @@
     public class Messenger
     {
         private static Messenger _instance;
-        private static readonly object _locker = new object();
+        private static readonly object _locker = new();
 
         public static Messenger Default
         {
@@ -35,12 +35,12 @@
 
         public int ServerPort { get; set; } = 9629;
 
-        private readonly CancellationTokenSource CancellationTokenSource = new CancellationTokenSource();
+        private readonly CancellationTokenSource CancellationTokenSource = new();
         private readonly Logger logger = LogManager.GetLogger("ConfigLogger");
 
         private IMqttClient client;
 
-        public IMqttClient Client => client ?? (client = new MqttFactory().CreateMqttClient());
+        public IMqttClient Client => client ??= new MqttFactory().CreateMqttClient();
 
         public async ValueTask PublishAsync(string topic, string payload, CancellationToken token)
         {

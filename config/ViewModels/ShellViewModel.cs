@@ -25,7 +25,7 @@
                         try
                         {
                             string input = File.ReadAllText(CONFIG_FILE);
-                            DeserializerBuilder builder = new DeserializerBuilder();
+                            DeserializerBuilder builder = new();
                             _config = builder.Build().Deserialize<AppConfiguration>(input);
                         }
                         catch (Exception)
@@ -121,7 +121,7 @@
             Configuration.Print.Medium = printOptionsViewModel.Medium;
             Configuration.Printer.Printer = printerSettingsViewModel.Printer;
 
-            SerializerBuilder builder = new SerializerBuilder();
+            SerializerBuilder builder = new();
             string content = builder.Build().Serialize(Configuration);
 
             File.WriteAllText(CONFIG_FILE, content);

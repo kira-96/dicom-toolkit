@@ -2,9 +2,9 @@
 {
     public class DicomServiceEvent
     {
-        public int ServerPort { get; private set; }
+        public int ServerPort { get; }
 
-        public string LocalAET { get; private set; }
+        public string LocalAET { get; }
 
         public DicomServiceEvent(int port, string aet)
         {

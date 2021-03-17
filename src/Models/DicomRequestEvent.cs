@@ -2,15 +2,15 @@
 {
     public class DicomRequestEvent
     {
-        public string ServerIP { get; private set; }
+        public string ServerIP { get; }
 
-        public int ServerPort { get; private set; }
+        public int ServerPort { get; }
 
-        public string ServerAET { get; private set; }
+        public string ServerAET { get; }
 
-        public string LocalAET { get; private set; }
+        public string LocalAET { get; }
 
-        public string Modality { get; private set; }
+        public string Modality { get; }
 
         public DicomRequestEvent(
             string ip,

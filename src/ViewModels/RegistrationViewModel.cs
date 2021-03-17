@@ -153,7 +153,7 @@
             Modality = "MR";
             ScheduledAET = "ANY-SCU";
             Age = "024Y";
-            Random rand = new Random(DateTime.Now.Millisecond);
+            Random rand = new(DateTime.Now.Millisecond);
             PatientID = $"P{rand.Next(1, 1000)}";
             AccessionNumber = PatientID;
         }
@@ -170,7 +170,7 @@
 
         public void Regist()
         {
-            WorklistItem item = new WorklistItem()
+            WorklistItem item = new()
             {
                 AccessionNumber = _accessionNumber,
                 PatientID = _patientId,
@@ -208,7 +208,7 @@
         {
             Guid guid = Guid.NewGuid();
             string val = guid.ToString().Split('-').Last();
-            Random rand = new Random();
+            Random rand = new();
 
             return $"{val}{rand.Next(100, 999)}";
         }

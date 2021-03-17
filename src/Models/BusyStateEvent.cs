@@ -2,7 +2,7 @@
 {
     public class BusyStateEvent
     {
-        public bool IsBusy { get; private set; }
+        public bool IsBusy { get; }
 
         public BusyStateEvent(bool isBusy)
         {

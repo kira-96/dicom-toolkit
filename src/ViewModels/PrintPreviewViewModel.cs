@@ -35,7 +35,7 @@
         [Inject]
         private IPrintSCU _printSCU;
 
-        private List<WriteableBitmap> _images = new List<WriteableBitmap>();
+        private List<WriteableBitmap> _images = new();
 
         private int _currentIndex = 0;
 
@@ -79,7 +79,7 @@
 
             PrintOptions options = GetPrintOptions();
 
-            List<Bitmap> images = new List<Bitmap>();
+            List<Bitmap> images = new();
             foreach (var image in _images)
             {
                 images.Add(image.AsBitmap());
@@ -151,7 +151,7 @@
 
             DicomFile dicomFile = await DicomFile.OpenAsync(file);
 
-            DicomImage image = new DicomImage(dicomFile.Dataset);
+            DicomImage image = new(dicomFile.Dataset);
 
             using (IImage iimage = image.RenderImage())
             {

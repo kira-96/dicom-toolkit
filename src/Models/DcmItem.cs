@@ -50,7 +50,7 @@
         /// </summary>
         public DicomSequence Sequence { get; }
 
-        public DicomTag Tag { get; private set; }
+        public DicomTag Tag { get; }
 
         private DicomVR _vr;
 
@@ -94,7 +94,7 @@
             }
         }
 
-        public string Description { get; private set; }
+        public string Description { get; }
 
         private string _values;
 
@@ -121,7 +121,7 @@
             }
         }
 
-        public DicomItemType Type { get; private set; } = DicomItemType.Item;
+        public DicomItemType Type { get; } = DicomItemType.Item;
 
         private bool _isValid = true;
 
@@ -147,7 +147,7 @@
 
         public string Content => Type == DicomItemType.Item ? string.Format("<{0}>", Values) : string.Empty;
 
-        public BindableCollection<DcmItem> Items { get; private set; }
+        public BindableCollection<DcmItem> Items { get; }
 
         public DcmItem(DicomItem item, DicomDataset dataset)
         {
@@ -163,7 +163,7 @@
 
                 foreach (DicomDataset itemDataset in seq.Items)
                 {
-                    DcmItem seqItem = new DcmItem(itemDataset, seq, Items.Count);
+                    DcmItem seqItem = new(itemDataset, seq, Items.Count);
 
                     Items.Add(seqItem);
                 }

@@ -179,7 +179,7 @@
 
             WorklistItems.Clear();
 
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            CancellationTokenSource cancellationTokenSource = new();
 
             try
             {

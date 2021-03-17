@@ -2,7 +2,7 @@
 {
     public class ServerStateEvent
     {
-        public bool IsRuning { get; private set; }
+        public bool IsRuning { get; }
 
         public ServerStateEvent(bool isRunning)
         {

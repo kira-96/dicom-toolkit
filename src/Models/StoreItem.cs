@@ -16,9 +16,9 @@
             set => SetAndNotify(ref _id, value);
         }
 
-        public string File { get; private set; }
+        public string File { get; }
 
-        public string FileName { get; private set; }
+        public string FileName { get; }
 
         private StoreItemStatus _status = StoreItemStatus.Waiting;
 
