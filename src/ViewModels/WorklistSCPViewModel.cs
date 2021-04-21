@@ -3,6 +3,7 @@
     using Stylet;
     using StyletIoC;
     using System;
+    using System.Threading.Tasks;
     using Helpers;
 
     public class WorklistSCPViewModel : Screen, IDisposable
@@ -26,14 +27,20 @@
             base.OnInitialActivate();
 
             PatientsViewModel.Parent = this;
-            PatientsViewModel.UpdateData();
             ServerConfigViewModel.Parent = this;
             ServerConfigViewModel.RequestAction = () => ServerConfigViewModel.PublishServerRequest(nameof(ViewModels.PatientsViewModel));
-            ServerConfigViewModel.ServerIP = SystemHelper.GetLocalIPAddress();
             ServerConfigViewModel.ServerPort = "6104";
             ServerConfigViewModel.LocalAET = ServerConfigViewModel.ServerAET = "RIS";
             ServerConfigViewModel.IsServerIPEnabled = ServerConfigViewModel.IsServerAETEnabled = ServerConfigViewModel.IsModalityEnabled = false;
             eventAggregator.Subscribe(ServerConfigViewModel, nameof(ViewModels.PatientsViewModel));
+            Task.Run(() =>
+            {
+                Execute.OnUIThread(() =>
+                {
+                    ServerConfigViewModel.ServerIP = SystemHelper.GetLocalIPAddress();
+                    PatientsViewModel.UpdateData();
+                });
+            });
         }
 
         public void Dispose()

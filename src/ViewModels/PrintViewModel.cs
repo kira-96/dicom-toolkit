@@ -4,6 +4,7 @@
     using StyletIoC;
     using System;
     using System.IO;
+    using System.Threading.Tasks;
     using Client;
     using Infrastructure;
     using Logging;
@@ -54,7 +55,6 @@
             ServerConfigViewModel.RequestAction = () => ServerConfigViewModel.PublishClientRequest(nameof(ViewModels.PrintPreviewViewModel));
             eventAggregator.Subscribe(ServerConfigViewModel, nameof(ViewModels.PrintPreviewViewModel));
             PrintPreviewViewModel.Parent = this;
-            await PrintPreviewViewModel.AddSampleImageAsync();
             var printConfig = configurationService.Get<PrintConfiguration>();
             PrintOptions = new PrintOptions()
             {
@@ -64,6 +64,10 @@
                 MediumType = printConfig.Medium
             };
             await messenger.SubscribeAsync(this, "Config", ReloadPrintOptions);
+            await Task.Run(async () =>
+            {
+                await Execute.PostToUIThreadAsync(async () => await PrintPreviewViewModel.AddSampleImageAsync());
+            });
         }
 
         public void ShowOptions()
