@@ -66,7 +66,7 @@
                 StoreServer.Default.CreateServer(message.ServerPort, message.LocalAET);
                 _eventAggregator.Publish(new ServerStateEvent(true), nameof(StoreReceivedViewModel));
                 notificationService.ShowNotification(
-                    string.Format(i18NService.GetXmlStringByKey("ServerIsRunning"), "C-STORE", SystemHelper.LocalIPAddress, message.ServerPort),
+                    string.Format(i18NService.GetXmlStringByKey("ServerIsRunning"), "C-STORE", message.ServerIP, message.ServerPort),
                     message.LocalAET);
             }
             else

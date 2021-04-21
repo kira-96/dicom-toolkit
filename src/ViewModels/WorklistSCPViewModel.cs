@@ -29,7 +29,7 @@
             PatientsViewModel.UpdateData();
             ServerConfigViewModel.Parent = this;
             ServerConfigViewModel.RequestAction = () => ServerConfigViewModel.PublishServerRequest(nameof(ViewModels.PatientsViewModel));
-            ServerConfigViewModel.ServerIP = SystemHelper.LocalIPAddress;
+            ServerConfigViewModel.ServerIP = SystemHelper.GetLocalIPAddress();
             ServerConfigViewModel.ServerPort = "6104";
             ServerConfigViewModel.LocalAET = ServerConfigViewModel.ServerAET = "RIS";
             ServerConfigViewModel.IsServerIPEnabled = ServerConfigViewModel.IsServerAETEnabled = ServerConfigViewModel.IsModalityEnabled = false;

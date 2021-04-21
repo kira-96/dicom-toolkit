@@ -211,7 +211,7 @@
             if (port == 0)
                 return;
 
-            _eventAggregator.Publish(new DicomServiceEvent(port, _localAET), channel);
+            _eventAggregator.Publish(new DicomServiceEvent(_serverIP, port, _localAET), channel);
         }
 
         public int ParseServerPort()

@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Windows;
 using System.Windows.Media;
 
@@ -10,15 +11,16 @@ namespace SimpleDICOMToolkit.Helpers
     public static class SystemHelper
     {
         /// <summary>
-        /// 获取当前IP地址
+        /// 获取本机IP地址
         /// </summary>
+        [Obsolete("Use GetLocalIPAddress()")]
         public static string LocalIPAddress
         {
             get
             {
                 foreach (IPAddress item in Dns.GetHostEntry(Dns.GetHostName()).AddressList)
                 {
-                    if (item.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                    if (item.AddressFamily == AddressFamily.InterNetwork)
                     {
                         return item.ToString();
                     }
@@ -26,6 +28,20 @@ namespace SimpleDICOMToolkit.Helpers
 
                 return "localhost";
             }
+        }
+
+        /// <summary>
+        /// 获取本机IP地址
+        /// https://stackoverflow.com/questions/6803073/get-local-ip-address
+        /// </summary>
+        public static string GetLocalIPAddress()
+        {
+            using Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Unspecified);
+
+            socket.Connect("8.8.8.8", 65530);
+            IPEndPoint endPoint = socket.LocalEndPoint as IPEndPoint;
+
+            return endPoint.Address.ToString();
         }
 
         /// <summary>

@@ -1,15 +1,9 @@
 ﻿namespace SimpleDICOMToolkit.ViewModels
 {
-#if FellowOakDicom5
-    using FellowOakDicom;
-#else
-    using Dicom;
-#endif
     using Stylet;
     using StyletIoC;
     using System;
     using System.Text;
-    using Helpers;
     using Infrastructure;
     using Models;
     using Server;
@@ -37,7 +31,7 @@
 
         private readonly IEventAggregator _eventAggregator;
 
-        public BindableCollection<IWorklistItem> WorklistItems { get; private set; }
+        public BindableCollection<IWorklistItem> WorklistItems { get; }
 
         private bool _isServerStarted = false;
 
@@ -49,14 +43,14 @@
 
         public PatientsViewModel(IEventAggregator eventAggregator)
         {
+            WorklistItems = new BindableCollection<IWorklistItem>();
+            WorklistServer.Default.WorklistItems = WorklistItems;
             _eventAggregator = eventAggregator;
             _eventAggregator.Subscribe(this, nameof(PatientsViewModel));
         }
 
         public void UpdateData()
         {
-            WorklistItems = new BindableCollection<IWorklistItem>();
-            WorklistServer.Default.WorklistItems = WorklistItems;
             WorklistItems.AddRange(dataService.GetWorklistItems());
         }
 
@@ -69,7 +63,7 @@
                 WorklistServer.Default.CreateServer(message.ServerPort, message.LocalAET, fallbackEncoding);
                 _eventAggregator.Publish(new ServerStateEvent(true), nameof(PatientsViewModel));
                 notificationService.ShowNotification(
-                    string.Format(i18NService.GetXmlStringByKey("ServerIsRunning"), "Worklist", SystemHelper.LocalIPAddress, message.ServerPort), 
+                    string.Format(i18NService.GetXmlStringByKey("ServerIsRunning"), "Worklist", message.ServerIP, message.ServerPort), 
                     message.LocalAET);
                 WorklistServer.Default.IsListening();
             }

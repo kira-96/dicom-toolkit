@@ -27,7 +27,7 @@
 
             StoreReceivedViewModel.Parent = this;
             ServerConfigViewModel.Parent = this;
-            ServerConfigViewModel.ServerIP = SystemHelper.LocalIPAddress;
+            ServerConfigViewModel.ServerIP = SystemHelper.GetLocalIPAddress();
             ServerConfigViewModel.ServerPort = "104";
             ServerConfigViewModel.LocalAET = ServerConfigViewModel.ServerAET = "STORE-SCP";
             ServerConfigViewModel.IsServerIPEnabled = ServerConfigViewModel.IsServerAETEnabled = ServerConfigViewModel.IsModalityEnabled = false;

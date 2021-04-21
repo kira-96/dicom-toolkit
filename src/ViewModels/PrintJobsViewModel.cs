@@ -39,7 +39,7 @@
                 PrintServer.Default.CreateServer(message.ServerPort, message.LocalAET);
                 _eventAggregator.Publish(new ServerStateEvent(true), nameof(PrintJobsViewModel));
                 notificationService.ShowNotification(
-                    string.Format(i18NService.GetXmlStringByKey("ServerIsRunning"), "Print", SystemHelper.LocalIPAddress, message.ServerPort),
+                    string.Format(i18NService.GetXmlStringByKey("ServerIsRunning"), "Print", message.ServerIP, message.ServerPort),
                     message.LocalAET);
             }
             else

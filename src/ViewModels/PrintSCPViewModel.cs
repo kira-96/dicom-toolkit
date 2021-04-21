@@ -47,7 +47,7 @@
 
             PrintJobsViewModel.Parent = this;
             ServerConfigViewModel.Parent = this;
-            ServerConfigViewModel.ServerIP = SystemHelper.LocalIPAddress;
+            ServerConfigViewModel.ServerIP = SystemHelper.GetLocalIPAddress();
             ServerConfigViewModel.ServerPort = "7104";
             ServerConfigViewModel.LocalAET = ServerConfigViewModel.ServerAET = "PRINT-SCP";
             ServerConfigViewModel.IsServerIPEnabled = ServerConfigViewModel.IsServerAETEnabled = ServerConfigViewModel.IsModalityEnabled = false;
