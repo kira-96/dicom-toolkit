@@ -814,7 +814,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FluentValidation">
-      <Version>10.0.4</Version>
+      <Version>9.5.4</Version>
     </PackageReference>
     <PackageReference Include="fo-dicom">
       <Version>4.0.7</Version>

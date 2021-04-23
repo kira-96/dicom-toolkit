@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleDICOMToolkit", "Deskt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Config", "Desktop\config\Config.csproj", "{1D5EEB5B-F714-4D79-BBBC-AB29EAA74461}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UIDGenerator", "Desktop\UIDGenerator\UIDGenerator.csproj", "{FC10A427-AC17-4623-A75C-EAEAA68CDDA5}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{55AE9D05-4DE6-4DB5-8381-7FB92B38F7F9}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
@@ -28,6 +30,10 @@ Global
 		{1D5EEB5B-F714-4D79-BBBC-AB29EAA74461}.Debug|x64.Build.0 = Debug|x64
 		{1D5EEB5B-F714-4D79-BBBC-AB29EAA74461}.Release|x64.ActiveCfg = Release|x64
 		{1D5EEB5B-F714-4D79-BBBC-AB29EAA74461}.Release|x64.Build.0 = Release|x64
+		{FC10A427-AC17-4623-A75C-EAEAA68CDDA5}.Debug|x64.ActiveCfg = Debug|x64
+		{FC10A427-AC17-4623-A75C-EAEAA68CDDA5}.Debug|x64.Build.0 = Debug|x64
+		{FC10A427-AC17-4623-A75C-EAEAA68CDDA5}.Release|x64.ActiveCfg = Release|x64
+		{FC10A427-AC17-4623-A75C-EAEAA68CDDA5}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -48,3 +48,7 @@ jobs:
     # Build Toolkit
     - name: Build Toolkit
       run: msbuild ${{env.SOLUTION_FILE_PATH}} -target:"SimpleDICOMToolkit" -p:Configuration=${{env.BUILD_CONFIGURATION}} -maxCpuCount
+
+    # Build Toolkit
+    - name: Build UID Generator
+      run: msbuild ${{env.SOLUTION_FILE_PATH}} -target:"UIDGenerator" -p:Configuration=${{env.BUILD_CONFIGURATION}} -maxCpuCount

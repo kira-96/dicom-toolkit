@@ -41,3 +41,6 @@ jobs:
 
     - name: Build Toolkit
       run: dotnet build ./src/SimpleDICOMToolkit.csproj --configuration ${{env.BUILD_CONFIGURATION}} --framework net5.0-windows --output ./x64/Release
+
+    - name: Build UID Generator
+      run: dotnet build ./UIDGenerator/UIDGenerator.csproj --configuration ${{env.BUILD_CONFIGURATION}} --framework net5.0-windows --output ./x64/Release

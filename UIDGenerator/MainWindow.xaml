@@ -1,0 +1,45 @@
+﻿<Window x:Class="UIDGenerator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:app="clr-namespace:UIDGenerator"
+        d:DataContext="{d:DesignInstance Type=app:MainViewModel}"
+        mc:Ignorable="d"
+        Title="UID Generator"
+        Topmost="True"
+        ResizeMode="CanMinimize"
+        WindowStartupLocation="CenterScreen"
+        Width="360"
+        Height="180">
+
+    <Window.InputBindings>
+        <KeyBinding Key="C" Command="{Binding CopyCommand}" />
+        <KeyBinding Key="N" Command="{Binding GenerateCommand}" />
+    </Window.InputBindings>
+    
+    <Grid FocusManager.FocusedElement="{Binding ElementName=CopyButton}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Text="选择 UID " VerticalAlignment="Center" Margin="2" />
+        <ComboBox Grid.Column="1" Grid.ColumnSpan="2"
+                  ItemsSource="{Binding KnownUids}"
+                  SelectedItem="{Binding SelectedUidName}"
+                  VerticalAlignment="Center"
+                  Margin="2" />
+        <GroupBox Header="UID" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="2">
+            <TextBox Text="{Binding CurrentUid}" IsReadOnly="True" TextWrapping="Wrap" />
+        </GroupBox>
+        <StackPanel Grid.Column="2" Grid.Row="1" Margin="2, 10">
+            <Button Content="生成(N)" ToolTip="生成新的UID" Command="{Binding GenerateCommand}" Margin="2" Padding="8,2" />
+            <Button x:Name="CopyButton" Content="复制(C)" ToolTip="复制到剪切板" Command="{Binding CopyCommand}" Margin="2" Padding="8,2" />
+        </StackPanel>
+    </Grid>
+</Window>
