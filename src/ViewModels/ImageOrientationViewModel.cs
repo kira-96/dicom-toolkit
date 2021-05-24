@@ -76,11 +76,16 @@ namespace SimpleDICOMToolkit.ViewModels
             private set => SetAndNotify(ref bottomMinor, value);
         }
 
-        public void UpdateOrientation(double[] orientation)
+        public void UpdateOrientation(double[] orientation, int rotation = 0, bool flipX = false)
         {
             if (orientation == null || orientation.Length != 6)
             {
                 return;
+            }
+
+            if (rotation != 0 || flipX)
+            {
+                orientation = ApplyRotationAndFlip(orientation, rotation, flipX);
             }
 
             (LeftMajor, LeftMinor) = ComputeOrientation(new Vector3D(-orientation[0], -orientation[1], -orientation[2]));
@@ -88,6 +93,29 @@ namespace SimpleDICOMToolkit.ViewModels
             (RightMajor, RightMinor) = ComputeOrientation(new Vector3D(orientation[0], orientation[1], orientation[2]));
             (BottomMajor, BottomMinor) = ComputeOrientation(new Vector3D(orientation[3], orientation[4], orientation[5]));
             OrientationVisibility = Visibility.Visible;
+        }
+
+        public static double[] ApplyRotationAndFlip(double[] orientation, int rotation, bool flipX)
+        {
+            Vector3D forward = new Vector3D(orientation[0], orientation[1], orientation[2]);
+            Vector3D down = new Vector3D(orientation[3], orientation[4], orientation[5]);
+
+            Orientation3D orientation3D = new Orientation3D(forward, down);
+
+            if (rotation != 0)
+            {
+                orientation3D.Pitch(rotation * Math.PI / 180);
+            }
+
+            return new double[]
+            {
+                flipX ? -orientation3D.Forward.X : orientation3D.Forward.X,
+                flipX ? -orientation3D.Forward.Y : orientation3D.Forward.Y,
+                flipX ? -orientation3D.Forward.Z : orientation3D.Forward.Z,
+                orientation3D.Down.X,
+                orientation3D.Down.Y,
+                orientation3D.Down.Z,
+            };
         }
 
         public static (string major, string minor) ComputeOrientation(Vector3D vector)

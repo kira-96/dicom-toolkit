@@ -102,7 +102,11 @@
 
             Dataset.TryGetValues<double>(DicomTag.ImageOrientationPatient, out var orientation);
 
-            ImageOrientationViewModel.UpdateOrientation(orientation);
+            // Apply rotation and flip
+            int rotation = Dataset.GetSingleValueOrDefault(DicomTag.ImageRotation, 0);
+            string horizontalFlip = Dataset.GetSingleValueOrDefault(DicomTag.ImageHorizontalFlip, "N");
+
+            ImageOrientationViewModel.UpdateOrientation(orientation, rotation, horizontalFlip == "Y");
 
             UpdateWindowCenterWindowWidth();
         }
@@ -269,6 +273,16 @@
             }
 
             using IImage iimage = dicomImage.RenderImage(frame);
+
+            // Apply rotation and flip
+            int rotation = Dataset.GetSingleValueOrDefault(DicomTag.ImageRotation, 0);
+            string horizontalFlip = Dataset.GetSingleValueOrDefault(DicomTag.ImageHorizontalFlip, "N");
+
+            if (rotation != 0 || horizontalFlip != "N")
+            {
+                iimage.Render(1, horizontalFlip == "Y", false, rotation);
+            }
+
             ImageSource = iimage.AsWriteableBitmap();
             ImageSource.Freeze();
         }
