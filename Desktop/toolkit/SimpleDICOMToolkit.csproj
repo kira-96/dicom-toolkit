@@ -832,7 +832,7 @@
       <Version>3.0.15</Version>
     </PackageReference>
     <PackageReference Include="NLog">
-      <Version>4.7.9</Version>
+      <Version>4.7.10</Version>
     </PackageReference>
     <PackageReference Include="Polly">
       <Version>7.2.2</Version>
