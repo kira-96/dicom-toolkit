@@ -1,8 +1,4 @@
-﻿#if FellowOakDicom5
-using FellowOakDicom.Network;
-#else
-using Dicom.Network;
-#endif
+﻿using FellowOakDicom.Network;
 using System.Collections.Generic;
 using System.Text;
 using SimpleDICOMToolkit.Infrastructure;
@@ -61,11 +57,7 @@ namespace SimpleDICOMToolkit.Server
 
             AETitle = serverAET;
 
-#if FellowOakDicom5
             defaultServer = DicomServerFactory.Create<WorklistService>(port, null, fallbackEncoding);
-#else
-            defaultServer = DicomServer.Create<WorklistService>(port, null, null, fallbackEncoding);
-#endif
             MppsSource = new MppsHandler(WorklistItems, defaultServer.Logger);
 
             return IsListening();

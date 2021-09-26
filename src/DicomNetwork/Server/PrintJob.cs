@@ -3,17 +3,10 @@
 // Copyright (c) 2012-2020 fo-dicom contributors.
 // Licensed under the Microsoft Public License (MS-PL).
 
-#if FellowOakDicom5
 using FellowOakDicom;
 using FellowOakDicom.Imaging;
 using FellowOakDicom.Log;
 using FellowOakDicom.Printing;
-#else
-using Dicom;
-using Dicom.Imaging;
-using Dicom.Log;
-using Dicom.Printing;
-#endif
 using System;
 using System.Collections.Generic;
 using System.Drawing.Printing;
@@ -85,7 +78,7 @@ namespace SimpleDICOMToolkit.Server
         /// <summary>
         /// Print job SOP class UID
         /// </summary>
-        public readonly DicomUID SOPClassUID = DicomUID.PrintJobSOPClass;
+        public readonly DicomUID SOPClassUID = DicomUID.PrintJob;
 
         /// <summary>
         /// Print job SOP instance UID
@@ -167,11 +160,7 @@ namespace SimpleDICOMToolkit.Server
             set => AddOrUpdate(DicomTag.Originator, value);
         }
 
-#if FellowOakDicom5
         public ILogger Log { get; private set; }
-#else
-        public Logger Log { get; private set; }
-#endif
 
 
         public event EventHandler<StatusUpdateEventArgs> StatusUpdate;
@@ -185,11 +174,7 @@ namespace SimpleDICOMToolkit.Server
         /// be generated
         /// </summary>
         /// <param name="sopInstance">New print job SOP instance uID</param>
-#if FellowOakDicom5
         public PrintJob(DicomUID sopInstance, Printer printer, string originator, ILogger log)
-#else
-        public PrintJob(DicomUID sopInstance, Printer printer, string originator, Logger log)
-#endif
             : base()
         {
             Log = log;

@@ -1,14 +1,8 @@
 ﻿namespace SimpleDICOMToolkit.Client
 {
-#if FellowOakDicom5
     using FellowOakDicom;
     using FellowOakDicom.Network;
     using FellowOakDicom.Network.Client;
-#else
-    using Dicom;
-    using Dicom.Network;
-    using DicomClient = Dicom.Network.Client.DicomClient;
-#endif
     using StyletIoC;
     using System.Collections.Generic;
     using System.Threading;
@@ -49,11 +43,7 @@
                 }
             };
 
-#if FellowOakDicom5
             IDicomClient client = DicomClientFactory.Create(serverIp, serverPort, false, localAET, serverAET);
-#else
-            DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
-#endif
             await client.AddRequestAsync(request);
             await client.SendAsync(cancellationToken);
 
@@ -85,11 +75,7 @@
                 }
             };
 
-#if FellowOakDicom5
             IDicomClient client = DicomClientFactory.Create(serverIp, serverPort, false, localAET, serverAET);
-#else
-            DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
-#endif
             await client.AddRequestAsync(request);
             await client.SendAsync(cancellationToken);
 
@@ -120,11 +106,7 @@
                 }
             };
 
-#if FellowOakDicom5
             IDicomClient client = DicomClientFactory.Create(serverIp, serverPort, false, localAET, serverAET);
-#else
-            DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
-#endif
             await client.AddRequestAsync(request);
             await client.SendAsync(cancellationToken);
 
@@ -156,11 +138,7 @@
                 }
             };
 
-#if FellowOakDicom5
             IDicomClient client = DicomClientFactory.Create(serverIp, serverPort, false, localAET, serverAET);
-#else
-            DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
-#endif
             await client.AddRequestAsync(request);
             await client.SendAsync(cancellationToken);
 
@@ -172,11 +150,7 @@
             List<DicomDataset> imageDatasets = new List<DicomDataset>();
 
             DicomCGetRequest request = RequestFactory.CreateCGetBySeriesUID(studyInstanceUid, seriesInstanceUid);
-#if FellowOakDicom5
             IDicomClient client = DicomClientFactory.Create(serverIp, serverPort, false, localAET, serverAET);
-#else
-            DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
-#endif
             client.OnCStoreRequest += async (req) => 
             {
                 if (req.HasDataset)
@@ -211,11 +185,7 @@
             DicomDataset imageDatasets = null;
 
             DicomCGetRequest request = RequestFactory.CreateCGetBySOPInstanceUID(studyInstanceUid, seriesInstanceUid, sopInstanceUid);
-#if FellowOakDicom5
             IDicomClient client = DicomClientFactory.Create(serverIp, serverPort, false, localAET, serverAET);
-#else
-            DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
-#endif
             client.OnCStoreRequest += async (req) =>
             {
                 if (req.HasDataset)
@@ -272,11 +242,7 @@
                 logger.Debug("C-MOVE response status. " + res.Status.Description);
             };
 
-#if FellowOakDicom5
             IDicomClient client = DicomClientFactory.Create(serverIp, serverPort, false, localAET, serverAET);
-#else
-            DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
-#endif
             await client.AddRequestAsync(request);
             await client.SendAsync(cancellationToken);
 

@@ -18,15 +18,9 @@ namespace SimpleDICOMToolkit.Server
 
         private readonly IEnumerable<IWorklistItem> _worklistItems;
 
-#if FellowOakDicom5
         private readonly FellowOakDicom.Log.ILogger _logger;
 
         public MppsHandler(IEnumerable<IWorklistItem> worklistItems, FellowOakDicom.Log.ILogger logger)
-#else
-        private readonly Dicom.Log.Logger _logger;
-
-        public MppsHandler(IEnumerable<IWorklistItem> worklistItems, Dicom.Log.Logger logger)
-#endif
         {
             _worklistItems = worklistItems;
             _logger = logger;

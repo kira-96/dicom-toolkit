@@ -1,8 +1,4 @@
-﻿#if FellowOakDicom5
-using FellowOakDicom;
-#else
-using Dicom;
-#endif
+﻿using FellowOakDicom;
 
 namespace SimpleDICOMToolkit.Models
 {

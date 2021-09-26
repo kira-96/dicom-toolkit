@@ -5,16 +5,10 @@
 
 namespace SimpleDICOMToolkit.Server
 {
-#if FellowOakDicom5
     using FellowOakDicom;
     using FellowOakDicom.Imaging.Codec;
     using FellowOakDicom.Log;
     using FellowOakDicom.Network;
-#else
-    using Dicom;
-    using Dicom.Log;
-    using Dicom.Network;
-#endif
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -33,38 +27,21 @@ namespace SimpleDICOMToolkit.Server
         // Encoding to use if encoding cannot be obtained from dataset
         private Encoding _fallbackEncoding;
 
-#if FellowOakDicom5
         public WorklistService(INetworkStream stream, Encoding fallbackEncoding, ILogger logger, ILogManager logManager, INetworkManager networkManager, ITranscoderManager transcoderManager)
             : base(stream, fallbackEncoding, logger, logManager, networkManager, transcoderManager)
-#else
-        public WorklistService(INetworkStream stream, Encoding fallbackEncoding, Logger log)
-            : base(stream, fallbackEncoding, log)
-#endif
         {
             _fallbackEncoding = fallbackEncoding;
         }
 
-#if FellowOakDicom5
         public Task<DicomCEchoResponse> OnCEchoRequestAsync(DicomCEchoRequest request)
         {
             Logger.Info($"Received verification request from AE {Association.CallingAE} with IP: {Association.RemoteHost}");
             return Task.FromResult(new DicomCEchoResponse(request, DicomStatus.Success));
         }
-#else
-        public DicomCEchoResponse OnCEchoRequest(DicomCEchoRequest request)
-        {
-            Logger.Info($"Received verification request from AE {Association.CallingAE} with IP: {Association.RemoteHost}");
-            return new DicomCEchoResponse(request, DicomStatus.Success);
-        }
-#endif
 
-#if FellowOakDicom5
 #pragma warning disable CS1998
         public async IAsyncEnumerable<DicomCFindResponse> OnCFindRequestAsync(DicomCFindRequest request)
 #pragma warning restore CS1998
-#else
-        public IEnumerable<DicomCFindResponse> OnCFindRequest(DicomCFindRequest request)
-#endif
         {
             if (WorklistServer.Default.WorklistItems == null)
             {
@@ -110,10 +87,10 @@ namespace SimpleDICOMToolkit.Server
             foreach (var pc in association.PresentationContexts)
             {
                 if (pc.AbstractSyntax == DicomUID.Verification
-                    || pc.AbstractSyntax == DicomUID.ModalityWorklistInformationModelFIND
-                    || pc.AbstractSyntax == DicomUID.ModalityPerformedProcedureStepSOPClass
-                    || pc.AbstractSyntax == DicomUID.ModalityPerformedProcedureStepNotificationSOPClass
-                    || pc.AbstractSyntax == DicomUID.ModalityPerformedProcedureStepNotificationSOPClass)
+                    || pc.AbstractSyntax == DicomUID.ModalityWorklistInformationModelFind
+                    || pc.AbstractSyntax == DicomUID.ModalityPerformedProcedureStep
+                    || pc.AbstractSyntax == DicomUID.ModalityPerformedProcedureStepNotification
+                    || pc.AbstractSyntax == DicomUID.ModalityPerformedProcedureStepNotification)
                 {
                     pc.AcceptTransferSyntaxes(AcceptedTransferSyntaxes);
                 }
@@ -128,19 +105,11 @@ namespace SimpleDICOMToolkit.Server
             return SendAssociationAcceptAsync(association);
         }
 
-#if FellowOakDicom5
         public Task<DicomNCreateResponse> OnNCreateRequestAsync(DicomNCreateRequest request)
-#else
-        public DicomNCreateResponse OnNCreateRequest(DicomNCreateRequest request)
-#endif
         {
-            if (request.SOPClassUID != DicomUID.ModalityPerformedProcedureStepSOPClass)
+            if (request.SOPClassUID != DicomUID.ModalityPerformedProcedureStep)
             {
-#if FellowOakDicom5
                 return Task.FromResult(new DicomNCreateResponse(request, DicomStatus.SOPClassNotSupported));
-#else
-                return new DicomNCreateResponse(request, DicomStatus.SOPClassNotSupported);
-#endif
             }
             // on N-Create the UID is stored in AffectedSopInstanceUID, in N-Set the UID is stored in RequestedSopInstanceUID
             var affectedSopInstanceUID = request.Command.GetSingleValue<string>(DicomTag.AffectedSOPInstanceUID);
@@ -152,26 +121,14 @@ namespace SimpleDICOMToolkit.Server
                 .GetSingleValue<string>(DicomTag.ScheduledProcedureStepID);
             var ok = WorklistServer.Default.MppsSource.SetInProgress(affectedSopInstanceUID, procedureStepId);
 
-#if FellowOakDicom5
             return Task.FromResult(new DicomNCreateResponse(request, ok ? DicomStatus.Success : DicomStatus.ProcessingFailure));
-#else
-            return new DicomNCreateResponse(request, ok ? DicomStatus.Success : DicomStatus.ProcessingFailure);
-#endif
         }
 
-#if FellowOakDicom5
         public Task<DicomNSetResponse> OnNSetRequestAsync(DicomNSetRequest request)
-#else
-        public DicomNSetResponse OnNSetRequest(DicomNSetRequest request)
-#endif
         {
-            if (request.SOPClassUID != DicomUID.ModalityPerformedProcedureStepSOPClass)
+            if (request.SOPClassUID != DicomUID.ModalityPerformedProcedureStep)
             {
-#if FellowOakDicom5
                 return Task.FromResult(new DicomNSetResponse(request, DicomStatus.SOPClassNotSupported));
-#else
-                return new DicomNSetResponse(request, DicomStatus.SOPClassNotSupported);
-#endif
             }
             // on N-Create the UID is stored in AffectedSopInstanceUID, in N-Set the UID is stored in RequestedSopInstanceUID
             var requestedSopInstanceUID = request.Command.GetSingleValue<string>(DicomTag.RequestedSOPInstanceUID);
@@ -199,11 +156,7 @@ namespace SimpleDICOMToolkit.Server
                 }
                 var ok = WorklistServer.Default.MppsSource.SetCompleted(requestedSopInstanceUID, doseDescription, listOfInstanceUIDs);
 
-#if FellowOakDicom5
                 return Task.FromResult(new DicomNSetResponse(request, ok ? DicomStatus.Success : DicomStatus.ProcessingFailure));
-#else
-                return new DicomNSetResponse(request, ok ? DicomStatus.Success : DicomStatus.ProcessingFailure);
-#endif
             }
             else if (status == "DISCONTINUED")
             {
@@ -211,25 +164,16 @@ namespace SimpleDICOMToolkit.Server
                 // var reason = request.Dataset.Get(DicomTag.PerformedProcedureStepDiscontinuationReasonCodeSequence);
                 var ok = WorklistServer.Default.MppsSource.SetDiscontinued(requestedSopInstanceUID, string.Empty);
 
-#if FellowOakDicom5
                 return Task.FromResult(new DicomNSetResponse(request, ok ? DicomStatus.Success : DicomStatus.ProcessingFailure));
-#else
-                return new DicomNSetResponse(request, ok ? DicomStatus.Success : DicomStatus.ProcessingFailure);
-#endif
             }
             else
             {
-#if FellowOakDicom5
                 return Task.FromResult(new DicomNSetResponse(request, DicomStatus.InvalidAttributeValue));
-#else
-                return new DicomNSetResponse(request, DicomStatus.InvalidAttributeValue);
-#endif
             }
         }
 
         #region not supported methods but that are required because of the interface
 
-#if FellowOakDicom5
         public Task<DicomNActionResponse> OnNActionRequestAsync(DicomNActionRequest request)
         {
             Logger.Log(LogLevel.Info, "receiving N-Action, not supported");
@@ -253,31 +197,6 @@ namespace SimpleDICOMToolkit.Server
             Logger.Log(LogLevel.Info, "receiving N-Get, not supported");
             return Task.FromResult(new DicomNGetResponse(request, DicomStatus.UnrecognizedOperation));
         }
-#else
-        public DicomNActionResponse OnNActionRequest(DicomNActionRequest request)
-        {
-            Logger.Log(LogLevel.Info, "receiving N-Action, not supported");
-            return new DicomNActionResponse(request, DicomStatus.UnrecognizedOperation);
-        }
-
-        public DicomNDeleteResponse OnNDeleteRequest(DicomNDeleteRequest request)
-        {
-            Logger.Log(LogLevel.Info, "receiving N-Delete, not supported");
-            return new DicomNDeleteResponse(request, DicomStatus.UnrecognizedOperation);
-        }
-
-        public DicomNEventReportResponse OnNEventReportRequest(DicomNEventReportRequest request)
-        {
-            Logger.Log(LogLevel.Info, "receiving N-Event, not supported");
-            return new DicomNEventReportResponse(request, DicomStatus.UnrecognizedOperation);
-        }
-
-        public DicomNGetResponse OnNGetRequest(DicomNGetRequest request)
-        {
-            Logger.Log(LogLevel.Info, "receiving N-Get, not supported");
-            return new DicomNGetResponse(request, DicomStatus.UnrecognizedOperation);
-        }
-#endif
 
         #endregion
 

@@ -3,11 +3,7 @@
 
 using System;
 
-#if FellowOakDicom5
 namespace FellowOakDicom.Log
-#else
-namespace Dicom.Log
-#endif
 {
     /// <summary>
     /// LogManager for the NLog logging framework.

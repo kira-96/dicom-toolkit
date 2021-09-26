@@ -2,9 +2,9 @@ name: Build .NET 5 projects
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, dev ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, dev ]
 
 env:
   # Path to the solution file relative to the root of the project.
@@ -19,7 +19,7 @@ jobs:
   build:
     strategy:
       matrix:
-        targetplatform: [x64]
+        targetplatform: [AnyCPU, x64]
 
     runs-on: windows-latest  # For a list of available runner types, refer to
                              # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on

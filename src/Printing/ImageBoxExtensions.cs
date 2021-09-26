@@ -4,15 +4,10 @@
 using System;
 using System.Drawing;
 using SimpleDICOMToolkit.Helpers;
-#if FellowOakDicom5
 using FellowOakDicom.Imaging;
 using FellowOakDicom.Imaging.Mathematics;
+
 namespace FellowOakDicom.Printing
-#else
-using Dicom.Imaging;
-using Dicom.Imaging.Mathematics;
-namespace Dicom.Printing
-#endif
 {
 
     /// <summary>

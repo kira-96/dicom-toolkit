@@ -1,14 +1,8 @@
 ﻿namespace SimpleDICOMToolkit.Client
 {
-#if FellowOakDicom5
     using FellowOakDicom;
     using FellowOakDicom.Network;
     using FellowOakDicom.Network.Client;
-#else
-    using Dicom;
-    using Dicom.Network;
-    using DicomClient = Dicom.Network.Client.DicomClient;
-#endif
     using StyletIoC;
     using System;
     using System.Linq;
@@ -76,11 +70,7 @@
                 worklistItems.Add(response.Dataset);
             };
 
-#if FellowOakDicom5
             IDicomClient client = DicomClientFactory.Create(serverIp, serverPort, false, localAET, serverAET);
-#else
-            DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
-#endif
 
             await client.AddRequestAsync(worklistRequest);
             await client.SendAsync(cancellationToken);
@@ -139,11 +129,7 @@
                 worklistResults.Add(GetWorklistResultFromDataset(response.Dataset, fallbackEncoding));
             };
 
-#if FellowOakDicom5
             IDicomClient client = DicomClientFactory.Create(serverIp, serverPort, false, localAET, serverAET);
-#else
-            DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
-#endif
 
             await client.AddRequestAsync(worklistRequest);
             await client.SendAsync(cancellationToken);
@@ -210,7 +196,7 @@
             // create an unique UID as the effectedinstamceUid, this id will be needed for the N-SET also
             DicomUID effectedinstamceUid = DicomUID.Generate();
 
-            DicomNCreateRequest dicomStartRequest = new DicomNCreateRequest(DicomUID.ModalityPerformedProcedureStepSOPClass, effectedinstamceUid)
+            DicomNCreateRequest dicomStartRequest = new DicomNCreateRequest(DicomUID.ModalityPerformedProcedureStep, effectedinstamceUid)
             {
                 Dataset = dataset
             };
@@ -234,11 +220,7 @@
                 }
             };
 
-#if FellowOakDicom5
             IDicomClient client = DicomClientFactory.Create(serverIp, serverPort, false, localAET, serverAET);
-#else
-            DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
-#endif
             await client.AddRequestAsync(dicomStartRequest);
             await client.SendAsync();
 
@@ -312,7 +294,7 @@
 
             bool result = false;
 
-            DicomNSetRequest dicomFinished = new DicomNSetRequest(DicomUID.ModalityPerformedProcedureStepSOPClass, affectedInstanceUid)
+            DicomNSetRequest dicomFinished = new DicomNSetRequest(DicomUID.ModalityPerformedProcedureStep, affectedInstanceUid)
             {
                 Dataset = dataset,
                 OnResponseReceived = (req, res) =>
@@ -332,11 +314,7 @@
                 }
             };
 
-#if FellowOakDicom5
             IDicomClient client = DicomClientFactory.Create(serverIp, serverPort, false, localAET, serverAET);
-#else
-            DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
-#endif
 
             await client.AddRequestAsync(dicomFinished);
             await client.SendAsync();
@@ -382,7 +360,7 @@
 
             bool result = false;
 
-            DicomNSetRequest dicomAbort = new DicomNSetRequest(DicomUID.ModalityPerformedProcedureStepSOPClass, affectedInstanceUid)
+            DicomNSetRequest dicomAbort = new DicomNSetRequest(DicomUID.ModalityPerformedProcedureStep, affectedInstanceUid)
             {
                 Dataset = dataset,
                 OnResponseReceived = (req, res) =>
@@ -402,11 +380,7 @@
                 }
             };
 
-#if FellowOakDicom5
             IDicomClient client = DicomClientFactory.Create(serverIp, serverPort, false, localAET, serverAET);
-#else
-            DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
-#endif
 
             await client.AddRequestAsync(dicomAbort);
             await client.SendAsync();

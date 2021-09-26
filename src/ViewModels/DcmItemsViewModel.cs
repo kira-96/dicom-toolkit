@@ -1,10 +1,6 @@
 ﻿namespace SimpleDICOMToolkit.ViewModels
 {
-#if FellowOakDicom5
     using FellowOakDicom;
-#else
-    using Dicom;
-#endif
     using Stylet;
     using StyletIoC;
     using System.Collections.Generic;
@@ -345,19 +341,12 @@
                 {
                     temp[i] = byte.Parse(values[i]);
                 }
-#if FellowOakDicom5
+
                 dataset.AddOrUpdate(vr, tag, temp);
-#else
-                dataset.AddOrUpdate(vr, tag, encoding, temp);
-#endif
             }
             else
             {
-#if FellowOakDicom5
                 dataset.AddOrUpdate(vr, tag, values);
-#else
-                dataset.AddOrUpdate(vr, tag, encoding, values);
-#endif
             }
         }
     }

@@ -1,12 +1,7 @@
 ﻿namespace SimpleDICOMToolkit.Client
 {
-#if FellowOakDicom5
     using FellowOakDicom.Network;
     using FellowOakDicom.Network.Client;
-#else
-    using Dicom.Network;
-    using DicomClient = Dicom.Network.Client.DicomClient;
-#endif
     using StyletIoC;
     using System.Collections.Generic;
     using System.Threading;
@@ -50,11 +45,7 @@
                 requests.Add(request);
             }
 
-#if FellowOakDicom5
             IDicomClient client = DicomClientFactory.Create(serverIp, serverPort, false, localAET, serverAET);
-#else
-            DicomClient client = new DicomClient(serverIp, serverPort, false, localAET, serverAET);
-#endif
 
             await client.AddRequestsAsync(requests);
             await client.SendAsync(cancellationToken);

@@ -1,12 +1,7 @@
 ﻿namespace SimpleDICOMToolkit.ViewModels
 {
-#if FellowOakDicom5
     using FellowOakDicom;
     using FellowOakDicom.Imaging;
-#else
-    using Dicom;
-    using Dicom.Imaging;
-#endif
     using Stylet;
     using StyletIoC;
     using System.IO;

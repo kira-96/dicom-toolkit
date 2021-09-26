@@ -1,10 +1,6 @@
 ﻿namespace SimpleDICOMToolkit.ViewModels
 {
-#if FellowOakDicom5
     using FellowOakDicom;
-#else
-    using Dicom;
-#endif
     using Stylet;
     using System.Collections.Generic;
     using System.Linq;

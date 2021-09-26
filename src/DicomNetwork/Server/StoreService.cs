@@ -5,16 +5,10 @@
 
 namespace SimpleDICOMToolkit.Server
 {
-#if FellowOakDicom5
     using FellowOakDicom;
     using FellowOakDicom.Imaging.Codec;
     using FellowOakDicom.Log;
     using FellowOakDicom.Network;
-#else
-    using Dicom;
-    using Dicom.Log;
-    using Dicom.Network;
-#endif
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -52,13 +46,8 @@ namespace SimpleDICOMToolkit.Server
 
         private readonly List<string> receivedFiles;
 
-#if FellowOakDicom5
         public StoreService(INetworkStream stream, Encoding fallbackEncoding, ILogger logger, ILogManager logManager, INetworkManager networkManager, ITranscoderManager transcoderManager)
             : base(stream, fallbackEncoding, logger, logManager, networkManager, transcoderManager)
-#else
-        public StoreService(INetworkStream stream, Encoding fallbackEncoding, Logger log)
-            : base(stream, fallbackEncoding, log)
-#endif
         {
             receivedFiles = new List<string>();
         }
@@ -111,23 +100,12 @@ namespace SimpleDICOMToolkit.Server
             return SendAssociationAcceptAsync(association);
         }
 
-#if FellowOakDicom5
         public Task<DicomCEchoResponse> OnCEchoRequestAsync(DicomCEchoRequest request)
         {
             return Task.FromResult(new DicomCEchoResponse(request, DicomStatus.Success));
         }
-#else
-        public DicomCEchoResponse OnCEchoRequest(DicomCEchoRequest request)
-        {
-            return new DicomCEchoResponse(request, DicomStatus.Success);
-        }
-#endif
 
-#if FellowOakDicom5
         public Task<DicomCStoreResponse> OnCStoreRequestAsync(DicomCStoreRequest request)
-#else
-        public DicomCStoreResponse OnCStoreRequest(DicomCStoreRequest request)
-#endif
         {
             string studyUid = request.Dataset.GetSingleValue<string>(DicomTag.StudyInstanceUID);
             string instUid = request.SOPInstanceUID.UID;
@@ -149,28 +127,15 @@ namespace SimpleDICOMToolkit.Server
 
             receivedFiles.Add(path);
 
-#if FellowOakDicom5
             return Task.FromResult(new DicomCStoreResponse(request, DicomStatus.Success));
-#else
-            return new DicomCStoreResponse(request, DicomStatus.Success);
-#endif
         }
 
-#if FellowOakDicom5
         public Task OnCStoreRequestExceptionAsync(string tempFileName, Exception e)
         {
             return Task.CompletedTask;
         }
-#else
-        public void OnCStoreRequestException(string tempFileName, Exception e)
-        {
-            // let library handle logging and error response
-        }
-#endif
 
         #region N-Service
-
-#if FellowOakDicom5
 
         public Task<DicomNActionResponse> OnNActionRequestAsync(DicomNActionRequest request)
         {
@@ -207,45 +172,6 @@ namespace SimpleDICOMToolkit.Server
             Logger.Info("Received N-Set request, message ID {0}.", request.MessageID);
             return Task.FromResult(new DicomNSetResponse(request, DicomStatus.Success));
         }
-
-#else
-        public DicomNActionResponse OnNActionRequest(DicomNActionRequest request)
-        {
-            Logger.Info("Received N-Action request, Action type ID {0}.", request.ActionTypeID);
-            return new DicomNActionResponse(request, DicomStatus.Success);
-        }
-
-        public DicomNCreateResponse OnNCreateRequest(DicomNCreateRequest request)
-        {
-            Logger.Info("Received N-Create request, message ID {0}.", request.MessageID);
-            return new DicomNCreateResponse(request, DicomStatus.Success);
-        }
-
-        public DicomNDeleteResponse OnNDeleteRequest(DicomNDeleteRequest request)
-        {
-            Logger.Info("Received N-Delete request, message ID {0}.", request.MessageID);
-            return new DicomNDeleteResponse(request, DicomStatus.Success);
-        }
-
-        public DicomNEventReportResponse OnNEventReportRequest(DicomNEventReportRequest request)
-        {
-            Logger.Info("Received N-EventReport request, event type ID {0}.", request.EventTypeID);
-            return new DicomNEventReportResponse(request, DicomStatus.Success);
-        }
-
-        public DicomNGetResponse OnNGetRequest(DicomNGetRequest request)
-        {
-            Logger.Info("Received N-Get request, message ID {0}.", request.MessageID);
-            return new DicomNGetResponse(request, DicomStatus.Success);
-        }
-
-        public DicomNSetResponse OnNSetRequest(DicomNSetRequest request)
-        {
-            Logger.Info("Received N-Set request, message ID {0}.", request.MessageID);
-            return new DicomNSetResponse(request, DicomStatus.Success);
-        }
-
-#endif
 
         #endregion
     }
