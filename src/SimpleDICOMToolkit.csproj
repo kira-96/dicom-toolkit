@@ -37,7 +37,7 @@
     <PackageReference Include="fo-dicom" Version="5.0.0-alpha3" />
     <PackageReference Include="fo-dicom.Codecs" Version="5.0.0-beta6" />
     <PackageReference Include="Hardcodet.NotifyIcon.Wpf.NetCore" Version="1.0.18" />
-    <PackageReference Include="LiteDB" Version="5.0.10" />
+    <PackageReference Include="LiteDB" Version="5.0.13" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.31" />
     <PackageReference Include="MQTTnet" Version="3.0.15" />
     <PackageReference Include="NLog" Version="4.7.10" />
